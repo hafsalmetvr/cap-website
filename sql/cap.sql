@@ -243,6 +243,19 @@ CREATE TABLE completion_status (
 CREATE TRIGGER completion_status_created BEFORE INSERT ON completion_status FOR EACH ROW SET new.created = now();
 INSERT INTO completion_status VALUES ('NOT STARTED'),('NOT COMPLETED'),('COMPLETED');
 
+CREATE TABLE recommendation (
+	id int NOT NULL auto_increment,
+	name varchar(255) NOT NULL,
+	description text NOT NULL,
+  created datetime NOT NULL,
+  modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	UNIQUE KEY (name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TRIGGER recommendation_created BEFORE INSERT ON recommendation FOR EACH ROW SET new.created = now();
+
+
 CREATE TABLE customer_questionnaire (
 	id int NOT NULL auto_increment,
 	customer_id int NOT NULL,
@@ -311,9 +324,29 @@ CREATE TABLE customer_answer (
 	PRIMARY KEY (id),
 	KEY (customer_id),
 	KEY (answer_id),
+	KEY (answer_enum_id),
   CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE,
-  CONSTRAINT FOREIGN KEY (answer_id) REFERENCES section (id) ON DELETE CASCADE
-  CONSTRAINT FOREIGN KEY (answer_enum_id) REFERENCES section (id) ON DELETE CASCADE
+  CONSTRAINT FOREIGN KEY (answer_id) REFERENCES answer (id) ON DELETE CASCADE
+  CONSTRAINT FOREIGN KEY (answer_enum_id) REFERENCES answer_enum (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TRIGGER customer_answer BEFORE INSERT ON customer_answer FOR EACH ROW SET new.created = now();
+
+CREATE TABLE customer_recommendation (
+	id int NOT NULL auto_increment,
+	customer_id int NOT NULL,
+	questionnaire_id int NOT NULL,
+	recommendation_id int NOT NULL,
+  created datetime NOT NULL,
+  modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	KEY (customer_id),
+	KEY (questionnaire_id),
+	KEY (recommendation_id),
+  CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE,
+  CONSTRAINT FOREIGN KEY (questionnaire_id) REFERENCES questionnaire (id) ON DELETE CASCADE
+  CONSTRAINT FOREIGN KEY (recommendation_id) REFERENCES recommendation (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TRIGGER customer_answer BEFORE INSERT ON customer_answer FOR EACH ROW SET new.created = now();
+
