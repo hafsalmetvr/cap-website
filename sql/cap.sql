@@ -185,7 +185,7 @@ CREATE TABLE question (
 	KEY (questionnaire_id),
 	KEY (section_id),
   CONSTRAINT FOREIGN KEY (questionnaire_id) REFERENCES questionnaire (id) ON DELETE CASCADE,
-  CONSTRAINT FOREIGN KEY (section_id) REFERENCES questionnaire (id) ON DELETE CASCADE
+  CONSTRAINT FOREIGN KEY (section_id) REFERENCES section (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TRIGGER question_created BEFORE INSERT ON question FOR EACH ROW SET new.created = now();
@@ -308,7 +308,7 @@ CREATE TABLE customer_question (
 	KEY (question_id),
 	KEY (completion_status_id),
   CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE,
-  CONSTRAINT FOREIGN KEY (question_id) REFERENCES section (id) ON DELETE CASCADE,
+  CONSTRAINT FOREIGN KEY (question_id) REFERENCES question (id) ON DELETE CASCADE,
   CONSTRAINT FOREIGN KEY (completion_status_id) REFERENCES completion_status (id) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
