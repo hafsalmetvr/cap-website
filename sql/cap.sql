@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS version;
 DROP TRIGGER IF EXISTS customer_answer_created;
 DROP TABLE IF EXISTS customer_answer;
 DROP TRIGGER IF EXISTS customer_question_created;
@@ -24,10 +25,10 @@ DROP TRIGGER IF EXISTS customer_property_created;
 DROP TABLE IF EXISTS customer_property;
 DROP TRIGGER IF EXISTS customer_hierarchy_created;
 DROP TABLE IF EXISTS customer_hierarchy;
-DROP TRIGGER IF EXISTS customer_status_created;
-DROP TABLE IF EXISTS customer_status;
 DROP TRIGGER IF EXISTS customer_created;
 DROP TABLE IF EXISTS customer;
+DROP TRIGGER IF EXISTS customer_status_created;
+DROP TABLE IF EXISTS customer_status;
 DROP TRIGGER IF EXISTS role_created;
 DROP TABLE IF EXISTS role;
 DROP TRIGGER IF EXISTS domain_created;
@@ -41,7 +42,7 @@ CREATE TABLE version (
   modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO version VALUES (1);
+INSERT INTO version (id) VALUES (1);
 
 CREATE TABLE organization (
   id int NOT NULL auto_increment,
@@ -78,6 +79,18 @@ CREATE TABLE role (
 
 CREATE TRIGGER role_created BEFORE INSERT ON role FOR EACH ROW SET new.created = now();
 
+CREATE TABLE customer_status (
+	id int NOT NULL auto_increment,
+	name varchar(255) NOT NULL,
+  created datetime NOT NULL,
+  modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	UNIQUE KEY (name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TRIGGER customer_status_created BEFORE INSERT ON customer_status FOR EACH ROW SET new.created = now();
+INSERT INTO customer_status (name) VALUES ('ACTIVE'),('INACTIVE'), ('DELETED');
+
 CREATE TABLE customer (
   id int NOT NULL auto_increment,
   email varchar(255) NOT NULL,
@@ -91,7 +104,7 @@ CREATE TABLE customer (
   created datetime NOT NULL,
   modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (id),
-  UNIQUE KEY (email,domain),
+  UNIQUE KEY (email,domain_id),
   KEY (role_id),
   CONSTRAINT FOREIGN KEY (domain_id) REFERENCES domain (id) ON DELETE CASCADE,
   CONSTRAINT FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE RESTRICT,
@@ -99,18 +112,6 @@ CREATE TABLE customer (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TRIGGER customer_created BEFORE INSERT ON customer FOR EACH ROW SET new.created = now();
-
-CREATE TABLE customer_status (
-	id int NOT NULL auto_increment,
-	name varchar(255) NOT NULL,
-  created datetime NOT NULL,
-  modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-	PRIMARY KEY (id),
-	UNIQUE KEY (name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TRIGGER customer_status_created BEFORE INSERT ON customer_status FOR EACH ROW SET new.created = now();
-INSERT INTO customer_status VALUES ('ACTIVE'),('INACTIVE'), ('DELETED');
 
 CREATE TABLE customer_hierarchy (
 	id int NOT NULL auto_increment,
@@ -160,7 +161,7 @@ CREATE TABLE section (
 	section_number int NOT NULL,
 	name varchar(255) NOT NULL,
 	description text NOT NULL DEFAULT "",
-	order int NOT NULL DEFAULT 0,
+	section_order int NOT NULL DEFAULT 0,
 	questionnaire_id int NOT NULL,
   created datetime NOT NULL,
   modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -175,7 +176,7 @@ CREATE TABLE question (
 	id int NOT NULL auto_increment,
 	question_number int NOT NULL,
 	question_text text NOT NULL,
-	order int NOT NULL DEFAULT 0,
+	question_order int NOT NULL DEFAULT 0,
 	section_id int NOT NULL,
 	questionnaire_id int NOT NULL,
   created datetime NOT NULL,
@@ -193,8 +194,8 @@ CREATE TABLE answer (
 	id int NOT NULL auto_increment,
 	answer_number int NOT NULL,
 	answer_text text NOT NULL,
-	type enum('TEXT', 'CHECKBOX', 'RADIO', 'TEXTAREA', 'SELECT', 'MULTISELECT', 'ENUM') DEFAULT "TEXT",
-	order int NOT NULL DEFAULT 0,
+	answer_type enum('TEXT', 'CHECKBOX', 'RADIO', 'TEXTAREA', 'SELECT', 'MULTISELECT', 'ENUM') DEFAULT "TEXT",
+	answer_order int NOT NULL DEFAULT 0,
 	question_id int NOT NULL,
   created datetime NOT NULL,
   modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -219,7 +220,7 @@ CREATE TABLE answer_enum_map (
 	id int NOT NULL auto_increment,
 	answer_id int NOT NULL,
 	answer_enum_id int NOT NULL,
-	order int NOT NULL DEFAULT 0,
+	answer_enum_order int NOT NULL DEFAULT 0,
   created datetime NOT NULL,
   modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
@@ -241,13 +242,13 @@ CREATE TABLE completion_status (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TRIGGER completion_status_created BEFORE INSERT ON completion_status FOR EACH ROW SET new.created = now();
-INSERT INTO completion_status VALUES ('NOT STARTED'),('NOT COMPLETED'),('COMPLETED');
+INSERT INTO completion_status (name) VALUES ('NOT STARTED'),('NOT COMPLETED'),('COMPLETED');
 
 CREATE TABLE customer_questionnaire (
 	id int NOT NULL auto_increment,
 	customer_id int NOT NULL,
 	questionnaire_id int NOT NULL,
-	completion_status_id in NOT NULL,
+	completion_status_id int NOT NULL,
 	completed datetime DEFAULT NULL,
   created datetime NOT NULL,
   modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -266,7 +267,7 @@ CREATE TABLE customer_section (
 	id int NOT NULL auto_increment,
 	customer_id int NOT NULL,
 	section_id int NOT NULL,
-	completion_status_id in NOT NULL,
+	completion_status_id int NOT NULL,
 	completed datetime DEFAULT NULL,
   created datetime NOT NULL,
   modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -285,13 +286,13 @@ CREATE TABLE customer_question (
 	id int NOT NULL auto_increment,
 	customer_id int NOT NULL,
 	question_id int NOT NULL,
-	completion_status_id in NOT NULL,
+	completion_status_id int NOT NULL,
 	completed datetime DEFAULT NULL,
   created datetime NOT NULL,
   modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 	PRIMARY KEY (id),
 	KEY (customer_id),
-	KEY (question),
+	KEY (question_id),
 	KEY (completion_status_id),
   CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE,
   CONSTRAINT FOREIGN KEY (question_id) REFERENCES section (id) ON DELETE CASCADE,
@@ -312,7 +313,7 @@ CREATE TABLE customer_answer (
 	KEY (customer_id),
 	KEY (answer_id),
   CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE,
-  CONSTRAINT FOREIGN KEY (answer_id) REFERENCES section (id) ON DELETE CASCADE
+  CONSTRAINT FOREIGN KEY (answer_id) REFERENCES section (id) ON DELETE CASCADE,
   CONSTRAINT FOREIGN KEY (answer_enum_id) REFERENCES section (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
