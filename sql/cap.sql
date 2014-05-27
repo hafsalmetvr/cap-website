@@ -1,4 +1,10 @@
 DROP TABLE IF EXISTS version;
+DROP TRIGGER IF EXISTS customer_tag_map_created;
+DROP TABLE IF EXISTS customer_tag_map;
+DROP TRIGGER IF EXISTS customer_note_map_created;
+DROP TABLE IF EXISTS customer_note_map;
+DROP TRIGGER IF EXISTS customer_note_created;
+DROP TABLE IF EXISTS customer_note;
 DROP TRIGGER IF EXISTS customer_recommendation_created;
 DROP TABLE IF EXISTS customer_recommendation;
 DROP TRIGGER IF EXISTS recommendation_created;
@@ -11,6 +17,8 @@ DROP TRIGGER IF EXISTS customer_section_created;
 DROP TABLE IF EXISTS customer_section;
 DROP TRIGGER IF EXISTS customer_questionnaire_created;
 DROP TABLE IF EXISTS customer_questionnaire;
+DROP TRIGGER IF EXISTS questionnaire_tag_map_created;
+DROP TABLE IF EXISTS questionnaire_tag_map;
 DROP TRIGGER IF EXISTS completion_status_created;
 DROP TABLE IF EXISTS completion_status;
 DROP TRIGGER IF EXISTS answer_enum_map_created;
@@ -33,6 +41,8 @@ DROP TRIGGER IF EXISTS customer_created;
 DROP TABLE IF EXISTS customer;
 DROP TRIGGER IF EXISTS customer_status_created;
 DROP TABLE IF EXISTS customer_status;
+DROP TRIGGER IF EXISTS tag_created;
+DROP TABLE IF EXISTS tag;
 DROP TRIGGER IF EXISTS role_created;
 DROP TABLE IF EXISTS role;
 DROP TRIGGER IF EXISTS domain_created;
@@ -82,6 +92,17 @@ CREATE TABLE role (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TRIGGER role_created BEFORE INSERT ON role FOR EACH ROW SET new.created = now();
+
+CREATE TABLE tag (
+	id int NOT NULL auto_increment,
+	name varchar(255) NOT NULL,
+  created datetime NOT NULL,
+  modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TRIGGER tag_created BEFORE INSERT ON tag FOR EACH ROW SET new.created = now();
+
 
 CREATE TABLE customer_status (
 	id int NOT NULL auto_increment,
@@ -260,6 +281,21 @@ CREATE TABLE recommendation (
 
 CREATE TRIGGER recommendation_created BEFORE INSERT ON recommendation FOR EACH ROW SET new.created = now();
 
+CREATE TABLE questionnaire_tag_map (
+	id int NOT NULL auto_increment,
+	tag_id int NOT NULL,
+	questionnaire_id int NOT NULL,
+  created datetime NOT NULL,
+  modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	KEY (questionnaire_id),
+	KEY (tag_id),
+  CONSTRAINT FOREIGN KEY (questionnaire_id) REFERENCES questionnaire (id) ON DELETE CASCADE,
+  CONSTRAINT FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TRIGGER questionnaire_tag_map_created BEFORE INSERT ON questionnaire_tag_map FOR EACH ROW SET new.created = now();
+
 
 CREATE TABLE customer_questionnaire (
 	id int NOT NULL auto_increment,
@@ -316,7 +352,7 @@ CREATE TABLE customer_question (
   CONSTRAINT FOREIGN KEY (completion_status_id) REFERENCES completion_status (id) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TRIGGER customer_question BEFORE INSERT ON customer_question FOR EACH ROW SET new.created = now();
+CREATE TRIGGER customer_question_created BEFORE INSERT ON customer_question FOR EACH ROW SET new.created = now();
 
 CREATE TABLE customer_answer (
 	id int NOT NULL auto_increment,
@@ -335,7 +371,7 @@ CREATE TABLE customer_answer (
   CONSTRAINT FOREIGN KEY (answer_enum_id) REFERENCES answer_enum (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TRIGGER customer_answer BEFORE INSERT ON customer_answer FOR EACH ROW SET new.created = now();
+CREATE TRIGGER customer_answer_created BEFORE INSERT ON customer_answer FOR EACH ROW SET new.created = now();
 
 CREATE TABLE customer_recommendation (
 	id int NOT NULL auto_increment,
@@ -353,5 +389,55 @@ CREATE TABLE customer_recommendation (
   CONSTRAINT FOREIGN KEY (recommendation_id) REFERENCES recommendation (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TRIGGER customer_recommendation BEFORE INSERT ON customer_recommendation FOR EACH ROW SET new.created = now();
+CREATE TRIGGER customer_recommendation_created BEFORE INSERT ON customer_recommendation FOR EACH ROW SET new.created = now();
+
+
+CREATE TABLE customer_note (
+	id int NOT NULL auto_increment,
+	customer_id int NOT NULL,
+	questionnaire_id int DEFAULT NULL,
+	note text NOT NULL,
+  created datetime NOT NULL,
+  modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	KEY (customer_id),
+	KEY (questionnaire_id),
+  CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE,
+  CONSTRAINT FOREIGN KEY (questionnaire_id) REFERENCES questionnaire (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TRIGGER customer_note_created BEFORE INSERT ON customer_note FOR EACH ROW SET new.created = now();
+
+-- this is the table that controls which other customers can see a note
+CREATE TABLE customer_note_map (
+	id int NOT NULL auto_increment,
+	customer_note_id int NOT NULL,
+	customer_id int NOT NULL,
+  created datetime NOT NULL,
+  modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	KEY (customer_id),
+	KEY (customer_note_id),
+  CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE,
+  CONSTRAINT FOREIGN KEY (note_id) REFERENCES customer_note (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TRIGGER customer_note_map_created BEFORE INSERT ON customer_note_map FOR EACH ROW SET new.created = now();
+
+CREATE TABLE customer_tag_map (
+	id int NOT NULL auto_increment,
+	tag_id int NOT NULL,
+	customer_id int NOT NULL,
+  created datetime NOT NULL,
+  modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	KEY (customer_id),
+	KEY (tag_id),
+  CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE,
+  CONSTRAINT FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TRIGGER customer_tag_map_created BEFORE INSERT ON customer_tag_map FOR EACH ROW SET new.created = now();
+
+
 
