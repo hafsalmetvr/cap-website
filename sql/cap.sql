@@ -1,4 +1,8 @@
 DROP TABLE IF EXISTS version;
+DROP TRIGGER IF EXISTS customer_recommendation_created;
+DROP TABLE IF EXISTS customer_recommendation;
+DROP TRIGGER IF EXISTS recommendation_created;
+DROP TABLE IF EXISTS recommendation;
 DROP TRIGGER IF EXISTS customer_answer_created;
 DROP TABLE IF EXISTS customer_answer;
 DROP TRIGGER IF EXISTS customer_question_created;
@@ -349,5 +353,5 @@ CREATE TABLE customer_recommendation (
   CONSTRAINT FOREIGN KEY (recommendation_id) REFERENCES recommendation (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TRIGGER customer_answer BEFORE INSERT ON customer_answer FOR EACH ROW SET new.created = now();
+CREATE TRIGGER customer_recommendation BEFORE INSERT ON customer_recommendation FOR EACH ROW SET new.created = now();
 
