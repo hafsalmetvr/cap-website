@@ -98,7 +98,7 @@ CREATE TABLE tag (
 	name varchar(255) NOT NULL,
   created datetime NOT NULL,
   modified timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TRIGGER tag_created BEFORE INSERT ON tag FOR EACH ROW SET new.created = now();
@@ -291,7 +291,7 @@ CREATE TABLE questionnaire_tag_map (
 	KEY (questionnaire_id),
 	KEY (tag_id),
   CONSTRAINT FOREIGN KEY (questionnaire_id) REFERENCES questionnaire (id) ON DELETE CASCADE,
-  CONSTRAINT FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE SET NULL
+  CONSTRAINT FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TRIGGER questionnaire_tag_map_created BEFORE INSERT ON questionnaire_tag_map FOR EACH ROW SET new.created = now();
@@ -419,7 +419,7 @@ CREATE TABLE customer_note_map (
 	KEY (customer_id),
 	KEY (customer_note_id),
   CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE,
-  CONSTRAINT FOREIGN KEY (note_id) REFERENCES customer_note (id) ON DELETE SET NULL
+  CONSTRAINT FOREIGN KEY (customer_note_id) REFERENCES customer_note (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TRIGGER customer_note_map_created BEFORE INSERT ON customer_note_map FOR EACH ROW SET new.created = now();
@@ -434,7 +434,7 @@ CREATE TABLE customer_tag_map (
 	KEY (customer_id),
 	KEY (tag_id),
   CONSTRAINT FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE,
-  CONSTRAINT FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE SET NULL
+  CONSTRAINT FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TRIGGER customer_tag_map_created BEFORE INSERT ON customer_tag_map FOR EACH ROW SET new.created = now();
