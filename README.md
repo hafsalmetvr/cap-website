@@ -13,6 +13,7 @@ Installation
 Database Configuration
 ------------
     Create a database "cap"
+    import mysql dump file (sql/cap.sql)
     
     open  config/autoload/local.php
     Set your mysql username and password there
