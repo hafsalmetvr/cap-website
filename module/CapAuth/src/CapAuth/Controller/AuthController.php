@@ -14,6 +14,26 @@ class AuthController extends AbstractRestfulController
     protected $storage;
     protected $authservice;
 
+    // test function
+    public function getList() {
+
+     if ($email = $this->getAuthService()->hasIdentity()){
+
+       return new JsonModel(array(
+            'data' => $this->getAuthService()->getIdentity())
+        );
+     }
+     else {
+
+     return new JsonModel(array(
+            'data' => 'sorry')
+        );
+
+    }
+    }
+
+
+
     public function getAuthService()
     {
         if (! $this->authservice) {
@@ -77,11 +97,12 @@ class AuthController extends AbstractRestfulController
                         $this->getAuthService()->setStorage($this->getSessionStorage());
                     }
                     $this->getAuthService()->setStorage($this->getSessionStorage());
-                    $this->getAuthService()->getStorage()->write($data['username']);
-
+                    
                     $result = $this->getAuthService()->getAdapter()->getResultRowObject();
                     $uid = $result->id;
                     $role_id = $result->role_id;
+                    $this->getAuthService()->getStorage()->write($uid);
+
                 }
           
         
