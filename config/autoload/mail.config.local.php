@@ -21,8 +21,8 @@ return array(
 				'connection_class'  => 'plain',
 				//'port' => '2525',
 				'connection_config' => array(
-					'username' => 'hafsalmetvr@gmail.com',
-					'password' => 'tvr@22478881895',
+					'username' => '',
+					'password' => '',
 					'ssl' => 'tls'
 				),
 			),  
