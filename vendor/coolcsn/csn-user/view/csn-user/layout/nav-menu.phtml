@@ -12,28 +12,3 @@
  * @author Martin Briglia <martin@mgscreativa.com>
  */
 
-if($this->navMenu == true){
-  if($this->user) { ?> 
-    <a href="<?php echo $this->url('user-index');?>" class="btn btn-success">
-      <?php echo $this->translate('User Home'); ?>
-    </a>
-	<a href="<?php echo $this->url('user-register', array('action' => 'edit-profile'));?>" class="btn btn-success">
-	  <?php echo $this->translate('Edit Profile'); ?>
-	</a> 
-	<a href="<?php echo $this->url('user-index', array('action' => 'logout'))?>" class="btn btn-success">
-	  <?php echo $this->translate('Log Out'); ?>
-	</a>
-<?php
-  } else { ?>
-	<a href="<?php echo $this->url('user-index', array('action' => 'login'))?>" class="btn btn-success">
-	  <?php echo $this->translate('Log in'); ?>
-	</a>
-	<a href="<?php echo $this->url('user-register');?>" class="btn btn-success">
-	  <?php echo $this->translate('Sign Up'); ?>
-	</a>
-	<a href="<?php echo $this->url('user-register', array('action' => 'reset-password'));?>" class="btn btn-success">
-	  <?php echo $this->translate('Reset Password'); ?>
-	</a>
-<?php } ?>
-<?php } ?>
-<hr />

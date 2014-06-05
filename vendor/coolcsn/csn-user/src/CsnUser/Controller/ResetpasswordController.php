@@ -74,7 +74,7 @@ class ResetpasswordController extends AbstractRestfulController
                     $entityManager->persist($user);
                     $entityManager->flush();
     
-                    $viewModel = new ViewModel(array('navMenu' => $this->getOptions()->getNavMenu()));
+                    $viewModel = new ViewModel();
                     $viewModel->setTemplate('csn-user/registration/change-password-success');
                     return $viewModel;
                 
