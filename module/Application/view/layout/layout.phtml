@@ -1,9 +1,9 @@
 <?php echo $this->doctype(); ?>
 
-<html lang="en">
+<html lang="en" ng-app="cap">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle($this->translate('Centurian Assesment Portal'))->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -14,36 +14,31 @@
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/style.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/font-awsome-4.1.0/css/font-awesome.css') ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript')
+            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript')
+                       ->prependFile($this->basePath() . '/js/angular_app/lib/angular/angular-resource.js', 'text/javascript')
+            ->prependFile($this->basePath() . '/js/angular_app/app.js',   'text/javascript')
+            ->prependFile($this->basePath() . '/js/angular_app/directives.js',   'text/javascript')
+            ->prependFile($this->basePath() . '/js/angular_app/controllers.js',   'text/javascript')
+            ->prependFile($this->basePath() . '/js/angular_app/services.js',   'text/javascript')
             ->prependFile($this->basePath() . '/js/jquery.min.js')
-            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
-        ; ?>
+            ->prependFile($this->basePath() . '/js/angular_app/lib/angular/angular-cookies.js', 'text/javascript')
+            ->prependFile($this->basePath() . '/js/angular_app/lib/angular/angular.js', 'text/javascript')
 
+
+        ; ?>
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('img/zf2-logo.png') ?>" alt="Zend Framework 2"/>&nbsp;<?php echo $this->translate('Skeleton Application') ?></a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
+        <div class="container_div">
+            <div class="container_header">
+                <span> Centurian Assessment Portal </span>
             </div>
-        </nav>
-        <div class="container">
             <?php echo $this->content; ?>
             <hr>
             <footer>
