@@ -199,16 +199,16 @@ function CreateAccountController($scope, $element, $http, $timeout, $location, $
             } 
             $http({
                 method: 'post',
-                url: "/Cap/public/user/register/",
+                url: "/Cap/public/user/create",
                 data: angular.toJson(params),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).success(function(data, status) {
-                if(data.data == "sent"){
+                if(data.status == "true"){
                     $scope.msg = "Account created Successfully";
                 } else {
-                    $scope.msg = "Some error occured";
+                    $scope.msg = data.message;
                 }
             }).error(function(data, success){
             });

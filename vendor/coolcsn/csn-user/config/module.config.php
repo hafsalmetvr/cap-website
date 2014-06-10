@@ -18,6 +18,7 @@ return array(
             'CsnUser\Controller\Index' => 'CsnUser\Controller\IndexController',
             'CsnUser\Controller\Registration' => 'CsnUser\Controller\RegistrationController',
             'CsnUser\Controller\Resetpassword' => 'CsnUser\Controller\ResetpasswordController',
+            'CsnUser\Controller\Createaccount' => 'CsnUser\Controller\CreateaccountController',
         ),
     ),
     'router' => array(
@@ -62,6 +63,21 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'CsnUser\Controller\Resetpassword',
+                        #'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+            'create-account' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/user/create[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CsnUser\Controller\Createaccount',
                         #'action' => 'index',
                     ),
                 ),

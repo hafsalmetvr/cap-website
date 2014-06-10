@@ -108,7 +108,7 @@ class Customer
      * @Annotation\Required(true)
      * @Annotation\Options({
      *   "required":"true",
-     *   "empty_option": "User Role",
+     *   "empty_option": "Customer Role",
      *   "target_class":"CsnUser\Entity\Role",
      *   "property": "name"
      * })
@@ -122,8 +122,25 @@ class Customer
      */
     protected $registrationToken;
 
-
-
+    /**
+     * @var CsnUser\Entity\Domain
+     *
+     * @ORM\ManyToOne(targetEntity="CsnUser\Entity\Domain")
+     * @ORM\JoinColumn(name="domain_id", referencedColumnName="id", nullable=false)
+     * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"Digits"})
+     * @Annotation\Required(true)
+     * @Annotation\Options({
+     *   "required":"true",
+     *   "empty_option": "Customer Domain",
+     *   "target_class":"CsnUser\Entity\Domain",
+     *   "property": "id"
+     * })
+     */
+    protected $domain;
+    
 
     public function __construct()
     {
@@ -283,7 +300,7 @@ class Customer
      * Set role
      *
      * @param  Role $role
-     * @return User
+     * @return Customer
      */
     public function setRole($role)
     {
@@ -326,26 +343,26 @@ class Customer
     }
 
     /**
-     * Set user state
+     * Set customer domain
      *
-     * @param  boolean $state
+     * @param  boolean $domain
      * @return User
      */
-    public function setState($state)
+    public function setDomain($domain)
     {
-        $this->state = $state;
+        $this->domain = $domain;
 
         return $this;
     }
 
     /**
-     * Get user state
+     * Get customer domain
      *
      * @return boolean
      */
-    public function getState()
+    public function getDomain()
     {
-        return $this->state;
+        return $this->domain;
     }
 
     /**
