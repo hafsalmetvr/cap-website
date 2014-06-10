@@ -59,7 +59,7 @@ class CreateaccountController extends AbstractRestfulController
     public function createAccountAction()
     {
 
-
+        return new ViewModel();
 
     }
 
@@ -75,7 +75,6 @@ class CreateaccountController extends AbstractRestfulController
         
 
         $user = new Customer;
-        #$form = $this->getUserFormHelper()->createUserForm($user, 'SignUp');
         if($this->getRequest()->isPost()) {
            $entityManager = $this->getEntityManager();
            $customer = $entityManager->createQuery("SELECT u FROM CsnUser\Entity\Customer u WHERE u.email = '$data[email]'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
@@ -88,8 +87,6 @@ class CreateaccountController extends AbstractRestfulController
                 $user->setFirstName($data['name']);
                 #$user->setLastName($data['lastname']);
                 $user->setEmail($data['email']);
-                #$user->setLanguage($entityManager->find('CsnUser\Entity\Language', 1));
-                #$user->setRegistrationDate(new \DateTime());
                 $user->setRegistrationToken(md5(uniqid(mt_rand(), true)));
                 $user->setPassword(UserCredentialsService::encryptPassword($this->generatePassword()));
                 
@@ -106,7 +103,7 @@ class CreateaccountController extends AbstractRestfulController
                      return new JsonModel(array('status' => 'true', 'message' => 'An email has been sent to user')); 
     		    } catch (\Exception $e) {
                     
-    				    return new JsonModel(array('status' => 'true', 'message' =>'Something went wrong when trying to send activation email! Please, try again later.'));
+    				    return new JsonModel(array('status' => 'false', 'message' =>'Something went wrong when trying to send activation email! Please, try again later.'));
     			}
             } else {
   
@@ -118,317 +115,6 @@ class CreateaccountController extends AbstractRestfulController
         return new JsonModel(array('status' => 'false', 'message' =>'Some Error Occured'));
     }
     
-    /**
-     * Edit Profile Action
-     *
-     * Displays user edit profile form
-     *
-     * @return Zend\View\Model\ViewModel
-     */
-    public function editProfileAction()
-    {
-        if(!$user = $this->identity()) {
-            return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
-        }
-        
-        $form = $this->getUserFormHelper()->createUserForm($user, 'EditProfile');
-        $email = $user->getEmail();
-        $username = $user->getUsername();
-        $message = null;    
-        if($this->getRequest()->isPost()) {
-            $currentFirstName = $user->getFirstName();
-            $currentLastName = $user->getLastName();
-            $form->setValidationGroup('firstName', 'lastName', 'language', 'csrf');
-            $form->setData($this->getRequest()->getPost());
-            if($form->isValid()) {
-                $firstName = $this->params()->fromPost('firstName');
-                $lastName = $this->params()->fromPost('lastName');
-                $user->setFirstName($firstName);
-                $user->setLastName($lastName);    
-                $entityManager = $this->getEntityManager();
-                $entityManager->persist($user);
-                $entityManager->flush();    
-                $message =  $this->getTranslatorHelper()->translate('Your profile has been edited');
-            }
-        }
-    
-        return new ViewModel(array(
-            'form' => $form,
-            'email' => $email,
-            'username' => $username,
-            'securityQuestion' => $user->getQuestion()->getQuestion(),
-            'message' => $message,
-            'navMenu' => $this->getOptions()->getNavMenu()
-        ));
-    }
-    
-    /**
-     * Change Email Action
-     *
-     * Displays user change password form
-     *
-     * @return Zend\View\Model\ViewModel
-     */
-    public function changePasswordAction()
-    {
-        if(!$user = $this->identity()) {
-            return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
-        }
-    
-        $form = $this->getUserFormHelper()->createUserForm($user, 'ChangePassword');
-        $message = null;
-        if($this->getRequest()->isPost()) {
-            $currentAnswer = $user->getAnswer();
-            $form->setValidationGroup('password', 'newPasswordVerify', 'answer', 'csrf');
-            $form->setData($this->getRequest()->getPost());
-            if($form->isValid()) {
-                $data = $form->getData();
-                $identicalValidator = new IdenticalValidator(array('token' => $currentAnswer));
-                if($identicalValidator->isValid($data->getAnswer())) {
-                    $user->setPassword(UserCredentialsService::encryptPassword($this->params()->fromPost('password')));
-                    $entityManager = $this->getEntityManager();
-                    $entityManager->persist($user);
-                    $entityManager->flush();
-    
-                    $viewModel = new ViewModel(array('navMenu' => $this->getOptions()->getNavMenu()));
-                    $viewModel->setTemplate('csn-user/registration/change-password-success');
-                    return $viewModel;
-                } else {
-                    $message = $this->getTranslatorHelper()->translate('Your answer is wrong. Please provide the correct answer.');
-                }
-            }
-        }
-    
-        return new ViewModel(array('form' => $form, 'navMenu' => $this->getOptions()->getNavMenu(), 'message' => $message, 'question' => $user->getQuestion()->getQuestion()));
-    }
-    
-    /**
-     * Reset Password Action
-     *
-     * Send email reset link to user
-     *
-     * @return Zend\View\Model\ViewModel
-     */
-    public function resetPasswordAction()
-    {
-        if($user = $this->identity()) {
-            return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
-        }
-    
-        $user = new User;
-        $form = $this->getUserFormHelper()->createUserForm($user, 'ResetPassword');
-        $message = null;
-        if($this->getRequest()->isPost()) {
-            $form->setValidationGroup('csrf', 'captcha');
-            $form->setData($this->getRequest()->getPost());
-            if($form->isValid()) {
-                $data = $form->getData();
-                $usernameOrEmail = $this->params()->fromPost('usernameOrEmail');
-                $entityManager = $this->getEntityManager();
-                $user = $entityManager->createQuery("SELECT u FROM CsnUser\Entity\User u WHERE u.email = '$usernameOrEmail' OR u.username = '$usernameOrEmail'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-                $user = $user[0];
-    
-                if(isset($user)) {
-                    try {
-                        $user->setRegistrationToken(md5(uniqid(mt_rand(), true)));
-                        $fullLink = $this->getBaseUrl() . $this->url()->fromRoute('user-register', array( 'action' => 'confirm-email-change-password', 'id' => $user->getRegistrationToken()));
-                        $this->sendEmail(
-                                $user->getEmail(),
-                                $this->getTranslatorHelper()->translate('Please, confirm your request to change password!'),
-                                sprintf($this->getTranslatorHelper()->translate('Hi, %s. Please, follow this link %s to confirm your request to change password.'), $user->getUsername(), $fullLink)
-                        );
-                        $entityManager->persist($user);
-                        $entityManager->flush();
-    
-                        $viewModel = new ViewModel(array(
-                            'email' => $user->getEmail(),
-                            'navMenu' => $this->getOptions()->getNavMenu()
-                        ));
-    
-                        $viewModel->setTemplate('csn-user/registration/password-change-success');
-                        return $viewModel;
-                    } catch (\Exception $e) {
-                        return $this->getServiceLocator()->get('csnuser_error_view')->createErrorView(
-                                $this->getTranslatorHelper()->translate('Something went wrong when trying to send activation email! Please, try again later.'),
-                                $e,
-                                $this->getOptions()->getDisplayExceptions(),
-                                $this->getOptions()->getNavMenu()
-                        );
-                    }
-                } else {
-                    $message = 'The username or email is not valid!';
-                }
-            }
-        }
-    
-        return new ViewModel(array('form' => $form, 'navMenu' => $this->getOptions()->getNavMenu(), 'message' => $message));
-    }
-    
-    /**
-     * Change Email Action
-     *
-     * Displays user change email form
-     *
-     * @return Zend\View\Model\ViewModel
-     */
-    public function changeEmailAction()
-    {
-        if(!$user = $this->identity()) {
-            return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
-        }
-
-        $form = $this->getUserFormHelper()->createUserForm($user, 'ChangeEmail');
-        $message = null;        
-        if($this->getRequest()->isPost()) {
-            $currentPassword = $user->getPassword();
-            $form->setValidationGroup('password', 'newEmail', 'newEmailVerify', 'csrf');
-            $form->setData($this->getRequest()->getPost());
-            if($form->isValid()) {
-                $data = $form->getData();
-                $user->setPassword($currentPassword);
-                if(UserCredentialsService::verifyHashedPassword($user, $this->params()->fromPost('password'))) {
-                    $newMail = $this->params()->fromPost('newEmail');
-                    $email = $user->setEmail($newMail);
-                    $entityManager = $this->getEntityManager();
-                    $entityManager->persist($user);
-                    $entityManager->flush();
-                    
-                    $viewModel = new ViewModel(array(
-                        'email' => $newMail,
-                        'navMenu' => $this->getOptions()->getNavMenu()
-                    ));
-                    $viewModel->setTemplate('csn-user/registration/change-email-success');
-                    return $viewModel;
-                } else {
-                    $message = $this->getTranslatorHelper()->translate('Your current password is not correct.');
-                }
-            }
-        }
-
-        return new ViewModel(array('form' => $form, 'navMenu' => $this->getOptions()->getNavMenu(), 'message' => $message));
-    }    
-    
-    /**
-     * Change Security Question
-     *
-     * Displays user change security question form
-     *
-     * @return Zend\View\Model\ViewModel
-     */
-    public function changeSecurityQuestionAction()
-    {
-        if(!$user = $this->identity()) {
-          return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
-        }
-        
-        $form = $this->getUserFormHelper()->createUserForm($user, 'ChangeSecurityQuestion');
-        $message = null;
-        if($this->getRequest()->isPost()) {
-          $currentPassword = $user->getPassword();
-          $form->setValidationGroup('password', 'question', 'answer', 'csrf');
-          $form->setData($this->getRequest()->getPost());
-          if($form->isValid()) {
-            $data = $form->getData();
-            $user->setPassword($currentPassword);
-              
-            if(UserCredentialsService::verifyHashedPassword($user, $this->params()->fromPost('password'))) {
-              $entityManager = $this->getEntityManager();
-              $entityManager->persist($user);
-              $entityManager->flush();     
-               
-              $viewModel = new ViewModel(array('navMenu' => $this->getOptions()->getNavMenu()));
-              $viewModel->setTemplate('csn-user/registration/change-security-question-success');
-              return $viewModel;
-            } else {
-              $message = $this->getTranslatorHelper()->translate('Your password is wrong. Please provide the correct password.');
-            }
-          }
-        }
-      
-        return new ViewModel(array('form' => $form, 'navMenu' => $this->getOptions()->getNavMenu(), 'message' => $message, 'questionSelectedId' => $user->getQuestion()->getId()));
-    }
-    
-    /**
-     * Confirm Email Action
-     *
-     * Checks for email validation through given token
-     *
-     * @return Zend\View\Model\ViewModel
-     */
-    public function confirmEmailAction()
-    {
-        $token = $this->params()->fromRoute('id');
-        try {
-            $entityManager = $this->getEntityManager();
-            if($token !== '' && $user = $entityManager->getRepository('CsnUser\Entity\User')->findOneBy(array('registrationToken' => $token))) {
-                $user->setRegistrationToken(md5(uniqid(mt_rand(), true)));
-                $user->setState($entityManager->find('CsnUser\Entity\State', 2));
-                $user->setEmailConfirmed(1);
-                $entityManager->persist($user);
-                $entityManager->flush();
-                
-                $viewModel = new ViewModel(array(
-                    'navMenu' => $this->getOptions()->getNavMenu(),
-                ));
-                $viewModel->setTemplate('csn-user/registration/confirm-email-success');
-                return $viewModel;                        
-            } else {
-                return $this->redirect()->toRoute('user-index', array('action' => 'login'));
-            }
-        } catch (\Exception $e) {
-            return $this->getServiceLocator()->get('csnuser_error_view')->createErrorView(
-                $this->getTranslatorHelper()->translate('Something went wrong during the activation of your account! Please, try again later.'),
-                $e,
-                $this->getOptions()->getDisplayExceptions(),
-                $this->getOptions()->getNavMenu()
-            );
-        }
-    }
-    
-    /**
-     * Confirm Email Change Action
-     *
-     * Confirms password change through given token
-     *
-     * @return Zend\View\Model\ViewModel
-     */
-    public function confirmEmailChangePasswordAction()
-    {
-      $token = $this->params()->fromRoute('id');
-      try {
-        $entityManager = $this->getEntityManager();
-        if($token !== '' && $user = $entityManager->getRepository('CsnUser\Entity\User')->findOneBy(array('registrationToken' => $token))) {
-          $user->setRegistrationToken(md5(uniqid(mt_rand(), true)));
-          $password = $this->generatePassword();
-          $user->setPassword(UserCredentialsService::encryptPassword($password));
-          $email = $user->getEmail();
-          $fullLink = $this->getBaseUrl() . $this->url()->fromRoute('user-index', array( 'action' => 'login'));
-          $this->sendEmail(
-              $user->getEmail(),
-              'Your password has been changed!',
-              sprintf($this->getTranslatorHelper()->translate('Hello again %s. Your new password is: %s. Please, follow this link %s to log in with your new password.'), $user->getUsername(), $password, $fullLink)
-              
-          );          
-          $entityManager->persist($user);
-          $entityManager->flush();
-    
-          $viewModel = new ViewModel(array(
-              'email' => $email,
-              'navMenu' => $this->getOptions()->getNavMenu()
-          ));
-          return $viewModel;
-        } else {
-          return $this->redirect()->toRoute('user-index');
-        }
-      } catch (\Exception $e) {
-        return $this->getServiceLocator()->get('csnuser_error_view')->createErrorView(
-            $this->getTranslatorHelper()->translate('An error occured during the confirmation of your password change! Please, try again later.'),
-            $e,
-            $this->getOptions()->getDisplayExceptions(),
-            $this->getOptions()->getNavMenu()
-        );
-      }
-    }
 
     /**
      * Generate Password
