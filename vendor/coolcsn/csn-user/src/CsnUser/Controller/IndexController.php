@@ -91,6 +91,7 @@ class IndexController extends AbstractRestfulController
 
     public function create($data)
     {
+
         $user = new Customer;
         $form = $this->getUserFormHelper()->createUserForm($user, 'login');
         $messages = null;

@@ -35,7 +35,7 @@ function LoginController($scope, $element, $http, $timeout, $location, $cookies)
             } 
             $http({
                 method: 'post',
-                url: "/Cap/public/user",
+                url: "/user",
                 data: angular.toJson(params),
                 headers: {
                     'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ function ForgotPasswordController($scope, $element, $http, $timeout, $location)
             } 
             $http({
                 method: 'post',
-                url: "/Cap/public/user/register",
+                url: "/user/register",
                 data: angular.toJson(params),
                 headers: {
                     'Content-Type': 'application/json'
@@ -123,7 +123,7 @@ function ForgotPasswordController($scope, $element, $http, $timeout, $location)
             } 
             $http({
                 method: 'post',
-                url: "/Cap/public/user/passwordreset",
+                url: "/user/passwordreset",
                 data: angular.toJson(params),
                 headers: {
                     'Content-Type': 'application/json'
@@ -199,7 +199,7 @@ function CreateAccountController($scope, $element, $http, $timeout, $location, $
             } 
             $http({
                 method: 'post',
-                url: "/Cap/public/user/create",
+                url: "/user/create",
                 data: angular.toJson(params),
                 headers: {
                     'Content-Type': 'application/json'
