@@ -216,7 +216,7 @@ CREATE TABLE `customer` (
   CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `domain` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `customer_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `customer_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +225,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (4,'ansal@technomics.com',0,1,NULL,NULL,'e10adc3949ba59abbe56e057f20f883e',1,NULL,'2014-06-02 16:49:40','2014-06-02 11:19:40');
+INSERT INTO `customer` VALUES (4,'hafsalmetvr@gmail.com',0,4,'Ansal',NULL,'$2y$10$z6wsovhbX85AaJP2rICAHeRsH24DD6gpedroh8Dj2ao5GAN6X4vXa',1,'5396e1cb432e705567b3d6a4f87316cf','2014-06-02 16:49:40','2014-06-16 18:56:08'),(10,'',3,5,NULL,NULL,NULL,1,NULL,'2014-06-10 21:48:43','2014-06-10 16:18:43'),(11,'ansalee',3,5,NULL,NULL,NULL,1,NULL,'2014-06-10 22:19:10','2014-06-10 18:24:37'),(12,'ansal',3,5,'Ansal',NULL,'$2y$10$OUN4CV4NdJAVtlSCJCQVse72ZtG/VZrPLjIN0SciXx9zmo/nfrxHm',1,'dc02085fab40ba7e14efcc1e26e76330','2014-06-10 22:25:58','2014-06-10 18:23:03'),(13,'ansal@technomicsr.com',3,5,'Ansal',NULL,'$2y$10$Oa2yz9ZpfM2uiSnb7/Oqu.PggtNu3CHMO3Dnr5dRTjyjDCydh5MMq',1,'025681da6b39235a28a7bfdefcdfbb72','2014-06-10 23:48:11','2014-06-10 18:18:11'),(14,'ansal@technomics.com',3,5,'Ansal',NULL,'$2y$10$AWz7TmsFc7YaEFqudEFWou9g6T4BraPDksXo56xBurET/mQoLawQK',1,'61329ea7aa56dc2926f5b8ab8f90bb1b','2014-06-10 23:53:11','2014-06-10 18:23:11'),(16,'ansalcemtrrrrr@gmail.com',3,5,'Ansal',NULL,'$2y$10$K2oVVLjbsTub5RYUQI4/eutUVGTn3taC0kNx.pDDeUcM1yz.yUctK',1,'f015a84b5e03a33217c61ba7cac6b2f3','2014-06-11 00:20:19','2014-06-10 18:50:19'),(17,'dfsdfcda@dsds.fsfs',3,5,'reara',NULL,'$2y$10$.xzhUuvf9WneAL93elEo5unZmHsHUmWXB/sOqTkdoVYN2sF25TNXK',1,'118330bea87bf14e336a6a78c34b7b94','2014-06-11 00:27:11','2014-06-10 18:57:11'),(18,'sdfsdfs@sffgsdfsd.sdfsf',3,5,'edfaefd',NULL,'$2y$10$hkSnY4Shw5ePC.uaMKX0C.H.wjCUd.THl.oslaCnpn3abI5XkXtXq',1,'fb26926b1671c64728808761a8f6d460','2014-06-11 01:05:46','2014-06-10 19:35:46'),(19,'sdfsdfsdfd@sffgsdfsd.sdfsf',3,5,'edfaefd',NULL,'$2y$10$nUZg9tqyRmp.GuznOlvtyuDmSz4Y3V1eX34Oe1PuUOK9UyKeYGPBG',1,'4c509acdb0a9c52499552bbdbe4f0272','2014-06-11 01:06:03','2014-06-10 19:36:03'),(20,'ansalcem@gmail.com',3,5,'efesaf',NULL,'$2y$10$7dPYhK/43ZsJ5LkmxM3.We49PKLm.zzVHyF96czAZIHr1RojUuJFG',1,'b2e36cd5b23efbefb24ba660332ee0ac','2014-06-11 01:44:24','2014-06-10 20:14:46');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -771,7 +771,7 @@ CREATE TABLE `domain` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `domain_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -780,6 +780,7 @@ CREATE TABLE `domain` (
 
 LOCK TABLES `domain` WRITE;
 /*!40000 ALTER TABLE `domain` DISABLE KEYS */;
+INSERT INTO `domain` VALUES (3,'technomics.com',1,'2014-06-10 21:20:34','2014-06-10 15:50:34');
 /*!40000 ALTER TABLE `domain` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -811,7 +812,7 @@ CREATE TABLE `organization` (
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -820,6 +821,7 @@ CREATE TABLE `organization` (
 
 LOCK TABLES `organization` WRITE;
 /*!40000 ALTER TABLE `organization` DISABLE KEYS */;
+INSERT INTO `organization` VALUES (1,'technomics.com','2014-06-10 21:20:15','2014-06-10 15:50:15'),(2,'Technomics','2014-06-16 00:55:45','2014-06-15 19:25:45');
 /*!40000 ALTER TABLE `organization` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -859,7 +861,7 @@ CREATE TABLE `question` (
   KEY `section_id` (`section_id`),
   CONSTRAINT `question_ibfk_1` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE,
   CONSTRAINT `question_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `section` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -868,6 +870,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
+INSERT INTO `question` VALUES (1,1,'What is perl',1,1,1,'2014-06-16 21:44:21','2014-06-16 16:14:21'),(2,1,'What is php',1,2,1,'2014-06-16 21:44:33','2014-06-16 16:27:36'),(3,1,'What is python',1,2,2,'2014-06-16 21:44:36','2014-06-16 16:27:48'),(4,1,'What is java',3,2,1,'2014-06-16 21:44:47','2014-06-16 16:27:59');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -903,7 +906,7 @@ CREATE TABLE `questionnaire` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `questionnaire_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -912,6 +915,7 @@ CREATE TABLE `questionnaire` (
 
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
+INSERT INTO `questionnaire` VALUES (1,'Test','',1,'2014-06-16 01:01:44','2014-06-15 19:31:44'),(2,'Test2','',1,'2014-06-16 20:48:59','2014-06-16 15:18:59'),(3,'Test3','',1,'2014-06-16 20:49:05','2014-06-16 15:19:05'),(4,'Test4','',1,'2014-06-16 20:49:09','2014-06-16 15:19:09');
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1018,6 +1022,47 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `reminder_frequency`
+--
+
+DROP TABLE IF EXISTS `reminder_frequency`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reminder_frequency` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `frequency` enum('DAILY','WEEKLY','MONTHLY','QUARTERLY') DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reminder_frequency`
+--
+
+LOCK TABLES `reminder_frequency` WRITE;
+/*!40000 ALTER TABLE `reminder_frequency` DISABLE KEYS */;
+INSERT INTO `reminder_frequency` VALUES (1,'WEEKLY','2014-06-18 21:38:31','2014-06-18 19:57:05');
+/*!40000 ALTER TABLE `reminder_frequency` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER reminder_frequency_created BEFORE INSERT ON reminder_frequency FOR EACH ROW SET new.created = now() */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
 -- Table structure for table `role`
 --
 
@@ -1034,7 +1079,7 @@ CREATE TABLE `role` (
   PRIMARY KEY (`id`),
   KEY `domain_id` (`domain_id`),
   CONSTRAINT `role_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `domain` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1043,6 +1088,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (4,'Admin',0,3,'2014-06-10 21:22:11','2014-06-10 15:52:11'),(5,'Mentor',0,3,'2014-06-10 21:22:37','2014-06-10 15:52:37'),(6,'Mentee',0,3,'2014-06-10 21:22:51','2014-06-10 15:52:51');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1080,7 +1126,7 @@ CREATE TABLE `section` (
   PRIMARY KEY (`id`),
   KEY `questionnaire_id` (`questionnaire_id`),
   CONSTRAINT `section_ibfk_1` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1089,6 +1135,7 @@ CREATE TABLE `section` (
 
 LOCK TABLES `section` WRITE;
 /*!40000 ALTER TABLE `section` DISABLE KEYS */;
+INSERT INTO `section` VALUES (1,1,'section1','',0,2,'2014-06-16 21:41:53','2014-06-16 16:11:53'),(2,1,'section2','',0,2,'2014-06-16 21:42:01','2014-06-16 16:12:01');
 /*!40000 ALTER TABLE `section` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1180,4 +1227,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-03  1:54:36
+-- Dump completed on 2014-06-19  1:40:10

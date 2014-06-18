@@ -85,8 +85,12 @@ class IndexController extends AbstractRestfulController
              return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
      
          }
-       
-       return new ViewModel();
+
+      $this->layout('layout/dashboard');
+      $viewModel  =  new ViewModel(array('name' => $user->getFirstName()));
+
+     return $viewModel;
+   
     } 
 
     public function create($data)

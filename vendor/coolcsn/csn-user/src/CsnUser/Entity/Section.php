@@ -5,12 +5,12 @@ namespace CsnUser\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Question
+ * Section
  *
- * @ORM\Table(name="question", indexes={@ORM\Index(name="questionnaire_id", columns={"questionnaire_id"}), @ORM\Index(name="section_id", columns={"section_id"})})
+ * @ORM\Table(name="section", indexes={@ORM\Index(name="questionnaire_id", columns={"questionnaire_id"})})
  * @ORM\Entity
  */
-class Question
+class Section
 {
     /**
      * @var integer
@@ -24,23 +24,30 @@ class Question
     /**
      * @var integer
      *
-     * @ORM\Column(name="question_number", type="integer", nullable=false)
+     * @ORM\Column(name="section_number", type="integer", nullable=false)
      */
-    private $questionNumber;
+    private $sectionNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="question_text", type="text", nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $questionText;
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=false)
+     */
+    private $description;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="question_order", type="integer", nullable=false)
+     * @ORM\Column(name="section_order", type="integer", nullable=false)
      */
-    private $questionOrder = '0';
+    private $sectionOrder = '0';
 
     /**
      * @var \DateTime
@@ -65,16 +72,6 @@ class Question
      * })
      */
     private $questionnaire;
-
-    /**
-     * @var \CsnUser\Entity\Section
-     *
-     * @ORM\ManyToOne(targetEntity="CsnUser\Entity\Section")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="section_id", referencedColumnName="id")
-     * })
-     */
-    private $section;
 
 
 }

@@ -17,12 +17,12 @@ return array(
 		'transport' => array(
 			'options' => array(
 				#'host' => 'localhost',
-				'host' => 'smtp.gmail.com',
+				'host' => 'smtp.sendgrid.net',
 				'connection_class'  => 'plain',
-				//'port' => '2525',
+				'port' => '25',
 				'connection_config' => array(
-					'username' => '',
-					'password' => '',
+					'username' => 'eightyco',
+					'password' => 'sendgrid3ightyc0',
 					'ssl' => 'tls'
 				),
 			),  

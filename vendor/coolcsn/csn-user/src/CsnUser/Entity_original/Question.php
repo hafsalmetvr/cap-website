@@ -1,6 +1,6 @@
 <?php
 
-namespace CsnUser\Entity;
+namespace cool-csn\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -57,9 +57,9 @@ class Question
     private $modified = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \CsnUser\Entity\Questionnaire
+     * @var \cool-csn\Entity\Questionnaire
      *
-     * @ORM\ManyToOne(targetEntity="CsnUser\Entity\Questionnaire")
+     * @ORM\ManyToOne(targetEntity="cool-csn\Entity\Questionnaire")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="questionnaire_id", referencedColumnName="id")
      * })
@@ -67,9 +67,9 @@ class Question
     private $questionnaire;
 
     /**
-     * @var \CsnUser\Entity\Section
+     * @var \cool-csn\Entity\Section
      *
-     * @ORM\ManyToOne(targetEntity="CsnUser\Entity\Section")
+     * @ORM\ManyToOne(targetEntity="cool-csn\Entity\Section")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="section_id", referencedColumnName="id")
      * })

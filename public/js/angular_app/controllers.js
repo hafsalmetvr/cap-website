@@ -147,15 +147,135 @@ function ForgotPasswordController($scope, $element, $http, $timeout, $location)
 }
 
 
-
 function DashboardController($scope, $element, $http, $timeout, $location, $cookies)
 {
     $scope.init = function(){
         $scope.user_id = $cookies.user_id;
         $scope.role_id = $cookies.role_id;
         console.log($scope.user_id, $scope.role_id);
+        $scope.role_id = 1;
+        if($scope.role_id == 1){
+            $scope.user_type = "Administrator";
+        } else if($scope.role_id == 2){
+            $scope.user_type = "Mentor";
+        } else {
+            $scope.user_type = "Mentee";
+        }
+        $scope.get_questionairs();
+    }
+    $scope.get_questionairs = function(){
+        $http.get("/user/saqlist").success(function(data)
+        {
+            $scope.questionairs = data.data;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+    $scope.show_menu = function(){
+        $('#menu').css('display', 'block');
+    }
+    $scope.hide_menu = function(){
+        $('#menu').css('display', 'none');
+    }
+        $scope.paginate_questionairs = function(){
+        $scope.current_ques_page = 1;
+        $scope.que_pages = $scope.ques_list.length / $scope.ques_page_interval;
+        if($scope.qes_pages > parseInt($scope.qes_pages))
+            $scope.qes_pages = parseInt($scope.qes_pages) + 1;
+        $scope.visible_qes_list = $scope.qes_list.slice(0, $scope.qes_page_interval);
+    }
+
+    $scope.select_ques_page = function(ques_page) {
+        var last_ques_page = ques_page - 1;
+        var start = (last_ques_page * $scope.ques_page_interval) + 1;
+        var end = $scope.ques_page_interval * ques_page;
+        $scope.current_ques_page = ques_page;
+        $scope.visible_ques_list = $scope.ques_list.slice(start, end);
     }
 }
+
+function QuestionairController($scope, $element, $http, $timeout, $location, $cookies)
+{
+    $scope.init = function(questionair_id){
+        $scope.user_id = $cookies.user_id;
+        $scope.role_id = $cookies.role_id;
+        $scope.questionair_id = questionair_id;
+        $scope.role_id = 1;
+        if($scope.role_id == 1){
+            $scope.user_type = "Administrator";
+        } else if($scope.role_id == 2){
+            $scope.user_type = "Mentor";
+        } else {
+            $scope.user_type = "Mentee";
+        }
+        $scope.get_questions();
+    }
+    $scope.get_questions = function(){
+        $http.get("/user/saqlist/"+$scope.questionair_id).success(function(data)
+        {
+            $scope.questions = data.data;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+    $scope.show_menu = function(){
+        $('#menu').css('display', 'block');
+    }
+    $scope.hide_menu = function(){
+        $('#menu').css('display', 'none');
+    }
+    
+}
+
+function SettingsController($scope, $element, $http, $timeout, $location, $cookies)
+{
+    $scope.init = function(){
+        $scope.user_id = $cookies.user_id;
+        $scope.role_id = $cookies.role_id;
+        $scope.reminder_interval = '';
+       
+    }
+    $scope.validate_form = function(){
+        if($scope.reminder_interval == ''){
+            $scope.msg = "Please Select Reminder Interval";
+            return false;
+        } else {
+            return true;
+        }
+    }
+    $scope.save_settings = function(){
+        if($scope.validate_form()){
+            params = { 
+                'reminder_interval': $scope.reminder_interval,
+            } 
+            $http({
+                method: 'post',
+                url: "/user/reminderfrequency",
+                data: angular.toJson(params),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).success(function(data, status) {
+                if(data.status == "success"){
+                    $scope.msg = "Settings Saved Successfully";
+                } else {
+                    $scope.msg = "Some error occured";
+                }
+            }).error(function(data, success){
+            });
+        }
+    }
+    $scope.show_menu = function(){
+        $('#menu').css('display', 'block');
+    }
+    $scope.hide_menu = function(){
+        $('#menu').css('display', 'none');
+    }
+}
+
+
 
 function CreateAccountController($scope, $element, $http, $timeout, $location, $cookies)
 {

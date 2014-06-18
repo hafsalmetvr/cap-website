@@ -49,13 +49,13 @@ div.container a.brand {
   min-height: 400px;
 }
 .container_header {
-  width: 100%;
-  background-color: #333333;
-  color: #FFFFFF;
-  font-weight: bold;
-  height: 80px;
-  padding: 30px 0px 0px 20px;
-  font-size: 20px;
+    background-color: #333333;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    height: 60px;
+    padding: 15px 0 0 20px;
+    width: 100%;
 }
 
 .login_box {
@@ -190,3 +190,62 @@ div.container a.brand {
 .create_account .error_msg {
   width: 75%;
 }
+
+/************* Dashboard Styles ***********/
+
+.header_right {
+  width: 25%;
+  float: right;
+  position: relative;
+}
+
+.menu_icon {
+    background: url('../img/settings.png') no-repeat;
+    display: block;
+    float: right;
+    height: 38px;
+    margin-top: -34px;
+    padding-top: 15px;
+    text-decoration: none;
+    text-indent: -9999;
+    width: 37px;
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  list-style: none;
+  right: 0px;
+  background-color: #B3B3B3;
+  top: 33px;  
+}
+
+.menu a, .menu a:hover {
+  color: #000000;
+  font-weight: normal;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.table_container {
+  width: 100%;
+  padding: 50px;
+}
+
+.table th {
+  background-color: #333333;
+}
+.even {
+  background-color: #F2F2F2;
+}
+
+.view_button {
+  color: #FFFFFF;
+  width: 86px;
+  height: 41px;
+  background-color: #0066FF;
+  display: block;
+  text-align: center;
+  padding-top: 10px;
+}
+/************* Dashboard Styles end **********/

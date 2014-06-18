@@ -19,6 +19,8 @@ return array(
             'CsnUser\Controller\Registration' => 'CsnUser\Controller\RegistrationController',
             'CsnUser\Controller\Resetpassword' => 'CsnUser\Controller\ResetpasswordController',
             'CsnUser\Controller\Createaccount' => 'CsnUser\Controller\CreateaccountController',
+            'CsnUser\Controller\Saqlist' => 'CsnUser\Controller\SaqlistController',
+            'CsnUser\Controller\Reminderfrequency' => 'CsnUser\Controller\ReminderfrequencyController',
         ),
     ),
     'router' => array(
@@ -83,11 +85,48 @@ return array(
                 ),
                 'may_terminate' => true,
             ),
+             'saq-list' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/user/saqlist[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CsnUser\Controller\Saqlist',
+                        #'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+
+            'reminder-frequency' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/user/reminderfrequency[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CsnUser\Controller\Reminderfrequency',
+                        #'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
         ),
     ),
     'view_manager' => array(
          'strategies' => array(
             'ViewJsonStrategy',
+         ),
+
+        'template_map' => array(
+        'layout/settings' => __DIR__ . '/../view/csn-user/layout/settings.phtml',
+        'layout/dashboard' => __DIR__ . '/../view/csn-user/layout/dashboard.phtml',
+        'layout/saq' => __DIR__ . '/../view/csn-user/layout/saq.phtml'
          ),
 
         'display_exceptions' => true,
