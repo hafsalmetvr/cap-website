@@ -1,7 +1,7 @@
 <?php
 /**
  * CsnUser - Coolcsn Zend Framework 2 User Module
- * 
+ *
  * @link https://github.com/coolcsn/CsnUser for the canonical source repository
  * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
  * @license https://github.com/coolcsn/CsnUser/blob/master/LICENSE BSDLicense
@@ -11,12 +11,12 @@
  * @author Stoyan Revov <st.revov@gmail.com>
  * @author Martin Briglia <martin@mgscreativa.com>
  */
- 
+
 namespace CsnUser\Service;
- 
+
 use Zend\Crypt\Password\Bcrypt;
 use CsnUser\Entity\Customer;
- 
+
 class UserService
 {
     /**
@@ -31,7 +31,7 @@ class UserService
         $bcrypt = new Bcrypt(array('cost' => 10));
         return $bcrypt->verify($passwordGiven, $user->getPassword());
     }
-    
+
     /**
      * Encrypt Password
      *
