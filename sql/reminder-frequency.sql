@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS `reminder_frequency`;
-CREATE TABLE `answer` (
+CREATE TABLE `reminder_frequency` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `frequency` enum('DAILY','WEEKLY','MONTHLY','QUARTERLY'),
   `created` datetime NOT NULL,
