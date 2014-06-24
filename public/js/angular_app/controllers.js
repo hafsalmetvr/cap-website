@@ -149,19 +149,23 @@ function ForgotPasswordController($scope, $element, $http, $timeout, $location)
 
 function DashboardController($scope, $element, $http, $timeout, $location, $cookies)
 {
-    $scope.init = function(){
-        $scope.user_id = $cookies.user_id;
-        $scope.role_id = $cookies.role_id;
-        console.log($scope.user_id, $scope.role_id);
-        $scope.role_id = 1;
-        if($scope.role_id == 1){
+    $scope.init = function(user,role){
+        $scope.user_id = user;
+        $scope.role_id = role;
+        console.log(user);
+        if($scope.role_id == 4){
+
             $scope.user_type = "Administrator";
-        } else if($scope.role_id == 2){
+            $scope.get_questionairs();
+            $scope.get_mentors();
+            $scope.get_mentees();
+        } else if($scope.role_id == 5){
             $scope.user_type = "Mentor";
+            $scope.get_mentor_mentees();
         } else {
             $scope.user_type = "Mentee";
         }
-        $scope.get_questionairs();
+        
     }
     $scope.get_questionairs = function(){
         $http.get("/user/saqlist").success(function(data)
@@ -171,7 +175,7 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         {
             console.log(data || "Request failed");
         });
-    }
+    }    
     $scope.show_menu = function(){
         $('#menu').css('display', 'block');
     }
@@ -192,6 +196,161 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         var end = $scope.ques_page_interval * ques_page;
         $scope.current_ques_page = ques_page;
         $scope.visible_ques_list = $scope.ques_list.slice(start, end);
+    }
+    
+    $scope.get_mentors = function(){
+        $http.get("/user/adminmentor").success(function(data)
+        {
+            $scope.mentors = data.data;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+   
+    $scope.activate = function(mentor){
+
+        params = {
+
+            'mentor_id': mentor.id,
+
+            'new_status': 1
+
+        }
+
+        $http({
+
+            method: 'post',
+
+            url: "/user/adminmentor",
+
+            data: $.param(params),
+
+            headers: {
+
+                'Content-Type': 'application/x-www-form-urlencoded'
+
+            }
+
+        }).success(function(data, status) {
+
+            mentor.status = 'ACTIVE';
+
+        }).error(function(data, success){
+
+            
+
+        }); 
+
+    }
+
+    $scope.de_activate = function(mentor){
+
+        params = {
+
+            'mentor_id': mentor.id,
+
+            'new_status': 2
+
+        }
+
+        $http({
+
+            method: 'post',
+
+            url: "/user/adminmentor",
+
+            data: $.param(params),
+
+            headers: {
+
+                'Content-Type': 'application/x-www-form-urlencoded'
+
+            }
+
+        }).success(function(data, status) {
+
+            mentor.status = 'INACTIVE';
+
+        }).error(function(data, success){
+
+            
+
+        }); 
+
+    }
+
+    $scope.get_mentor_mentees = function(){
+        $http.get("/user/mentees").success(function(data)
+        {
+            $scope.mentees = data.data;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+    $scope.get_mentees = function(){
+        $http.get("/user/mentees").success(function(data)
+        {
+            $scope.mentees = data.data;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+    $scope.assign = function(mentee){
+        $http.get("/user/mentees/assign/"+mentee.id+"/").success(function(data)
+        {
+            $scope.mentee.status = 'Assigned';
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+    $scope.reassign = function(mentor){
+        $http.get("/user/mentees/reassign/"+mentee.id+"/").success(function(data)
+        {
+            $scope.mentee.status = 'Unassigned';
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+
+}
+
+function MentorMenteeController($scope, $element, $http, $timeout, $location, $cookies)
+{
+    $scope.init = function(mentor_id){
+        $scope.mentor_id = mentor_id
+        $scope.user_type = "Administrator";
+        $scope.get_mentor_mentees();
+    }
+
+     $scope.get_mentor_mentees = function(){
+        $http.get("/user/adminmentor/"+$scope.mentor_id).success(function(data)
+        {
+            $scope.mentees = data.data;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+    
+    $scope.delete_mentor_mentees = function(mentee){
+
+        $http.delete("/user/adminmentor/"+mentee.id).success(function(data)
+
+        {
+
+            $scope.get_mentor_mentees();
+
+        }).error(function(data, status)
+
+        {
+             console.log(data || "Request failed");
+
+        });
     }
 }
 

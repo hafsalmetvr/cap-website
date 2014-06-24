@@ -87,7 +87,11 @@ class IndexController extends AbstractRestfulController
          }
 
       $this->layout('layout/dashboard');
-      $viewModel  =  new ViewModel(array('name' => $user->getFirstName()));
+      $viewModel  =  new ViewModel(array('user'=> $user->getId() ,'role' => $user->getRoleid()));
+    
+      $menuview = new ViewModel(array('name' => $user->getFirstName()));
+      $menuview->setTemplate('layout/menu');
+      $viewModel->addChild($menuview, 'menuview');
 
      return $viewModel;
    
@@ -97,7 +101,7 @@ class IndexController extends AbstractRestfulController
     {
 
         $user = new Customer;
-        $form = $this->getUserFormHelper()->createUserForm($user, 'login');
+        #$form = $this->getUserFormHelper()->createUserForm($user, 'login');
         $messages = null;
         if ($this->getRequest()->isPost()) {
                 $authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');

@@ -21,6 +21,7 @@ return array(
             'CsnUser\Controller\Createaccount' => 'CsnUser\Controller\CreateaccountController',
             'CsnUser\Controller\Saqlist' => 'CsnUser\Controller\SaqlistController',
             'CsnUser\Controller\Reminderfrequency' => 'CsnUser\Controller\ReminderfrequencyController',
+            'CsnUser\Controller\AdminMentor' => 'CsnUser\Controller\AdminMentorController', 
         ),
     ),
     'router' => array(
@@ -116,6 +117,21 @@ return array(
                 ),
                 'may_terminate' => true,
             ),
+            'adminmentor' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/user/adminmentor[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CsnUser\Controller\AdminMentor',
+                        #'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
         ),
     ),
     'view_manager' => array(
@@ -126,7 +142,9 @@ return array(
         'template_map' => array(
         'layout/settings' => __DIR__ . '/../view/csn-user/layout/settings.phtml',
         'layout/dashboard' => __DIR__ . '/../view/csn-user/layout/dashboard.phtml',
-        'layout/saq' => __DIR__ . '/../view/csn-user/layout/saq.phtml'
+        'layout/saq' => __DIR__ . '/../view/csn-user/layout/saq.phtml',
+        'layout/mentormentee' => __DIR__ . '/../view/csn-user/layout/mentor.phtml',
+        'layout/menu' => __DIR__ . '/../view/csn-user/layout/menu.phtml' 
          ),
 
         'display_exceptions' => true,

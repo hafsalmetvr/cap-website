@@ -58,8 +58,20 @@ class CreateaccountController extends AbstractRestfulController
 
     public function createAccountAction()
     {
+ 
+        if(!$user = $this->identity()) {
 
-        return new ViewModel();
+            return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
+        }
+
+        $this->layout('layout/dashboard'); 
+        $viewModel =  new ViewModel();
+        
+        $menuview = new ViewModel(array('name' => $user->getFirstName()));
+        $menuview->setTemplate('layout/menu');
+        $viewModel->addChild($menuview, 'menuview');
+
+        return $viewModel;
 
     }
 
@@ -98,7 +110,7 @@ class CreateaccountController extends AbstractRestfulController
     		            sprintf($this->getTranslatorHelper()->translate('Please, click the link to confirm your registration => %s'), $fullLink)
     		        );
     		        $entityManager->persist($user);
-                    $entityManager->flush();
+                        $entityManager->flush();
                     
                      return new JsonModel(array('status' => 'true', 'message' => 'An email has been sent to user')); 
     		    } catch (\Exception $e) {

@@ -248,4 +248,40 @@ div.container a.brand {
   text-align: center;
   padding-top: 10px;
 }
+.view_button {
+  color: #FFFFFF;
+  width: 86px;
+  height: 41px;
+  background-color: #0066FF;
+  display: block;
+  text-align: center;
+  padding-top: 10px;
+}
+.deactivate_button {
+  color: #FFFFFF;
+  width: 86px;
+  height: 41px;
+  background-color: #FF1D25;
+  display: block;
+  text-align: center;
+  padding-top: 10px;
+}
+.deactivate_button , .reassign_button{
+  color: #FFFFFF;
+  width: 86px;
+  height: 41px;
+  background-color: #FF1D25;
+  display: block;
+  text-align: center;
+  padding-top: 10px;
+}
+.activate_button, .assign_button {
+  color: #FFFFFF;
+  width: 86px;
+  height: 41px;
+  background-color: #7AC943;
+  display: block;
+  text-align: center;
+  padding-top: 10px;
+}
 /************* Dashboard Styles end **********/

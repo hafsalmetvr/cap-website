@@ -1,0 +1,27 @@
+<body ng-controller="MentorMenteeController" ng-init="init(<?php echo $mentor_id; ?>)" id="dashboard">
+	<div class="container_div">
+
+                   <?php  echo $this->menuview ?>
+
+                      <div class="table_container">
+				<span> Mentor Mentees </span>
+				<table class="table">
+					<tr>
+						<th> # </th>
+						<th> Name </th>
+						<th> Status </th>
+						<th> Actions </th>
+						<th> &nbsp; </th>
+					</tr>
+					<tr ng-repeat="mentee in mentees">
+						<td> [[$index]] </td>
+						<td> [[mentee.firstName]] </td>
+						<td> [[mentee.status]] </td>
+						<td> <a href="#" class="view_button"> VIEW </a> </td>
+						<td> <a href="" class="reassign_button" ng-click="delete_mentor_mentees(mentee)"> DELETE </a>						
+					</tr>
+				</table>
+			</div>				
+                   
+	</div>
+</body>		

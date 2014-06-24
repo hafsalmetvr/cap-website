@@ -70,16 +70,20 @@ class ReminderfrequencyController extends AbstractRestfulController
     public function setfrequencyAction()
     {
 
-     if (!$user = $this->identity()) {
+       if (!$user = $this->identity()) {
 
              return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
 
-     }
+       }
      
-     $this->layout('layout/settings');
-     $viewModel  =  new ViewModel();
+       $this->layout('layout/dashboard');
+       $viewModel  =  new ViewModel();
+     
+       $menuview = new ViewModel(array('name' => $user->getFirstName()));
+       $menuview->setTemplate('layout/menu');
+       $viewModel->addChild($menuview, 'menuview');
 
-     return $viewModel;
+       return $viewModel;
 
     }
 

@@ -1,11 +1,15 @@
-<div class="content" ng-controller="CreateAccountController" ng-init="init()">
+<body  ng-controller="CreateAccountController" ng-init="init()">
+     <div class="container_div">
+   
+       <?php  echo $this->menuview ?>
+
 	<h3 class="page_header_with_underline"> Create a new Account </h3>
 	<div class="create_account">
 		<p class="">
 			<label class="account_type_label"> Account Type: </label>
 			<select ng-model="account_type" class="account_type">
 				<option value="5">Mentor</option>
-				<option vlaue="6">Mentee</option>
+				<option value="6">Mentee</option>
 			</select>
 		</p>
 		<p class="p_with_background"> 
@@ -30,4 +34,6 @@
 		</p>
 		
 	</div>
-</div>
+   </div>
+</body>
+

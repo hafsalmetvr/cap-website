@@ -141,7 +141,23 @@ class Customer
      */
     protected $domain;
     
+      /**
+     * @var CsnUser\Entity\CustomerStatus
+     *
+     * @ORM\ManyToOne(targetEntity="CsnUser\Entity\CustomerStatus")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="status_id", referencedColumnName="id")
+     * })
+     */
+    private $status;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role_id", type="integer", length=255, nullable=true)
+     */
+    protected $roleid;
+ 
     public function __construct()
     {
         $this->friendsWithMe = new ArrayCollection();
@@ -318,28 +334,38 @@ class Customer
     {
         return $this->role;
     }
+  
+    /**
+     * Get roleid
+     *
+     * @return roleid
+     */
+    public function getRoleid()
+    {
+        return $this->roleid;
+    }
 
     /**
-     * Set language
+     * Set status
      *
-     * @param  Language $language
-     * @return User
+     * @param  status $status
+     * @return Customer
      */
-    public function setLanguage($language)
+    public function setStatus($status)
     {
-        $this->language = $language;
+        $this->status = $status;
 
         return $this;
     }
 
     /**
-     * Get language
+     * Get status
      *
-     * @return Language
+     * @return CustomerStatus
      */
-    public function getLanguage()
+    public function getStatus()
     {
-        return $this->language;
+        return $this->status;
     }
 
     /**
