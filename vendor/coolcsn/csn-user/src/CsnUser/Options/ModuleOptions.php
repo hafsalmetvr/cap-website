@@ -26,12 +26,12 @@ class ModuleOptions extends AbstractOptions
     /**
      * @var string
      */
-    protected $loginRedirectRoute = 'user';
+    protected $loginRedirectRoute = 'user/login';
 
     /**
      * @var string
      */
-    protected $logoutRedirectRoute = 'user';
+    protected $logoutRedirectRoute = 'user/login';
 
     /**
      * @var string

@@ -102,6 +102,7 @@ class ResetpasswordController extends AbstractRestfulController
                 if($token !== '' && $user = $entityManager->getRepository('CsnUser\Entity\Customer')->findOneBy(array('registrationToken' => $token)))                { 
                     $user->setPassword(UserCredentialsService::encryptPassword($data['new_password']));
                     $entityManager = $this->getEntityManager();
+                    $user->setRegistrationToken(md5(uniqid(mt_rand(), true)));
                     $entityManager->persist($user);
                     $entityManager->flush();
                     return new JsonModel(array('passwordreset' => 'success', 'message' => 'password successfully reset'));
