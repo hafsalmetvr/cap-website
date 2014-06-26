@@ -466,4 +466,10 @@ function CreateAccountController($scope, $element, $http, $timeout, $location, $
             });
         }
     }
+    $scope.show_menu = function(){
+        $('#menu').css('display', 'block');
+    }
+    $scope.hide_menu = function(){
+        $('#menu').css('display', 'none');
+    }
 }
