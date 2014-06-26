@@ -141,10 +141,12 @@ div.container a.brand {
   display: block;
   border-bottom: 1px dashed;
   padding-bottom: 10px;
+  font-family: 'Roboto Condensed', sans-serif !important;
 }
 
 .content {
   padding: 30px 30px 30px 40px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .create_account {
@@ -156,22 +158,28 @@ div.container a.brand {
    width: 30%;
    font-weight: normal;
 }
-.create_account .p_with_background {
-  margin: 0px 0px 10px 0px;
-  width: 100%;
+.create_account .widget_container {
+  height: 50px;
+  width: 100%;  
+  padding: 10px;
+}
+.with_bg_color {
+  background-color: #B3B3B3;
 }
 
 .create_account input[type="text"] {
-  border: 1px solid #424242;
+  border: 1px solid #B3B3B3;
   padding: 5px;
   width: 68%;
+  float: right;
 }
 .account_type {
-  width: 65%;
+  width: 68%;
   background-color: #B3B3B3;
   border: medium none;
   color: #FFFFFF;
   padding: 5px;
+  float: right;
 }
 .account_type_label {
   width: 31% !important;
@@ -204,27 +212,36 @@ div.container a.brand {
     display: block;
     float: right;
     height: 38px;
-    margin-top: -34px;
     padding-top: 15px;
     text-decoration: none;
     text-indent: -9999;
     width: 37px;
 }
-
+.menu_icon:hover {
+    background: url('../img/settings_black.png') no-repeat;
+}
 .menu {
   display: none;
   position: absolute;
   list-style: none;
   right: 0px;
   background-color: #B3B3B3;
-  top: 33px;  
+  top: 45px;  
+  padding: 10px 0px 0px 0px;
 }
 
 .menu a, .menu a:hover {
   color: #000000;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 20px;
   text-decoration: none;
+  display: block;
+  padding: 5px 5px 5px 10px;
+  width: 100%;
+}
+
+.menu a:hover { 
+  background-color: #F2F2F2;
 }
 
 .table_container {
@@ -234,6 +251,11 @@ div.container a.brand {
 
 .table th {
   background-color: #333333;
+  color: #FFFFFF;
+  vertical-align: middle !important;
+}
+.table td {
+  vertical-align: middle !important;
 }
 .even {
   background-color: #F2F2F2;
@@ -259,14 +281,14 @@ div.container a.brand {
 }
 .deactivate_button {
   color: #FFFFFF;
-  width: 86px;
+  width: 105px;
   height: 41px;
   background-color: #FF1D25;
   display: block;
   text-align: center;
   padding-top: 10px;
 }
-.deactivate_button , .reassign_button{
+.reassign_button{
   color: #FFFFFF;
   width: 86px;
   height: 41px;
@@ -283,5 +305,55 @@ div.container a.brand {
   display: block;
   text-align: center;
   padding-top: 10px;
+}
+.activate_button:hover, .assign_button:hover, .reassign_button:hover, .deactivate_button:hover {
+  text-decoration: none;
+}
+.icon_container {
+  float: right;
+  height: 63px;
+  margin-top: -18px;
+  padding: 15px 5px 0 5px;
+  width: 50px;
+}
+
+.icon_container:hover {
+  background-color: #B3B3B3;
+}
+
+.icon_container:hover .menu_icon{
+  background: url('../img/settings_black.png') no-repeat;
+}
+
+.user_details {
+  float: right;
+  padding-right: 5px;
+}
+.mentor_list_icon {
+  background: url('../img/mentors_icon.png') no-repeat;
+  width: 25px;
+  height: 23px;
+  display: block;
+  float: left;
+  margin-right: 5px;
+}
+.mentee_list_icon {
+  background: url('../img/mentees_icon.png') no-repeat;
+  width: 30px;
+  height: 30px;
+  display: block;
+  float: left;
+  margin-right: 5px;
+}
+.saq_list_icon {
+  background: url('../img/skills_icon.png') no-repeat;
+  width: 19px;
+  height: 23px;
+  display: block;
+  float: left;
+  margin-right: 5px;
+}
+.table_list_header {
+  font-size: 20px;
 }
 /************* Dashboard Styles end **********/

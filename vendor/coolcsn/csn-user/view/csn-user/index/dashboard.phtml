@@ -1,44 +1,43 @@
 <body ng-controller="DashboardController" ng-init="init('<?php echo $user; ?>', '<?php echo $role; ?>')" id="dashboard">
-          <div class="container_div">
+    <div class="container_div">
 
-               <?php  echo $this->menuview ?>
-                      <div class="table_container">
-				<span> Skill Assessment Questionaries </span>
-				<table class="table">
-					<tr>
-						<th> Name </th>
-						<th> Action </th>
-					</tr>
-					<tr ng-repeat="question in questionairs">
-						<td> [[question.name]] </td>
-						<td> <a href="/user/saqlist/saqview/[[question.id]]" class="view_button"> VIEW </a> </td>
-					</tr>
-				</table>
-			</div>			
-                        
-                        <div class="table_container">
-                                <span> Mentors </span>
-                                <table class="table">
-                                        <tr>
-                                                <th> # </th>
-                                                <th> Name </th>
-                                                <th> Status </th>
-                                                <th> Actions </th>
-                                                <th> &nbsp; </th>
-                                        </tr>
-                                        <tr ng-repeat="mentor in mentors">
-                                                <td> [[$index]] </td>
-                                                <td> [[mentor.firstName]] </td>
-                                                <td> [[mentor.status]] </td>
-                                                <td><a href="#" ng-click="activate(mentor)" class="activate_button" ng-hide="mentor.status == 'ACTIVE'" ng-show="mentor.status == 'INACTIVE'"> ACTIVATE </a>
-
- <a href="#" ng-click="de_activate(mentor)" class="deactivate_button" ng-show="mentor.status == 'ACTIVE'" ng-hide="mentor.status == 'INACTIVE'"> DEACTIVATE </a></td>
-                                                <td> <a href="/user/adminmentor/mentee/[[mentor.id]]" class="view_button"> VIEW </a> </td>
-                                        </tr>
-                                </table>
-                        </div>
-
-
-     </div>
+        <?php  echo $this->menuview ?>
+        <div class="table_container">
+        	<span class="table_list_header"><span class="saq_list_icon"></span> Skill Assessment Questionaries </span>
+        	<table class="table">
+        		<tr>
+        			<th> Name </th>
+        			<th> Action </th>
+        		</tr>
+        		<tr ng-repeat="question in questionairs">
+        			<td> [[question.name]] </td>
+        			<td> <a href="/user/saqlist/saqview/[[question.id]]" class="view_button"> VIEW </a> </td>
+        		</tr>
+        	</table>
+        </div>			
+                
+        <div class="table_container">
+                <span class="table_list_header"><span class="mentor_list_icon"></span> Mentors </span>
+                <table class="table">
+                        <tr>
+                                <th> # </th>
+                                <th> Name </th>
+                                <th> Status </th>
+                                <th> Actions </th>
+                                <th> &nbsp; </th>
+                        </tr>
+                        <tr ng-repeat="mentor in mentors">
+                                <td> [[$index]] </td>
+                                <td> [[mentor.firstName]] </td>
+                                <td> [[mentor.status]] </td>
+                                <td>
+                                    <a href="" ng-click="activate(mentor)" class="activate_button" ng-hide="mentor.status == 'ACTIVE'" ng-show="mentor.status == 'INACTIVE'"> ACTIVATE </a>
+                                    <a href="" ng-click="de_activate(mentor)" class="deactivate_button" ng-show="mentor.status == 'ACTIVE'" ng-hide="mentor.status == 'INACTIVE'"> DEACTIVATE </a>
+                                </td>
+                                <td> <a href="/user/adminmentor/mentee/[[mentor.id]]" class="view_button"> VIEW </a> </td>
+                        </tr>
+                </table>
+        </div>
+    </div>
 </body>
 
