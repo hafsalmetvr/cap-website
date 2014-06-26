@@ -63,7 +63,6 @@ function ForgotPasswordController($scope, $element, $http, $timeout, $location)
         $scope.old_password = '';
         $scope.new_password = '';
         $scope.token_value = token;
-
     }
     $scope.validate_form = function(){
         if($scope.email == ''){
@@ -142,8 +141,6 @@ function ForgotPasswordController($scope, $element, $http, $timeout, $location)
             $scope.msg = "Please Enter Old password and New Password";
         }  
     }
-    
-
 }
 
 
@@ -154,7 +151,6 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         $scope.role_id = role;
         console.log(user);
         if($scope.role_id == 4){
-
             $scope.user_type = "Administrator";
             $scope.get_questionairs();
             $scope.get_mentors();
@@ -165,7 +161,6 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         } else {
             $scope.user_type = "Mentee";
         }
-        
     }
     $scope.get_questionairs = function(){
         $http.get("/user/saqlist").success(function(data)
@@ -209,75 +204,40 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
     }
    
     $scope.activate = function(mentor){
-
         params = {
-
             'mentor_id': mentor.id,
-
             'new_status': 1
-
         }
-
         $http({
-
             method: 'post',
-
             url: "/user/adminmentor",
-
             data: $.param(params),
-
             headers: {
-
                 'Content-Type': 'application/x-www-form-urlencoded'
-
             }
-
         }).success(function(data, status) {
-
             mentor.status = 'ACTIVE';
-
         }).error(function(data, success){
-
-            
-
         }); 
-
     }
 
     $scope.de_activate = function(mentor){
-
         params = {
-
             'mentor_id': mentor.id,
-
             'new_status': 2
-
         }
-
         $http({
-
             method: 'post',
-
             url: "/user/adminmentor",
-
             data: $.param(params),
-
             headers: {
 
                 'Content-Type': 'application/x-www-form-urlencoded'
-
             }
-
         }).success(function(data, status) {
-
             mentor.status = 'INACTIVE';
-
         }).error(function(data, success){
-
-            
-
         }); 
-
     }
 
     $scope.get_mentor_mentees = function(){
@@ -360,7 +320,6 @@ function QuestionairController($scope, $element, $http, $timeout, $location, $co
         $scope.user_id = $cookies.user_id;
         $scope.role_id = $cookies.role_id;
         $scope.questionair_id = questionair_id;
-        $scope.role_id = 1;
         if($scope.role_id == 1){
             $scope.user_type = "Administrator";
         } else if($scope.role_id == 2){
@@ -394,7 +353,13 @@ function SettingsController($scope, $element, $http, $timeout, $location, $cooki
         $scope.user_id = $cookies.user_id;
         $scope.role_id = $cookies.role_id;
         $scope.reminder_interval = '';
-       
+        if($scope.role_id == 1){
+            $scope.user_type = "Administrator";
+        } else if($scope.role_id == 2){
+            $scope.user_type = "Mentor";
+        } else {
+            $scope.user_type = "Mentee";
+        }
     }
     $scope.validate_form = function(){
         if($scope.reminder_interval == ''){
@@ -446,6 +411,14 @@ function CreateAccountController($scope, $element, $http, $timeout, $location, $
         $scope.title = '';
         $scope.phone_number = '';
         $scope.email = '';
+        if($scope.role_id == 1){
+            $scope.user_type = "Administrator";
+        } else if($scope.role_id == 2){
+            $scope.user_type = "Mentor";
+        } else {
+            $scope.user_type = "Mentee";
+        }
+        $scope.msg = '';
     }
     $scope.validate_form = function(){
         if($scope.account_type == ''){
@@ -492,5 +465,11 @@ function CreateAccountController($scope, $element, $http, $timeout, $location, $
             }).error(function(data, success){
             });
         }
+    }
+    $scope.show_menu = function(){
+        $('#menu').css('display', 'block');
+    }
+    $scope.hide_menu = function(){
+        $('#menu').css('display', 'none');
     }
 }
