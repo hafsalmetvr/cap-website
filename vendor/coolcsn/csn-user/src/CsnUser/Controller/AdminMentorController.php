@@ -123,7 +123,7 @@ class AdminMentorController extends AbstractRestfulController
      *
      * @return Zend\View\Model\ViewModel
      */
-    public function menteeAction($id)
+    public function menteeAction()
     {
 
      if (!$user = $this->identity()) {
