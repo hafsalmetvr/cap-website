@@ -251,7 +251,7 @@ div.container a.brand {
 }
 
 .table th {
-  background-color: #333333;
+  background-color: #333333 !important;
   color: #FFFFFF;
   vertical-align: middle !important;
 }
@@ -352,5 +352,42 @@ div.container a.brand {
 }
 .table_list_header {
   font-size: 20px;
+}
+
+.popup {
+    background-color: #FFFFFF;
+    left: 30%;
+    position: fixed;
+}
+.bg_black {
+  background-color: #333333;
+  float: right;
+  width: 60%;
+}
+.popup_table_container {
+  padding: 10px;
+  position: relative;
+}
+.search_box {
+  margin-bottom: 10px;
+}
+.close_button_div {
+  width: 50%;
+  float: right;
+  bottom: 0px;
+}
+.popup_header {
+  margin-bottom: 15px !important;
+}
+.search_box input {
+  width: 100% !important;
+  display: block !important;
+  margin-bottom: 15px;
+  padding-left: 10px;
+}
+.fa-search {
+  margin-top: 8px;
+  position: absolute;
+  right: 16px;
 }
 /************* Dashboard Styles end **********/

@@ -1,15 +1,38 @@
 <body ng-controller="DashboardController" ng-init="init('<?php echo $user; ?>', '<?php echo $role; ?>')" id="dashboard">
     <div class="container_div">
+        <div class="popup login_box" ng-show="show_popup" >
+            <div class="popup_header login_header"> <h3> Assign [[selected_mentee.firstName]] a mentor </h3></div>
+            <div class="popup_table_container"> 
+                <div class="search_box"> 
+                    <input type="text" name="search_mentor" placeholder="Enter a Mentors Name..." /> 
+                    <span class="fa fa-search"></span>
+                </div>
+                <table class="table table-striped">
+                    <tr ng-repeat="mentor in mentors">
+                            <td> [[$index+1]] </td>
+                            <td> [[mentor.firstName]] </td>
+                            <td>
+                                <a href="" ng-click="assign_mentee_a_mentor(mentor)" class="assign_button bg_black"> ASSIGN </a>
+                            </td>
+                    </tr>
+                </table>
+                <div class="close_button_div"> 
+                    <a href="" ng-click="show_popup=false;" class="assign_button bg_black "> Close </a>
+                </div>
+            </div>
+        </div>
 
         <?php  echo $this->menuview ?>
         <div class="table_container">
         	<span class="table_list_header"><span class="fa fa-file-text"></span> Skill Assessment Questionaries </span>
-        	<table class="table">
+        	<table class="table table-striped">
         		<tr>
+                    <th> # </th>
         			<th> Name </th>
         			<th> Action </th>
         		</tr>
         		<tr ng-repeat="question in questionairs">
+                    <td> [[$index+1]] </td>
         			<td> [[question.name]] </td>
         			<td> <a href="/user/saqlist/saqview/[[question.id]]" class="view_button"> VIEW </a> </td>
         		</tr>
@@ -17,26 +40,48 @@
         </div>			
                 
         <div class="table_container">
-                <span class="table_list_header"><span class="fa fa-star"></span> Mentors </span>
-                <table class="table">
-                        <tr>
-                                <th> # </th>
-                                <th> Name </th>
-                                <th> Status </th>
-                                <th> Actions </th>
-                                <th> &nbsp; </th>
-                        </tr>
-                        <tr ng-repeat="mentor in mentors">
-                                <td> [[$index]] </td>
-                                <td> [[mentor.firstName]] </td>
-                                <td> [[mentor.status]] </td>
-                                <td>
-                                    <a href="" ng-click="activate(mentor)" class="activate_button" ng-hide="mentor.status == 'ACTIVE'" ng-show="mentor.status == 'INACTIVE'"> ACTIVATE </a>
-                                    <a href="" ng-click="de_activate(mentor)" class="deactivate_button" ng-show="mentor.status == 'ACTIVE'" ng-hide="mentor.status == 'INACTIVE'"> DEACTIVATE </a>
-                                </td>
-                                <td> <a href="/user/adminmentor/mentee/[[mentor.id]]" class="view_button"> VIEW </a> </td>
-                        </tr>
-                </table>
+            <span class="table_list_header"><span class="fa fa-star"></span> Mentors </span>
+            <table class="table">
+                    <tr>
+                            <th> # </th>
+                            <th> Name </th>
+                            <th> Status </th>
+                            <th> Actions </th>
+                            <th> &nbsp; </th>
+                    </tr>
+                    <tr ng-repeat="mentor in mentors">
+                            <td> [[$index+1]] </td>
+                            <td> [[mentor.firstName]] </td>
+                            <td> [[mentor.status]] </td>
+                            <td>
+                                <a href="" ng-click="activate(mentor)" class="activate_button" ng-hide="mentor.status == 'ACTIVE'" ng-show="mentor.status == 'INACTIVE'"> ACTIVATE </a>
+                                <a href="" ng-click="de_activate(mentor)" class="deactivate_button" ng-show="mentor.status == 'ACTIVE'" ng-hide="mentor.status == 'INACTIVE'"> DEACTIVATE </a>
+                            </td>
+                            <td> <a href="/user/adminmentor/mentee/[[mentor.id]]" class="view_button"> VIEW </a> </td>
+                    </tr>
+            </table>
+        </div>
+        <div class="table_container">
+            <span class="table_list_header"><span class="fa fa-mortar-board"></span> Mentees </span>
+            <table class="table">
+                    <tr>
+                            <th> # </th>
+                            <th> Name </th>
+                            <th> Status </th>
+                            <th> Actions </th>
+                            <th> &nbsp; </th>
+                    </tr>
+                    <tr ng-repeat="mentee in mentees">
+                            <td> [[$index+1]] </td>
+                            <td> [[mentee.firstName]] </td>
+                            <td> [[mentee.status]] </td>
+                            <td>
+                                <a href="" ng-click="assign(mentee)" class="assign_button" ng-hide="mentee.status == 'ASSIGNED'" ng-show="mentor.status == 'UNASSIGNED'"> ASSIGN </a>
+                                <a href="" ng-click="activate(mentee)" class="reassign_button" ng-show="mentee.status == 'ASSIGNED'" ng-hide="mentor.status == 'UNASSIGNED'"> REASSIGN </a>
+                            </td>
+                            <td> <a href="/user/admin/mentee/[[mentee.id]]" class="view_button"> VIEW </a> </td>
+                    </tr>
+            </table>
         </div>
     </div>
 </body>

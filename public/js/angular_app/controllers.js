@@ -149,12 +149,12 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
     $scope.init = function(user,role){
         $scope.user_id = user;
         $scope.role_id = role;
-        console.log(user);
+        $scope.show_popup = false;
         if($scope.role_id == 4){
             $scope.user_type = "Administrator";
             $scope.get_questionairs();
             $scope.get_mentors();
-            $scope.get_mentees();
+            //$scope.get_mentees();
         } else if($scope.role_id == 5){
             $scope.user_type = "Mentor";
             $scope.get_mentor_mentees();
@@ -197,6 +197,7 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         $http.get("/user/adminmentor").success(function(data)
         {
             $scope.mentors = data.data;
+            $scope.mentees = data.data;
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
@@ -259,15 +260,22 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         });
     }
     $scope.assign = function(mentee){
-        $http.get("/user/mentees/assign/"+mentee.id+"/").success(function(data)
+        $scope.show_popup = true;
+        $scope.selected_mentee = mentee;
+    }
+    $scope.assign_mentee_a_mentor = function(mentor){
+        var mentee = $scope.selected_mentee;
+        var mentor = mentor;
+        $http.get("/user/mentees/assign/"+mentee.id+"/"+mentor.id).success(function(data)
         {
-            $scope.mentee.status = 'Assigned';
+            $scope.mentee.status = 'ASSIGNED';
+            $scope.show_popup = false;
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
         });
     }
-    $scope.reassign = function(mentor){
+    /*$scope.reassign = function(mentor){
         $http.get("/user/mentees/reassign/"+mentee.id+"/").success(function(data)
         {
             $scope.mentee.status = 'Unassigned';
@@ -275,7 +283,7 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         {
             console.log(data || "Request failed");
         });
-    }
+    }*/
 
 }
 
