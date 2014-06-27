@@ -1,4 +1,5 @@
 <body ng-controller="DashboardController" ng-init="init('<?php echo $user; ?>', '<?php echo $role; ?>')" id="dashboard">
+    <div class="overlay" ng-show="show_popup"></div>
     <div class="container_div">
         <div class="popup login_box" ng-show="show_popup" >
             <div class="popup_header login_header"> <h3> Assign [[selected_mentee.firstName]] a mentor </h3></div>

@@ -358,6 +358,7 @@ div.container a.brand {
     background-color: #FFFFFF;
     left: 30%;
     position: fixed;
+    z-index: 3;
 }
 .bg_black {
   background-color: #333333;
@@ -389,5 +390,13 @@ div.container a.brand {
   margin-top: 8px;
   position: absolute;
   right: 16px;
+}
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  z-index: 2;
+  background-color: #333333;
 }
 /************* Dashboard Styles end **********/
