@@ -208,7 +208,7 @@ div.container a.brand {
 }
 
 .menu_icon {
-    background: url('../img/settings.png') no-repeat;
+    /*background: url('../img/settings.png') no-repeat;*/
     display: block;
     float: right;
     height: 38px;
@@ -216,9 +216,10 @@ div.container a.brand {
     text-decoration: none;
     text-indent: -9999;
     width: 37px;
+    color: #B3B3B3;
 }
-.menu_icon:hover {
-    background: url('../img/settings_black.png') no-repeat;
+.icon_container:hover .menu_icon{
+  color: #333333;
 }
 .menu {
   display: none;
@@ -313,16 +314,12 @@ div.container a.brand {
   float: right;
   height: 63px;
   margin-top: -18px;
-  padding: 15px 5px 0 5px;
+  padding: 1px 5px 0 5px;
   width: 50px;
 }
 
 .icon_container:hover {
   background-color: #B3B3B3;
-}
-
-.icon_container:hover .menu_icon{
-  background: url('../img/settings_black.png') no-repeat;
 }
 
 .user_details {
