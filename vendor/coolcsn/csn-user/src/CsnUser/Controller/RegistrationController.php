@@ -65,7 +65,6 @@ class RegistrationController extends AbstractRestfulController
     {
 
         $user = new Customer;
-        $form = $this->getUserFormHelper()->createUserForm($user, 'ResetPassword');
         $message = null;
         if($this->getRequest()->isPost()) {
            
@@ -121,7 +120,6 @@ $entityManager->persist($user);
         if($token !== '' && $user = $entityManager->getRepository('CsnUser\Entity\Customer')->findOneBy(array('registrationToken' => $token))) {
 
           #$user = new Customer;
-          $form = $this->getUserFormHelper()->createUserForm($user, 'ChangePassword'); 
           #$entityManager->persist($user);
           #$entityManager->flush();
     

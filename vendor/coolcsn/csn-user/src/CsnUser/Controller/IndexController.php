@@ -54,9 +54,9 @@ class IndexController extends AbstractRestfulController
      *
      * @return Zend\View\Model\ViewModelarray navigation menu
      */
-    public function indexAction()
+    public function getList()
     {
-        return new ViewModel();
+        return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
     }
 
     /**
