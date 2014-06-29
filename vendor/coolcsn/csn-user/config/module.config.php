@@ -21,7 +21,9 @@ return array(
             'CsnUser\Controller\Createaccount' => 'CsnUser\Controller\CreateaccountController',
             'CsnUser\Controller\Saqlist' => 'CsnUser\Controller\SaqlistController',
             'CsnUser\Controller\Reminderfrequency' => 'CsnUser\Controller\ReminderfrequencyController',
-            'CsnUser\Controller\AdminMentor' => 'CsnUser\Controller\AdminMentorController', 
+            'CsnUser\Controller\AdminMentor' => 'CsnUser\Controller\AdminMentorController',
+            'CsnUser\Controller\AdminMentee' => 'CsnUser\Controller\AdminMenteeController',
+            'CsnUser\Controller\AdminSaqresult' => 'CsnUser\Controller\AdminSaqresultController' 
         ),
     ),
     'router' => array(
@@ -127,6 +129,37 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'CsnUser\Controller\AdminMentor',
+                        #'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+            'adminmentee' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/user/adminmentee[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CsnUser\Controller\AdminMentee',
+                        #'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+
+              'adminsaqresult' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/user/adminsaqresult[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CsnUser\Controller\AdminSaqresult',
                         #'action' => 'index',
                     ),
                 ),

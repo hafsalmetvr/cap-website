@@ -250,7 +250,7 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         });
     }
     $scope.get_mentees = function(){
-        $http.get("/user/mentees").success(function(data)
+        $http.get("/user/adminmentee").success(function(data)
         {
             $scope.mentees = data.data;
         }).error(function(data, status)
@@ -477,6 +477,7 @@ function AdminMenteeController($scope, $element, $http, $timeout, $location, $co
         $scope.user_id = user;
         $scope.role_id = role;
         $scope.mentee_id = mentee_id;
+        console.log(mentee_id);
         $scope.show_popup = false;
         if($scope.role_id == 4){
             $scope.user_type = "Administrator";
@@ -488,7 +489,7 @@ function AdminMenteeController($scope, $element, $http, $timeout, $location, $co
         $scope.get_mentee_saq_list();
     }
     $scope.get_mentee_saq_list = function(){
-        $http.get("/user/mentee/"+$scope.mentee_id+"/saqlist").success(function(data)
+        $http.get("/user/adminmentee/"+$scope.mentee_id).success(function(data)
         {
             $scope.mentee_saq_list = data.data;
         }).error(function(data, status)
@@ -516,7 +517,7 @@ function AdminMenteeSAQDetailController($scope, $element, $http, $timeout, $loca
         $scope.get_saq_details();
     }
     $scope.get_saq_details = function(){
-        $http.get("/user/saq/"+$scope.saq_id+"/details").success(function(data)
+        $http.get("/user/adminsaqresult/"+$scope.saq_id).success(function(data)
         {
             $scope.saq = data.data;
         }).error(function(data, status)

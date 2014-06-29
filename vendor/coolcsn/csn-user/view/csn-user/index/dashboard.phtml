@@ -80,7 +80,7 @@
                                 <a href="" ng-click="assign(mentee)" class="assign_button" ng-hide="mentee.status == 'ASSIGNED'" ng-show="mentor.status == 'UNASSIGNED'"> ASSIGN </a>
                                 <a href="" ng-click="activate(mentee)" class="reassign_button" ng-show="mentee.status == 'ASSIGNED'" ng-hide="mentor.status == 'UNASSIGNED'"> REASSIGN </a>
                             </td>
-                            <td> <a href="/user/admin/mentee/[[mentee.id]]" class="view_button"> VIEW </a> </td>
+                            <td> <a href="/user/adminmentee/mentee/[[mentee.id]]" class="view_button"> VIEW </a> </td>
                     </tr>
             </table>
         </div>
