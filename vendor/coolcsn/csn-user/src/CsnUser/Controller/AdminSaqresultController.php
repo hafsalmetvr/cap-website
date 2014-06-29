@@ -78,10 +78,9 @@ class AdminSaqresultController extends AbstractRestfulController
    
     
         $entityManager = $this->getEntityManager();
-      #  $user = $entityManager->createQuery("SELECT q FROM CsnUser\Entity\CustomerQuestionnaire q where q.id = $id")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-       # $user = $user[0];
-        #$cid = $user->getcustomerid();
-        $cid =3;
+        $user = $entityManager->createQuery("SELECT q FROM CsnUser\Entity\CustomerQuestionnaire q where q.id = $id")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+        $user = $user[0];
+        $cid = $user->getcustomerid();
         $saq = $entityManager->createQuery("SELECT cr.created, c.id FROM CsnUser\Entity\CustomerRecommendation cr JOIN cr.customer c where cr.customer = $cid")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
        # $saq = $saq[0];
         return new JsonModel(array('data' => $saq));
