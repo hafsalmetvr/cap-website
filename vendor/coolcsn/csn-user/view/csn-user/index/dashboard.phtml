@@ -2,23 +2,41 @@
     <div class="overlay" ng-show="show_popup"></div>
     <div class="container_div">
         <div class="popup login_box" ng-show="show_popup" >
-            <div class="popup_header login_header"> <h3> Assign [[selected_mentee.firstName]] a mentor </h3></div>
-            <div class="popup_table_container"> 
-                <div class="search_box"> 
-                    <input type="text" name="search_mentor" placeholder="Enter a Mentors Name..." /> 
-                    <span class="fa fa-search"></span>
+            <div id="assign_mentee_mentor">
+                <div class="popup_header login_header"> 
+                    <h3> Assign [[selected_mentee.firstName]] a mentor </h3>
                 </div>
-                <table class="table table-striped">
-                    <tr ng-repeat="mentor in mentors">
-                            <td> [[$index+1]] </td>
-                            <td> [[mentor.firstName]] </td>
-                            <td>
-                                <a href="" ng-click="assign_mentee_a_mentor(mentor)" class="assign_button bg_black"> ASSIGN </a>
-                            </td>
-                    </tr>
-                </table>
-                <div class="close_button_div"> 
-                    <a href="" ng-click="show_popup=false;" class="assign_button bg_black "> Close </a>
+                <div class="popup_table_container"> 
+                    <div class="search_box"> 
+                        <input type="text" name="search_mentor" placeholder="Enter a Mentors Name..." /> 
+                        <span class="fa fa-search"></span>
+                    </div>
+                    <table class="table table-striped">
+                        <tr ng-repeat="mentor in mentors">
+                                <td> [[$index+1]] </td>
+                                <td> [[mentor.firstName]] </td>
+                                <td>
+                                    <a href="" ng-click="assign_mentee_a_mentor(mentor)" class="assign_button bg_black"> ASSIGN </a>
+                                </td>
+                        </tr>
+                    </table>
+                    <div class="close_button_div"> 
+                        <a href="" ng-click="show_popup=false;" class="assign_button bg_black "> Close </a>
+                    </div>
+                </div>
+            </div>
+             <div id="assign_mentee_saq">
+                <div class="popup_header login_header"> <h3> Assign SAQ to a mentee </h3></div>
+                <div class="popup_table_container"> 
+                    <label> Mentee: </label>
+                    <select ng-model="saq_mentee">
+                        <option ng-repeat="mentee in mentees" value="[[mentee.id]]"> [[mentee.firstName]]</option>
+                    </select>
+                    <p> [[error_message]] </p>
+                    <div class="close_button_div"> 
+                        <a href="" ng-click="assign_mentee_a_saq()" class="assign_button bg_black"> ASSIGN </a> </br></br></br></br></br></br>
+                        <a href="" ng-click="show_popup=false;" class="assign_button bg_black "> Close </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,11 +49,15 @@
                     <th> # </th>
         			<th> Name </th>
         			<th> Action </th>
+                    <th> &nbsp; </th>
         		</tr>
         		<tr ng-repeat="question in questionairs">
                     <td> [[$index+1]] </td>
         			<td> [[question.name]] </td>
         			<td> <a href="/user/saqlist/saqview/[[question.id]]" class="view_button"> VIEW </a> </td>
+                    <td>
+                        <a href="" ng-click="assign_saq(question)" class="assign_button bg_black"> ASSIGN </a>
+                    </td>
         		</tr>
         	</table>
         </div>			

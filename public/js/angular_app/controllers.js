@@ -154,7 +154,7 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
             $scope.user_type = "Administrator";
             $scope.get_questionairs();
             $scope.get_mentors();
-            $scope.get_mentees();
+            //$scope.get_mentees();
         } else if($scope.role_id == 5){
             $scope.user_type = "Mentor";
             $scope.get_mentor_mentees();
@@ -197,6 +197,7 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         $http.get("/user/adminmentor").success(function(data)
         {
             $scope.mentors = data.data;
+            $scope.mentees = data.data;
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
@@ -258,7 +259,13 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
             console.log(data || "Request failed");
         });
     }
+    $scope.hide_popup_divs = function(){
+        $('#assign_mentee_mentor').css('display', 'none');
+        $('#assign_mentee_saq').css('display', 'none');
+    }
     $scope.assign = function(mentee){
+        $scope.hide_popup_divs();
+        $('#assign_mentee_mentor').css('display', 'block');
         $scope.show_popup = true;
         $scope.selected_mentee = mentee;
     }
@@ -266,6 +273,30 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         var mentee = $scope.selected_mentee;
         var mentor = mentor;
         $http.get("/user/mentees/assign/"+mentee.id+"/"+mentor.id).success(function(data)
+        {
+            $scope.mentee.status = 'ASSIGNED';
+            $scope.show_popup = false;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+    $scope.assign_saq = function(saq){
+        $scope.show_popup = true;
+        $scope.selected_saq = saq;
+        $scope.saq_mentee = '';
+        $scope.hide_popup_divs();
+        $('#assign_mentee_saq').css('display', 'block');
+    }
+    $scope.assign_mentee_a_saq = function(){
+        if($scope.saq_mentee == '')
+        {
+            $scope.error_message = "Please select a mentee ";
+            return false;
+        } else {
+            $scope.error_message = '';
+        }
+        $http.get("/user/mentees/assign/saq/"+$scope.saq_mentee+"/"+$scope.selected_saq.id).success(function(data)
         {
             $scope.mentee.status = 'ASSIGNED';
             $scope.show_popup = false;
