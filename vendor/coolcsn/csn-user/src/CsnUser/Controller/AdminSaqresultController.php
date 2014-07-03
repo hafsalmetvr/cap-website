@@ -88,8 +88,8 @@ class AdminSaqresultController extends AbstractRestfulController
    
     }
 
-    public function create($data)
-    {
+#    public function create($data)
+#    {
 
 
       #$entityManager = $this->getEntityManager();
@@ -104,9 +104,9 @@ class AdminSaqresultController extends AbstractRestfulController
       
 #      return new JsonModel(array('status' => $status));
 
-    }
+#    }
 
-    public function delete($id) {
+#    public function delete($id) {
 #
  #     $status = "failed";
   #    $entityManager = $this->getEntityManager();
@@ -120,15 +120,15 @@ class AdminSaqresultController extends AbstractRestfulController
       #}
       #return new JsonModel(array('status' => $id));
 
-    }
+#    }
     
     /**
      * Admin Mentee View Action
      *
      * @return Zend\View\Model\ViewModel
      */
-    public function menteeAction()
-    {
+#    public function menteeAction()
+#    {
 
     # if (!$user = $this->identity()) {
 
@@ -144,7 +144,7 @@ class AdminSaqresultController extends AbstractRestfulController
      #  $viewModel->addChild($menuview, 'menuview');
      #  return $viewModel; 
     
-    }
+#    }
   
     /**
      * Admin Mentee View Action

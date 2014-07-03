@@ -82,39 +82,39 @@ class AdminMenteeController extends AbstractRestfulController
    
     }
 
-    public function create($data)
-    {
+   # public function create($data)
+   # {
 
 
-      $entityManager = $this->getEntityManager();
+   #   $entityManager = $this->getEntityManager();
  
-      $user = $this->getEntityManager()->createQuery("SELECT u FROM CsnUser\Entity\Customer u WHERE u.id = $data[mentor_id]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+   #   $user = $this->getEntityManager()->createQuery("SELECT u FROM CsnUser\Entity\Customer u WHERE u.id = $data[mentor_id]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
    
-      $user = $user[0];
-      if($data['new_status'] == 1) {$status = "ACTIVE";} else if($data['new_status'] == 2) { $status = "INACTIVE";} 
-      $user->setStatus($entityManager->find('CsnUser\Entity\CustomerStatus', $data['new_status']));
-      $entityManager->persist($user);
-      $entityManager->flush();
+    #  $user = $user[0];
+    #  if($data['new_status'] == 1) {$status = "ACTIVE";} else if($data['new_status'] == 2) { $status = "INACTIVE";} 
+    #  $user->setStatus($entityManager->find('CsnUser\Entity\CustomerStatus', $data['new_status']));
+    #  $entityManager->persist($user);
+    #  $entityManager->flush();
       
-      return new JsonModel(array('status' => $status));
+    #  return new JsonModel(array('status' => $status));
 
-    }
+    #}
 
-    public function delete($id) {
+   # public function delete($id) {
 
-      $status = "failed";
-      $entityManager = $this->getEntityManager();
-      $user = $entityManager->getRepository('CsnUser\Entity\CustomerHierarchy')->findOneBy(array('childCustomer' => $id));
+    #  $status = "failed";
+    #  $entityManager = $this->getEntityManager();
+    #  $user = $entityManager->getRepository('CsnUser\Entity\CustomerHierarchy')->findOneBy(array('childCustomer' => $id));
 
-      if($user) {
-          
-          $entityManager->remove($user);
-          $entityManager->flush();
-          $status = "success";
-      }
-      return new JsonModel(array('status' => $id));
+    #  if($user) {
+    #      
+    #      $entityManager->remove($user);
+    #      $entityManager->flush();
+    #      $status = "success";
+    #  }
+    #  return new JsonModel(array('status' => $id));
 
-    }
+    #}
     
     /**
      * Admin Mentee View Action

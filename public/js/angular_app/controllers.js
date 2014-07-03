@@ -154,7 +154,7 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
             $scope.user_type = "Administrator";
             $scope.get_questionairs();
             $scope.get_mentors();
-            //$scope.get_mentees();
+            $scope.get_mentees();
         } else if($scope.role_id == 5){
             $scope.user_type = "Mentor";
             $scope.get_mentor_mentees();
@@ -242,7 +242,7 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
     }
 
     $scope.get_mentor_mentees = function(){
-        $http.get("/user/mentees").success(function(data)
+        $http.get("/user/adminmentor/"+$scope.user_id).success(function(data)
         {
             $scope.mentees = data.data;
         }).error(function(data, status)
@@ -296,14 +296,32 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         } else {
             $scope.error_message = '';
         }
-        $http.get("/user/mentees/assign/saq/"+$scope.saq_mentee+"/"+$scope.selected_saq.id).success(function(data)
-        {
-            $scope.mentee.status = 'ASSIGNED';
-            $scope.show_popup = false;
-        }).error(function(data, status)
-        {
-            console.log(data || "Request failed");
+
+        params = {
+            'mentee_id': $scope.saq_mentee,
+            'questionnaire_id': $scope.selected_saq.id
+        }
+        $http({
+            method: 'post',
+            url: "/user/saqlist",
+            data: $.param(params),
+            headers: {
+
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).success(function(data, status) {
+            mentor.status = 'success';
+        }).error(function(data, success){
         });
+
+       // $http.get("/user/mentees/assign/saq/"+$scope.saq_mentee+"/"+$scope.selected_saq.id).success(function(data)
+       // {
+       //     $scope.mentee.status = 'ASSIGNED';
+       //     $scope.show_popup = false;
+       // }).error(function(data, status)
+       // {
+       //     console.log(data || "Request failed");
+       // });
     }
 }
 

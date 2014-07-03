@@ -22,6 +22,27 @@ class CustomerQuestionnaire
     private $id;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="completed", type="datetime", nullable=true)
+     */
+    private $completed;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime", nullable=false)
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modified", type="datetime", nullable=false)
+     */
+    private $modified = 'CURRENT_TIMESTAMP';
+
+    /**
      * @var \CsnUser\Entity\Customer
      *
      * @ORM\ManyToOne(targetEntity="CsnUser\Entity\Customer")

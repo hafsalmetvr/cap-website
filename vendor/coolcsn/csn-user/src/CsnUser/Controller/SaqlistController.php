@@ -20,6 +20,7 @@ use Zend\Mail\Message;
 use Zend\Validator\Identical as IdenticalValidator;
 use Zend\View\Model\JsonModel;
 use CsnUser\Entity\Customer;
+use CsnUser\Entity\CustomerQuestionnaire;
 use CsnUser\Options\ModuleOptions;
 use CsnUser\Service\UserService as UserCredentialsService;
 
@@ -82,6 +83,34 @@ class SaqlistController extends AbstractRestfulController
    
     }
 
+    public function create($data)
+    {
+
+
+      $entityManager = $this->getEntityManager();
+
+      if($questionnaire = $this->getEntityManager()->createQuery("SELECT u.id FROM CsnUser\Entity\CustomerQuestionnaire u WHERE u.customer = $data[mentee_id] and u.questionnaire = $data[questionnaire_id]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT)) {
+
+          $msg = "already_assigned";
+      } else {
+
+        $questionnaire =  new CustomerQuestionnaire;
+        $questionnaire->setcustomer($entityManager->find('CsnUser\Entity\Customer', $data['mentee_id']));
+        $questionnaire->setquestionnaire($entityManager->find('CsnUser\Entity\Questionnaire', $data['questionnaire_id'])); 
+        $questionnaire->setcompletionStatus($entityManager->find('CsnUser\Entity\CompletionStatus', '1'));
+        $entityManager->persist($questionnaire);
+        $entityManager->flush();
+        $msg = "success";
+      }      
+      #$user = $user[0];
+      #if($data['new_status'] == 1) {$status = "ACTIVE";} else if($data['new_status'] == 2) { $status = "INACTIVE";}
+      #$user->setStatus($entityManager->find('CsnUser\Entity\CustomerStatus', $data['new_status']));
+      #$entityManager->persist($user);
+      #$entityManager->flush();
+
+      return new JsonModel(array('status' => $msg));
+
+    }
     
     /**
      * Confirm Saq View Action

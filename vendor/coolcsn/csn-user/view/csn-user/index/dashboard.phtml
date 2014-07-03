@@ -42,6 +42,8 @@
         </div>
 
         <?php  echo $this->menuview ?>
+        <?php if($role == 4){ ?>
+
         <div class="table_container">
         	<span class="table_list_header"><span class="fa fa-file-text"></span> Skill Assessment Questionaries </span>
         	<table class="table table-striped">
@@ -84,6 +86,8 @@
                     </tr>
             </table>
         </div>
+       <?php  } ?>
+
         <div class="table_container">
             <span class="table_list_header"><span class="fa fa-mortar-board"></span> Mentees </span>
             <table class="table">

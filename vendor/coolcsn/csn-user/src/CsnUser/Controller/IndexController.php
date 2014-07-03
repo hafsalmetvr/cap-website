@@ -89,7 +89,7 @@ class IndexController extends AbstractRestfulController
       $this->layout('layout/dashboard');
       $viewModel  =  new ViewModel(array('user'=> $user->getId() ,'role' => $user->getRoleid()));
     
-      $menuview = new ViewModel(array('name' => $user->getFirstName()));
+      $menuview = new ViewModel(array('name' => $user->getFirstName(), 'role' => $user->getRoleid()));
       $menuview->setTemplate('layout/menu');
       $viewModel->addChild($menuview, 'menuview');
 
