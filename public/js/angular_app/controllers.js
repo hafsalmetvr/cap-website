@@ -366,22 +366,49 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         });
     }
     $scope.search_mentors = function(){
-        $http.get("/user/adminmentor?key="+$scope.mentor_search_key).success(function(data)
-        {
-            $scope.mentors_result = data.data;
-        }).error(function(data, status)
-        {
-            console.log(data || "Request failed");
+
+        params = {
+            'key': $scope.mentor_search_key
+        }
+        $http({
+            method: 'post',
+            url: "/user/searchmentor",
+            data: $.param(params),
+            headers: {
+
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).success(function(data, status) {
+
+           $scope.mentors_result = data.data;
+
+        }).error(function(data, success){
+           console.log(data || "Request failed");
         });
+
+
     }
     $scope.search_mentees = function(){
-        $http.get("/user/adminmentee?key="+$scope.mentee_search_key).success(function(data)
-        {
-            $scope.mentees_result = data.data;
-        }).error(function(data, status)
-        {
-            console.log(data || "Request failed");
+
+        params = {
+            'key': $scope.mentee_search_key
+        }
+        $http({
+            method: 'post',
+            url: "/user/searchmentee",
+            data: $.param(params),
+            headers: {
+
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).success(function(data, status) {
+
+           $scope.mentees_result = data.data;
+
+        }).error(function(data, success){
+           console.log(data || "Request failed");
         });
+
     }
 }
 

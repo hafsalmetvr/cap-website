@@ -23,7 +23,9 @@ return array(
             'CsnUser\Controller\Reminderfrequency' => 'CsnUser\Controller\ReminderfrequencyController',
             'CsnUser\Controller\AdminMentor' => 'CsnUser\Controller\AdminMentorController',
             'CsnUser\Controller\AdminMentee' => 'CsnUser\Controller\AdminMenteeController',
-            'CsnUser\Controller\AdminSaqresult' => 'CsnUser\Controller\AdminSaqresultController' 
+            'CsnUser\Controller\AdminSaqresult' => 'CsnUser\Controller\AdminSaqresultController',
+            'CsnUser\Controller\MenteeSearch'  =>  'CsnUser\Controller\MenteeSearchController',
+            'CsnUser\Controller\MentorSearch'  =>  'CsnUser\Controller\MentorSearchController'
         ),
     ),
     'router' => array(
@@ -160,6 +162,36 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'CsnUser\Controller\AdminSaqresult',
+                        #'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+            'searchmentee' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/user/searchmentee[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CsnUser\Controller\MenteeSearch',
+                        #'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+            'searchmentor' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/user/searchmentor[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CsnUser\Controller\MentorSearch',
                         #'action' => 'index',
                     ),
                 ),
