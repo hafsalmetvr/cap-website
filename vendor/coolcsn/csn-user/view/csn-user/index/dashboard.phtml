@@ -5,38 +5,43 @@
             <div id="assign_mentee_mentor">
                 <div class="popup_header login_header"> 
                     <h3> Assign [[selected_mentee.firstName]] a mentor </h3>
+                    <a href="" ng-click="show_popup=false;" class="close_button"> X </a>
                 </div>
                 <div class="popup_table_container"> 
                     <div class="search_box"> 
-                        <input type="text" name="search_mentor" placeholder="Enter a Mentors Name..." /> 
+                        <input type="text" name="search_mentor" ng-model="mentor_search_key" placeholder="Enter a Mentors Name..." /> 
                         <span class="fa fa-search"></span>
                     </div>
                     <table class="table table-striped">
-                        <tr ng-repeat="mentor in mentors">
-                                <td> [[$index+1]] </td>
-                                <td> [[mentor.firstName]] </td>
-                                <td>
-                                    <a href="" ng-click="assign_mentee_a_mentor(mentor)" class="assign_button bg_black"> ASSIGN </a>
-                                </td>
+                        <tr ng-repeat="mentor in mentors_result">
+                            <td> [[$index+1]] </td>
+                            <td> [[mentor.firstName]] </td>
+                            <td>
+                                <a href="" ng-click="assign_mentee_a_mentor(mentor)" class="assign_button bg_black"> ASSIGN </a>
+                            </td>
                         </tr>
-                    </table>
-                    <div class="close_button_div"> 
-                        <a href="" ng-click="show_popup=false;" class="assign_button bg_black "> Close </a>
-                    </div>
+                    </table>                    
                 </div>
             </div>
              <div id="assign_mentee_saq">
-                <div class="popup_header login_header"> <h3> Assign SAQ to a mentee </h3></div>
+                <div class="popup_header login_header"> 
+                    <h3> Assign SAQ to a mentee </h3>
+                    <a href="" ng-click="show_popup=false;" class="close_button"> X </a>
+                </div>
                 <div class="popup_table_container"> 
-                    <label> Mentee: </label>
-                    <select ng-model="saq_mentee">
-                        <option ng-repeat="mentee in mentees" value="[[mentee.id]]"> [[mentee.firstName]]</option>
-                    </select>
-                    <p> [[error_message]] </p>
-                    <div class="close_button_div"> 
-                        <a href="" ng-click="assign_mentee_a_saq()" class="assign_button bg_black"> ASSIGN </a> </br></br></br></br></br></br>
-                        <a href="" ng-click="show_popup=false;" class="assign_button bg_black "> Close </a>
+                    <div class="search_box"> 
+                        <input type="text" name="search_mentor" placeholder="Enter a Mentors Name..." ng-model="mentee_search_key" /> 
+                        <span class="fa fa-search"></span>
                     </div>
+                    <table class="table table-striped">
+                        <tr ng-repeat="mentee in mentees">
+                            <td> [[$index+1]] </td>
+                            <td> [[mentee.firstName]] </td>
+                            <td>
+                                <a href="" ng-click="assign_mentee_a_saq(mentee)" class="assign_button bg_black"> ASSIGN </a>
+                            </td>
+                        </tr>
+                    </table>  
                 </div>
             </div>
         </div>
@@ -53,7 +58,7 @@
         			<th> Action </th>
                     <th> &nbsp; </th>
         		</tr>
-        		<tr ng-repeat="question in questionairs">
+        		<tr ng-repeat="question in visible_questionairs">
                     <td> [[$index+1]] </td>
         			<td> [[question.name]] </td>
         			<td> <a href="/user/saqlist/saqview/[[question.id]]" class="view_button"> VIEW </a> </td>
@@ -62,11 +67,27 @@
                     </td>
         		</tr>
         	</table>
+            <div class="page" ng-show="que_pages > 1">
+                <ul class="pagination"> 
+                    <li class="arrow unavailable">
+                        <a href="" ng-click="select_ques_page(-1)">&laquo;</a>
+                    </li>
+                    <li ng-repeat="page in range(que_pages)" ng-class="getClass($index+1)">
+                        <a href="" ng-click="select_ques_page($index+1)">[[$index+1]]</a>
+                    </li>
+                    <!-- <li class="unavailable">
+                        <a href="">&hellip;</a>
+                    </li>  -->
+                    <li class="arrow">
+                        <a href="" ng-click="select_ques_page(0)">&raquo;</a>
+                    </li> 
+                </ul>
+            </div>
         </div>			
                 
         <div class="table_container">
             <span class="table_list_header"><span class="fa fa-star"></span> Mentors </span>
-            <table class="table">
+            <table class="table table-striped">
                     <tr>
                             <th> # </th>
                             <th> Name </th>
@@ -74,7 +95,7 @@
                             <th> Actions </th>
                             <th> &nbsp; </th>
                     </tr>
-                    <tr ng-repeat="mentor in mentors">
+                    <tr ng-repeat="mentor in visible_mentors">
                             <td> [[$index+1]] </td>
                             <td> [[mentor.firstName]] </td>
                             <td> [[mentor.status]] </td>
@@ -85,12 +106,28 @@
                             <td> <a href="/user/adminmentor/mentee/[[mentor.id]]" class="view_button"> VIEW </a> </td>
                     </tr>
             </table>
+            <div class="page" ng-show="mentor_pages > 1">
+                <ul class="pagination"> 
+                    <li class="arrow unavailable">
+                        <a href="" ng-click="select_mentor_page(-1)">&laquo;</a>
+                    </li>
+                    <li ng-repeat="page in range(mentor_pages)" ng-class="getClass($index+1)">
+                        <a href="" ng-click="select_mentor_page($index+1)">[[$index+1]]</a>
+                    </li>
+                    <!-- <li class="unavailable">
+                        <a href="">&hellip;</a>
+                    </li>  -->
+                    <li class="arrow">
+                        <a href="" ng-click="select_mentor_page(0)">&raquo;</a>
+                    </li> 
+                </ul>
+            </div>
         </div>
        <?php  } ?>
 
         <div class="table_container">
             <span class="table_list_header"><span class="fa fa-mortar-board"></span> Mentees </span>
-            <table class="table">
+            <table class="table table-striped">
                     <tr>
                             <th> # </th>
                             <th> Name </th>
@@ -98,7 +135,7 @@
                             <th> Actions </th>
                             <th> &nbsp; </th>
                     </tr>
-                    <tr ng-repeat="mentee in mentees">
+                    <tr ng-repeat="mentee in visible_mentees">
                             <td> [[$index+1]] </td>
                             <td> [[mentee.firstName]] </td>
                             <td> [[mentee.status]] </td>
@@ -109,6 +146,22 @@
                             <td> <a href="/user/adminmentee/mentee/[[mentee.id]]" class="view_button"> VIEW </a> </td>
                     </tr>
             </table>
+            <div class="page" ng-show="mentee_pages > 1">
+                <ul class="pagination"> 
+                    <li class="arrow unavailable">
+                        <a href="" ng-click="select_mentee_page(-1)">&laquo;</a>
+                    </li>
+                    <li ng-repeat="page in range(mentee_pages)" ng-class="getClass($index+1)">
+                        <a href="" ng-click="select_mentee_page($index+1)">[[$index+1]]</a>
+                    </li>
+                    <!-- <li class="unavailable">
+                        <a href="">&hellip;</a>
+                    </li>  -->
+                    <li class="arrow">
+                        <a href="" ng-click="select_mentee_page(0)">&raquo;</a>
+                    </li> 
+                </ul>
+            </div>
         </div>
     </div>
 </body>

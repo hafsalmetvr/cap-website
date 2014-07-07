@@ -150,6 +150,9 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         $scope.user_id = user;
         $scope.role_id = role;
         $scope.show_popup = false;
+        $scope.ques_page_interval = 5;
+        $scope.mentor_page_interval = 5;
+        $scope.mentee_page_interval = 5;
         if($scope.role_id == 4){
             $scope.user_type = "Administrator";
             $scope.get_questionairs();
@@ -162,10 +165,20 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
             $scope.user_type = "Mentee";
         }
     }
+    $scope.range = function(n) {
+        return new Array(n);
+    }
+    $scope.getClass = function(page) {
+        if(page == $scope.current_page)
+            return "current";
+        else
+            return '';
+    }
     $scope.get_questionairs = function(){
         $http.get("/user/saqlist").success(function(data)
         {
             $scope.questionairs = data.data;
+            $scope.paginate_questionairs();
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
@@ -177,33 +190,58 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
     $scope.hide_menu = function(){
         $('#menu').css('display', 'none');
     }
-        $scope.paginate_questionairs = function(){
+    $scope.paginate_questionairs = function(){
         $scope.current_ques_page = 1;
-        $scope.que_pages = $scope.ques_list.length / $scope.ques_page_interval;
-        if($scope.qes_pages > parseInt($scope.qes_pages))
-            $scope.qes_pages = parseInt($scope.qes_pages) + 1;
-        $scope.visible_qes_list = $scope.qes_list.slice(0, $scope.qes_page_interval);
+        $scope.que_pages = $scope.questionairs.length / $scope.ques_page_interval;
+        if($scope.que_pages > parseInt($scope.que_pages))
+            $scope.que_pages = parseInt($scope.que_pages) + 1;
+        $scope.visible_questionairs = $scope.questionairs.slice(0, $scope.ques_page_interval);
+        console.log($scope.que_pages);
     }
 
     $scope.select_ques_page = function(ques_page) {
+        if(ques_page == 0){
+            ques_page = $scope.current_ques_page + 1;
+        } else if(ques_page == -1){
+            ques_page = $scope.current_ques_page - 1;
+        }
         var last_ques_page = ques_page - 1;
-        var start = (last_ques_page * $scope.ques_page_interval) + 1;
+        var start = (last_ques_page * $scope.ques_page_interval) ;
         var end = $scope.ques_page_interval * ques_page;
         $scope.current_ques_page = ques_page;
-        $scope.visible_ques_list = $scope.ques_list.slice(start, end);
+        $scope.visible_questionairs = $scope.questionairs.slice(start, end);
     }
     
     $scope.get_mentors = function(){
         $http.get("/user/adminmentor").success(function(data)
         {
             $scope.mentors = data.data;
-            $scope.mentees = data.data;
+            $scope.paginate_mentors();
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
         });
     }
-   
+    $scope.paginate_mentors = function(){
+        $scope.current_mentor_page = 1;
+        $scope.mentor_pages = $scope.mentors.length / $scope.mentor_page_interval;
+        if($scope.mentor_pages > parseInt($scope.mentor_pages))
+            $scope.mentor_pages = parseInt($scope.mentor_pages) + 1;
+        $scope.visible_mentors = $scope.mentors.slice(0, $scope.mentor_page_interval);
+    }
+
+    $scope.select_mentor_page = function(mentor_page) {
+        if(mentor_page == 0){
+            mentor_page = $scope.current_mentor_page + 1;
+        } else if(mentor_page == -1){
+            mentor_page = $scope.current_mentor_page - 1;
+        }
+        var last_mentor_page = mentor_page - 1;
+        var start = (last_mentor_page * $scope.mentor_page_interval);
+        var end = $scope.mentor_page_interval * mentor_page;
+        $scope.current_mentor_page = mentor_page;
+        $scope.visible_mentors = $scope.mentors.slice(start, end);
+    }
     $scope.activate = function(mentor){
         params = {
             'mentor_id': mentor.id,
@@ -254,10 +292,32 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         $http.get("/user/adminmentee").success(function(data)
         {
             $scope.mentees = data.data;
+            $scope.paginate_mentees();
+
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
         });
+    }
+    $scope.paginate_mentees = function(){
+        $scope.current_mentee_page = 1;
+        $scope.mentee_pages = $scope.mentees.length / $scope.mentee_page_interval;
+        if($scope.mentee_pages > parseInt($scope.mentee_pages))
+            $scope.mentee_pages = parseInt($scope.mentee_pages) + 1;
+        $scope.visible_mentees = $scope.mentees.slice(0, $scope.mentee_page_interval);
+    }
+
+    $scope.select_mentee_page = function(mentee_page) {
+        if(mentee_page == 0){
+            mentee_page = $scope.current_mentee_page + 1;
+        } else if(mentee_page == -1){
+            mentee_page = $scope.current_mentee_page - 1;
+        }
+        var last_mentee_page = mentee_page - 1;
+        var start = (last_mentee_page * $scope.mentee_page_interval) ;
+        var end = $scope.mentee_page_interval * mentee_page;
+        $scope.current_mentee_page = mentee_page;
+        $scope.visible_mentees = $scope.mentees.slice(start, end);
     }
     $scope.hide_popup_divs = function(){
         $('#assign_mentee_mentor').css('display', 'none');
@@ -288,17 +348,9 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         $scope.hide_popup_divs();
         $('#assign_mentee_saq').css('display', 'block');
     }
-    $scope.assign_mentee_a_saq = function(){
-        if($scope.saq_mentee == '')
-        {
-            $scope.error_message = "Please select a mentee ";
-            return false;
-        } else {
-            $scope.error_message = '';
-        }
-
+    $scope.assign_mentee_a_saq = function(mentee){
         params = {
-            'mentee_id': $scope.saq_mentee,
+            'mentee_id': mentee.id,
             'questionnaire_id': $scope.selected_saq.id
         }
         $http({
@@ -310,18 +362,26 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).success(function(data, status) {
-            mentor.status = 'success';
         }).error(function(data, success){
         });
-
-       // $http.get("/user/mentees/assign/saq/"+$scope.saq_mentee+"/"+$scope.selected_saq.id).success(function(data)
-       // {
-       //     $scope.mentee.status = 'ASSIGNED';
-       //     $scope.show_popup = false;
-       // }).error(function(data, status)
-       // {
-       //     console.log(data || "Request failed");
-       // });
+    }
+    $scope.search_mentors = function(){
+        $http.get("/user/adminmentor?key="+$scope.mentor_search_key).success(function(data)
+        {
+            $scope.mentors_result = data.data;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+    $scope.search_mentees = function(){
+        $http.get("/user/adminmentee?key="+$scope.mentee_search_key).success(function(data)
+        {
+            $scope.mentees_result = data.data;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
     }
 }
 

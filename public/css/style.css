@@ -69,7 +69,7 @@ div.container a.brand {
 .login_header {
   width: 100%;
   height: 80px;
-  padding: 30px 0px 0px 20px;
+  padding: 10px 0px 0px 20px;
   background-color: #0066FF;
   color: #FFFFFF;
   margin-bottom: 35px;
@@ -398,5 +398,22 @@ div.container a.brand {
   opacity: 0.5;
   z-index: 2;
   background-color: #333333;
+}
+
+.close_button {
+    color: #333333;
+    display: block;
+    float: right;
+    font-size: 45px;
+    font-weight: bold;
+    margin-right: 2%;    
+}
+.close_button:hover {
+  text-decoration: none;
+  color: #333333;
+}
+.popup_header h3 {
+  width: 65%;
+  float: left;
 }
 /************* Dashboard Styles end **********/
