@@ -368,6 +368,18 @@ div.container a.brand {
 .popup_table_container {
   padding: 10px;
   position: relative;
+  height: 250px;
+}
+.popup_table_container table tbody {
+  height: 225px;
+  overflow: auto;
+  display: block;
+}
+.popup_table_container table tbody td {
+  width: 40%;
+}
+.popup_table_container table tbody td .assign_button {
+  width: 86px !important;
 }
 .search_box {
   margin-bottom: 10px;

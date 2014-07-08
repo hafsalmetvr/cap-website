@@ -9,7 +9,7 @@
                 </div>
                 <div class="popup_table_container"> 
                     <div class="search_box"> 
-                        <input type="text" name="search_mentor" ng-model="mentor_search_key" placeholder="Enter a Mentors Name..." /> 
+                        <input type="text" name="search_mentor" ng-model="mentor_search_key" placeholder="Enter a Mentors Name..." ng-change="search_mentors()" /> 
                         <span class="fa fa-search"></span>
                     </div>
                     <table class="table table-striped">
@@ -30,11 +30,11 @@
                 </div>
                 <div class="popup_table_container"> 
                     <div class="search_box"> 
-                        <input type="text" name="search_mentor" placeholder="Enter a Mentors Name..." ng-model="mentee_search_key" /> 
+                        <input type="text" name="search_mentor" placeholder="Enter a Mentors Name..." ng-model="mentee_search_key" ng-change="search_mentees()"/> 
                         <span class="fa fa-search"></span>
                     </div>
                     <table class="table table-striped">
-                        <tr ng-repeat="mentee in mentees">
+                        <tr ng-repeat="mentee in mentees_result">
                             <td> [[$index+1]] </td>
                             <td> [[mentee.firstName]] </td>
                             <td>
@@ -141,7 +141,7 @@
                             <td> [[mentee.status]] </td>
                             <td>
                                 <a href="" ng-click="assign(mentee)" class="assign_button" ng-hide="mentee.status == 'ASSIGNED'" ng-show="mentor.status == 'UNASSIGNED'"> ASSIGN </a>
-                                <a href="" ng-click="activate(mentee)" class="reassign_button" ng-show="mentee.status == 'ASSIGNED'" ng-hide="mentor.status == 'UNASSIGNED'"> REASSIGN </a>
+                                <a href="" ng-click="assign(mentee)" class="reassign_button" ng-show="mentee.status == 'ASSIGNED'" ng-hide="mentor.status == 'UNASSIGNED'"> REASSIGN </a>
                             </td>
                             <td> <a href="/user/adminmentee/mentee/[[mentee.id]]" class="view_button"> VIEW </a> </td>
                     </tr>
