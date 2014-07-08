@@ -22,20 +22,6 @@ class CustomerHierarchy
     private $id;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created", type="datetime", nullable=false)
-     */
-    private $created;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="modified", type="datetime", nullable=false)
-     */
-    private $modified = 'CURRENT_TIMESTAMP';
-
-    /**
      * @var \CsnUser\Entity\Customer
      *
      * @ORM\ManyToOne(targetEntity="CsnUser\Entity\Customer")
@@ -55,5 +41,30 @@ class CustomerHierarchy
      */
     private $childCustomer;
 
+    /**
+     * Set parentCustomer
+     *
+     * @param  string $parentCustomer
+     * @return CustomerHierarchy
+     */
+    public function setParentCustomer($parentCustomer)
+    {
+        $this->parentCustomer = $parentCustomer;
+
+        return $this;
+    }
+  
+   /**
+     * Set childCustomer
+     *
+     * @param  string $childCustomer
+     * @return CustomerHierarchy
+     */
+    public function setChildCustomer($childCustomer)
+    {
+        $this->childCustomer = $childCustomer;
+
+        return $this;
+    }
 
 }

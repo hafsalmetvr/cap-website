@@ -96,12 +96,27 @@ class AdminMenteeController extends AbstractRestfulController
    
     }
 
-   # public function create($data)
-   # {
+    public function create($data)
+    {
 
 
-   #   $entityManager = $this->getEntityManager();
- 
+      $entityManager = $this->getEntityManager();
+
+      $user = $entityManager->createQuery("SELECT c FROM CsnUser\Entity\CustomerHierarchy c WHERE c.childCustomer = '$data[mentee]'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+      
+      if($user) {
+     
+          $user = $user[0];
+      
+      } else {
+
+          $user = new CustomerHierarchy;
+          $user->setChildCustomer($entityManager->find('CsnUser\Entity\Customer', $data['mentee']));
+      }
+      $user->setParentCustomer($entityManager->find('CsnUser\Entity\Customer', $data['mentor']));
+
+      $entityManager->persist($user);
+      $entityManager->flush(); 
    #   $user = $this->getEntityManager()->createQuery("SELECT u FROM CsnUser\Entity\Customer u WHERE u.id = $data[mentor_id]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
    
     #  $user = $user[0];
@@ -110,9 +125,9 @@ class AdminMenteeController extends AbstractRestfulController
     #  $entityManager->persist($user);
     #  $entityManager->flush();
       
-    #  return new JsonModel(array('status' => $status));
+      return new JsonModel(array('status' => $user));
 
-    #}
+    }
 
    # public function delete($id) {
 
