@@ -67,7 +67,21 @@ class AdminMenteeController extends AbstractRestfulController
 
       $entityManager = $this->getEntityManager();
                # $user = $this->getEntityManager()->createQuery("SELECT u.id, u.firstName, s.id as status FROM CsnUser\Entity\Customer u JOIN u.status s WHERE u.role = 5")->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-                $user = $this->getEntityManager()->createQuery("SELECT u.id, u.firstName, s.name  as status FROM CsnUser\Entity\Customer u JOIN u.status s WHERE u.role = 6")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+                $user = $this->getEntityManager()->createQuery("SELECT u.id, u.firstName FROM CsnUser\Entity\Customer u WHERE u.role = 6")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+        
+                 foreach ($user as $key =>$user_id) {
+
+                  $user_hrcy = $this->getEntityManager()->createQuery("SELECT u FROM CsnUser\Entity\CustomerHierarchy u  WHERE u.childCustomer = $user_id[id]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+           
+                  if($user_hrcy) {
+
+                     $user[$key]['status'] = 'ASSIGNED';
+                 
+                  } else {
+
+                     $user[$key]['status'] = 'UNASSIGNED';
+                  }
+                  }
 
         return new JsonModel(array('data' => $user));
     }
