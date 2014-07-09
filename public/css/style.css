@@ -352,8 +352,16 @@ div.container a.brand {
 }
 .table_list_header {
   font-size: 20px;
+  float: left;
 }
-
+.create_note {
+    float: left;
+    font-size: 15px;
+    margin-left: 5px;
+    position: relative;
+    top: -6px;
+    width: 14%;
+}
 .popup {
     background-color: #FFFFFF;
     left: 30%;
@@ -429,3 +437,21 @@ div.container a.brand {
   float: left;
 }
 /************* Dashboard Styles end **********/
+
+/************** Mentee details page styles *********/
+
+.add_note {
+  width: 100%;
+  padding: 3%;
+}
+.add_note p {
+  padding: 15px;
+}
+
+.add_note input[type="submit"] {
+  float: right;
+}
+.add_note textarea {
+  width: 55%;
+}
+/************ Mentee details page style end

@@ -1,9 +1,8 @@
 <body ng-controller="MentorMenteeController" ng-init="init(<?php echo $mentor_id; ?>)" id="dashboard">
 	<div class="container_div">
+            <?php  echo $this->menuview ?>
 
-                   <?php  echo $this->menuview ?>
-
-                      <div class="table_container">
+          	<div class="table_container">
 				<span> Mentor Mentees </span>
 				<table class="table">
 					<tr>

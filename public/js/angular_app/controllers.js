@@ -196,7 +196,6 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         if($scope.que_pages > parseInt($scope.que_pages))
             $scope.que_pages = parseInt($scope.que_pages) + 1;
         $scope.visible_questionairs = $scope.questionairs.slice(0, $scope.ques_page_interval);
-        console.log($scope.que_pages);
     }
 
     $scope.select_ques_page = function(ques_page) {
@@ -283,6 +282,7 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         $http.get("/user/adminmentor/"+$scope.user_id).success(function(data)
         {
             $scope.mentees = data.data;
+            $scope.paginate_mentees();
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
@@ -435,14 +435,10 @@ function MentorMenteeController($scope, $element, $http, $timeout, $location, $c
         $http.delete("/user/adminmentor/"+mentee.id).success(function(data)
 
         {
-
             $scope.get_mentor_mentees();
-
         }).error(function(data, status)
-
         {
              console.log(data || "Request failed");
-
         });
     }
 }
@@ -661,4 +657,99 @@ function AdminMenteeSAQDetailController($scope, $element, $http, $timeout, $loca
             console.log(data || "Request failed");
         });
     }  
+}
+
+function MenteeDetailController($scope, $element, $http, $timeout, $location, $cookies)
+{
+     $scope.init = function(user,role, mentee_id){
+        $scope.user_id = user;
+        $scope.role_id = role;
+        $scope.show_popup = false;
+        $scope.ques_page_interval = 5;
+        $scope.notes_page_interval = 5;
+        $scope.shared_page_interval = 5;
+        $scope.mentee_id = mentee_id;
+        if($scope.role_id == 4){
+            $scope.user_type = "Administrator";
+        } else if($scope.role_id == 5){
+            $scope.user_type = "Mentor";
+        } else {
+            $scope.user_type = "Mentee";
+        }
+        $scope.get_mentee_saq_list();
+
+    }
+    $scope.range = function(n) {
+        return new Array(n);
+    }
+    $scope.getClass = function(page) {
+        if(page == $scope.current_page)
+            return "current";
+        else
+            return '';
+    }
+    $scope.get_mentee_saq_list = function(){
+        $http.get("/user/adminmentee/"+$scope.mentee_id).success(function(data)
+        {
+            $scope.mentee_saq_list = data.data;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    } 
+    $scope.show_menu = function(){
+        $('#menu').css('display', 'block');
+    }
+    $scope.hide_menu = function(){
+        $('#menu').css('display', 'none');
+    }
+    $scope.create_note = function(){
+        $scope.show_popup = true;
+    }
+    $scope.edit_note = function(note){
+        $scope.show_popup = true;
+        $scope.current_note.title = note.title;
+        $scope.current_note.id = note.id;
+        $scope.current_note.date = note.date;
+        $scope.current_note.description = note.description;
+    }
+    $scope.validate_note = function(){
+        if($scope.current_note.title == ''){
+            $scope.msg = "Please Enter Title";
+            return false;
+        } else if($scope.current_note.date == ''){
+            $scope.msg = "Please Select date";
+            return false;
+        } else if($scope.current_note.description == ''){
+            $scope.msg = "Please enter description";
+            return false;
+        } else {
+            return true;
+        }
+    }
+    $scope.save_new_note = function(){
+        if($scope.validate_note()){
+            params = { 
+                'description': $scope.current_note.description,
+                'date': $scope.current_note.date,
+                'title': $scope.current_note.title,
+                'id': $scope.current_note.id,
+            } 
+            $http({
+                method: 'post',
+                url: "/user/note/create",
+                data: angular.toJson(params),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).success(function(data, status) {
+                if(data.status == "true"){
+                    $scope.msg = "Note created Successfully";
+                } else {
+                    $scope.msg = data.message;
+                }
+            }).error(function(data, success){
+            });
+        }
+    }
 }
