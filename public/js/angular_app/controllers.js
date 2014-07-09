@@ -330,16 +330,36 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
         $scope.selected_mentee = mentee;
     }
     $scope.assign_mentee_a_mentor = function(mentor){
-        var mentee = $scope.selected_mentee;
-        var mentor = mentor;
-        $http.get("/user/mentees/assign/"+mentee.id+"/"+mentor.id).success(function(data)
-        {
-            $scope.mentee.status = 'ASSIGNED';
-            $scope.show_popup = false;
-        }).error(function(data, status)
-        {
-            console.log(data || "Request failed");
+       // var mentee = $scope.selected_mentee;
+       // var mentor = mentor;
+        params = {
+            'mentor': mentor,
+            'mentee': $scope.selected_mentee
+        }
+        $http({
+            method: 'post',
+            url: "/user/adminmentee",
+            data: $.param(params),
+            headers: {
+
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).success(function(data, status) {
+            $scope.mentee.status = 'ASSIGNED'
+            $scope.show_popup = false; 
+        }).error(function(data, success){
+            console.log(data || "Request failed")
         });
+
+
+       // $http.get("/user/mentees/assign/"+mentee.id+"/"+mentor.id).success(function(data)
+       // {
+       //     $scope.mentee.status = 'ASSIGNED';
+       //     $scope.show_popup = false;
+       // }).error(function(data, status)
+       // {
+       //     console.log(data || "Request failed");
+       // });
     }
     $scope.assign_saq = function(saq){
         $scope.show_popup = true;
