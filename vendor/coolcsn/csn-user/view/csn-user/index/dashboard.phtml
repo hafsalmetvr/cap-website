@@ -143,7 +143,10 @@
                                 <a href="" ng-click="assign(mentee)" class="assign_button" ng-hide="mentee.status == 'ASSIGNED'" ng-show="mentor.status == 'UNASSIGNED'"> ASSIGN </a>
                                 <a href="" ng-click="assign(mentee)" class="reassign_button" ng-show="mentee.status == 'ASSIGNED'" ng-hide="mentor.status == 'UNASSIGNED'"> REASSIGN </a>
                             </td>
-                            <td> <a href="/user/adminmentee/mentee/[[mentee.id]]" class="view_button"> VIEW </a> </td>
+                            <td> 
+                                <a href="/user/adminmentee/mentee/[[mentee.id]]" class="view_button" ng-show="user_type == 'Administrator'"> VIEW </a>
+                                <a href="/user/mentor/mentee/[[mentee.id]]" ng-show="user_type == 'Mentor'" class="view_button"> VIEW </a>
+                             </td>
                     </tr>
             </table>
             <div class="page" ng-show="mentee_pages > 1">

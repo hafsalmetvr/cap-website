@@ -772,4 +772,14 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
             });
         }
     }
+    $scope.delete_note = function(note){
+
+        $http.delete("/user/mentor/mentee/note"+note.id).success(function(data)
+        {
+            $scope.get_notes();
+        }).error(function(data, status)
+        {
+             console.log(data || "Request failed");
+        });
+    }
 }

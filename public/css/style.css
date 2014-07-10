@@ -271,14 +271,9 @@ div.container a.brand {
   text-align: center;
   padding-top: 10px;
 }
-.view_button {
+.view_button:hover {
+  text-decoration: none !important;
   color: #FFFFFF;
-  width: 86px;
-  height: 41px;
-  background-color: #0066FF;
-  display: block;
-  text-align: center;
-  padding-top: 10px;
 }
 .deactivate_button {
   color: #FFFFFF;
