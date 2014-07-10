@@ -697,7 +697,8 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
             $scope.user_type = "Mentee";
         }
         $scope.get_mentee_saq_list();
-
+        $scope.get_mentee_notes();
+        $scope.get_mentee_shared_notes();
     }
     $scope.range = function(n) {
         return new Array(n);
@@ -712,11 +713,33 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
         $http.get("/user/adminmentee/"+$scope.mentee_id).success(function(data)
         {
             $scope.mentee_saq_list = data.data;
+            console.log($scope.mentee_id);
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
         });
-    } 
+    }
+    $scope.get_mentee_notes = function(){
+        $http.get("/user/notes/").success(function(data)
+        {
+            $scope.menteenotes = data.data;
+            console.log($scope.mentee_id);
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+    $scope.get_mentee_shared_notes = function(){
+        $http.get("/user/notes/"+$scope.mentee_id).success(function(data)
+        {
+            $scope.menteesharednotes = data.data;
+            console.log($scope.mentee_id);
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
+        });
+    }
+ 
     $scope.show_menu = function(){
         $('#menu').css('display', 'block');
     }
@@ -751,13 +774,13 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
         if($scope.validate_note()){
             params = { 
                 'description': $scope.current_note.description,
-                'date': $scope.current_note.date,
+                'created': $scope.current_note.date,
                 'title': $scope.current_note.title,
                 'id': $scope.current_note.id,
             } 
             $http({
                 method: 'post',
-                url: "/user/note/create",
+                url: "user/notes",
                 data: angular.toJson(params),
                 headers: {
                     'Content-Type': 'application/json'
@@ -774,7 +797,7 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
     }
     $scope.delete_note = function(note){
 
-        $http.delete("/user/mentor/mentee/note"+note.id).success(function(data)
+        $http.delete("/user/notes/"+note.id).success(function(data)
         {
             $scope.get_notes();
         }).error(function(data, status)

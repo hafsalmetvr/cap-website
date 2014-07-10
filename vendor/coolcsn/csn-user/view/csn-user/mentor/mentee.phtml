@@ -80,10 +80,10 @@
                     <th> Share w/ Mentee </th>
                     <th> Actions </th>
                 </tr>
-                <tr ng-repeat="note in notes">
+                <tr ng-repeat="note in menteenotes">
                     <td> [[$index+1]] </td>
                     <td> [[note.title]] </td>
-                    <td> [[note.date]] </td>
+                    <td> [[note.created.date]] </td>
                     <td> &nbsp; </td>
                     <td> <a href="" class="view_button" ng-click="delete_note(note)"> DELETE </a> </td>
                     <td> <a href="" class="view_button" ng-click="edit_note(note)"> EDIT </a> </td>
@@ -101,10 +101,10 @@
                     <th> Date </th>
                     <th> Actions </th>
                 </tr>
-                <tr ng-repeat="note in notes">
+                <tr ng-repeat="notesh in menteesharednotes">
                     <td> [[$index+1]] </td>
-                    <td> [[note.title]] </td>
-                    <td> [[note.date]] </td>
+                    <td> [[notesh.title]] </td>
+                    <td> [[notesh.created.date]] </td>
                     <td> <a href="/user/mentormentee/note/[[note.id]]" class="view_button"> VIEW </a> </td>
                 </tr>
             </table>

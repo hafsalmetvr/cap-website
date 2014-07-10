@@ -26,7 +26,8 @@ return array(
             'CsnUser\Controller\AdminSaqresult' => 'CsnUser\Controller\AdminSaqresultController',
             'CsnUser\Controller\MenteeSearch'  =>  'CsnUser\Controller\MenteeSearchController',
             'CsnUser\Controller\MentorSearch'  =>  'CsnUser\Controller\MentorSearchController',
-            'CsnUser\Controller\Mentor' => 'CsnUser\Controller\MentorController'
+            'CsnUser\Controller\Mentor' => 'CsnUser\Controller\MentorController',
+            'CsnUser\Controller\Notes'  => 'CsnUser\Controller\NotesController'
         ),
     ),
     'router' => array(
@@ -213,7 +214,21 @@ return array(
                 ),
                 'may_terminate' => true,
             ),
-
+           'notes' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/user/notes[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CsnUser\Controller\Notes',
+                        #'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
         ),
     ),
     'view_manager' => array(
