@@ -24,14 +24,14 @@ class CustomerNoteMap
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created", type="datetime", nullable=false)
+     * @ORM\Column(name="created", nullable=false)
      */
     private $created;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="modified", type="datetime", nullable=false)
+     * @ORM\Column(name="modified", nullable=false)
      */
     private $modified = 'CURRENT_TIMESTAMP';
 
@@ -55,5 +55,43 @@ class CustomerNoteMap
      */
     private $customerNote;
 
+     /**
+     * Set customer
+     *
+     * @param  string $customer
+     * @return CustomerNoteMap 
+     */
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Set customerNote
+     *
+     * @param  string $customerNote
+     * @return CustomerNoteMap 
+     */
+    public function setCustomerNote($customerNote)
+    {
+        $this->customerNote = $customerNote;
+
+        return $this;
+    }
+
+    /**
+     * Set created
+     *
+     * @param  string $created
+     * @return CustomerNote 
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
 
 }

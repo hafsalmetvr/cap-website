@@ -23,6 +23,7 @@ use CsnUser\Entity\Customer;
 use CsnUser\Entity\CustomerStatus;
 use CsnUser\Entity\CustomerHierarchy;
 use CsnUser\Entity\CustomerNote;
+use CsnUser\Entity\CustomerNoteMap;
 use CsnUser\Options\ModuleOptions;
 use CsnUser\Service\UserService as UserCredentialsService;
 
@@ -121,8 +122,16 @@ class NotesController extends AbstractRestfulController
       $note->setCreated($data['created']);
       $entityManager->persist($note);
       $entityManager->flush();
+      $id = $note->getId();
+
+      if($data['share_with_mentee']) {
+
+         
+         $this->sharenote($data['mentee'], $id);
+      }
+
       
-      return new JsonModel(array('status' => true));
+      return new JsonModel(array('status' => $id));
 
     }
 
@@ -150,7 +159,10 @@ class NotesController extends AbstractRestfulController
       $note->setCreated($data['created']);
       $entityManager->persist($note);
       $entityManager->flush();
-
+   
+      if($data['share_with_mentee']) { 
+         $this->sharenote($data['mentee'], $id);
+      }
       return new JsonModel(array('status' => true));
 
     }
@@ -172,7 +184,34 @@ class NotesController extends AbstractRestfulController
       return new JsonModel(array('status' => $status));
 
     }
-    
+
+    public function sharenote($cid, $note=null) {
+
+     if (!$user = $this->identity()) {
+
+             return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
+
+     }
+
+        $entityManager = $this->getEntityManager();
+       # $user = $entityManager->getRepository('CsnUser\Entity\Question')->findall();
+
+       $notes = $entityManager->createQuery("SELECT cn FROM CsnUser\Entity\CustomerNoteMap cn WHERE cn.customerNote='$note'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+
+     if(!$notes) {
+
+      $notes = new CustomerNoteMap;
+
+      $notes->setCustomer($entityManager->find('CsnUser\Entity\Customer', $cid));
+      $notes->setCustomerNote($entityManager->find('CsnUser\Entity\CustomerNote', $note));
+      $notes->setCreated('434343');
+      $entityManager->persist($notes);
+      $entityManager->flush();
+   
+      return 1; 
+     }
+
+     }    
     /**
      * Confirm Saq View Action
      *

@@ -784,6 +784,7 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
                 'created': 'dummy txt',
                 'id': $scope.current_note.id,
                 'share_with_mentee': $scope.current_note.share_with_mentee,
+                'mentee' :$scope.mentee_id,
             } 
             if($scope.edit_flag){
                 var url = "/user/notes/"+$scope.current_note.id;
