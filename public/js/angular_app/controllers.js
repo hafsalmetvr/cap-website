@@ -689,6 +689,7 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
         $scope.notes_page_interval = 5;
         $scope.shared_page_interval = 5;
         $scope.mentee_id = mentee_id;
+        $scope.edit_flag = false;
         if($scope.role_id == 4){
             $scope.user_type = "Administrator";
         } else if($scope.role_id == 5){
@@ -699,6 +700,9 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
         $scope.get_mentee_saq_list();
         $scope.get_mentee_notes();
         $scope.get_mentee_shared_notes();
+        $scope.current_note = {};
+        $scope.clear_current_note();
+
     }
     $scope.range = function(n) {
         return new Array(n);
@@ -713,7 +717,6 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
         $http.get("/user/adminmentee/"+$scope.mentee_id).success(function(data)
         {
             $scope.mentee_saq_list = data.data;
-            console.log($scope.mentee_id);
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
@@ -723,7 +726,6 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
         $http.get("/user/notes/").success(function(data)
         {
             $scope.menteenotes = data.data;
-            console.log($scope.mentee_id);
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
@@ -733,7 +735,6 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
         $http.get("/user/notes/"+$scope.mentee_id).success(function(data)
         {
             $scope.menteesharednotes = data.data;
-            console.log($scope.mentee_id);
         }).error(function(data, status)
         {
             console.log(data || "Request failed");
@@ -750,10 +751,11 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
         $scope.show_popup = true;
     }
     $scope.edit_note = function(note){
+        $scope.edit_flag = true;
+        $scope.msg = false;
         $scope.show_popup = true;
         $scope.current_note.title = note.title;
         $scope.current_note.id = note.id;
-        $scope.current_note.date = note.date;
         $scope.current_note.description = note.description;
     }
     $scope.validate_note = function(){
@@ -770,29 +772,65 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
             return true;
         }
     }
+    $scope.clear_current_note = function(){
+        $scope.current_note.title = '';
+        $scope.current_note.id = '';
+        $scope.current_note.share_with_mentee = false;
+    }
     $scope.save_new_note = function(){
         if($scope.validate_note()){
             params = { 
-                'description': $scope.current_note.description,
-                'created': $scope.current_note.date,
                 'title': $scope.current_note.title,
+                'created': 'dummy txt',
                 'id': $scope.current_note.id,
+                'share_with_mentee': $scope.current_note.share_with_mentee,
             } 
-            $http({
+            if($scope.edit_flag){
+                var url = "/user/notes/"+$scope.current_note.id;
+                $http({
+                method: 'put',
+                    url: url,
+                    data: angular.toJson(params),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).success(function(data, status) {
+                    if(data.status == "true"){
+                        $scope.msg = "Note saved Successfully";
+                    } else {
+                        $scope.msg = data.message;
+                    }
+                    $scope.get_mentee_notes();
+                    $scope.msg = '';
+                    $scope.edit_flag = false;
+                    $scope.show_popup = false;
+                    $scope.clear_current_note();
+                }).error(function(data, success){
+                });
+            } else {
+                var url = "/user/notes/"
+                $http({
                 method: 'post',
-                url: "user/notes",
-                data: angular.toJson(params),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).success(function(data, status) {
-                if(data.status == "true"){
-                    $scope.msg = "Note created Successfully";
-                } else {
-                    $scope.msg = data.message;
-                }
-            }).error(function(data, success){
-            });
+                    url: url,
+                    data: angular.toJson(params),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).success(function(data, status) {
+                    if(data.status == "true"){
+                        $scope.msg = "Note saved Successfully";
+                    } else {
+                        $scope.msg = data.message;
+                    }
+                    $scope.get_mentee_notes();
+                    $scope.msg = '';
+                    $scope.edit_flag = false;
+                    $scope.show_popup = false;
+                    $scope.clear_current_note();
+                }).error(function(data, success){
+                });
+            }
+
         }
     }
     $scope.delete_note = function(note){

@@ -14,14 +14,10 @@
                             <input type="text" ng-model="current_note.title" />
                         </p>
                         <p>
-                            <label> Date: </label>
-                            <input type="text" ng-model="current_note.date" />
+                            <label> Share with mentee : </label>
+                            <input type="checkbox" ng-model="current_note.share_with_mentee" />
                         </p>
-                        <p>
-                            <label> Descrition </label>
-                            <textarea ng-model="current_note.description"></textarea>
-                        </p>
-                        <p> <input type="submit" value="Save" /> </p>
+                        <p> <a href="" ng-click="save_new_note()" class="view_button"> Save </a> </p>
 
                     </div>
                 </div>
@@ -79,14 +75,15 @@
                     <th> Date </th>
                     <th> Share w/ Mentee </th>
                     <th> Actions </th>
+                    <th> &nbsp; </th>
                 </tr>
                 <tr ng-repeat="note in menteenotes">
                     <td> [[$index+1]] </td>
                     <td> [[note.title]] </td>
-                    <td> [[note.created.date]] </td>
+                    <td> [[note.created]] </td>
                     <td> &nbsp; </td>
-                    <td> <a href="" class="view_button" ng-click="delete_note(note)"> DELETE </a> </td>
-                    <td> <a href="" class="view_button" ng-click="edit_note(note)"> EDIT </a> </td>
+                    <td> <a href="" class="view_button" ng-click="delete_note(note)" style="float: left; margin-right: 10px;"> DELETE </a> <a href="" class="view_button" ng-click="edit_note(note)" style="float: left"> EDIT </a></td>
+                    <td>  </td>
                 </tr>
             </table>
         </div>
@@ -104,7 +101,7 @@
                 <tr ng-repeat="notesh in menteesharednotes">
                     <td> [[$index+1]] </td>
                     <td> [[notesh.title]] </td>
-                    <td> [[notesh.created.date]] </td>
+                    <td> [[notesh.created]] </td>
                     <td> <a href="/user/mentormentee/note/[[note.id]]" class="view_button"> VIEW </a> </td>
                 </tr>
             </table>
