@@ -65,9 +65,9 @@ class CreateaccountController extends AbstractRestfulController
         }
 
         $this->layout('layout/dashboard'); 
-        $viewModel =  new ViewModel();
+        $viewModel =  new ViewModel(array('user'=> $user->getId() ,'role' => $user->getRoleid()));
         
-        $menuview = new ViewModel(array('name' => $user->getFirstName()));
+        $menuview = new ViewModel(array('name' => $user->getFirstName(), 'role' => $user->getRoleid()));
         $menuview->setTemplate('layout/menu');
         $viewModel->addChild($menuview, 'menuview');
 
@@ -95,7 +95,7 @@ class CreateaccountController extends AbstractRestfulController
             if(!$customer) {
                 $user->setDomain($entityManager->find('CsnUser\Entity\Domain', 3));
                 $user->setRole($entityManager->find('CsnUser\Entity\Role', $data['account_type']));
-                #$user->setEmailConfirmed(false);
+                $user->setStatus($entityManager->find('CsnUser\Entity\CustomerStatus', 1));
                 $user->setFirstName($data['name']);
                 #$user->setLastName($data['lastname']);
                 $user->setEmail($data['email']);

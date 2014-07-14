@@ -86,12 +86,19 @@ class AdminMenteeController extends AbstractRestfulController
         return new JsonModel(array('data' => $user));
     }
 
+
+   /*
+   * Get Customer questionnaire
+   *
+   */
+
+
     public function get($id)
     {
    
     
         $entityManager = $this->getEntityManager();
-        $user = $entityManager->createQuery("SELECT q.id, c.id as questionnaire_id, c.name FROM CsnUser\Entity\CustomerQuestionnaire q JOIN q.questionnaire c where q.customer = $id")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+        $user = $entityManager->createQuery("SELECT q.id, c.id as questionnaire_id, c.name, cs.name as completion_status FROM CsnUser\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where q.customer = $id")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
         return new JsonModel(array('data' => $user));
    
     }
