@@ -88,6 +88,19 @@ class IndexController extends AbstractRestfulController
 
       $this->layout('layout/dashboard');
       $viewModel  =  new ViewModel(array('user'=> $user->getId() ,'role' => $user->getRoleid()));
+
+      if($user->getRoleid() == 6) {
+
+          $pid = $user->getRoleid();
+          $entityManager = $this->getEntityManager();
+          $parent = $entityManager->createQuery("SELECT ch.firstName, ch.id, ch.email FROM CsnUser\Entity\CustomerHierarchy c JOIN c.parentCustomer ch WHERE c.childCustomer = '$pid'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT); 
+      
+      } else {
+       
+      
+       
+      }
+
     
       $menuview = new ViewModel(array('name' => $user->getFirstName(), 'role' => $user->getRoleid()));
       $menuview->setTemplate('layout/menu');
