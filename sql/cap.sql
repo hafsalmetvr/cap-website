@@ -201,8 +201,7 @@ CREATE TABLE `customer` (
   `email` varchar(255) NOT NULL,
   `domain_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `status_id` int(1) DEFAULT '1',
   `verify_email_token` varchar(255) DEFAULT NULL,
@@ -216,7 +215,7 @@ CREATE TABLE `customer` (
   CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `domain` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `customer_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `customer_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +224,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (4,'hafsalmetvr@gmail.com',0,4,'Ansal',NULL,'$2y$10$K0ZZKJLmCweOrSBF/dNK5OrvpBCFwbmXtKYFFlf0ItpjT6GhPc5wK',1,'5beec137c2d70b7d81334a703e14ca42','2014-06-02 16:49:40','2014-06-26 18:35:57'),(14,'ansal@technomics.com',3,5,'Ansal',NULL,'$2y$10$K0ZZKJLmCweOrSBF/dNK5OrvpBCFwbmXtKYFFlf0ItpjT6GhPc5wK',2,'61329ea7aa56dc2926f5b8ab8f90bb1b','2014-06-10 23:53:11','2014-07-07 18:53:52'),(27,'mentee1@gmail.com',3,6,'Mentee1',NULL,'$2y$10$5zjHAQJvKoRTDsVeqsncA.JyFaCbtLEl04dUCNRd6rP/E.B6xCP6G',1,'36b5b63d69dd3f581388de8ab4486281','2014-06-22 19:04:54','2014-06-28 20:18:16'),(28,'mentee2mentee@gmail.com',3,6,'Mentee2',NULL,'$2y$10$lbKWl3eOyvnaHZUGHjB72unVI5rbG.U8Ip9CM6jXiHBK1H726KWpe',1,'9e3edf5c39832929fda6355e46e254a1','2014-06-24 01:35:34','2014-06-28 20:18:16'),(29,'mentor@mentorr.com',3,5,'Mentor2',NULL,'$2y$10$vTZFMmGXGLNZ2yZwlx4.1OY4bsorq6LRpnX8kCkpmbi6f5KQ/Jc9K',NULL,'360da9d06ac427fb82fde26464469fcb','2014-06-24 23:56:54','2014-06-24 18:26:54'),(30,'mentee2@mentorr.com',3,6,'Mentee2',NULL,'$2y$10$34MakWxhVSeCsXg8wVoJNOk90olvK0rPJNUVboNNeOKY3aab/6.tK',1,'12476d66a63345ca05ba86d0b2519e32','2014-06-24 23:57:55','2014-06-28 20:18:16'),(31,'menteeeee22@gmail.com',3,6,'Mentee2',NULL,'$2y$10$mNLKH0w.uhIk22o9nYQKPepBsh/zq.XtZxsNu6VKXlqmGsFRo3Qpe',1,'38e7370fbfc59f7e793a0b127b1166cc','2014-06-27 00:26:07','2014-06-28 20:18:16');
+INSERT INTO `customer` VALUES (4,'hafsalmetvr@gmail.com',0,4,'Ansal','$2y$10$K0ZZKJLmCweOrSBF/dNK5OrvpBCFwbmXtKYFFlf0ItpjT6GhPc5wK',1,'5beec137c2d70b7d81334a703e14ca42','2014-06-02 16:49:40','2014-06-26 18:35:57'),(14,'ansal@technomics.com',3,5,'Ansal','$2y$10$K0ZZKJLmCweOrSBF/dNK5OrvpBCFwbmXtKYFFlf0ItpjT6GhPc5wK',1,'61329ea7aa56dc2926f5b8ab8f90bb1b','2014-06-10 23:53:11','2014-07-14 19:37:45'),(27,'mentee1@gmail.com',3,6,'Mentee1','$2y$10$K0ZZKJLmCweOrSBF/dNK5OrvpBCFwbmXtKYFFlf0ItpjT6GhPc5wK',1,'36b5b63d69dd3f581388de8ab4486281','2014-06-22 19:04:54','2014-07-14 09:46:06'),(28,'mentee2mentee@gmail.com',3,6,'Mentee2','$2y$10$lbKWl3eOyvnaHZUGHjB72unVI5rbG.U8Ip9CM6jXiHBK1H726KWpe',1,'9e3edf5c39832929fda6355e46e254a1','2014-06-24 01:35:34','2014-06-28 20:18:16'),(29,'mentor@mentorr.com',3,5,'Mentor2','$2y$10$vTZFMmGXGLNZ2yZwlx4.1OY4bsorq6LRpnX8kCkpmbi6f5KQ/Jc9K',1,'360da9d06ac427fb82fde26464469fcb','2014-06-24 23:56:54','2014-07-14 19:37:43'),(30,'mentee2@mentorr.com',3,6,'Mentee2','$2y$10$34MakWxhVSeCsXg8wVoJNOk90olvK0rPJNUVboNNeOKY3aab/6.tK',1,'12476d66a63345ca05ba86d0b2519e32','2014-06-24 23:57:55','2014-06-28 20:18:16'),(31,'menteeeee22@gmail.com',3,6,'Mentee2','$2y$10$mNLKH0w.uhIk22o9nYQKPepBsh/zq.XtZxsNu6VKXlqmGsFRo3Qpe',1,'38e7370fbfc59f7e793a0b127b1166cc','2014-06-27 00:26:07','2014-06-28 20:18:16'),(33,'veerankuttyvp1@gmail.com',3,6,'test Mentor','$2y$10$nuCgwo.qJcR/riHxRmn/oO.HdDF/WlmQls3TBFaDY3wmIcRoe2bQC',1,'953d6a6631c60bfd2bc062e2b8b11209','2014-07-15 01:05:23','2014-07-14 19:35:23'),(34,'mentor6@gmail.com',3,5,'Mentor6','$2y$10$xD1TSbDwaORyvt8OpcEOJebBkPnUjaLd3I8z9pJjKegXj4N99sIra',1,'e4f84ec8840b4674247a621695886f6d','2014-07-16 01:17:42','2014-07-15 19:47:42');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -358,7 +357,7 @@ CREATE TABLE `customer_note` (
   KEY `questionnaire_id` (`questionnaire_id`),
   CONSTRAINT `customer_note_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_note_ibfk_2` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,6 +366,7 @@ CREATE TABLE `customer_note` (
 
 LOCK TABLES `customer_note` WRITE;
 /*!40000 ALTER TABLE `customer_note` DISABLE KEYS */;
+INSERT INTO `customer_note` VALUES (2,27,NULL,'test note of ansal','2014-07-11 01:15:23','2014-07-10 19:45:23'),(3,27,NULL,'test','2014-07-11 02:12:00','2014-07-10 20:44:35'),(6,14,NULL,'xxxxxxxxxxxx','0000-00-00 00:00:00','2014-07-11 17:44:29'),(7,14,NULL,'test3','0000-00-00 00:00:00','2014-07-11 18:12:17'),(8,14,NULL,'test4','2014-07-11 23:43:06','0000-00-00 00:00:00'),(9,14,NULL,'test5','2014-07-11 23:43:53','0000-00-00 00:00:00'),(10,14,NULL,'test54','2014-07-11 23:45:49','0000-00-00 00:00:00'),(11,14,NULL,'test45','2014-07-11 23:46:59','0000-00-00 00:00:00'),(12,27,NULL,'test3','2014-07-15 22:30:03','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `customer_note` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -403,7 +403,7 @@ CREATE TABLE `customer_note_map` (
   KEY `customer_note_id` (`customer_note_id`),
   CONSTRAINT `customer_note_map_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_note_map_ibfk_2` FOREIGN KEY (`customer_note_id`) REFERENCES `customer_note` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -412,6 +412,7 @@ CREATE TABLE `customer_note_map` (
 
 LOCK TABLES `customer_note_map` WRITE;
 /*!40000 ALTER TABLE `customer_note_map` DISABLE KEYS */;
+INSERT INTO `customer_note_map` VALUES (5,6,27,'2014-07-11 23:36:21','0000-00-00 00:00:00'),(6,7,27,'2014-07-11 23:42:29','0000-00-00 00:00:00'),(7,11,27,'2014-07-11 23:46:59','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `customer_note_map` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1231,4 +1232,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-09  0:06:27
+-- Dump completed on 2014-07-16  1:31:33

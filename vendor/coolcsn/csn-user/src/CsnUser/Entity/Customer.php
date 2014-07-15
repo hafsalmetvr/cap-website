@@ -45,24 +45,13 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="first_name", type="string", length=40, nullable=true)
+     * @ORM\Column(name="name", type="string", length=40, nullable=true)
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"StringLength", "options":{"encoding":"UTF-8", "max":40}})
      */
     protected $firstName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="last_name", type="string", length=40, nullable=true)
-     * @Annotation\Type("Zend\Form\Element\Text")
-     * @Annotation\Filter({"name":"StripTags"})
-     * @Annotation\Filter({"name":"StringTrim"})
-     * @Annotation\Validator({"name":"StringLength", "options":{"encoding":"UTF-8", "max":40}})
-     */
-    protected $lastName;
 
     /**
      * @var string
