@@ -561,8 +561,13 @@ function MentorMenteeController($scope, $element, $http, $timeout, $location, $c
         $scope.user_type = "Administrator";
         $scope.get_mentor_mentees();
     }
-
-     $scope.get_mentor_mentees = function(){
+    $scope.show_menu = function(){
+        $('#menu').css('display', 'block');
+    }
+    $scope.hide_menu = function(){
+        $('#menu').css('display', 'none');
+    }
+    $scope.get_mentor_mentees = function(){
         $http.get("/user/adminmentor/"+$scope.mentor_id).success(function(data)
         {
             $scope.mentees = data.data;
@@ -682,11 +687,11 @@ function CreateAccountController($scope, $element, $http, $timeout, $location, $
         $scope.title = '';
         $scope.phone_number = '';
         $scope.email = '';
-        if($scope.role_id == 1){
+        if($scope.role_id == 4){
             $scope.user_type = "Administrator";
-        } else if($scope.role_id == 2){
+        } else if($scope.role_id == 5){
             $scope.user_type = "Mentor";
-        } else {
+        } else if($scope.role_id == 6){
             $scope.user_type = "Mentee";
         }
         $scope.msg = '';
