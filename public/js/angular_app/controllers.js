@@ -435,8 +435,8 @@ function DashboardController($scope, $element, $http, $timeout, $location, $cook
     }
     $scope.assign_mentee_a_mentor = function(mentor){
         params = {
-            'mentor': mentor,
-            'mentee': $scope.selected_mentee
+            'mentor': mentor.id,
+            'mentee': $scope.selected_mentee.id
         }
         $http({
             method: 'post',

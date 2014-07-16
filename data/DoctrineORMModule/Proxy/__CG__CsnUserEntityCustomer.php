@@ -64,10 +64,10 @@ class Customer extends \CsnUser\Entity\Customer implements \Doctrine\ORM\Proxy\P
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'firstName', 'lastName', 'email', 'password', 'role', 'registrationToken', 'domain', '' . "\0" . 'CsnUser\\Entity\\Customer' . "\0" . 'status', 'roleid');
+            return array('__isInitialized__', 'id', 'firstName', 'email', 'password', 'role', 'registrationToken', 'domain', '' . "\0" . 'CsnUser\\Entity\\Customer' . "\0" . 'status', 'roleid');
         }
 
-        return array('__isInitialized__', 'id', 'firstName', 'lastName', 'email', 'password', 'role', 'registrationToken', 'domain', '' . "\0" . 'CsnUser\\Entity\\Customer' . "\0" . 'status', 'roleid');
+        return array('__isInitialized__', 'id', 'firstName', 'email', 'password', 'role', 'registrationToken', 'domain', '' . "\0" . 'CsnUser\\Entity\\Customer' . "\0" . 'status', 'roleid');
     }
 
     /**
