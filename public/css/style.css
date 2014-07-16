@@ -449,4 +449,22 @@ div.container a.brand {
 .add_note textarea {
   width: 55%;
 }
-/************ Mentee details page style end
+/************ Mentee details page style end ********************/
+
+.mentor_info p {
+  width: 60%;
+  float: left;
+}
+.mentor_info p label  {
+  width: 30%;
+  float: left;
+}
+
+.mentor_info p span  {
+  width: 70%;
+  float: left;
+}
+
+.clear {
+  clear: both;
+}
