@@ -157,8 +157,8 @@
                                 <td> [[mentee.firstName]] </td>
                                 <td> [[mentee.status]] </td>
                                 <td>
-                                    <a href="" ng-click="assign(mentee)" class="assign_button" ng-hide="mentee.status == 'ASSIGNED'" ng-show="mentor.status == 'UNASSIGNED'"> ASSIGN </a>
-                                    <a href="" ng-click="assign(mentee)" class="reassign_button" ng-show="mentee.status == 'ASSIGNED'" ng-hide="mentor.status == 'UNASSIGNED'"> REASSIGN </a>
+                                    <a href="" ng-click="assign(mentee)" class="assign_button" ng-hide="mentee.status == 'ASSIGNED'"> ASSIGN </a>
+                                    <a href="" ng-click="assign(mentee)" class="reassign_button" ng-show="mentee.status == 'ASSIGNED'"> REASSIGN </a>
                                 </td>
                                 <td> 
                                     <a href="/user/adminmentee/mentee/[[mentee.id]]" class="view_button" ng-show="user_type == 'Administrator'"> VIEW </a>
