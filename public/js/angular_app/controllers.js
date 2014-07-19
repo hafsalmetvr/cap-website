@@ -808,7 +808,7 @@ function AdminMenteeSAQDetailController($scope, $element, $http, $timeout, $loca
 
 function MenteeDetailController($scope, $element, $http, $timeout, $location, $cookies)
 {
-     $scope.init = function(user,role, mentee_id){
+    $scope.init = function(user,role, mentee_id){
         $scope.user_id = user;
         $scope.role_id = role;
         $scope.show_popup = false;
@@ -893,5 +893,51 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
     $scope.delete_note = function(note){
 
         delete_note(note, $scope, $http);
+    }
+}
+
+function MenteeSAQInterface($scope, $element, $http, $timeout, $location, $cookies){
+    $scope.init = function(){
+
+    }
+    $scope.get_saq_details = function(){
+        params = {
+            'mentee_id': mentee.id,
+            'questionnaire_id': $scope.selected_saq.id
+        }
+        $http({
+            method: 'post',
+            url: "/user/saqlist",
+            data: $.param(params),
+            headers: {
+
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).success(function(data, status) {
+        }).error(function(data, success){
+        });
+    }
+}
+
+function SAQDetail($scope, $element, $http, $timeout, $location, $cookies){
+    $scope.init = function(){
+
+    }
+    $scope.get_saq_details = function(){
+        params = {
+            'mentee_id': mentee.id,
+            'questionnaire_id': $scope.selected_saq.id
+        }
+        $http({
+            method: 'post',
+            url: "/user/saqlist",
+            data: $.param(params),
+            headers: {
+
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).success(function(data, status) {
+        }).error(function(data, success){
+        });
     }
 }
