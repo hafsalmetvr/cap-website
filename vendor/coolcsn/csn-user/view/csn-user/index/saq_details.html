@@ -1,0 +1,15 @@
+<div class="content" ng-controller="SAQDetail" ng-init="init()">
+	<h3 class="page_header_with_underline"> Skill Assessment Questionnare</h3>
+	<p> [[saq.name]]: [[saq.completion_percentage]]</p>
+	<div class="" ng-repeat="section in saq.sections.questions">
+		<p>[[question.number]]. [[question.question]]</p>
+		<p>[[saq.description]]</p>
+		<table>
+			<tr ng-repeat="section in saq.sections">
+				<td> [[section.number]][[section.name]] </td>
+				<td> [[section.questions]]</td>
+				<td> [[section.status]]</td>
+			</tr>
+		</table>
+	</div>	
+</div>
