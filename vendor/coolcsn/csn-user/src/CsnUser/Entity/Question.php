@@ -76,6 +76,22 @@ class Question
      */
     private $section;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="section_id", type="integer", length=255, nullable=true)
+     */
+
+    private $sectionid;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="questionnaire_id", type="integer", length=255, nullable=true)
+     */
+
+    private $questionnaireid;
+
      /**
      * Get id
      *
@@ -86,4 +102,33 @@ class Question
         return $this->id;
     }
 
+     /**
+     * Get sectionid
+     *
+     * @return sectionid
+     */
+    public function getSectionid()
+    {
+        return $this->sectionid;
+    }
+
+    /**
+     * Get questionnaireid
+     *
+     * @return questionnaireid
+     */
+    public function getQuestionnaireid()
+    {
+        return $this->questionnaireid;
+    }
+
+    /**
+     * Get questionOrder
+     *
+     * @return QuestionOrder
+     */
+    public function getQuestionOrder()
+    {
+        return $this->questionOrder;
+    }
 }

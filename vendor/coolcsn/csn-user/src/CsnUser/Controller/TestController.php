@@ -87,11 +87,28 @@ class TestController extends AbstractRestfulController
     public function create($data)
     {
 
-       $qid = $data['qid'];
-       $section = 1;
-       $order = 0;
+
+       if(isset($data['AnswerSubmit'])) {
+       
+         $entityManager = $this->getEntityManager();
+         $qst = $entityManager->createQuery("SELECT q FROM CsnUser\Entity\Question q WHERE q.id = 1")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+         $qst = $qst[0];
+         $qid  =  $qst->getQuestionnaireid();
+         $section =  $qst->getSectionid();
+         $order =  $qst->getQuestionOrder();
+          
+        # return new JsonModel(array('question' => $));
+  
+
+       } else {
+
+          $qid = $data['qid'];
+          $section = 1;
+          $order = 0;
+       
+       }
        $entityManager = $this->getEntityManager();
-       $qst = $entityManager->createQuery("SELECT q.questionText,q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder");
+       $qst = $entityManager->createQuery("SELECT q.id, q.questionnaireid, q.questionText,q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder");
        $qst->setMaxResults(1);
        $question =   $qst->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
        #$question = $question[0]; 
