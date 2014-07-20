@@ -91,15 +91,12 @@ class TestController extends AbstractRestfulController
        if(isset($data['AnswerSubmit'])) {
        
          $entityManager = $this->getEntityManager();
-         $qst = $entityManager->createQuery("SELECT q FROM CsnUser\Entity\Question q WHERE q.id = 1")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+         $qst = $entityManager->createQuery("SELECT q FROM CsnUser\Entity\Question q WHERE q.id = $data[id]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
          $qst = $qst[0];
          $qid  =  $qst->getQuestionnaireid();
          $section =  $qst->getSectionid();
          $order =  $qst->getQuestionOrder();
           
-        # return new JsonModel(array('question' => $));
-  
-
        } else {
 
           $qid = $data['qid'];
@@ -108,12 +105,18 @@ class TestController extends AbstractRestfulController
        
        }
        $entityManager = $this->getEntityManager();
-       $qst = $entityManager->createQuery("SELECT q.id, q.questionnaireid, q.questionText,q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder");
-       $qst->setMaxResults(1);
-       $question =   $qst->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-       #$question = $question[0]; 
-       #$answer = $question[0]->getId();
-       $answer = $entityManager->createQuery("SELECT a.answerNumber, a.answerText, a.answerOrder, a.answerType FROM CsnUser\Entity\Answer a WHERE a.question = '1'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+       if(!$question = $entityManager->createQuery("SELECT q.id, q.questionnaireid, q.questionText,q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder")->setMaxResults(1)->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT)) {
+            $section = $section+1;
+            $order = 0;
+            if(!$question = $entityManager->createQuery("SELECT q.id, q.questionnaireid, q.questionText,q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder")->setMaxResults(1)->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT)) { 
+
+        
+            return new JsonModel(array('status' => 'finished'));
+
+         }
+       }
+       $question_id = $question[0]['id']; 
+       $answer = $entityManager->createQuery("SELECT a.answerNumber, a.answerText, a.answerOrder, a.answerType FROM CsnUser\Entity\Answer a WHERE a.question = '$question_id'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
 
        return new JsonModel(array('question' => $question, 'answer' => $answer));
 
