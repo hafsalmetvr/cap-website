@@ -34,7 +34,7 @@ CREATE TABLE `answer` (
   PRIMARY KEY (`id`),
   KEY `question_id` (`question_id`),
   CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `answer` (
 
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
+INSERT INTO `answer` VALUES (1,1,'First answer','TEXT',1,1,'2014-07-19 17:33:26','2014-07-19 12:03:26'),(2,1,'Second answer','TEXT',2,1,'2014-07-19 17:33:52','2014-07-19 12:03:52'),(3,1,'Third answer','TEXT',3,1,'2014-07-19 17:34:03','2014-07-19 12:04:03');
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -74,7 +75,7 @@ CREATE TABLE `answer_enum` (
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,6 +84,7 @@ CREATE TABLE `answer_enum` (
 
 LOCK TABLES `answer_enum` WRITE;
 /*!40000 ALTER TABLE `answer_enum` DISABLE KEYS */;
+INSERT INTO `answer_enum` VALUES (1,'Agree','2014-07-19 17:02:03','2014-07-19 11:32:03'),(2,'Don\'t Care','2014-07-19 17:02:40','2014-07-19 11:32:40'),(3,'Disagree','2014-07-19 17:02:53','2014-07-19 11:32:53');
 /*!40000 ALTER TABLE `answer_enum` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -310,7 +312,7 @@ CREATE TABLE `customer_hierarchy` (
   KEY `customer_hierarchy_ibfk_1` (`parent_customer_id`),
   CONSTRAINT `customer_hierarchy_ibfk_1` FOREIGN KEY (`parent_customer_id`) REFERENCES `customer` (`id`),
   CONSTRAINT `customer_hierarchy_ibfk_2` FOREIGN KEY (`child_customer_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +321,7 @@ CREATE TABLE `customer_hierarchy` (
 
 LOCK TABLES `customer_hierarchy` WRITE;
 /*!40000 ALTER TABLE `customer_hierarchy` DISABLE KEYS */;
-INSERT INTO `customer_hierarchy` VALUES (9,14,27,'2014-07-09 00:04:25','2014-07-08 18:34:25'),(10,14,28,'2014-07-09 00:05:07','2014-07-08 18:35:07');
+INSERT INTO `customer_hierarchy` VALUES (21,34,27,'2014-07-17 00:09:49','2014-07-16 19:14:33'),(22,34,28,'2014-07-17 00:46:05','2014-07-16 19:16:05'),(23,34,30,'2014-07-17 01:08:43','2014-07-16 19:38:43'),(24,29,31,'2014-07-17 01:09:02','2014-07-16 19:39:02');
 /*!40000 ALTER TABLE `customer_hierarchy` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -874,7 +876,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (1,1,'What is perl',1,1,1,'2014-06-16 21:44:21','2014-06-16 16:14:21'),(2,1,'What is php',1,2,1,'2014-06-16 21:44:33','2014-06-16 16:27:36'),(3,1,'What is python',1,2,2,'2014-06-16 21:44:36','2014-06-16 16:27:48'),(4,1,'What is java',3,2,1,'2014-06-16 21:44:47','2014-06-16 16:27:59');
+INSERT INTO `question` VALUES (1,1,'What is perl',1,1,1,'2014-06-16 21:44:21','2014-06-16 16:14:21'),(2,1,'What is php',2,2,1,'2014-06-16 21:44:33','2014-07-19 10:56:47'),(3,1,'What is python',1,1,2,'2014-06-16 21:44:36','2014-07-19 10:57:38'),(4,1,'What is java',1,2,1,'2014-06-16 21:44:47','2014-07-19 10:56:20');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1232,4 +1234,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-16  1:31:33
+-- Dump completed on 2014-07-22 21:02:27
