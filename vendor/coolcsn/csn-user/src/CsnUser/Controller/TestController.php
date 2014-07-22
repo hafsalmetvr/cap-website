@@ -22,6 +22,8 @@ use Zend\View\Model\JsonModel;
 use CsnUser\Entity\Customer;
 use CsnUser\Entity\CustomerQuestionnaire;
 use CsnUser\Entity\Answer;
+use CsnUser\Entity\AnswerEnumMap;
+use CsnUser\Entity\AnswerEnum;
 use CsnUser\Options\ModuleOptions;
 use CsnUser\Service\UserService as UserCredentialsService;
 
@@ -116,9 +118,14 @@ class TestController extends AbstractRestfulController
          }
        }
        $question_id = $question[0]['id']; 
-       $answer = $entityManager->createQuery("SELECT a.answerNumber, a.answerText, a.answerOrder, a.answerType FROM CsnUser\Entity\Answer a WHERE a.question = '$question_id'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+       $answers = $entityManager->createQuery("SELECT a.id, a.answerNumber, a.answerText, a.answerOrder, a.answerType FROM CsnUser\Entity\Answer a WHERE a.question = '$question_id'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
 
-       return new JsonModel(array('question' => $question, 'answer' => $answer));
+        foreach ($answers as $key => $answer) {
+             $answer_enum = $entityManager->createQuery("SELECT aem.id, ae.name FROM CsnUser\Entity\AnswerEnumMap aem JOIN aem.answerEnum ae WHERE aem.answer = '$answer[id]'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+             $answers[$key]['answer_enum'] = $answer_enum;
+        }
+
+       return new JsonModel(array('question' => $question, 'answer' => $answers));
 
 
     #  $entityManager = $this->getEntityManager();
