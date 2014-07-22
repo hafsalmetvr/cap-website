@@ -34,7 +34,7 @@ CREATE TABLE `answer` (
   PRIMARY KEY (`id`),
   KEY `question_id` (`question_id`),
   CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `answer` (
 
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,1,'First answer','TEXT',1,1,'2014-07-19 17:33:26','2014-07-19 12:03:26'),(2,1,'Second answer','TEXT',2,1,'2014-07-19 17:33:52','2014-07-19 12:03:52'),(3,1,'Third answer','TEXT',3,1,'2014-07-19 17:34:03','2014-07-19 12:04:03');
+INSERT INTO `answer` VALUES (1,1,'First answer','TEXT',1,1,'2014-07-19 17:33:26','2014-07-19 12:03:26'),(2,1,'Second answer','TEXT',2,1,'2014-07-19 17:33:52','2014-07-19 12:03:52'),(3,1,'Third answer','TEXT',3,1,'2014-07-19 17:34:03','2014-07-19 12:04:03'),(4,1,'This is Enum Answer Text number 1','ENUM',1,4,'2014-07-22 21:40:36','2014-07-22 16:10:36'),(5,2,'This is Enum Answer Text number 2','ENUM',2,4,'2014-07-22 21:40:56','2014-07-22 16:10:56'),(6,3,'This is Enum Answer Text number 3','ENUM',3,4,'2014-07-22 21:41:37','2014-07-22 16:11:37');
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -122,7 +122,7 @@ CREATE TABLE `answer_enum_map` (
   KEY `answer_enum_id` (`answer_enum_id`),
   CONSTRAINT `answer_enum_map_ibfk_1` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `answer_enum_map_ibfk_2` FOREIGN KEY (`answer_enum_id`) REFERENCES `answer_enum` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,6 +131,7 @@ CREATE TABLE `answer_enum_map` (
 
 LOCK TABLES `answer_enum_map` WRITE;
 /*!40000 ALTER TABLE `answer_enum_map` DISABLE KEYS */;
+INSERT INTO `answer_enum_map` VALUES (1,4,1,1,'2014-07-22 21:48:09','2014-07-22 16:18:09'),(2,4,2,2,'2014-07-22 21:48:27','2014-07-22 16:18:27'),(3,4,3,3,'2014-07-22 21:48:34','2014-07-22 16:18:34'),(4,5,1,1,'2014-07-22 21:48:40','2014-07-22 16:18:40'),(5,5,2,2,'2014-07-22 21:48:46','2014-07-22 16:18:46'),(6,5,3,3,'2014-07-22 21:48:53','2014-07-22 16:18:53'),(7,6,1,1,'2014-07-22 21:48:59','2014-07-22 16:18:59'),(8,6,2,2,'2014-07-22 21:49:03','2014-07-22 16:19:03'),(9,6,3,3,'2014-07-22 21:49:11','2014-07-22 16:19:11');
 /*!40000 ALTER TABLE `answer_enum_map` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -876,7 +877,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (1,1,'What is perl',1,1,1,'2014-06-16 21:44:21','2014-06-16 16:14:21'),(2,1,'What is php',2,2,1,'2014-06-16 21:44:33','2014-07-19 10:56:47'),(3,1,'What is python',1,1,2,'2014-06-16 21:44:36','2014-07-19 10:57:38'),(4,1,'What is java',1,2,1,'2014-06-16 21:44:47','2014-07-19 10:56:20');
+INSERT INTO `question` VALUES (1,1,'What is perl',1,1,1,'2014-06-16 21:44:21','2014-06-16 16:14:21'),(2,1,'What is php',2,2,1,'2014-06-16 21:44:33','2014-07-19 10:56:47'),(3,1,'What is python',1,1,2,'2014-06-16 21:44:36','2014-07-19 10:57:38'),(4,1,'This is a question with answer type ENUM',1,2,1,'2014-06-16 21:44:47','2014-07-22 16:07:27');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1234,4 +1235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-22 21:02:27
+-- Dump completed on 2014-07-22 21:58:37
