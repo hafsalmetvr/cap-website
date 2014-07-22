@@ -239,7 +239,7 @@
                         <td> [[question.completion_status]] </td>
                         <td>
                             <a href="/user/saqlist/saqview/[[question.id]]" class="assign_button bg_black" ng-show="question.completion_status == 'COMPLETED' "> VIEW </a>
-                            <a href="" class="assign_button bg_black" ng-show="question.completion_status == 'NOT STARTED' "> BEGIN </a>
+                            <a href="/user/test/saq/[[question.id]]" class="assign_button bg_black" ng-show="question.completion_status == 'NOT STARTED' "> BEGIN </a>
                         </td>
                     </tr>
                 </table>
@@ -291,11 +291,11 @@
 
                   <table class="table table-striped">
                     <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Phone Number</th>
-                                <th>Email Address</th>
-                                <th> &nbsp; </th>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Email Address</th>
+                        <th> &nbsp; </th>
                    </tr>
 
                   </table>

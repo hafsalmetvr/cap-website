@@ -897,23 +897,25 @@ function MenteeDetailController($scope, $element, $http, $timeout, $location, $c
 }
 
 function MenteeSAQInterface($scope, $element, $http, $timeout, $location, $cookies){
-    $scope.init = function(){
-
+    $scope.init = function(questionare_id){
+        $scope.saq_id = questionare_id;
+        $scope.get_saq_details();
     }
     $scope.get_saq_details = function(){
         params = {
-            'mentee_id': mentee.id,
-            'questionnaire_id': $scope.selected_saq.id
+            'qid': $scope.saq_id,
         }
         $http({
             method: 'post',
-            url: "/user/saqlist",
+            url: "/user/test",
             data: $.param(params),
             headers: {
 
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).success(function(data, status) {
+            $scope.question = data.question[0];
+            $scope.answers = data.answer;
         }).error(function(data, success){
         });
     }
