@@ -43,7 +43,7 @@ CREATE TABLE `answer` (
 
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,1,'First answer','TEXT',1,1,'2014-07-19 17:33:26','2014-07-19 12:03:26'),(2,1,'Second answer','TEXT',2,1,'2014-07-19 17:33:52','2014-07-19 12:03:52'),(3,1,'Third answer','TEXT',3,1,'2014-07-19 17:34:03','2014-07-19 12:04:03'),(4,1,'This is Enum Answer Text number 1','ENUM',1,4,'2014-07-22 21:40:36','2014-07-22 16:10:36'),(5,2,'This is Enum Answer Text number 2','ENUM',2,4,'2014-07-22 21:40:56','2014-07-22 16:10:56'),(6,3,'This is Enum Answer Text number 3','ENUM',3,4,'2014-07-22 21:41:37','2014-07-22 16:11:37');
+INSERT INTO `answer` VALUES (1,1,'Multiselect Option 1','MULTISELECT',1,1,'2014-07-19 17:33:26','2014-07-22 19:30:06'),(2,1,'Multiselect Option 2','MULTISELECT',2,1,'2014-07-19 17:33:52','2014-07-22 19:30:18'),(3,1,'This is third multiselection option','MULTISELECT',3,1,'2014-07-19 17:34:03','2014-07-22 19:30:28'),(4,1,'This is Enum Answer Text number 1','ENUM',1,4,'2014-07-22 21:40:36','2014-07-22 16:10:36'),(5,2,'This is Enum Answer Text number 2','ENUM',2,4,'2014-07-22 21:40:56','2014-07-22 16:10:56'),(6,3,'This is Enum Answer Text number 3','ENUM',3,4,'2014-07-22 21:41:37','2014-07-22 16:11:37');
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -877,7 +877,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (1,1,'What is perl',1,1,1,'2014-06-16 21:44:21','2014-06-16 16:14:21'),(2,1,'What is php',2,2,1,'2014-06-16 21:44:33','2014-07-19 10:56:47'),(3,1,'What is python',1,1,2,'2014-06-16 21:44:36','2014-07-19 10:57:38'),(4,1,'This is a question with answer type ENUM',1,2,1,'2014-06-16 21:44:47','2014-07-22 16:07:27');
+INSERT INTO `question` VALUES (1,1,'This is a question with answer type MULTISELECT',1,1,1,'2014-06-16 21:44:21','2014-07-22 19:34:53'),(2,1,'This is a question with Answer type of TEXT, it just has an input type = text',2,2,1,'2014-06-16 21:44:33','2014-07-22 19:39:01'),(3,1,'What is python',1,1,2,'2014-06-16 21:44:36','2014-07-19 10:57:38'),(4,1,'This is a question with answer type ENUM',1,2,1,'2014-06-16 21:44:47','2014-07-22 16:07:27');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1235,4 +1235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-22 21:58:37
+-- Dump completed on 2014-07-23  1:10:04
