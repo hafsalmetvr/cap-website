@@ -34,7 +34,7 @@ CREATE TABLE `answer` (
   PRIMARY KEY (`id`),
   KEY `question_id` (`question_id`),
   CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `answer` (
 
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,1,'Multiselect Option 1','MULTISELECT',1,1,'2014-07-19 17:33:26','2014-07-22 19:30:06'),(2,1,'Multiselect Option 2','MULTISELECT',2,1,'2014-07-19 17:33:52','2014-07-22 19:30:18'),(3,1,'This is third multiselection option','MULTISELECT',3,1,'2014-07-19 17:34:03','2014-07-22 19:30:28'),(4,1,'This is Enum Answer Text number 1','ENUM',1,4,'2014-07-22 21:40:36','2014-07-22 16:10:36'),(5,2,'This is Enum Answer Text number 2','ENUM',2,4,'2014-07-22 21:40:56','2014-07-22 16:10:56'),(6,3,'This is Enum Answer Text number 3','ENUM',3,4,'2014-07-22 21:41:37','2014-07-22 16:11:37');
+INSERT INTO `answer` VALUES (1,1,'Multiselect Option 1','MULTISELECT',1,1,'2014-07-19 17:33:26','2014-07-22 19:30:06'),(2,1,'Multiselect Option 2','MULTISELECT',2,1,'2014-07-19 17:33:52','2014-07-22 19:30:18'),(3,1,'This is third multiselection option','MULTISELECT',3,1,'2014-07-19 17:34:03','2014-07-22 19:30:28'),(4,1,'This is Enum Answer Text number 1','ENUM',1,4,'2014-07-22 21:40:36','2014-07-22 16:10:36'),(5,2,'This is Enum Answer Text number 2','ENUM',2,4,'2014-07-22 21:40:56','2014-07-22 16:10:56'),(6,3,'This is Enum Answer Text number 3','ENUM',3,4,'2014-07-22 21:41:37','2014-07-22 16:11:37'),(7,1,'','TEXT',1,2,'2014-07-24 00:41:10','2014-07-23 19:11:10'),(8,1,'check box option 1','CHECKBOX',1,5,'2014-07-24 02:07:55','2014-07-23 20:37:55'),(9,2,'check box option 2','CHECKBOX',2,5,'2014-07-24 02:08:17','2014-07-23 20:38:17'),(10,3,'check box option 3','CHECKBOX',3,5,'2014-07-24 02:09:00','2014-07-23 20:39:00'),(11,1,'Radio option 1','RADIO',1,6,'2014-07-24 02:09:37','2014-07-23 20:39:37'),(12,2,'Radio option 2','RADIO',2,6,'2014-07-24 02:09:50','2014-07-23 20:39:50'),(13,3,'Radio option 3','RADIO',3,6,'2014-07-24 02:10:00','2014-07-23 20:40:00'),(14,1,'Select option 1','SELECT',1,7,'2014-07-24 02:11:03','2014-07-23 20:41:03'),(15,2,'Select option 2','SELECT',2,7,'2014-07-24 02:11:17','2014-07-23 20:41:17'),(16,3,'Select option 3','SELECT',3,7,'2014-07-24 02:11:33','2014-07-23 20:41:33'),(17,4,'Select option 4','SELECT',4,7,'2014-07-24 02:11:48','2014-07-23 20:41:48'),(19,1,'','TEXTAREA',1,8,'2014-07-24 02:56:25','2014-07-23 21:26:25');
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -868,7 +868,7 @@ CREATE TABLE `question` (
   KEY `section_id` (`section_id`),
   CONSTRAINT `question_ibfk_1` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE,
   CONSTRAINT `question_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `section` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -877,7 +877,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (1,1,'This is a question with answer type MULTISELECT',1,1,1,'2014-06-16 21:44:21','2014-07-22 19:34:53'),(2,1,'This is a question with Answer type of TEXT, it just has an input type = text',2,2,1,'2014-06-16 21:44:33','2014-07-22 19:39:01'),(3,1,'What is python',1,1,2,'2014-06-16 21:44:36','2014-07-19 10:57:38'),(4,1,'This is a question with answer type ENUM',1,2,1,'2014-06-16 21:44:47','2014-07-22 16:07:27');
+INSERT INTO `question` VALUES (1,1,'This is a question with answer type MULTISELECT',1,1,1,'2014-06-16 21:44:21','2014-07-22 19:34:53'),(2,1,'This is a question with Answer type of TEXT, it just has an input type = text',2,2,1,'2014-06-16 21:44:33','2014-07-22 19:39:01'),(3,1,'What is python',1,1,2,'2014-06-16 21:44:36','2014-07-19 10:57:38'),(4,1,'This is a question with answer type ENUM',1,2,1,'2014-06-16 21:44:47','2014-07-22 16:07:27'),(5,1,'This is a question with anser type of CHECKBOX',3,2,1,'2014-07-24 02:02:42','2014-07-23 20:32:42'),(6,1,'This is a question with anser type of RADIO',4,2,1,'2014-07-24 02:03:22','2014-07-23 20:33:22'),(7,1,'This is a question with anser type of SELECT',5,2,1,'2014-07-24 02:03:44','2014-07-23 20:33:44'),(8,1,'This is a text area type question',6,2,1,'2014-07-24 02:50:47','2014-07-23 21:24:05');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -922,7 +922,7 @@ CREATE TABLE `questionnaire` (
 
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,'Test','',1,'2014-06-16 01:01:44','2014-06-15 19:31:44'),(2,'Test2','',1,'2014-06-16 20:48:59','2014-06-16 15:18:59'),(3,'Test3','',1,'2014-06-16 20:49:05','2014-06-16 15:19:05'),(4,'Test4','',1,'2014-06-16 20:49:09','2014-06-16 15:19:09');
+INSERT INTO `questionnaire` VALUES (1,'Learning To Use The Force','',1,'2014-06-16 01:01:44','2014-07-23 21:02:23'),(2,'Test2','',1,'2014-06-16 20:48:59','2014-06-16 15:18:59'),(3,'Test3','',1,'2014-06-16 20:49:05','2014-06-16 15:19:05'),(4,'Test4','',1,'2014-06-16 20:49:09','2014-06-16 15:19:09');
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1235,4 +1235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-23  1:10:04
+-- Dump completed on 2014-07-24  3:21:34
