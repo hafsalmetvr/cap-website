@@ -107,10 +107,10 @@ class TestController extends AbstractRestfulController
        
        }
        $entityManager = $this->getEntityManager();
-       if(!$question = $entityManager->createQuery("SELECT q.id, q.questionnaireid, q.questionText,q.questionOrder, s.name as section_name, s.id as section_id FROM CsnUser\Entity\Question q JOIN q.section s WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder")->setMaxResults(1)->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT)) {
+       if(!$question = $entityManager->createQuery("SELECT q.id, q.questionnaireid, qn.name as saq_name, q.questionText,q.questionOrder, s.name as section_name, s.id as section_id FROM CsnUser\Entity\Question q JOIN q.section s JOIN q.questionnaire qn WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder")->setMaxResults(1)->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT)) {
             $section = $section+1;
             $order = 0;
-            if(!$question = $entityManager->createQuery("SELECT q.id, q.questionnaireid, q.questionText,q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder")->setMaxResults(1)->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT)) { 
+            if(!$question = $entityManager->createQuery("SELECT q.id, q.questionnaireid, qn.name as saq_name, q.questionText,q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s JOIN q.questionnaire qn WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder")->setMaxResults(1)->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT)) { 
 
         
             return new JsonModel(array('status' => 'finished'));
@@ -167,7 +167,7 @@ class TestController extends AbstractRestfulController
 
      }    
 
-       $this->layout('layout/saq');
+      # $this->layout('layout/saq');
        $viewModel  =  new ViewModel(array('id' => $this->params('id')));
        return $viewModel; 
     

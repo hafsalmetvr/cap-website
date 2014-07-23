@@ -1,5 +1,5 @@
 <div class="content" ng-controller="MenteeSAQInterface" ng-init="init('<?php echo $id; ?>')">
-	<h3 class="page_header_with_underline"> [[question.saq_name]] [[saq.completion_percentage]]</h3>
+	<h3 class="page_header_with_underline"> [[question.saq_name]] [[saq.completion_percentage]] 55% Complete</h3>
 	<p class="section_name"> Section [[question.section_id]]: [[question.section_name]]</p>
 	<div class="">
 		<p class="question_name"> [[question.id]]. [[question.questionText]]</p> 
@@ -26,6 +26,6 @@
 				</tr>
 			</table>
 		</div>
-		<input type="button" value="Save" class="save_button" ng-click="save_answer();" />
+		<input type="button" value="Save and Continue" class="save_button" ng-click="save_answer();" />
 	</div>	
 </div>

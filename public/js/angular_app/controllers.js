@@ -917,15 +917,15 @@ function MenteeSAQInterface($scope, $element, $http, $timeout, $location, $cooki
             $scope.question = data.question[0];
             $scope.answers = data.answer;
             $scope.question.answer_type = data.answer[0].answerType;
-            $scope.question.saq_name = 'Learning To Use The Force';
+            //$scope.question.saq_name = 'Learning To Use The Force';
             console.log($scope.question);
         }).error(function(data, success){
         });
     }
     $scope.save_answer = function(){
-        console.log($scope.question.selected_answers);
+        console.log($scope.question.id);
         params = {
-            'id': $scope.saq_id,
+            'id': $scope.question.id,
             'AnswerSubmit': 1,            
         }
         if($scope.question.answer_type=='MULTISELECT'){
@@ -947,7 +947,7 @@ function MenteeSAQInterface($scope, $element, $http, $timeout, $location, $cooki
             $scope.question = data.question[0];
             $scope.answers = data.answer;
             $scope.question.answer_type = data.answer[0].answerType;
-            $scope.question.saq_name = 'Learning To Use The Force';
+            $scope.question.saq_name = $scope.question.saq_name;
             console.log($scope.question);
         }).error(function(data, success){
         });
