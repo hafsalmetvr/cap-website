@@ -916,6 +916,39 @@ function MenteeSAQInterface($scope, $element, $http, $timeout, $location, $cooki
         }).success(function(data, status) {
             $scope.question = data.question[0];
             $scope.answers = data.answer;
+            $scope.question.answer_type = data.answer[0].answerType;
+            $scope.question.saq_name = 'Learning To Use The Force';
+            console.log($scope.question);
+        }).error(function(data, success){
+        });
+    }
+    $scope.save_answer = function(){
+        console.log($scope.question.selected_answers);
+        params = {
+            'id': $scope.saq_id,
+            'AnswerSubmit': 1,            
+        }
+        if($scope.question.answer_type=='MULTISELECT'){
+            params['selected_answers']= angular.toJson($scope.question.selected_answers);
+        }
+        if($scope.question.answer_type=='ENUM'){
+            params['selected_answers']= angular.toJson($scope.answers);
+        }
+        console.log(params);
+        $http({
+            method: 'post',
+            url: "/user/test",
+            data: $.param(params),
+            headers: {
+
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).success(function(data, status) {
+            $scope.question = data.question[0];
+            $scope.answers = data.answer;
+            $scope.question.answer_type = data.answer[0].answerType;
+            $scope.question.saq_name = 'Learning To Use The Force';
+            console.log($scope.question);
         }).error(function(data, success){
         });
     }

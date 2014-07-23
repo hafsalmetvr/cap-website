@@ -1,31 +1,31 @@
 <div class="content" ng-controller="MenteeSAQInterface" ng-init="init('<?php echo $id; ?>')">
-	<h3 class="page_header_with_underline"> [[question.name]] [[saq.completion_percentage]]</h3>
-	<p> [[saq.section_no]]: [[question.name]]</p>
+	<h3 class="page_header_with_underline"> [[question.saq_name]] [[saq.completion_percentage]]</h3>
+	<p class="section_name"> Section [[question.section_id]]: [[question.section_name]]</p>
 	<div class="">
-		<p>[[question.number]]. [[question.questionText]]</p>
-		<textarea ng-model="question.textarea"></textarea>
-		<input type="text" ng-model="question.text" />
-		<select ng-model="question.choice">
-			<option ng-repeat="option in question.choices"> [[option]] </option>
+		<p class="question_name"> [[question.id]]. [[question.questionText]]</p> 
+		<textarea ng-model="question.textarea" ng-show="question.answer_type=='TEXTAREA'"></textarea>
+		<input type="text" ng-model="question.text" ng-show="question.answer_type=='TEXT'"/>
+		<select ng-model="question.choice" ng-show="question.answer_type=='SELECT'" >
+			<option ng-repeat="answer in answers" value="[[answer.id"> [[answer.answerText]] </option>
 		</select>
-		<div class="question_options">
-			<p ng-repeat="option in question.multi_options" ng-click="select_option(option);"> [[option]]  </p>
-		</div>
-		<div class="checkbox_choices">
+		<select ng-model="question.selected_answers" ng-show="question.answer_type=='MULTISELECT'" multiple class="multi_select" size=[[answers.length]]>
+			<option ng-repeat="answer in answers" value="[[answer.id]]"> [[answer.answerText]] </option>
+		</select>
+		
+		<div class="checkbox_choices" ng-show="question.answer_type=='CHECKBOX'">
 			<p ng-repeat="choice in checkbox_choices"> <input ng-model="check_box_choice" type="checkbox" value="choice" /></p>
 		</div>
-		<div class="radio_choices">
+		<div class="radio_choices" ng-show="question.answer_type=='RADIO'">
 			<p ng-repeat="choice in radio_choices"> <input ng-model="radio_choice" type="radio" value="choice" /></p>
 		</div>
-		<div class="enumes">
-			<table>
-				<tr ng-repeat="enume in enumes">
-					<td> [[enume]] </td>
-					<td> Agree <input type="radio" value="agree" /></td>
-					<td> Don't care <input type="radio" value="dont_care" /></td>
-					<td> Disagree<input type="radio" value="disagree" /></td>
+		<div class="enumes" ng-show="question.answer_type=='ENUM'">
+			<table class="enume_table" border>
+				<tr ng-repeat="answer in answers">
+					<td> [[answer.answerText]] </td>
+					<td ng-repeat="enum in answer.answer_enum">  <input type="radio" name="[[answer.answerText]]" value="[[enum.id]]" ng-model="answer.selected_enume" /> [[enum.name]]</td>
 				</tr>
 			</table>
 		</div>
+		<input type="button" value="Save" class="save_button" ng-click="save_answer();" />
 	</div>	
 </div>

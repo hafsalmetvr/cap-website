@@ -415,7 +415,7 @@ div.container a.brand {
   background-color: #333333;
 }
 
-.close_button {
+.close_button{
     color: #333333;
     display: block;
     float: right;
@@ -468,3 +468,47 @@ div.container a.brand {
 .clear {
   clear: both;
 }
+
+/****************** Mentee details end **************/
+
+/************* Test interface styles *****************/
+.section_name {
+  font-weight: bold;
+
+}
+.question_name {
+  font-weight: bold;
+
+}
+.multi_select {
+    background-color: #F2F2F2;
+    border: 1px solid #BABABA;
+    overflow: auto;
+    padding: 5px;
+    width: 40%;
+    margin-left: 2%;
+}
+
+.multi_select option{
+  padding: 3px;
+}
+.save_button{
+    color: #333333;
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 2%;
+    background-color: #CCCCCC;    
+}
+.enume_table {
+  border: 1px solid #BABABA;
+  width: 70%;
+  margin-left: 2%;
+  background-color: #F2F2F2;
+}
+
+.enume_table td {
+  border: 1px solid #C6C6C6;
+  padding: 5px;
+}
+/******************** test interface styles end ************/
