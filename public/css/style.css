@@ -480,25 +480,29 @@ div.container a.brand {
   font-weight: bold;
 
 }
-.multi_select {
+.multi_select, .textarea, .textinput, .select {
     background-color: #F2F2F2;
     border: 1px solid #BABABA;
     overflow: auto;
     padding: 5px;
-    width: 40%;
+    width: 50%;
     margin-left: 2%;
 }
-
+.textinput {
+  height: 40px;
+}
 .multi_select option{
   padding: 3px;
 }
 .save_button{
-    color: #333333;
+    background-color: #0066FF;
+    border: medium none;
+    color: #B3B3B3;
     display: block;
     font-size: 15px;
     font-weight: bold;
-    margin-right: 2%;
-    background-color: #CCCCCC;    
+    margin: 2% auto auto 29%;
+    padding: 5px; 
 }
 .enume_table {
   border: 1px solid #BABABA;
@@ -510,5 +514,21 @@ div.container a.brand {
 .enume_table td {
   border: 1px solid #C6C6C6;
   padding: 5px;
+}
+.completion_percentage {
+  display: block;
+  float: right;
+  color: #7AC943;
+}
+.message {
+  font-size: 20px;
+  color: #7AC943;
+}
+.checkbox_container, .radio_container {
+  width: 30%;
+  float: left;
+}
+.checkbox_choices, .radio_choices {
+  margin-left: 2%
 }
 /******************** test interface styles end ************/
