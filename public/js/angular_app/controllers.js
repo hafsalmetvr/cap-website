@@ -900,6 +900,40 @@ function MenteeSAQInterface($scope, $element, $http, $timeout, $location, $cooki
     $scope.init = function(questionare_id){
         $scope.saq_id = questionare_id;
         $scope.get_saq_details();
+        $scope.continue = true;
+        $scope.pause = false;
+        $scope.saq = {
+            'name': 'Learning to use force',
+            'completion_percentage': '50%',
+            'description': "Lorem Ipsum is simply dummy text of the printing and typesetting industry.\
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,\
+                             when an unknown printer took a galley of type and scrambled it to make a type \
+                             specimen book. It has survived not only five centuries, but also the leap into \
+                             electronic typesetting, remaining essentially unchanged. It was popularised in the \
+                             1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more \
+                             recently with desktop publishing software like Aldus PageMaker including versions \
+                             of Lorem Ipsum.",
+            'sections': [
+                {
+                    'name': 'Moving Objects',
+                    'total_questions': '35',
+                    'completed_questions': '35',
+                    'status': 'Completed',
+                },
+                {
+                    'name': 'Sensing Disturbances',
+                    'total_questions': '22',
+                    'completed_questions': '40',
+                    'status': 'In Progress',
+                },
+                {
+                    'name': 'Jedi Mind Tricks',
+                    'total_questions': '0',
+                    'completed_questions': '25',
+                    'status': 'Not Started',
+                },
+            ]
+        }
     }
     $scope.get_saq_details = function(){
         params = {
@@ -978,6 +1012,29 @@ function MenteeSAQInterface($scope, $element, $http, $timeout, $location, $cooki
             }
         }).error(function(data, success){
         });
+    }
+    $scope.pause_saq = function(){
+        $scope.continue = false;
+        $scope.pause = true;
+        params = {
+            'saq_id': $scope.saq_id,
+        }
+        $http({
+            method: 'post',
+            url: "/user/saqsummary",
+            data: $.param(params),
+            headers: {
+
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).success(function(data, status) {
+            //$scope.saq = data.saq;
+        }).error(function(data, success){
+        });
+    }
+    $scope.continue_test = function(){
+        $scope.continue = true;
+        $scope.pause = false;
     }
 }
 

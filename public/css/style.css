@@ -531,4 +531,45 @@ div.container a.brand {
 .checkbox_choices, .radio_choices {
   margin-left: 2%
 }
+.saq_button_div {
+  width: 50%;
+}
+.saq_button_div .save_button {
+  float: left;
+  margin: 20px;
+}
+.saq_summary {
+  width: 80%;
+  margin-left: 20%;
+}
+.continue_button {
+  border: none;
+  background-color: #333333;
+  padding: 10px 20px 10px 20px;
+  margin-left: 45%;
+  font-size: 16px;
+  color: #FFFFFF;
+}
+.green {
+  color: #7AC943;
+}
+.gray {
+  color: #B3B3B3;
+}
+.saq_description {
+  font-size: 12px;
+}
+.even {
+  background-color: #F2F2F2;
+}
+.saq_summary .table tr {
+  height: 80px;
+  border: none;
+}
+.saq_summary .table tr td {
+  border: none;
+}
+.saq_summary .table {
+  border: 1px solid black;
+}
 /******************** test interface styles end ************/
