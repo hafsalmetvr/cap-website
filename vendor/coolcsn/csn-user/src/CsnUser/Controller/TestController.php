@@ -24,6 +24,7 @@ use CsnUser\Entity\CustomerQuestionnaire;
 use CsnUser\Entity\Answer;
 use CsnUser\Entity\AnswerEnumMap;
 use CsnUser\Entity\AnswerEnum;
+use CsnUser\Entity\CustomerAnswer;
 use CsnUser\Options\ModuleOptions;
 use CsnUser\Service\UserService as UserCredentialsService;
 
@@ -89,11 +90,123 @@ class TestController extends AbstractRestfulController
     public function create($data)
     {
 
+      if (!$user = $this->identity()) {
+
+             return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
+
+     }
+
+      $uid = $user->getId();
+
+       
+       $entityManager = $this->getEntityManager();
 
        if(isset($data['AnswerSubmit'])) {
+  
+        $ans = json_decode($data['selected_answers']);  
+ 
+        if($data['answers_type'] == 'ENUM') {
        
-         $entityManager = $this->getEntityManager();
-         $qst = $entityManager->createQuery("SELECT q FROM CsnUser\Entity\Question q WHERE q.id = $data[id]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+        $enums = [];
+        foreach($ans as $a) {
+
+          $a = (array)$a; 
+          
+        if($a['selected_enume']){ 
+            
+            $enums[$a['id']] = $a['selected_enume'];
+
+           $customeranswer =  new CustomerAnswer;
+           $customeranswer->setcustomer($entityManager->find('CsnUser\Entity\Customer', $uid));
+           $customeranswer->setAnswer($entityManager->find('CsnUser\Entity\Answer', $a['id']));
+
+           $enummap = $entityManager->createQuery("SELECT em.answerEnumId FROM CsnUser\Entity\AnswerEnumMap em WHERE em.id= $a[selected_enume]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+           
+           $enummap = $enummap[0];
+           #return new JsonModel(array('status' => $parent));
+           $customeranswer->setAnswerEnum($entityManager->find('CsnUser\Entity\AnswerEnum', $enummap['answerEnumId'])); 
+           $customeranswer->setCreated('test');
+           $entityManager->persist($customeranswer);
+           $entityManager->flush();
+
+       }
+     }
+ 
+        }
+
+      else if ($data['answers_type'] == 'CHECKBOX') {
+
+        foreach($ans as $a) {
+
+          $a = (array)$a;
+
+        #  return new JsonModel(array('status' => $a));
+        if($a['selected']){
+
+           $customeranswer =  new CustomerAnswer;
+           $customeranswer->setcustomer($entityManager->find('CsnUser\Entity\Customer', $uid));
+           $customeranswer->setAnswer($entityManager->find('CsnUser\Entity\Answer', $a['id']));
+
+          # $enummap = $entityManager->createQuery("SELECT em.answerEnumId FROM CsnUser\Entity\AnswerEnumMap em WHERE em.id= $a[selected_enume]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+
+          # $enummap = $enummap[0];
+           #return new JsonModel(array('status' => $parent));
+          # $customeranswer->setAnswerEnum($entityManager->find('CsnUser\Entity\AnswerEnum', $enummap['answerEnumId']));
+           $customeranswer->setCreated('test');
+           $entityManager->persist($customeranswer);
+           $entityManager->flush();
+
+       }
+     }
+
+    }
+
+ 
+    #    return new JsonModel(array('status' => $ans));
+       else if(is_array($ans)) {
+
+        foreach ($ans as $a) {
+     
+        #return new JsonModel(array('status' => 'array'));
+        
+        $customeranswer =  new CustomerAnswer;
+        $customeranswer->setcustomer($entityManager->find('CsnUser\Entity\Customer', $uid));
+        $customeranswer->setAnswer($entityManager->find('CsnUser\Entity\Answer', $a)); 
+        $customeranswer->setCreated('test');
+        $entityManager->persist($customeranswer);
+        $entityManager->flush();
+     
+        }
+        }
+       
+        else if ($data['answers_type'] == 'TEXT' or $data['answers_type'] == 'TEXTAREA') {
+
+        $customeranswer =  new CustomerAnswer;
+        $customeranswer->setcustomer($entityManager->find('CsnUser\Entity\Customer', $uid));
+        $customeranswer->setAnswer($entityManager->find('CsnUser\Entity\Answer', 1));
+        $customeranswer->setAnswerText($data['selected_answers']);
+        $customeranswer->setCreated('test');
+        $entityManager->persist($customeranswer);
+        $entityManager->flush();
+
+        }
+
+       else {
+       
+        #return new JsonModel(array('status' => $ans));         
+
+        $customeranswer =  new CustomerAnswer;
+        $customeranswer->setcustomer($entityManager->find('CsnUser\Entity\Customer', $uid));
+        $customeranswer->setAnswer($entityManager->find('CsnUser\Entity\Answer', $ans)); 
+        $customeranswer->setCreated('test');
+        $entityManager->persist($customeranswer);
+        $entityManager->flush();
+   
+        }
+
+ 
+       
+        $qst = $entityManager->createQuery("SELECT q FROM CsnUser\Entity\Question q WHERE q.id = $data[id]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
          $qst = $qst[0];
          $qid  =  $qst->getQuestionnaireid();
          $section =  $qst->getSectionid();

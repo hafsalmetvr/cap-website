@@ -1,6 +1,6 @@
 <?php
 
-namespace cool-csn\Entity;
+namespace CsnUser\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,7 +22,7 @@ class CustomerAnswer
     private $id;
 
     /**
-     * @var string
+     * @var stringanswerText
      *
      * @ORM\Column(name="answer_text", type="text", nullable=true)
      */
@@ -31,21 +31,21 @@ class CustomerAnswer
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created", type="datetime", nullable=false)
+     * @ORM\Column(name="created", nullable=false)
      */
     private $created;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="modified", type="datetime", nullable=false)
+     * @ORM\Column(name="modified", nullable=false)
      */
     private $modified = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \cool-csn\Entity\Customer
+     * @var \CsnUser\Entity\Customer
      *
-     * @ORM\ManyToOne(targetEntity="cool-csn\Entity\Customer")
+     * @ORM\ManyToOne(targetEntity="CsnUser\Entity\Customer")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      * })
@@ -53,9 +53,9 @@ class CustomerAnswer
     private $customer;
 
     /**
-     * @var \cool-csn\Entity\Answer
+     * @var \CsnUser\Entity\Answer
      *
-     * @ORM\ManyToOne(targetEntity="cool-csn\Entity\Answer")
+     * @ORM\ManyToOne(targetEntity="CsnUser\Entity\Answer")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="answer_id", referencedColumnName="id")
      * })
@@ -63,14 +63,77 @@ class CustomerAnswer
     private $answer;
 
     /**
-     * @var \cool-csn\Entity\AnswerEnum
+     * @var \CsnUser\Entity\AnswerEnum
      *
-     * @ORM\ManyToOne(targetEntity="cool-csn\Entity\AnswerEnum")
+     * @ORM\ManyToOne(targetEntity="CsnUser\Entity\AnswerEnum")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="answer_enum_id", referencedColumnName="id")
      * })
      */
     private $answerEnum;
 
+     /**
+     * Set customer
+     *
+     * @param  string $customer
+     * @return CustomerAnswer
+     */
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
 
+        return $this;
+    }
+    
+     /**
+     * Set answer
+     *
+     * @param  string $answer
+     * @return CustomerAnswer
+     */
+    public function setAnswer($answer)
+    {
+        $this->answer = $answer;
+
+        return $this;
+    }
+
+    /**
+     * Set answerEnum
+     *
+     * @param  string $answerEnum
+     * @return CustomerAnswer
+     */
+    public function setAnswerEnum($answerEnum)
+    {
+        $this->answerEnum = $answerEnum;
+
+        return $this;
+    }
+      
+    /**
+     * Set answerText
+     *
+     * @param  string $answerText
+     * @return CustomerAnswer
+     */
+    public function setAnswerText($answerText)
+    {
+        $this->answerText = $answerText;
+
+        return $this;
+    }
+
+     /**
+     * Set created
+     *
+     * @param  string $created
+     * @return CustomerAnswer
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
 }

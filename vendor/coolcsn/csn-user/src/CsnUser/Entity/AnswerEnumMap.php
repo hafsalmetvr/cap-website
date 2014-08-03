@@ -61,6 +61,12 @@ class AnswerEnumMap
      * })
      */
     private $answerEnum;
-
+ 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="answer_enum_id", type="integer", length=255, nullable=true)
+     */
+    private $answerEnumId;
 
 }

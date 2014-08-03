@@ -973,15 +973,19 @@ function MenteeSAQInterface($scope, $element, $http, $timeout, $location, $cooki
         }
         if($scope.question.answer_type=='ENUM'){
             params['selected_answers'] = angular.toJson($scope.answers);
+            params['answers_type'] = 'ENUM';
         }
         if($scope.question.answer_type=='TEXT'){
             params['selected_answers'] = $scope.question.answer_text;
+            params['answers_type'] = 'TEXT';
         }
         if($scope.question.answer_type=='TEXTAREA'){
             params['selected_answers'] = $scope.question.answer_textarea;
+            params['answers_type'] = 'TEXTAREA';
         }
         if($scope.question.answer_type=='CHECKBOX'){
             params['selected_answers'] = angular.toJson($scope.answers);
+            params['answers_type'] = 'CHECKBOX';
         }
         if($scope.question.answer_type=='RADIO'){
            params['selected_answers'] = $scope.question.radio_choice; 
