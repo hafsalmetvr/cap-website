@@ -1020,21 +1020,30 @@ function MenteeSAQInterface($scope, $element, $http, $timeout, $location, $cooki
     $scope.pause_saq = function(){
         $scope.continue = false;
         $scope.pause = true;
-        params = {
-            'saq_id': $scope.saq_id,
-        }
-        $http({
-            method: 'post',
-            url: "/user/saqsummary",
-            data: $.param(params),
-            headers: {
+       // params = {
+       //     'saq_id': $scope.saq_id,
+      //  }
+      //  $http({
+      //      method: 'post',
+      //      url: "/user/saqsummary",
+     //       data: $.param(params),
+     //       headers: {
+//
+ //               'Content-Type': 'application/x-www-form-urlencoded'
+  //          }
+   //     }).success(function(data, status) {
+    //        //$scope.saq = data.saq;
+     //   }).error(function(data, success){
+      //  });
 
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }).success(function(data, status) {
-            //$scope.saq = data.saq;
-        }).error(function(data, success){
+       $http.get("/user/summary/"+$scope.saq_id).success(function(data)
+        {
+            $scope.saq = data.data;
+        }).error(function(data, status)
+        {
+            console.log(data || "Request failed");
         });
+
     }
     $scope.continue_test = function(){
         $scope.continue = true;

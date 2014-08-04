@@ -25,6 +25,8 @@ use CsnUser\Entity\Answer;
 use CsnUser\Entity\AnswerEnumMap;
 use CsnUser\Entity\AnswerEnum;
 use CsnUser\Entity\CustomerAnswer;
+use CsnUser\Entity\CustomerQuestion;
+use CsnUser\Entity\CustomerSection;
 use CsnUser\Options\ModuleOptions;
 use CsnUser\Service\UserService as UserCredentialsService;
 
@@ -128,6 +130,8 @@ class TestController extends AbstractRestfulController
            $customeranswer->setCreated('test');
            $entityManager->persist($customeranswer);
            $entityManager->flush();
+  
+                   
 
        }
      }
@@ -205,6 +209,15 @@ class TestController extends AbstractRestfulController
         }
 
  
+        $customer_question = new CustomerQuestion;
+        $customer_question->setCustomer($entityManager->find('CsnUser\Entity\Customer', $uid));
+        $customer_question->setQuestion($entityManager->find('CsnUser\Entity\Question', $data['id']));
+        $customer_question->setCompletionStatus($entityManager->find('CsnUser\Entity\CompletionStatus', 3));
+        $customer_question->setCreated('test');
+        $entityManager->persist($customer_question);
+        $entityManager->flush();
+
+
        
         $qst = $entityManager->createQuery("SELECT q FROM CsnUser\Entity\Question q WHERE q.id = $data[id]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
          $qst = $qst[0];
@@ -221,6 +234,18 @@ class TestController extends AbstractRestfulController
        }
        $entityManager = $this->getEntityManager();
        if(!$question = $entityManager->createQuery("SELECT q.id, q.questionnaireid, qn.name as saq_name, q.questionText,q.questionOrder, s.name as section_name, s.id as section_id FROM CsnUser\Entity\Question q JOIN q.section s JOIN q.questionnaire qn WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder")->setMaxResults(1)->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT)) {
+
+
+        $customer_section = new CustomerSection;
+        $customer_section->setCustomer($entityManager->find('CsnUser\Entity\Customer', $uid));
+        $customer_section->setSection($entityManager->find('CsnUser\Entity\Section', $section));
+        $customer_section->setCompletionStatus($entityManager->find('CsnUser\Entity\CompletionStatus', 3));
+        $customer_section->setCreated('test');
+        $entityManager->persist($customer_section);
+        $entityManager->flush();
+
+
+
             $section = $section+1;
             $order = 0;
             if(!$question = $entityManager->createQuery("SELECT q.id, q.questionnaireid, qn.name as saq_name, q.questionText,q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s JOIN q.questionnaire qn WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder")->setMaxResults(1)->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT)) { 

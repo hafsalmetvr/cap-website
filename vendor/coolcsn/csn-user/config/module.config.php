@@ -28,7 +28,8 @@ return array(
             'CsnUser\Controller\MentorSearch'  =>  'CsnUser\Controller\MentorSearchController',
             'CsnUser\Controller\Mentor' => 'CsnUser\Controller\MentorController',
             'CsnUser\Controller\Notes'  => 'CsnUser\Controller\NotesController',
-            'CsnUser\Controller\Test'  => 'CsnUser\Controller\TestController'
+            'CsnUser\Controller\Test'  => 'CsnUser\Controller\TestController',
+            'CsnUser\Controller\Summary' => 'CsnUser\Controller\SummaryController'
         ),
     ),
     'router' => array(
@@ -240,6 +241,22 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'CsnUser\Controller\Test',
+                        #'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+
+           'summary' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/user/summary[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CsnUser\Controller\Summary',
                         #'action' => 'index',
                     ),
                 ),

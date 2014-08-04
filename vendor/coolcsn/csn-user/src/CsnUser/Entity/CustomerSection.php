@@ -72,5 +72,56 @@ class CustomerSection
      */
     private $completionStatus;
 
+           /**
+     * Set customer
+     *
+     * @param  string $customer
+     * @return CustomerQuestion
+     */
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+     /**
+     * Set section
+     *
+     * @param  string $section
+     * @return CustomerQuestion
+     */
+    public function setSection($section)
+    {
+        $this->section = $section;
+
+        return $this;
+    }
+
+     /**
+     * Set completionStatus
+     *
+     * @param  string $completionStatus
+     * @return CustomerQuestion
+     */
+    public function setCompletionStatus($completionStatus)
+    {
+        $this->completionStatus = $completionStatus;
+
+        return $this;
+    }
+
+     /**
+     * Set created
+     *
+     * @param  string $created
+     * @return CustomerQuestion
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
 
 }
