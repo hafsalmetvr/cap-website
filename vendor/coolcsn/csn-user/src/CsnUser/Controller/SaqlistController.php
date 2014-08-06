@@ -77,8 +77,16 @@ class SaqlistController extends AbstractRestfulController
         $entityManager = $this->getEntityManager();
        # $user = $entityManager->getRepository('CsnUser\Entity\Question')->findall();
  
-       $user = $entityManager->createQuery("SELECT q.questionText,q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s WHERE q.questionnaire = '$id'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+       $user = $entityManager->createQuery("SELECT q.id, q.questionText, q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s WHERE q.questionnaire = '$id'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+     
+      foreach($user as $key => $u) { 
+         
+            $answers = $entityManager->createQuery("SELECT a.id FROM CsnUser\Entity\Answer a WHERE a.question = '$u[id]'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
 
+            $cus_ans = $entityManager->createQuery("SELECT ca.id FROM CsnUser\Entity\CustomerAnswer ca WHERE ca.answer IN (2,3)")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+ 
+            $user[$key]['answers'] = $cus_ans;
+      }
       return new JsonModel(array('data' => $user));
    
     }
