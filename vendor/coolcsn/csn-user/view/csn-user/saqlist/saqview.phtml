@@ -24,12 +24,13 @@
 						<th> Name </th>
 						<th> Text </th>
 						<th> Order </th>
-
+						<th ng-show="user_type=='Mentee'"> Answers </th>
 					</tr>
 					<tr ng-repeat="question in questions">
 						<td> [[question.name]] </td>
 						<td> [[question.questionText]] </td>
 						<td> [[question.questionOrder]] </td>
+						<td> <span ng-repeat="answer in question.answers ">[[answer.answer]]</span> </td>
 					</tr>
 				</table>
                             
