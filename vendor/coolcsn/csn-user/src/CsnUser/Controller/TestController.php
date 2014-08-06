@@ -250,7 +250,13 @@ class TestController extends AbstractRestfulController
             $order = 0;
             if(!$question = $entityManager->createQuery("SELECT q.id, q.questionnaireid, qn.name as saq_name, q.questionText,q.questionOrder, s.name FROM CsnUser\Entity\Question q JOIN q.section s JOIN q.questionnaire qn WHERE q.questionnaire = '$qid' and q.section = '$section' and q.questionOrder > '$order' order by q.questionOrder")->setMaxResults(1)->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT)) { 
 
-        
+            $cus_qstnr = $entityManager->createQuery("SELECT cq FROM CsnUser\Entity\CustomerQuestionnaire cq WHERE cq.questionnaire = $qid and cq.customer = $uid")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+
+            $cus_qstnr = $cus_qstnr[0];
+            $cus_qstnr->setcompletionStatus($entityManager->find('CsnUser\Entity\CompletionStatus', 3));
+           # $cus_qstnr->setcustomer($entityManager->find('CsnUser\Entity\Customer', $uid));        
+            $entityManager->persist($cus_qstnr);
+            $entityManager->flush(); 
             return new JsonModel(array('status' => 'finished'));
 
          }
