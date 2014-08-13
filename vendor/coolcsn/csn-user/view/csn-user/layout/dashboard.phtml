@@ -16,14 +16,14 @@
                         ->prependStylesheet($this->basePath() . '/css/style.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
-                        ->prependStylesheet($this->basePath() . '/font-awesome-4.1.0/css/font-awesome.css') ?>
+                        ->prependStylesheet($this->basePath() . '/css/font-awesome-4.1.0/css/font-awesome.css') ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
             ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript')
             ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript')
-                       ->prependFile($this->basePath() . '/js/angular_app/lib/angular/angular-resource.js', 'text/javascript')
+            ->prependFile($this->basePath() . '/js/angular_app/lib/angular/angular-resource.js', 'text/javascript')
             ->prependFile($this->basePath() . '/js/angular_app/app.js',   'text/javascript')
             ->prependFile($this->basePath() . '/js/angular_app/directives.js',   'text/javascript')
             ->prependFile($this->basePath() . '/js/angular_app/controllers.js',   'text/javascript')
@@ -36,15 +36,15 @@
         ; ?>
     </head>
 
-<?php 
+<?php
 $children = $this->viewModel()->getCurrent()->getChildren();
 $child = $children[0];
 
 #echo $this->escape($child->role);
 
 
- ?>
-            <?php echo $this->content; ?>
-        <?php echo $this->inlineScript() ?>
+?>
+<?php echo $this->content; ?>
+<?php echo $this->inlineScript() ?>
 
 </html>

@@ -1,0 +1,41 @@
+<div class="table_container">
+    <span class="table_list_header"><i class="fa fa-mortar-board"></i>Mentees</span>
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Actions</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr ng-repeat="mentee in mentees track by $index">
+            <td>[[$index+1]].</td>
+            <td>[[mentee.firstName]]</td>
+            <td>[[mentee.status]]</td>
+            <td>
+                <a href="" ng-click="assign(mentee)" class="assign_button" ng-hide="mentee.status == 'ASSIGNED'"> ASSIGN </a>
+                <a href="" ng-click="assign(mentee)" class="reassign_button" ng-show="mentee.status == 'ASSIGNED'"> REASSIGN </a>
+            </td>
+            <td>
+                <a href="/user/adminmentee/mentee/[[mentee.id]]" class="view_button" ng-show="user_type == 'Administrator'"> VIEW </a>
+                <a href="/user/mentor/mentee/[[mentee.id]]" ng-show="user_type == 'Mentor'" class="view_button"> VIEW </a>
+            </td>
+        </tr>
+    </table>
+    <div class="page" ng-show="mentee_pages > 1">
+        <ul class="pagination">
+            <li class="arrow unavailable">
+                <a href="" ng-click="select_mentee_page(-1)">&laquo;</a>
+            </li>
+            <li ng-repeat="page in range(mentee_pages)" ng-class="getClass($index+1)">
+                <a href="" ng-click="select_mentee_page($index+1)">[[$index+1]]</a>
+            </li>
+            <!-- <li class="unavailable">
+                <a href="">&hellip;</a>
+            </li>  -->
+            <li class="arrow">
+                <a href="" ng-click="select_mentee_page(0)">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>

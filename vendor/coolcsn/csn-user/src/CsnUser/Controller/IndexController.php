@@ -1,7 +1,7 @@
 <?php
 /**
  * CsnUser - Coolcsn Zend Framework 2 User Module
- * 
+ *
  * @link https://github.com/coolcsn/CsnUser for the canonical source repository
  * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
  * @license https://github.com/coolcsn/CsnUser/blob/master/LICENSE BSDLicense
@@ -36,12 +36,12 @@ class IndexController extends AbstractRestfulController
      * @var Doctrine\ORM\EntityManager
      */
     protected $entityManager;
-    
+
     /**
      * @var Zend\Mvc\I18n\Translator
      */
     protected $translatorHelper;
-    
+
     /**
      * @var Zend\Form\Form
      */
@@ -66,24 +66,22 @@ class IndexController extends AbstractRestfulController
      *
      * @return Zend\View\Model\ViewModel|array login form|array messages|array navigation menu
      */
-    public function loginAction()
-    {
+    public function loginAction() {
         if ($user = $this->identity()) {
-         
+
             return $this->redirect()->toRoute('user-index',array('action' =>  'dashboard'));
         }
-        
-        
+
+
         return new ViewModel();
     }
 
-   
-    public function dashboardAction()
-    {
+
+    public function dashboardAction() {
         if (!$user = $this->identity()) {
-     
+
              return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
-     
+
          }
 
       $this->layout('layout/dashboard');
@@ -93,25 +91,24 @@ class IndexController extends AbstractRestfulController
 
           $pid = $user->getRoleid();
           $entityManager = $this->getEntityManager();
-          $parent = $entityManager->createQuery("SELECT ch.firstName, ch.id, ch.email FROM CsnUser\Entity\CustomerHierarchy c JOIN c.parentCustomer ch WHERE c.childCustomer = '$pid'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT); 
-      
+          $parent = $entityManager->createQuery("SELECT ch.firstName, ch.id, ch.email FROM CsnUser\Entity\CustomerHierarchy c JOIN c.parentCustomer ch WHERE c.childCustomer = '$pid'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+
       } else {
-       
-      
-       
+
+
+
       }
 
-    
+
       $menuview = new ViewModel(array('name' => $user->getFirstName(), 'role' => $user->getRoleid()));
       $menuview->setTemplate('layout/menu');
       $viewModel->addChild($menuview, 'menuview');
 
      return $viewModel;
-   
-    } 
 
-    public function create($data)
-    {
+    }
+
+    public function create($data) {
 
         $user = new Customer;
         #$form = $this->getUserFormHelper()->createUserForm($user, 'login');
@@ -158,11 +155,11 @@ class IndexController extends AbstractRestfulController
                         $this->getOptions()->getNavMenu()
                     );
                 }
-            
+
         }
 
         return new JsonModel(array('login' => 'false', 'message' => 'credential are not valid'));
-    }   
+    }
 
     /**
      * Log out action
@@ -171,8 +168,7 @@ class IndexController extends AbstractRestfulController
      *
      * @return redirect to specific action
      */
-    public function logoutAction()
-    {
+    public function logoutAction() {
         $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
         if ($auth->hasIdentity()) {
             $auth->clearIdentity();
@@ -188,12 +184,11 @@ class IndexController extends AbstractRestfulController
      *
      * @return ModuleOptions
      */
-    private function getOptions()
-    {
+    private function getOptions() {
         if (null === $this->options) {
             $this->options = $this->getServiceLocator()->get('csnuser_module_options');
         }
-      
+
         return $this->options;
     }
 
@@ -202,40 +197,37 @@ class IndexController extends AbstractRestfulController
      *
      * @return EntityManager
      */
-    private function getEntityManager()
-    {
+    private function getEntityManager() {
         if (null === $this->entityManager) {
             $this->entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
         }
 
         return $this->entityManager;
     }
-    
+
     /**
      * get translatorHelper
      *
      * @return  Zend\Mvc\I18n\Translator
      */
-    private function getTranslatorHelper()
-    {
+    private function getTranslatorHelper() {
         if (null === $this->translatorHelper) {
            $this->translatorHelper = $this->getServiceLocator()->get('MvcTranslator');
         }
-      
+
         return $this->translatorHelper;
     }
-    
+
     /**
      * get userFormHelper
      *
      * @return  Zend\Form\Form
      */
-    private function getUserFormHelper()
-    {
+    private function getUserFormHelper() {
         if (null === $this->userFormHelper) {
            $this->userFormHelper = $this->getServiceLocator()->get('csnuser_user_form');
         }
-      
+
         return $this->userFormHelper;
     }
 }

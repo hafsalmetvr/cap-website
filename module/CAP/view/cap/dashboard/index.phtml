@@ -1,0 +1,8 @@
+<?php
+
+    /* manage the views depending on what rolw the user is */
+    $user = $this->identity();
+    $partial = 'cap/dashboard/'.strtolower($user->getRole()->getName());
+    echo $this->partial($partial);
+
+?>

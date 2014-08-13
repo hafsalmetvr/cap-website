@@ -1,7 +1,7 @@
 <?php
 /**
  * CsnUser - Coolcsn Zend Framework 2 User Module
- * 
+ *
  * @link https://github.com/coolcsn/CsnUser for the canonical source repository
  * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
  * @license https://github.com/coolcsn/CsnUser/blob/master/LICENSE BSDLicense
@@ -16,6 +16,7 @@
  * If you have a ./config/autoload/ directory set up for your project, you can
  * drop this config file in it and change the values as you wish.
  */
+
 return array(
     'csnuser' => array(
         /**
@@ -27,8 +28,8 @@ return array(
          * Accepted values: A valid route name within your application
          *
          */
-        'login_redirect_route' => 'user-index',
-    
+        'login_redirect_route' => 'home',
+
         /**
          * Logout Redirect Route
          *
@@ -37,8 +38,8 @@ return array(
          * Default value: 'user'
          * Accepted values: A valid route name within your application
          */
-        'logout_redirect_route' => 'user-index',
-        
+        'logout_redirect_route' => 'home',
+
         /**
          * Sender email dadress
          *
@@ -49,7 +50,7 @@ return array(
          * Accepted values:  A valid email address
          */
         'sender_email_adress' => 'no-reply@example.com',
-        
+
         /**
          * Visibility of navigation menu
          *
@@ -59,7 +60,7 @@ return array(
          * Accepted values: true/false
          */
         'nav_menu' => true,
-        
+
         /**
          * Set captcha number of characters
          *
@@ -67,7 +68,7 @@ return array(
          * Accepted values: int
          */
          'captcha_char_num' => 1,
-        
+
         /**
          * Visibility of exception details
          *

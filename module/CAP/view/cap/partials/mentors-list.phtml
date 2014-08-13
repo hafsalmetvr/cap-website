@@ -1,0 +1,38 @@
+<div class="table_container">
+    <span class="table_list_header"><i class="fa fa-star"></i> Mentors </span>
+    <table class="table table-striped">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr ng-repeat="mentor in mentors track by $index">
+        <td>[[$index+1]].</td>
+        <td>[[mentor.name]]</td>
+        <td>[[mentor.status]]</td>
+        <td>
+            <a href="" ng-click="activate(mentor)" class="activate_button" ng-hide="mentor.status == 'ACTIVE'" ng-show="mentor.status == 'INACTIVE'"> ACTIVATE </a>
+            <a href="" ng-click="de_activate(mentor)" class="deactivate_button" ng-show="mentor.status == 'ACTIVE'" ng-hide="mentor.status == 'INACTIVE'"> DEACTIVATE </a>
+        </td>
+        <td><a href="/user/adminmentor/mentee/[[mentor.id]]" class="view_button">VIEW</a></td>
+      </tr>
+    </table>
+    <div class="page" ng-show="mentor_pages > 1">
+        <ul class="pagination">
+            <li class="arrow unavailable">
+                <a href="" ng-click="select_mentor_page(-1)">&laquo;</a>
+            </li>
+            <li ng-repeat="page in range(mentor_pages)" ng-class="getClass($index+1)">
+                <a href="" ng-click="select_mentor_page($index+1)">[[$index+1]]</a>
+            </li>
+            <!-- <li class="unavailable">
+                <a href="">&hellip;</a>
+            </li>  -->
+            <li class="arrow">
+                <a href="" ng-click="select_mentor_page(0)">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 <?php
 /**
  * CsnUser - Coolcsn Zend Framework 2 User Module
- * 
+ *
  * @link https://github.com/coolcsn/CsnUser for the canonical source repository
  * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
  * @license https://github.com/coolcsn/CsnUser/blob/master/LICENSE BSDLicense
@@ -22,7 +22,7 @@ use Doctrine\Common\Collections\Collection;
 
 /**
  * Doctrine ORM implementation of User entity
- * 
+ *
  * @ORM\Entity(repositoryClass="CsnUser\Entity\Repository\UserRepository")
  * @ORM\Table(name="`customer`",
  *   indexes={@ORM\Index(name="search_idx", columns={ "first_name", "last_name", "email"})}
@@ -87,7 +87,7 @@ class Customer
 
     /**
      * @var CsnUser\Entity\Role
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="CsnUser\Entity\Role")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=false)
      * @Annotation\Type("DoctrineModule\Form\Element\ObjectSelect")
@@ -129,7 +129,7 @@ class Customer
      * })
      */
     protected $domain;
-    
+
       /**
      * @var CsnUser\Entity\CustomerStatus
      *
@@ -146,7 +146,7 @@ class Customer
      * @ORM\Column(name="role_id", type="integer", length=255, nullable=true)
      */
     protected $roleid;
- 
+
     public function __construct()
     {
         $this->friendsWithMe = new ArrayCollection();
@@ -323,7 +323,7 @@ class Customer
     {
         return $this->role;
     }
-  
+
     /**
      * Get roleid
      *

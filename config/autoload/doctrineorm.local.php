@@ -1,7 +1,7 @@
 <?php
 /**
  * CsnUser - Coolcsn Zend Framework 2 User Module
- * 
+ *
  * @link https://github.com/coolcsn/CsnUser for the canonical source repository
  * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
  * @license https://github.com/coolcsn/CsnUser/blob/master/LICENSE BSDLicense
@@ -20,9 +20,9 @@ return array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
                     'host'     => 'localhost',
-                    #'port'     => '3306',
+                    'port'     => '3306',
                     'user'     => 'root',
-                    'password' => 'root',
+                    'password' => 'optimum2014',
                     'dbname'   => 'cap',
 					'charset' => 'utf8', // extra
 					'driverOptions' => array(

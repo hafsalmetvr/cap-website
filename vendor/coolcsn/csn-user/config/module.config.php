@@ -1,7 +1,7 @@
 <?php
 /**
  * CsnUser - Coolcsn Zend Framework 2 User Module
- * 
+ *
  * @link https://github.com/coolcsn/CsnUser for the canonical source repository
  * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
  * @license https://github.com/coolcsn/CsnUser/blob/master/LICENSE BSDLicense
@@ -48,6 +48,7 @@ return array(
                 ),
                 'may_terminate' => true,
             ),
+
             'user-register' => array(
                 'type' => 'Segment',
                 'options' => array(
@@ -268,13 +269,12 @@ return array(
          'strategies' => array(
             'ViewJsonStrategy',
          ),
-
         'template_map' => array(
         'layout/settings' => __DIR__ . '/../view/csn-user/layout/settings.phtml',
         'layout/dashboard' => __DIR__ . '/../view/csn-user/layout/dashboard.phtml',
         'layout/saq' => __DIR__ . '/../view/csn-user/layout/saq.phtml',
         'layout/mentormentee' => __DIR__ . '/../view/csn-user/layout/mentor.phtml',
-        'layout/menu' => __DIR__ . '/../view/csn-user/layout/menu.phtml' 
+        'layout/menu' => __DIR__ . '/../view/csn-user/layout/menu.phtml'
          ),
 
         'display_exceptions' => true,
@@ -282,7 +282,7 @@ return array(
             'csn-user' => __DIR__ . '/../view'
         ),
 
-       
+
     ),
     'service_manager' => array (
         'factories' => array(
