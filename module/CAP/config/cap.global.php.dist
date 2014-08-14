@@ -1,5 +1,5 @@
 <?php
-
+if (0) {
 return array(
     'cap' => array(
         /**
@@ -64,3 +64,4 @@ return array(
         'display_exceptions' => true,
     ),
 );
+}

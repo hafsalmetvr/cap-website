@@ -7779,11 +7779,14 @@ form .text-input.form-group {
   background-color: #333333;
 }
 /* table lists */
-.table_list_header {
+.table-container {
+  margin: 20px 0;
+}
+.table-container .table-list-header {
   font-size: 18pt;
   font-family: "Roboto Condensed";
 }
-.table_list_header i {
+.table-container .table-list-header i {
   margin-right: 20px;
 }
 table th {

@@ -20,6 +20,8 @@ controller('LoginCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '
             } else {
 
                 $scope.inProgress = true;
+                $scope.success    = true;
+                $scope.msg        = "Logging in...";
 
                 var params = {
                     'email': $scope.email,
@@ -35,16 +37,14 @@ controller('LoginCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '
                     }
                 }).success(function(data, status) {
                     if(data.login){
-                        $scope.success = true;
-                        $scope.msg = "Logging in...";
-                        $cookies.user_id = data.uid;
-                        $cookies.role_id = data.role_id;
+                        $scope.inProgress = false;
+
                         $timeout(function() {
                             $window.location.href = '/dashboard';
-                            $scope.inProgress = false;
                         });
                         //document.location.href = "./dashboard";
                     } else {
+                        $scope.inProgress = false;
                         $scope.msg = data.msg || "Your email or password was incorrect.";
                     }
 

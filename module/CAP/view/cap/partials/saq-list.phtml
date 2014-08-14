@@ -1,35 +1,40 @@
-<div class="table_container">
-	<span class="table_list_header"><i class="fa fa-file-text"></i> Skill Assessment Questionaries </span>
-	<table class="table table-striped">
-		<tr>
-      <th>#</th>
-			<th>Name</th>
-			<th>Action</th>
-      <th>&nbsp;</th>
-		</tr>
-		<tr ng-repeat="saq in saqList track by $index">
-      <td>[[$index+1]].</td>
-			<td>[[saq.name]]</td>
-			<td><a href="/user/saqlist/saqview/[[question.id]]" class="view_button">VIEW</a></td>
-      <td><a href="" ng-click="assign_saq(question)" class="assign_button bg_black">ASSIGN</a></td>
-		</tr>
-	</table>
-
-	<?php /* paginate */ ?>
-  <div class="page" ng-show="que_pages > 1">
-      <ul class="pagination">
-          <li class="arrow unavailable">
-              <a href="" ng-click="select_ques_page(-1)">&laquo;</a>
-          </li>
-          <li ng-repeat="page in range(que_pages)" ng-class="getClass($index+1)">
-              <a href="" ng-click="select_ques_page($index+1)">[[$index+1]]</a>
-          </li>
-          <!-- <li class="unavailable">
-              <a href="">&hellip;</a>
-          </li>  -->
-          <li class="arrow">
-              <a href="" ng-click="select_ques_page(0)">&raquo;</a>
-          </li>
-      </ul>
+<div class="row">
+  <div class="table-container col-xs-12">
+  	<span class="table-list-header"><i class="fa fa-file-text"></i> Skill Assessment Questionaries </span>
+  	<table class="table table-striped">
+  		<tr>
+        <th>#</th>
+  			<th>Name</th>
+  			<th>Action</th>
+        <th>&nbsp;</th>
+  		</tr>
+  		<tr ng-repeat="saq in saqList track by $index">
+        <td>[[$index+1]].</td>
+  			<td>[[saq.name]]</td>
+  			<td><a href="/user/saqlist/saqview/[[question.id]]" class="view_button">VIEW</a></td>
+        <td><a href="" ng-click="assign_saq(question)" class="assign_button bg_black">ASSIGN</a></td>
+  		</tr>
+  	</table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+  	<?php /* paginate */ ?>
+    <div class="page" ng-show="que_pages > 1">
+        <ul class="pagination">
+            <li class="arrow unavailable">
+                <a href="" ng-click="select_ques_page(-1)">&laquo;</a>
+            </li>
+            <li ng-repeat="page in range(que_pages)" ng-class="getClass($index+1)">
+                <a href="" ng-click="select_ques_page($index+1)">[[$index+1]]</a>
+            </li>
+            <!-- <li class="unavailable">
+                <a href="">&hellip;</a>
+            </li>  -->
+            <li class="arrow">
+                <a href="" ng-click="select_ques_page(0)">&raquo;</a>
+            </li>
+        </ul>
+    </div>
   </div>
 </div>
