@@ -7740,22 +7740,32 @@ h1 {
   border-bottom: thin dashed #333333;
 }
 h2 {
-  font-size: 24pt;
+  font-size: 22pt;
   padding: 0;
   margin: 0;
   font-family: "Roboto Condensed";
 }
 body {
-  font-size: 10pt;
+  font-size: 12pt;
   font-family: "Helvetica Neue";
   color: #333333;
 }
 label {
-  font-size: 22pt;
+  font-size: 16pt;
   font-weight: normal;
+  font-family: "Roboto";
+  margin-top: 8px;
+}
+form {
+  padding: 20px;
+}
+form .text-input.form-group {
+  background-color: #b3b3b3;
+  padding: 10px;
+  font-family: "Roboto";
 }
 .form-control {
-  font-size: 22pt;
+  font-size: 14pt;
   font-weight: normal;
   height: 48px;
 }
@@ -7770,7 +7780,7 @@ label {
 }
 /* table lists */
 .table_list_header {
-  font-size: 20pt;
+  font-size: 18pt;
   font-family: "Roboto Condensed";
 }
 .table_list_header i {
@@ -7778,14 +7788,14 @@ label {
 }
 table th {
   font-weight: normal;
-  font-size: 18pt;
+  font-size: 14pt;
   background-color: #333333 !important;
   color: #ffffff;
   vertical-align: middle !important;
 }
 table td {
   font-weight: normal;
-  font-size: 18pt;
+  font-size: 14pt;
   vertical-align: middle !important;
 }
 .even {
@@ -7853,19 +7863,6 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   color: #ffffff;
   padding: 15px;
 }
-.login-box form {
-  padding: 20px;
-}
-.login-box form .form-group {
-  background-color: #b3b3b3;
-  padding: 10px;
-  font-family: "Roboto";
-}
-.login-box form .form-group label {
-  line-height: 29px;
-  font-family: "Roboto";
-  font-weight: normal;
-}
 .login-box form .contact-admin,
 .login-box form .forgot-password {
   font-size: .9em;
@@ -7878,7 +7875,7 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   margin-right: 0;
 }
 .create-account-info {
-  font-size: 18pt;
+  font-size: 14pt;
   font-family: "Roboto";
   margin-top: 25px;
 }
@@ -7886,7 +7883,5 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   margin-top: 20px;
 }
 .reminder-frequency select {
-  margin-top: 4px;
   width: 100% !important;
-  font-size: 18pt;
 }
