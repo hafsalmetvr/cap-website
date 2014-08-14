@@ -23,7 +23,7 @@ class IndexController extends AbstractActionController {
 
 		/* if they're logged in - redirect to the dashboard */
 		if ( $user = $this->identity() ) {
-			return $this->redirect()->toRoute( 'dashboard-index');
+			return $this->redirect()->toRoute( 'dashboard');
 		}
 
 		try {
