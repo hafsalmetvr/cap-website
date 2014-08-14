@@ -11,6 +11,16 @@
      				<i class="hover-menu-toggle fa fa-cog fa-2x"></i>
      				<ul class="hover-menu hide">
      					<!-- list depends on what role the person who is logged in is -->
+                              <li>
+                                   <a href="<?php echo $this->url('dashboard');?>">
+                                        <i class="fa fa-tachometer">
+                                             <span>Dashboard</span>
+                                        </i>
+                                   </a>
+                              </li>
+
+                              <!-- TODO implement this -->
+                              <?php if (0) { ?>
      					<li>
      						<a href="#">
      							<i class="fa fa-file-text">
@@ -18,7 +28,6 @@
      							</i>
      						</a>
      					</li>
-                              <?php if($role == 4) {?>
                          	<li>
                          		<a href="#">
                          			<i class="fa fa-star">
@@ -26,8 +35,6 @@
                          			</i>
                          		</a>
                          	</li>
-                              <?php } ?>
-
                               <li>
                               	<a href="#">
                               		<i class="fa fa-mortar-board">
@@ -35,29 +42,29 @@
                               		</i>
                               	</a>
                               </li>
+                              <?php } //end if (0) ?>
 
-                              <?php if($role == 4) { ?>
+                              <?php
+                              if($this->identity()->getRole()->getName() == 'Admin') { ?>
                               	<li>
-                              		<a href="/user/reminderfrequency/setfrequency">
+                              		<!--<a href="/user/reminderfrequency/setfrequency"> -->
+                                        <a href="<?php echo $this->url('dashboard', array('action' => 'settings'));?>">
                               			<i class="fa fa-gears">
                               				<span>Settings</span>
                               			</i>
                               		</a>
                               	</li>
-                              <?php } ?>
-
-                              <?php if($role == 4) { ?>
-                              	<li>
-                              		<a href="<?php echo $this->url('create-account', array('action' => 'createaccount'));?>">
-                              			<i class="fa fa-sun-o">
-                              				<span>Create Account</span>
-                              			</i>
-                              		</a>
-                              	</li>
+                                   <li>
+                                        <a href="<?php echo $this->url('dashboard', array('action' => 'create'));?>">
+                                             <i class="fa fa-sun-o">
+                                                  <span>Create Account</span>
+                                             </i>
+                                        </a>
+                                   </li>
                               <?php } ?>
 
                               <li>
-                              	<a href="<?php echo $this->url('user-index', array('action' => 'logout'));?>">
+                              	<a href="<?php echo $this->url('logout');?>">
                               		<i class="fa fa-reply">
                               			<span>Logout</span>
                               		</i>

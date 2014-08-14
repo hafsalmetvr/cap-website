@@ -1,9 +1,154 @@
 /* Controllers */
 angular.module('cap.controllers.admin', []).
 
-controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$location', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $location, $cookies, customer) {
+controller('SettingsCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
+	function($scope, $element, $http, $timeout, $cookies, customer) {
+    $scope.init = function(){
+      $scope.inProgress = false;
+    	$scope.reminderFrequencies = ['DAILY','WEEKLY','MONTHLY','QUARTERLY'];
+    	console.log($scope.reminderFrequencies);
+
+    	/* get current settings */
+      $http.get('/rest/settings', {
+          headers: {'Content-Type': 'application/json'}
+      }).success(function(data, status) {
+      	console.log(data);
+      	$scope.settings = data.settings;
+
+      }).error(function(data, status){
+        console.log(data);
+      });
+    }
+
+    $scope.saveSettings = function(){
+      if($scope.settingsForm.$valid) {
+      	$scope.inProgress = true;
+        $http.post("/rest/settings", angular.toJson($scope.settings)).success(function(data, status) {
+        	console.log('saved settings');
+        	console.log(data);
+          $scope.success = true;
+          $scope.msg = "Settings have been changed successfully.";
+          $scope.inProgress = false;
+        }).error(function(data, success){
+        	$scope.success = false;
+        	$scope.msg = "An error occurred while saving your settings. Please contact the administrator.";
+          $scope.inProgress = false;
+        });
+      }
+    }
+	}
+]).
+
+controller('CreateAccountCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
+	function($scope, $element, $http, $timeout, $cookies, customer) {
+    $scope.init = function(){
+      $scope.inProgress = false;
+      $scope.create = {};
+    	/* get current settings */
+      $http.get('/rest/customer', {
+          headers: {'Content-Type': 'application/json'}
+      }).success(function(data, status) {
+      	console.log(data);
+      	$scope.roles = data.roles;
+      	$scope.create.role_id = $scope.roles[0].id;
+
+      }).error(function(data, status){
+        console.log(data);
+      });
+
+    }
+
+    $scope.createAccount = function(){
+    	$scope.success = false;
+    	$scope.msg = null;
+      if($scope.createAccountForm.$valid) {
+      	$scope.inProgress = true;
+
+        $http.post("/rest/customer", angular.toJson($scope.create)).success(function(data, status) {
+        	console.log('created customer');
+        	console.log(data);
+        	if (data.success) {
+        		console.log('success');
+	          $scope.success = true;
+	          $scope.msg = "Account was successfully created. A confirmation email has been sent to: "+ $scope.create.email;
+	         } else {
+	         	console.log('error');
+	         	$scope.success = false;
+	         	$scope.msg = data.message;
+	         }
+          $scope.inProgress = false;
+        }).error(function(data, success){
+        	$scope.success = false;
+        	$scope.msg = "An error occurred while creating the account. Please contact the administrator.";
+          $scope.inProgress = false;
+        });
+      }
+    }
+	}
+]).
+
+controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
+	function($scope, $element, $http, $timeout, $cookies, customer) {
 		console.log('dboardctrl');
+
+		$scope.paginate_questionairs = function() {
+			$scope.current_ques_page = 1;
+			$scope.que_pages = $scope.questionairs.length / $scope.ques_page_interval;
+			if ($scope.que_pages > parseInt($scope.que_pages))
+				$scope.que_pages = parseInt($scope.que_pages) + 1;
+			$scope.visible_questionairs = $scope.questionairs.slice(0, $scope.ques_page_interval);
+		}
+		$scope.select_ques_page = function(ques_page) {
+			if (ques_page == 0) {
+				ques_page = $scope.current_ques_page + 1;
+			} else if (ques_page == -1) {
+				ques_page = $scope.current_ques_page - 1;
+			}
+			var last_ques_page = ques_page - 1;
+			var start = (last_ques_page * $scope.ques_page_interval);
+			var end = $scope.ques_page_interval * ques_page;
+			$scope.current_ques_page = ques_page;
+			$scope.visible_questionairs = $scope.questionairs.slice(start, end);
+		}
+		$scope.paginate_mentors = function() {
+			$scope.current_mentor_page = 1;
+			$scope.mentor_pages = $scope.mentors.length / $scope.mentor_page_interval;
+			if ($scope.mentor_pages > parseInt($scope.mentor_pages))
+				$scope.mentor_pages = parseInt($scope.mentor_pages) + 1;
+			$scope.visible_mentors = $scope.mentors.slice(0, $scope.mentor_page_interval);
+		}
+		$scope.select_mentor_page = function(mentor_page) {
+			if (mentor_page == 0) {
+				mentor_page = $scope.current_mentor_page + 1;
+			} else if (mentor_page == -1) {
+				mentor_page = $scope.current_mentor_page - 1;
+			}
+			var last_mentor_page = mentor_page - 1;
+			var start = (last_mentor_page * $scope.mentor_page_interval);
+			var end = $scope.mentor_page_interval * mentor_page;
+			$scope.current_mentor_page = mentor_page;
+			$scope.visible_mentors = $scope.mentors.slice(start, end);
+		}
+		$scope.paginate_mentees = function() {
+			$scope.current_mentee_page = 1;
+			$scope.mentee_pages = $scope.mentees.length / $scope.mentee_page_interval;
+			if ($scope.mentee_pages > parseInt($scope.mentee_pages))
+				$scope.mentee_pages = parseInt($scope.mentee_pages) + 1;
+			$scope.visible_mentees = $scope.mentees.slice(0, $scope.mentee_page_interval);
+		}
+		$scope.select_mentee_page = function(mentee_page) {
+			if (mentee_page == 0) {
+				mentee_page = $scope.current_mentee_page + 1;
+			} else if (mentee_page == -1) {
+				mentee_page = $scope.current_mentee_page - 1;
+			}
+			var last_mentee_page = mentee_page - 1;
+			var start = (last_mentee_page * $scope.mentee_page_interval);
+			var end = $scope.mentee_page_interval * mentee_page;
+			$scope.current_mentee_page = mentee_page;
+			$scope.visible_mentees = $scope.mentees.slice(start, end);
+		}
+
 		$scope.init = function(user, role) {
 			console.log('dboardctrl init');
 			/* fetch the logged in identity */
@@ -74,25 +219,7 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$locati
 				console.log(data || "Request failed");
 			});
 		}
-		$scope.paginate_questionairs = function() {
-			$scope.current_ques_page = 1;
-			$scope.que_pages = $scope.questionairs.length / $scope.ques_page_interval;
-			if ($scope.que_pages > parseInt($scope.que_pages))
-				$scope.que_pages = parseInt($scope.que_pages) + 1;
-			$scope.visible_questionairs = $scope.questionairs.slice(0, $scope.ques_page_interval);
-		}
-		$scope.select_ques_page = function(ques_page) {
-			if (ques_page == 0) {
-				ques_page = $scope.current_ques_page + 1;
-			} else if (ques_page == -1) {
-				ques_page = $scope.current_ques_page - 1;
-			}
-			var last_ques_page = ques_page - 1;
-			var start = (last_ques_page * $scope.ques_page_interval);
-			var end = $scope.ques_page_interval * ques_page;
-			$scope.current_ques_page = ques_page;
-			$scope.visible_questionairs = $scope.questionairs.slice(start, end);
-		}
+
 		$scope.get_mentors = function() {
 			$http.get("/user/adminmentor").success(function(data) {
 				$scope.mentors = data.data;
@@ -101,25 +228,7 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$locati
 				console.log(data || "Request failed");
 			});
 		}
-		$scope.paginate_mentors = function() {
-			$scope.current_mentor_page = 1;
-			$scope.mentor_pages = $scope.mentors.length / $scope.mentor_page_interval;
-			if ($scope.mentor_pages > parseInt($scope.mentor_pages))
-				$scope.mentor_pages = parseInt($scope.mentor_pages) + 1;
-			$scope.visible_mentors = $scope.mentors.slice(0, $scope.mentor_page_interval);
-		}
-		$scope.select_mentor_page = function(mentor_page) {
-			if (mentor_page == 0) {
-				mentor_page = $scope.current_mentor_page + 1;
-			} else if (mentor_page == -1) {
-				mentor_page = $scope.current_mentor_page - 1;
-			}
-			var last_mentor_page = mentor_page - 1;
-			var start = (last_mentor_page * $scope.mentor_page_interval);
-			var end = $scope.mentor_page_interval * mentor_page;
-			$scope.current_mentor_page = mentor_page;
-			$scope.visible_mentors = $scope.mentors.slice(start, end);
-		}
+
 		$scope.activate = function(mentor) {
 			params = {
 				'mentor_id': mentor.id,
@@ -169,25 +278,6 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$locati
 			}).error(function(data, status) {
 				console.log(data || "Request failed");
 			});
-		}
-		$scope.paginate_mentees = function() {
-			$scope.current_mentee_page = 1;
-			$scope.mentee_pages = $scope.mentees.length / $scope.mentee_page_interval;
-			if ($scope.mentee_pages > parseInt($scope.mentee_pages))
-				$scope.mentee_pages = parseInt($scope.mentee_pages) + 1;
-			$scope.visible_mentees = $scope.mentees.slice(0, $scope.mentee_page_interval);
-		}
-		$scope.select_mentee_page = function(mentee_page) {
-			if (mentee_page == 0) {
-				mentee_page = $scope.current_mentee_page + 1;
-			} else if (mentee_page == -1) {
-				mentee_page = $scope.current_mentee_page - 1;
-			}
-			var last_mentee_page = mentee_page - 1;
-			var start = (last_mentee_page * $scope.mentee_page_interval);
-			var end = $scope.mentee_page_interval * mentee_page;
-			$scope.current_mentee_page = mentee_page;
-			$scope.visible_mentees = $scope.mentees.slice(start, end);
 		}
 		$scope.hide_popup_divs = function() {
 			$('#assign_mentee_mentor').css('display', 'none');

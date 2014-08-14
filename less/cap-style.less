@@ -1,18 +1,38 @@
+h1 {
+	font-size:28pt;
+	padding:0;
+	margin:0 0 10px 0;
+	font-family: "Roboto Condensed";
+	display:block;
+	border-bottom:thin dashed @gray3;
+}
 
 h2 {
+	font-size:24pt;
 	padding:0;
 	margin:0;
-	font-size:16px;
 	font-family: "Roboto Condensed";
 }
 
 body {
+	font-size:10pt;
 	font-family: "Helvetica Neue";
 	color:@gray3;
 }
 
+label {
+	font-size:22pt;
+	font-weight: normal;
+}
+
 a {
 
+}
+
+.form-control {
+	font-size:22pt;
+	font-weight:normal;
+	height:48px;
 }
 
 .navbar {
@@ -26,10 +46,31 @@ a {
 	background-color:@gray3;
 }
 
+/* table lists */
+.table_list_header {
+  font-size: 20pt;
+  font-family: "Roboto Condensed";
+  i {
+  	margin-right:20px;
+  }
+}
 
+table th {
+	font-weight: normal;
+	font-size:18pt;
+  background-color: @gray3 !important;
+  color: @white;
+  vertical-align: middle !important;
+}
 
-label {
-	font-size:14px;
+table td {
+	font-weight: normal;
+	font-size:18pt;
+  vertical-align: middle !important;
+}
+
+.even {
+  background-color: @gray1;
 }
 
 @media (max-width: @screen-xs-max) {
@@ -41,15 +82,6 @@ label {
 }
 
 @media (min-width: @screen-md-min) {
-	h1 {
-
-	}
-	h2 {
-		font-size:24px;
-	}
-	label {
-		font-size:20px;
-	}
 }
 
 @media (min-width: @screen-lg-min) {

@@ -24,19 +24,8 @@ return array(
     'router' => array(
         'routes' => array(
 
-            /* something uses this and i can't figure out what */
-            'user-index' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/user[/:action]',
-                    'defaults' => array(
-                        'controller' => 'CAP\Controller\Rest\Customer',
-                    )
-                ),
-            ),
-
             /* restful routes */
-            'login' => array(
+            'rest-login' => array(
                 'type' => 'literal',
                 'options' => array(
                     'route' => '/login',
@@ -46,7 +35,7 @@ return array(
                 ),
             ),
 
-            'rest-customer-index' => array(
+            'rest-customer' => array(
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/rest/customer[/:id]',
@@ -59,7 +48,7 @@ return array(
                 ),
             ),
 
-            'rest-dashboard-index' => array(
+            'rest-dashboard' => array(
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/rest/dashboard[/:id]',
@@ -68,6 +57,16 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'CAP\Controller\Rest\Dashboard',
+                    )
+                ),
+            ),
+
+            'rest-settings' => array(
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/rest/settings',
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Rest\Settings',
                     )
                 ),
             ),
@@ -96,7 +95,7 @@ return array(
                 ),
             ),
 
-            'dashboard-index' => array(
+            'dashboard' => array(
                 'type'    => 'segment',
                 'options' => array(
                     'route'    => '/dashboard[/:action]',
@@ -155,11 +154,12 @@ return array(
         'invokables' => array(
             'CAP\Controller\Index'      => 'CAP\Controller\IndexController',
             'CAP\Controller\Dashboard'  => 'CAP\Controller\DashboardController',
-            'CAP\Controller\PArtials'   => 'CAP\Controller\PartialsController',
+            'CAP\Controller\Partials'   => 'CAP\Controller\PartialsController',
 
             'CAP\Controller\Rest\Customer'   => 'CAP\Controller\Rest\CustomerController',
             'CAP\Controller\Rest\Dashboard'  => 'CAP\Controller\Rest\DashboardController',
-            'CAP\Controller\Rest\Login'      => 'CAP\Controller\Rest\LoginController'
+            'CAP\Controller\Rest\Login'      => 'CAP\Controller\Rest\LoginController',
+            'CAP\Controller\Rest\Settings'   => 'CAP\Controller\Rest\SettingsController',
         ),
     ),
     'view_manager' => array(

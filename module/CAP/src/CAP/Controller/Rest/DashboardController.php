@@ -110,8 +110,9 @@ class DashboardController extends AbstractRestfulController {
 		foreach ($mentees as $idx => $mentee) {
 	    $sql = "SELECT c.id, c.name FROM CAP\Entity\CustomerHierarchy ch JOIN ch.parentCustomer c WHERE ch.childCustomerId = ".$mentee['id'];
 			$mentor = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')->createQuery($sql)->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+			$mentees[$idx]['status'] = $mentor[0] ? 'Assigned' : 'Unassigned';
 			$logger->log( \Zend\Log\Logger::INFO, $mentor );
-			$mentees[$idx]['mentor'] = $mentor;
+			$mentees[$idx]['mentor'] = $mentor[0];
 		}
 
 		return $mentees;

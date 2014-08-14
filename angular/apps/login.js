@@ -14,8 +14,7 @@ angular.module('cap', [
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 })
-.config(['$locationProvider',
-  function($location) {
+.config([function() {
 
   }
 ]).run(['$rootScope', function($rootScope) {

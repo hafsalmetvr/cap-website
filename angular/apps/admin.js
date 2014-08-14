@@ -1,7 +1,6 @@
 'use strict';
 
 var app = angular.module('cap', [
-  'ngRoute',
   'ngAnimate',
   'ngCookies',
   'cap.controllers',
@@ -17,6 +16,6 @@ app.config(function($interpolateProvider) {
     $interpolateProvider.endSymbol(']]');
 });
 
-app.config(['$routeProvider', '$locationProvider', function($routes, $location) {
+app.config([function() {
 
 }]);

@@ -7731,15 +7731,33 @@ button.close {
 .fa-bomb:before {
   content: "\f1e2";
 }
+h1 {
+  font-size: 28pt;
+  padding: 0;
+  margin: 0 0 10px 0;
+  font-family: "Roboto Condensed";
+  display: block;
+  border-bottom: thin dashed #333333;
+}
 h2 {
+  font-size: 24pt;
   padding: 0;
   margin: 0;
-  font-size: 16px;
   font-family: "Roboto Condensed";
 }
 body {
+  font-size: 10pt;
   font-family: "Helvetica Neue";
   color: #333333;
+}
+label {
+  font-size: 22pt;
+  font-weight: normal;
+}
+.form-control {
+  font-size: 22pt;
+  font-weight: normal;
+  height: 48px;
 }
 .navbar {
   border: none;
@@ -7750,16 +7768,28 @@ body {
 .navbar-inverse {
   background-color: #333333;
 }
-label {
-  font-size: 14px;
+/* table lists */
+.table_list_header {
+  font-size: 20pt;
+  font-family: "Roboto Condensed";
 }
-@media (min-width: 992px) {
-  h2 {
-    font-size: 24px;
-  }
-  label {
-    font-size: 20px;
-  }
+.table_list_header i {
+  margin-right: 20px;
+}
+table th {
+  font-weight: normal;
+  font-size: 18pt;
+  background-color: #333333 !important;
+  color: #ffffff;
+  vertical-align: middle !important;
+}
+table td {
+  font-weight: normal;
+  font-size: 18pt;
+  vertical-align: middle !important;
+}
+.even {
+  background-color: #f2f2f2;
 }
 nav .container-fluid {
   padding-right: 0px;
@@ -7799,6 +7829,7 @@ nav .hover-menu-container.active ul.hover-menu {
   padding: 15px 0px 15px 0px;
 }
 nav .hover-menu-container.active ul.hover-menu li {
+  font-family: "Roboto";
   list-style: none;
   display: block;
 }
@@ -7845,4 +7876,17 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
 .login-box form .row {
   margin-left: 0;
   margin-right: 0;
+}
+.create-account-info {
+  font-size: 18pt;
+  font-family: "Roboto";
+  margin-top: 25px;
+}
+.settings-col {
+  margin-top: 20px;
+}
+.reminder-frequency select {
+  margin-top: 4px;
+  width: 100% !important;
+  font-size: 18pt;
 }

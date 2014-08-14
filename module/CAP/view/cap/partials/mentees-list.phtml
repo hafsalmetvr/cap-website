@@ -10,7 +10,7 @@
         </tr>
         <tr ng-repeat="mentee in mentees track by $index">
             <td>[[$index+1]].</td>
-            <td>[[mentee.firstName]]</td>
+            <td>[[mentee.name]]</td>
             <td>[[mentee.status]]</td>
             <td>
                 <a href="" ng-click="assign(mentee)" class="assign_button" ng-hide="mentee.status == 'ASSIGNED'"> ASSIGN </a>

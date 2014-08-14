@@ -283,48 +283,6 @@ function QuestionairController($scope, $element, $http, $timeout, $location, $co
 
 function SettingsController($scope, $element, $http, $timeout, $location, $cookies)
 {
-    $scope.init = function(){
-        $scope.user_id = $cookies.user_id;
-        $scope.role_id = $cookies.role_id;
-        $scope.reminder_interval = '';
-        if($scope.role_id == 1){
-            $scope.user_type = "Administrator";
-        } else if($scope.role_id == 2){
-            $scope.user_type = "Mentor";
-        } else {
-            $scope.user_type = "Mentee";
-        }
-    }
-    $scope.validate_form = function(){
-        if($scope.reminder_interval == ''){
-            $scope.msg = "Please Select Reminder Interval";
-            return false;
-        } else {
-            return true;
-        }
-    }
-    $scope.save_settings = function(){
-        if($scope.validate_form()){
-            params = {
-                'reminder_interval': $scope.reminder_interval,
-            }
-            $http({
-                method: 'post',
-                url: "/user/reminderfrequency",
-                data: angular.toJson(params),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).success(function(data, status) {
-                if(data.status == "success"){
-                    $scope.msg = "Settings Saved Successfully";
-                } else {
-                    $scope.msg = "Some error occured";
-                }
-            }).error(function(data, success){
-            });
-        }
-    }
     $scope.show_menu = function(){
         $('#menu').css('display', 'block');
     }

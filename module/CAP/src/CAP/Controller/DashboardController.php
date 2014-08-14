@@ -21,14 +21,16 @@ class DashboardController extends AbstractActionController {
 
 	public function indexAction() {
 		$logger        = $this->getServiceLocator()->get( 'Log\App' );
-   	//$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+		//$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
 
-		$logger->log( \Zend\Log\Logger::INFO, "Dashboard index action");
+		$logger->log( \Zend\Log\Logger::INFO, "Dashboard index action" );
+		$u = $this->identity();
+		$logger->log( \Zend\Log\Logger::INFO, $u->getRole()->getName() );
 
 		/* if they're not logged in - redirect to login */
 		if ( !$user = $this->identity() ) {
-			return $this->redirect()->toRoute( 'home');
+			return $this->redirect()->toRoute( 'home' );
 		}
 
 
@@ -40,18 +42,55 @@ class DashboardController extends AbstractActionController {
 	}
 
 
-	public function logoutAction() {
+	public function createAction() {
 		$logger        = $this->getServiceLocator()->get( 'Log\App' );
-		$logger->log( \Zend\Log\Logger::INFO, "logout");
+		//$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
-		$auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
-		if ($auth->hasIdentity()) {
-	    $auth->clearIdentity();
-	    $sessionManager = new SessionManager();
-	    $sessionManager->forgetMe();
+
+		$logger->log( \Zend\Log\Logger::INFO, "Display dashboard create form" );
+		/* if they're not logged in - redirect to login */
+		if ( !$user = $this->identity() ) {
+			return $this->redirect()->toRoute( 'home' );
 		}
 
-		return $this->redirect()->toRoute('home',array('action' =>  'index'));
+		/* if they're not admin in - redirect to dashboard */
+		if ( $this->identity()->getRole()->getName() !== 'Admin' ) {
+			return $this->redirect()->toRoute( 'dashboard' );
+		}
+		return new viewModel();
+	}
+
+	public function settingsAction() {
+		$logger        = $this->getServiceLocator()->get( 'Log\App' );
+		//$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+
+		$logger->log( \Zend\Log\Logger::INFO, "Dashboard settings action" );
+		/* if they're not logged in - redirect to login */
+		if ( !$user = $this->identity() ) {
+			return $this->redirect()->toRoute( 'home' );
+		}
+
+		/* if they're not admin in - redirect to dashboard */
+		if ( $this->identity()->getRole()->getName() !== 'Admin' ) {
+			return $this->redirect()->toRoute( 'dashboard' );
+		}
+		return new viewModel();
+	}
+
+
+	public function logoutAction() {
+		$logger        = $this->getServiceLocator()->get( 'Log\App' );
+		$logger->log( \Zend\Log\Logger::INFO, "logout" );
+
+		$auth = $this->getServiceLocator()->get( 'Zend\Authentication\AuthenticationService' );
+		if ( $auth->hasIdentity() ) {
+			$auth->clearIdentity();
+			$sessionManager = new SessionManager();
+			$sessionManager->forgetMe();
+		}
+
+		return $this->redirect()->toRoute( 'home', array( 'action' =>  'index' ) );
 	}
 
 }
