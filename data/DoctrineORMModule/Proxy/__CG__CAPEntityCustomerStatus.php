@@ -188,4 +188,15 @@ class CustomerStatus extends \CAP\Entity\CustomerStatus implements \Doctrine\ORM
         return parent::getId();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+
+        return parent::getName();
+    }
+
 }

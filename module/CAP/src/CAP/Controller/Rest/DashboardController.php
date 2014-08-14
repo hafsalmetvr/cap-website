@@ -11,13 +11,13 @@ use Doctrine\ORM\Query\ResultSetMapping;
 
 class DashboardController extends AbstractRestfulController {
 
-	public function get($id) {
+	public function get( $id ) {
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
-		$logger->log( \Zend\Log\Logger::INFO, "Rest call to GET /user/".$id);
-		if ($id == 'current') {
-			$e = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-			$hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($e);
-			return new JsonModel( $hydrator->extract($this->identity()) );
+		$logger->log( \Zend\Log\Logger::INFO, "Rest call to GET /user/".$id );
+		if ( $id == 'current' ) {
+			$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+			$hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject( $e );
+			return new JsonModel( $hydrator->extract( $this->identity() ) );
 		}
 	}
 
@@ -27,7 +27,7 @@ class DashboardController extends AbstractRestfulController {
 		//$logger->log( \Zend\Log\Logger::INFO, "Role is ".$this->identity()->getRole() );
 
 		/* fetch the data for the dashboard depending on who is logged in */
-		if ($this->identity()->getRole()->getName() == "Admin") {
+		if ( $this->identity()->getRole()->getName() == "Admin" ) {
 			/* get every mentee and their mentor */
 
 
@@ -57,13 +57,14 @@ class DashboardController extends AbstractRestfulController {
 			$rsm->addFieldResult('cs1', 'name', 'name');
 			*/
 
-      return new JsonModel(
-      	array(
-      		'saqList' => $this->getSAQList(),
-      		'mentors' => $this->getAllMentors(),
-      		'mentees' => $this->getAllMentees(),
-      		)
-      );
+			return new JsonModel(
+				array(
+					'saqList' => $this->getSAQList(),
+					'mentors' => $this->getAllMentors(),
+					'mentees' => $this->getAllMentees(),
+					'admins'  => $this->getAllAdmins(),
+				)
+			);
 
 		}
 
@@ -77,39 +78,47 @@ class DashboardController extends AbstractRestfulController {
 	}
 
 	private function getSAQList() {
-    /* get SAQ List */
-    $entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-    $saqList = $entityManager->createQuery("SELECT q.name, q.id FROM CAP\Entity\Questionnaire q ")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+		/* get SAQ List */
+		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+		$saqList = $entityManager->createQuery( "SELECT q.name, q.id FROM CAP\Entity\Questionnaire q " )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 		return $saqList;
 	}
 
 	private function getAllMentors() {
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
-    $sql = "SELECT c.id, c.name, s.name as status FROM CAP\Entity\Customer c JOIN c.status s JOIN c.role r WHERE r.name = 'Mentor'";
-		$mentors = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')->createQuery($sql)->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+		$sql = "SELECT c.id, c.name, s.name as status FROM CAP\Entity\Customer c JOIN c.status s JOIN c.role r WHERE r.name = 'Mentor'";
+		$mentors = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 		$logger->log( \Zend\Log\Logger::INFO, $mentors );
 
 		/* get each mentee's mentor */
-		foreach ($mentors as $idx => $mentor) {
-	    $sql = "SELECT c.id, c.name FROM CAP\Entity\CustomerHierarchy ch JOIN ch.childCustomer c WHERE ch.parentCustomerId = ".$mentor['id'];
-			$mentees = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')->createQuery($sql)->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+		foreach ( $mentors as $idx => $mentor ) {
+			$sql = "SELECT c.id, c.name FROM CAP\Entity\CustomerHierarchy ch JOIN ch.childCustomer c WHERE ch.parentCustomerId = ".$mentor['id'];
+			$mentees = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 			$logger->log( \Zend\Log\Logger::INFO, $mentor );
 			$mentors[$idx]['mentees'] = $mentees;
 		}
 		return $mentors;
 	}
 
+	private function getAllAdmins() {
+		$logger = $this->getServiceLocator()->get( 'Log\App' );
+		/* get all admins */
+		$sql = "SELECT c.id, c.name, s.name as status FROM CAP\Entity\Customer c JOIN c.status s JOIN c.role r WHERE r.name = 'Admin'";
+		$admins = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+		return $admins;
+	}
+
 	private function getAllMentees() {
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
-    /* get all mentees */
-    $sql = "SELECT c.id, c.name FROM CAP\Entity\Customer c JOIN c.role r WHERE r.name = 'Mentee'";
-		$mentees = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')->createQuery($sql)->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+		/* get all mentees */
+		$sql = "SELECT c.id, c.name FROM CAP\Entity\Customer c JOIN c.role r WHERE r.name = 'Mentee'";
+		$mentees = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 		$logger->log( \Zend\Log\Logger::INFO, $mentees );
 
 		/* get each mentee's mentor */
-		foreach ($mentees as $idx => $mentee) {
-	    $sql = "SELECT c.id, c.name FROM CAP\Entity\CustomerHierarchy ch JOIN ch.parentCustomer c WHERE ch.childCustomerId = ".$mentee['id'];
-			$mentor = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')->createQuery($sql)->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+		foreach ( $mentees as $idx => $mentee ) {
+			$sql = "SELECT c.id, c.name FROM CAP\Entity\CustomerHierarchy ch JOIN ch.parentCustomer c WHERE ch.childCustomerId = ".$mentee['id'];
+			$mentor = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 			$mentees[$idx]['status'] = $mentor[0] ? 'Assigned' : 'Unassigned';
 			$logger->log( \Zend\Log\Logger::INFO, $mentor );
 			$mentees[$idx]['mentor'] = $mentor[0];

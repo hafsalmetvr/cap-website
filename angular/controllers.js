@@ -115,7 +115,7 @@ function clear_current_note($scope){
     $scope.current_note.id = '';
     $scope.current_note.share_with_mentee = false;
 }
-function LoginController($scope, $element, $http, $timeout, $location, $cookies)
+function LoginControllerOff($scope, $element, $http, $timeout, $location, $cookies)
 {
 }
 

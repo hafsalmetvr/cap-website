@@ -44,10 +44,11 @@ class LoginController extends AbstractRestfulController {
 		if ( $this->getRequest()->isPost() ) {
 			$authService     = $this->getServiceLocator()->get( 'Zend\Authentication\AuthenticationService' );
 			$adapter         = $authService->getAdapter();
-			$usernameOrEmail = $data['email'];
 
 			try {
-				$user = $this->getEntityManager()->createQuery( "SELECT u FROM CAP\Entity\Customer u WHERE u.email = '$usernameOrEmail'" )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+				$user = $this->getEntityManager()->createQuery( "SELECT u FROM CAP\Entity\Customer u WHERE u.email = :email" )
+				->setParameter('email', $data['email'])
+				->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 				$user = $user[0];
 
 				if ( !isset( $user ) ) {

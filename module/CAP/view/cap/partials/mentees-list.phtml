@@ -1,30 +1,51 @@
 <div class="row">
     <div class="table-container col-xs-12">
-        <span class="table-list-header"><i class="fa fa-mortar-board"></i>Mentees</span>
-        <table class="table table-striped">
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Actions</th>
-                <th>&nbsp;</th>
-            </tr>
-            <tr ng-repeat="mentee in mentees track by $index">
-                <td>[[$index+1]].</td>
-                <td>[[mentee.name]]</td>
-                <td>[[mentee.status]]</td>
-                <td>
-                    <a href="" ng-click="assign(mentee)" class="assign_button" ng-hide="mentee.status == 'ASSIGNED'"> ASSIGN </a>
-                    <a href="" ng-click="assign(mentee)" class="reassign_button" ng-show="mentee.status == 'ASSIGNED'"> REASSIGN </a>
-                </td>
-                <td>
-                    <a href="/user/adminmentee/mentee/[[mentee.id]]" class="view_button" ng-show="user_type == 'Administrator'"> VIEW </a>
-                    <a href="/user/mentor/mentee/[[mentee.id]]" ng-show="user_type == 'Mentor'" class="view_button"> VIEW </a>
-                </td>
-            </tr>
-        </table>
+        <div class="row table-header">
+            <div class="col-xs-12">
+                <i class="fa fa-graduation-cap"></i>
+                <span>Mentees</span>
+            </div>
+        </div>
+        <div class="row table-list">
+            <div class="col-xs-12">
+                <div class="row table-list-header">
+                    <div class="col-xs-1">#</div>
+                    <div class="col-xs-7">Name</div>
+                </div>
+
+                <div ng-hide="mentees" class="row">
+                    <div class="col-xs-12 alert alert-warning">There are no mentees assigned to this mentor</div>
+                </div>
+                <div ng-class="{1:'even'}[$index%2]" class="row table-list-row" ng-repeat="mentee in mentees track by $index">
+                    <div class="col-xs-1 text">[[$index+1]].</div>
+                    <div class="col-xs-7 text">[[mentee.name]]</div>
+                    <div class="actions text-right col-xs-4">
+                        <a ng-href="/dashboard/mentee/[[mentee.id]]" class="action-link">
+                          <div class="action-icon">
+                            <i class="fa fa-eye "></i>
+                          </div>
+                          <div class="action-text">View</div>
+                        </a>
+                        <a ng-show="{null:true}[mentee.mentor]" href="#" class="action-link">
+                          <div class="action-icon">
+                            <i class="fa fa-group "></i>
+                          </div>
+                          <div class="action-text">Assign</div>
+                        </a>
+                        <a ng-hide="{null:true}[mentee.mentor]" href="#" class="action-link">
+                          <div class="action-icon">
+                            <i class="fa fa-group "></i>
+                          </div>
+                          <div class="action-text">Reassign</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
 <div class="row">
     <div class="col-xs-12">
         <div class="page" ng-show="mentee_pages > 1">

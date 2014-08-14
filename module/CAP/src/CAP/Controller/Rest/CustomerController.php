@@ -84,15 +84,14 @@ class CustomerController extends AbstractRestfulController {
 			$customer->setDomain( $entityManager->find( 'CAP\Entity\Domain', 3 ) );
 			$customer->setRole(   $entityManager->find( 'CAP\Entity\Role', $data['role_id'] ) );
 
-			/* TODO: should be status 2 until they email confirmation comes in */
-			$customer->setStatus( $entityManager->find( 'CAP\Entity\CustomerStatus', 1 ) );
+			$customer->setStatus( $entityManager->find( 'CAP\Entity\CustomerStatus', 2 ) );
 			$customer->setName( $data['name'] );
 			$customer->setEmail( $data['email'] );
 			$customer->setRegistrationToken( md5( uniqid( mt_rand(), true ) ) );
 			$customer->setPassword( UserService::encryptPassword( $this->generatePassword() ) );
 
 			try {
-				$fullLink = $this->getBaseUrl() . $this->url()->fromRoute( 'dashboard', array( 'action' => 'confirm-email-change-password', 'id' => $customer->getRegistrationToken() ) );
+				$fullLink = $this->getBaseUrl() . $this->url()->fromRoute( 'dashboard', array( 'action' => 'confirm-email', 'id' => $customer->getRegistrationToken() ) );
 				$this->sendEmail(
 					$customer->getEmail(),
 					$this->getTranslatorHelper()->translate( 'Please, confirm your registration!' ),
@@ -101,7 +100,7 @@ class CustomerController extends AbstractRestfulController {
 				$entityManager->persist( $customer );
 				$entityManager->flush();
 
-				return new JsonModel( array( 'successs' => true, 'message' => 'An email has been sent to customer' ) );
+				return new JsonModel( array( 'success' => true, 'message' => 'An email has been sent to '.$customer->getEmail() ) );
 			} catch ( \Exception $e ) {
 				$logger->log( \Zend\Log\Logger::INFO, $e );
 				return new JsonModel( array( 'success' => false, 'message' =>'Something went wrong when trying to send the activation email! Please contact your administrator.' ) );

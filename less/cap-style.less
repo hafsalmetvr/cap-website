@@ -61,33 +61,65 @@ form {
 /* table lists */
 .table-container {
 	margin:20px 0;
-	.table-list-header {
+
+	.table-header {
 	  font-size: 18pt;
 	  font-family: "Roboto Condensed";
 	  i {
 	  	margin-right:20px;
 	  }
 	}
+
+	.table-list {
+		.table-list-header {
+			padding:8px;
+			font-weight: normal;
+			font-size:14pt;
+		  background-color: @gray3 !important;
+		  color: @white;
+		  vertical-align: middle !important;
+		}
+		.table-list-row {
+			padding:4px 8px;
+			font-weight: normal;
+			font-size:14pt;
+		  vertical-align: middle !important;
+		  .text {
+		  	line-height: 44px;
+		  }
+		}
+		.even {
+			border-top:1px solid @gray2;
+			border-bottom:1px solid @gray2;
+		  background-color: @gray1;
+		}
+	}
+
+	.action-link {
+		width:68px;
+		font-size:.9em;
+		display: inline-block;
+		text-align:center;
+		margin:0 10px;
+		.action-icon {
+
+		}
+		.action-text {
+			font-size:.8em;
+		}
+	}
 }
 
-table th {
-	font-weight: normal;
-	font-size:14pt;
-  background-color: @gray3 !important;
-  color: @white;
-  vertical-align: middle !important;
-}
+.detail {
+	margin-bottom:30px;
+	.detail-info {
+		font-size:16pt;
+		font-weight: normal;
+		font-family: "Roboto";
+		margin-top:8px;
+	}
 
-table td {
-	font-weight: normal;
-	font-size:14pt;
-  vertical-align: middle !important;
 }
-
-.even {
-  background-color: @gray1;
-}
-
 @media (max-width: @screen-xs-max) {
 
 }

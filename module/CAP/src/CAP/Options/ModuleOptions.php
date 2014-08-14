@@ -13,17 +13,17 @@ class ModuleOptions extends AbstractOptions
     /**
      * @var string
      */
-    protected $loginRedirectRoute = 'user/login';
+    protected $loginRedirectRoute = '/dashboard';
 
     /**
      * @var string
      */
-    protected $logoutRedirectRoute = 'user/login';
+    protected $logoutRedirectRoute = '/';
 
     /**
      * @var string
      */
-    protected $senderEmailAdress = 'no-reply@example.com';
+    protected $senderEmailAdress = 'cap@go-optimum.com';
 
     /**
      * @var bool

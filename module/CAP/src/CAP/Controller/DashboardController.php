@@ -42,6 +42,71 @@ class DashboardController extends AbstractActionController {
 	}
 
 
+	public function saqAction() {
+    $id = $this->params()->fromRoute('id');
+		/* if they're not logged in - redirect to login */
+		if ( !$user = $this->identity() ) {
+			return $this->redirect()->toRoute( 'home' );
+		}
+		$viewModel = new ViewModel();
+		return $viewModel->setTemplate('cap/dashboard/detail/saq.phtml');
+	}
+
+	public function mentorAction() {
+    $id = $this->params()->fromRoute('id');
+		$logger        = $this->getServiceLocator()->get( 'Log\App' );
+		$logger->log( \Zend\Log\Logger::INFO, "display mentor detail for ".$id );
+
+		/* if they're not logged in - redirect to login */
+		if ( !$user = $this->identity() ) {
+			return $this->redirect()->toRoute( 'home' );
+		}
+
+		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+
+		/* if not admin make sure this is a parent of the current logged in customer */
+		if ($this->identity()->getRole()->getName() !== "Admin") {
+	    $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')->findOneBy(array('parent_customer_id' => $id, 'child_customer_id' => $this->identity()->getId()));
+	    if (!$ch) {
+				return $this->redirect()->toRoute('dashboard');
+	    }
+	  }
+
+   	$mentor = $entityManager->getRepository('CAP\Entity\Customer')->find($id);
+
+    if (!$mentor) {
+			return $this->redirect()->toRoute('dashboard');
+    }
+
+		$viewModel = new ViewModel(array(
+			'mentor' => $mentor
+		));
+		return $viewModel->setTemplate('cap/dashboard/detail/mentor.phtml');
+	}
+
+	public function menteeAction() {
+    $id = $this->params()->fromRoute('id');
+		/* if they're not logged in - redirect to login */
+		if ( !$user = $this->identity() ) {
+			return $this->redirect()->toRoute( 'home' );
+		}
+		$viewModel = new ViewModel();
+		return $viewModel->setTemplate('cap/dashboard/detail/mentee.phtml');
+	}
+
+	public function adminAction() {
+    $id = $this->params()->fromRoute('id');
+		/* if they're not logged in - redirect to login */
+		if ( !$user = $this->identity() ) {
+			return $this->redirect()->toRoute( 'home' );
+		}
+		if ( $this->identity()->getRole()->getName() !=='Admin' ) {
+			return $this->redirect()->toRoute( 'home' );
+		}
+		$viewModel = new ViewModel();
+		return $viewModel->setTemplate('cap/dashboard/detail/admin.phtml');
+	}
+
 	public function createAction() {
 		$logger        = $this->getServiceLocator()->get( 'Log\App' );
 		//$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
@@ -57,6 +122,30 @@ class DashboardController extends AbstractActionController {
 		if ( $this->identity()->getRole()->getName() !== 'Admin' ) {
 			return $this->redirect()->toRoute( 'dashboard' );
 		}
+		return new viewModel();
+	}
+
+	public function confirmEmailAction() {
+		$logger        = $this->getServiceLocator()->get( 'Log\App' );
+		$logger->log( \Zend\Log\Logger::INFO, "Display confirm email form" );
+
+		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $token = $this->params()->fromRoute('id');
+    $c = $entityManager->getRepository('CAP\Entity\Customer')->findOneBy(array('registrationToken' => $token));
+
+    try {
+			//TODO: index token on customer table
+      if($token && $c) {
+        $viewModel = new ViewModel(array(
+            'token' => $c->getRegistrationToken(),
+        ));
+        return $viewModel;
+
+      } else {
+        return $this->redirect()->toRoute('home');
+      }
+    } catch (\Exception $e) {
+    }
 		return new viewModel();
 	}
 

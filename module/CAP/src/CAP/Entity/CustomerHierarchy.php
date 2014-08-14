@@ -79,4 +79,8 @@ class CustomerHierarchy {
         return $this;
     }
 
+    public function getChildCustomer() {
+        return $this->childCustomer;
+    }
+
 }

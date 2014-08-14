@@ -1,22 +1,42 @@
 <div class="row">
-  <div class="table-container col-xs-12">
-  	<span class="table-list-header"><i class="fa fa-file-text"></i> Skill Assessment Questionaries </span>
-  	<table class="table table-striped">
-  		<tr>
-        <th>#</th>
-  			<th>Name</th>
-  			<th>Action</th>
-        <th>&nbsp;</th>
-  		</tr>
-  		<tr ng-repeat="saq in saqList track by $index">
-        <td>[[$index+1]].</td>
-  			<td>[[saq.name]]</td>
-  			<td><a href="/user/saqlist/saqview/[[question.id]]" class="view_button">VIEW</a></td>
-        <td><a href="" ng-click="assign_saq(question)" class="assign_button bg_black">ASSIGN</a></td>
-  		</tr>
-  	</table>
-  </div>
+    <div class="table-container col-xs-12">
+        <div class="row table-header">
+            <div class="col-xs-12">
+                <i class="fa fa-file-text"></i>
+                <span>Self Assessment Questionnaires</span>
+            </div>
+        </div>
+        <div class="row table-list">
+            <div class="col-xs-12">
+                <div class="row table-list-header">
+                    <div class="col-xs-1">#</div>
+                    <div class="col-xs-7">Name</div>
+                </div>
+
+                <div ng-class="{1:'even'}[$index%2]" class="row table-list-row" ng-repeat="saq in saqList track by $index">
+                    <div class="col-xs-1 text">[[$index+1]].</div>
+                    <div class="col-xs-7 text">[[saq.name]]</div>
+                    <div class="actions text-right col-xs-4">
+                        <a ng-href="/dashboard/saq/[[saq.id]]" class="action-link">
+                          <div class="action-icon">
+                            <i class="fa fa-eye "></i>
+                          </div>
+                          <div class="action-text">View</div>
+                        </a>
+                        <a href="#" class="action-link">
+                          <div class="action-icon">
+                            <i class="fa fa-group "></i>
+                          </div>
+                          <div class="action-text">Assign</div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <div class="row">
   <div class="col-xs-12">
   	<?php /* paginate */ ?>

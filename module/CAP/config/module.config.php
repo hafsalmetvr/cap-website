@@ -34,6 +34,15 @@ return array(
                     )
                 ),
             ),
+            'rest-password' => array(
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/password',
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Rest\Password',
+                    )
+                ),
+            ),
 
             'rest-customer' => array(
                 'type' => 'segment',
@@ -47,6 +56,59 @@ return array(
                     )
                 ),
             ),
+
+            'rest-mentee' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/rest/mentee[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Rest\Mentee',
+                    )
+                ),
+            ),
+
+            'rest-mentoe' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/rest/mentor[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Rest\Mentor',
+                    )
+                ),
+            ),
+
+            'rest-admin' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/rest/admin[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Rest\Admin',
+                    )
+                ),
+            ),
+
+            'rest-saq' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/rest/saq[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Rest\SAQ',
+                    )
+                ),
+            ),
+
 
             'rest-dashboard' => array(
                 'type' => 'segment',
@@ -98,7 +160,7 @@ return array(
             'dashboard' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/dashboard[/:action]',
+                    'route'    => '/dashboard[/:action][/:id]',
                     'constraints' => array(
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
@@ -157,8 +219,13 @@ return array(
             'CAP\Controller\Partials'   => 'CAP\Controller\PartialsController',
 
             'CAP\Controller\Rest\Customer'   => 'CAP\Controller\Rest\CustomerController',
+            'CAP\Controller\Rest\Mentee'     => 'CAP\Controller\Rest\MenteeController',
+            'CAP\Controller\Rest\Mentor'     => 'CAP\Controller\Rest\MentorController',
+            'CAP\Controller\Rest\Admin'      => 'CAP\Controller\Rest\AdminController',
+            'CAP\Controller\Rest\SAQ'        => 'CAP\Controller\Rest\SaqController',
             'CAP\Controller\Rest\Dashboard'  => 'CAP\Controller\Rest\DashboardController',
             'CAP\Controller\Rest\Login'      => 'CAP\Controller\Rest\LoginController',
+            'CAP\Controller\Rest\Password'   => 'CAP\Controller\Rest\PasswordController',
             'CAP\Controller\Rest\Settings'   => 'CAP\Controller\Rest\SettingsController',
         ),
     ),

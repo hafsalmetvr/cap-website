@@ -34,7 +34,7 @@ CREATE TABLE `answer` (
   PRIMARY KEY (`id`),
   KEY `question_id` (`question_id`),
   CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `answer_enum` (
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,7 @@ CREATE TABLE `answer_enum_map` (
   KEY `answer_enum_id` (`answer_enum_id`),
   CONSTRAINT `answer_enum_map_ibfk_1` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `answer_enum_map_ibfk_2` FOREIGN KEY (`answer_enum_id`) REFERENCES `answer_enum` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,7 +164,7 @@ CREATE TABLE `completion_status` (
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +173,7 @@ CREATE TABLE `completion_status` (
 
 LOCK TABLES `completion_status` WRITE;
 /*!40000 ALTER TABLE `completion_status` DISABLE KEYS */;
-INSERT INTO `completion_status` VALUES (1,'NOT STARTED','2014-05-28 20:59:13','2014-05-28 15:29:13'),(2,'NOT COMPLETED','2014-05-28 20:59:13','2014-05-28 15:29:13'),(3,'COMPLETED','2014-05-28 20:59:13','2014-05-28 15:29:13'),(4,'Almost complted','2014-06-29 05:02:36','2014-06-28 23:32:36');
+INSERT INTO `completion_status` (name) VALUES ('NOT STARTED'),('NOT COMPLETED'),('COMPLETED');
 /*!40000 ALTER TABLE `completion_status` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -205,6 +205,8 @@ CREATE TABLE `customer` (
   `domain_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `status_id` int(1) DEFAULT '1',
   `verify_email_token` varchar(255) DEFAULT NULL,
@@ -218,7 +220,7 @@ CREATE TABLE `customer` (
   CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `domain` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `customer_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `customer_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +229,8 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (4,'hafsalmetvr@gmail.com',0,4,'Ansal','$2y$10$K0ZZKJLmCweOrSBF/dNK5OrvpBCFwbmXtKYFFlf0ItpjT6GhPc5wK',1,'5beec137c2d70b7d81334a703e14ca42','2014-06-02 16:49:40','2014-06-26 18:35:57'),(14,'ansal@technomics.com',3,5,'Ansal','$2y$10$K0ZZKJLmCweOrSBF/dNK5OrvpBCFwbmXtKYFFlf0ItpjT6GhPc5wK',1,'61329ea7aa56dc2926f5b8ab8f90bb1b','2014-06-10 23:53:11','2014-07-14 19:37:45'),(27,'mentee1@gmail.com',3,6,'Mentee1','$2y$10$K0ZZKJLmCweOrSBF/dNK5OrvpBCFwbmXtKYFFlf0ItpjT6GhPc5wK',1,'36b5b63d69dd3f581388de8ab4486281','2014-06-22 19:04:54','2014-07-14 09:46:06'),(28,'mentee2mentee@gmail.com',3,6,'Mentee2','$2y$10$lbKWl3eOyvnaHZUGHjB72unVI5rbG.U8Ip9CM6jXiHBK1H726KWpe',1,'9e3edf5c39832929fda6355e46e254a1','2014-06-24 01:35:34','2014-06-28 20:18:16'),(29,'mentor@mentorr.com',3,5,'Mentor2','$2y$10$vTZFMmGXGLNZ2yZwlx4.1OY4bsorq6LRpnX8kCkpmbi6f5KQ/Jc9K',1,'360da9d06ac427fb82fde26464469fcb','2014-06-24 23:56:54','2014-07-14 19:37:43'),(30,'mentee2@mentorr.com',3,6,'Mentee2','$2y$10$34MakWxhVSeCsXg8wVoJNOk90olvK0rPJNUVboNNeOKY3aab/6.tK',1,'12476d66a63345ca05ba86d0b2519e32','2014-06-24 23:57:55','2014-06-28 20:18:16'),(31,'menteeeee22@gmail.com',3,6,'Mentee2','$2y$10$mNLKH0w.uhIk22o9nYQKPepBsh/zq.XtZxsNu6VKXlqmGsFRo3Qpe',1,'38e7370fbfc59f7e793a0b127b1166cc','2014-06-27 00:26:07','2014-06-28 20:18:16'),(33,'veerankuttyvp1@gmail.com',3,6,'test Mentor','$2y$10$nuCgwo.qJcR/riHxRmn/oO.HdDF/WlmQls3TBFaDY3wmIcRoe2bQC',1,'953d6a6631c60bfd2bc062e2b8b11209','2014-07-15 01:05:23','2014-07-14 19:35:23'),(34,'mentor6@gmail.com',3,5,'Mentor6','$2y$10$xD1TSbDwaORyvt8OpcEOJebBkPnUjaLd3I8z9pJjKegXj4N99sIra',1,'e4f84ec8840b4674247a621695886f6d','2014-07-16 01:17:42','2014-07-15 19:47:42');
+INSERT INTO `customer` (email,domain_id,role_id,name,password,status_id) VALUES ('kwalpole@go-optimum.com',0,4,'Kim Walpole','$2y$10$hxluqSwKn1A5ydOBf/BB0Oe1NH6PBt9xx/bRDm5Vfb0ZIoux4l1VS',1),('tom@eighty.co',0,4,'Tom Walpole','$2y$10$hxluqSwKn1A5ydOBf/BB0Oe1NH6PBt9xx/bRDm5Vfb0ZIoux4l1VS',1);
+
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -313,7 +316,7 @@ CREATE TABLE `customer_hierarchy` (
   KEY `customer_hierarchy_ibfk_1` (`parent_customer_id`),
   CONSTRAINT `customer_hierarchy_ibfk_1` FOREIGN KEY (`parent_customer_id`) REFERENCES `customer` (`id`),
   CONSTRAINT `customer_hierarchy_ibfk_2` FOREIGN KEY (`child_customer_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,7 +325,6 @@ CREATE TABLE `customer_hierarchy` (
 
 LOCK TABLES `customer_hierarchy` WRITE;
 /*!40000 ALTER TABLE `customer_hierarchy` DISABLE KEYS */;
-INSERT INTO `customer_hierarchy` VALUES (21,34,27,'2014-07-17 00:09:49','2014-07-16 19:14:33'),(22,34,28,'2014-07-17 00:46:05','2014-07-16 19:16:05'),(23,34,30,'2014-07-17 01:08:43','2014-07-16 19:38:43'),(24,29,31,'2014-07-17 01:09:02','2014-07-16 19:39:02');
 /*!40000 ALTER TABLE `customer_hierarchy` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -360,7 +362,7 @@ CREATE TABLE `customer_note` (
   KEY `questionnaire_id` (`questionnaire_id`),
   CONSTRAINT `customer_note_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_note_ibfk_2` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +371,6 @@ CREATE TABLE `customer_note` (
 
 LOCK TABLES `customer_note` WRITE;
 /*!40000 ALTER TABLE `customer_note` DISABLE KEYS */;
-INSERT INTO `customer_note` VALUES (2,27,NULL,'test note of ansal','2014-07-11 01:15:23','2014-07-10 19:45:23'),(3,27,NULL,'test','2014-07-11 02:12:00','2014-07-10 20:44:35'),(6,14,NULL,'xxxxxxxxxxxx','0000-00-00 00:00:00','2014-07-11 17:44:29'),(7,14,NULL,'test3','0000-00-00 00:00:00','2014-07-11 18:12:17'),(8,14,NULL,'test4','2014-07-11 23:43:06','0000-00-00 00:00:00'),(9,14,NULL,'test5','2014-07-11 23:43:53','0000-00-00 00:00:00'),(10,14,NULL,'test54','2014-07-11 23:45:49','0000-00-00 00:00:00'),(11,14,NULL,'test45','2014-07-11 23:46:59','0000-00-00 00:00:00'),(12,27,NULL,'test3','2014-07-15 22:30:03','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `customer_note` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -406,7 +407,7 @@ CREATE TABLE `customer_note_map` (
   KEY `customer_note_id` (`customer_note_id`),
   CONSTRAINT `customer_note_map_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_note_map_ibfk_2` FOREIGN KEY (`customer_note_id`) REFERENCES `customer_note` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,7 +416,6 @@ CREATE TABLE `customer_note_map` (
 
 LOCK TABLES `customer_note_map` WRITE;
 /*!40000 ALTER TABLE `customer_note_map` DISABLE KEYS */;
-INSERT INTO `customer_note_map` VALUES (5,6,27,'2014-07-11 23:36:21','0000-00-00 00:00:00'),(6,7,27,'2014-07-11 23:42:29','0000-00-00 00:00:00'),(7,11,27,'2014-07-11 23:46:59','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `customer_note_map` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -549,7 +549,7 @@ CREATE TABLE `customer_questionnaire` (
   CONSTRAINT `customer_questionnaire_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_questionnaire_ibfk_2` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_questionnaire_ibfk_3` FOREIGN KEY (`completion_status_id`) REFERENCES `completion_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -598,7 +598,7 @@ CREATE TABLE `customer_recommendation` (
   CONSTRAINT `customer_recommendation_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_recommendation_ibfk_2` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_recommendation_ibfk_3` FOREIGN KEY (`recommendation_id`) REFERENCES `recommendation` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -689,7 +689,7 @@ CREATE TABLE `customer_status` (
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -698,7 +698,7 @@ CREATE TABLE `customer_status` (
 
 LOCK TABLES `customer_status` WRITE;
 /*!40000 ALTER TABLE `customer_status` DISABLE KEYS */;
-INSERT INTO `customer_status` VALUES (1,'ACTIVE','2014-05-28 20:59:11','2014-05-28 15:29:11'),(2,'INACTIVE','2014-05-28 20:59:11','2014-05-28 15:29:11'),(3,'DELETED','2014-05-28 20:59:11','2014-05-28 15:29:11');
+INSERT INTO `customer_status` (name) VALUES ('ACTIVE'),('INACTIVE'),('DELETED');
 /*!40000 ALTER TABLE `customer_status` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -763,6 +763,47 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `organization`
+--
+
+DROP TABLE IF EXISTS `organization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `organization` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `organization`
+--
+
+LOCK TABLES `organization` WRITE;
+/*!40000 ALTER TABLE `organization` DISABLE KEYS */;
+INSERT INTO `organization` (name) VALUES ('Optimum Training & Consulting, Inc.');
+/*!40000 ALTER TABLE `organization` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER organization_created BEFORE INSERT ON organization FOR EACH ROW SET new.created = now() */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
 -- Table structure for table `domain`
 --
 
@@ -778,7 +819,7 @@ CREATE TABLE `domain` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `domain_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -787,7 +828,7 @@ CREATE TABLE `domain` (
 
 LOCK TABLES `domain` WRITE;
 /*!40000 ALTER TABLE `domain` DISABLE KEYS */;
-INSERT INTO `domain` VALUES (3,'technomics.com',1,'2014-06-10 21:20:34','2014-06-10 15:50:34');
+INSERT INTO `domain` (name,organization_id) VALUES ('go-optimum.com',1);
 /*!40000 ALTER TABLE `domain` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -807,45 +848,7 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
--- Table structure for table `organization`
---
 
-DROP TABLE IF EXISTS `organization`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `organization` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `organization`
---
-
-LOCK TABLES `organization` WRITE;
-/*!40000 ALTER TABLE `organization` DISABLE KEYS */;
-INSERT INTO `organization` VALUES (1,'technomics.com','2014-06-10 21:20:15','2014-06-10 15:50:15'),(2,'Technomics','2014-06-16 00:55:45','2014-06-15 19:25:45');
-/*!40000 ALTER TABLE `organization` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER organization_created BEFORE INSERT ON organization FOR EACH ROW SET new.created = now() */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `question`
@@ -868,7 +871,7 @@ CREATE TABLE `question` (
   KEY `section_id` (`section_id`),
   CONSTRAINT `question_ibfk_1` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE,
   CONSTRAINT `question_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `section` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -913,7 +916,7 @@ CREATE TABLE `questionnaire` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `questionnaire_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1001,7 +1004,7 @@ CREATE TABLE `recommendation` (
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1042,7 +1045,7 @@ CREATE TABLE `reminder_frequency` (
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1051,7 +1054,7 @@ CREATE TABLE `reminder_frequency` (
 
 LOCK TABLES `reminder_frequency` WRITE;
 /*!40000 ALTER TABLE `reminder_frequency` DISABLE KEYS */;
-INSERT INTO `reminder_frequency` VALUES (1,'MONTHLY','2014-06-18 21:38:31','2014-06-26 18:58:11');
+INSERT INTO `reminder_frequency` (frequency) VALUES ('MONTHLY');
 /*!40000 ALTER TABLE `reminder_frequency` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1087,7 +1090,7 @@ CREATE TABLE `role` (
   PRIMARY KEY (`id`),
   KEY `domain_id` (`domain_id`),
   CONSTRAINT `role_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `domain` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1096,7 +1099,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (4,'Admin',0,3,'2014-06-10 21:22:11','2014-06-10 15:52:11'),(5,'Mentor',0,3,'2014-06-10 21:22:37','2014-06-10 15:52:37'),(6,'Mentee',0,3,'2014-06-10 21:22:51','2014-06-10 15:52:51');
+INSERT INTO `role` (name,level,domain_id) VALUES ('Admin',0,1),('Mentor',0,1),('Mentee',0,1);
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1134,7 +1137,7 @@ CREATE TABLE `section` (
   PRIMARY KEY (`id`),
   KEY `questionnaire_id` (`questionnaire_id`),
   CONSTRAINT `section_ibfk_1` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

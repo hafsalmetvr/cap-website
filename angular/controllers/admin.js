@@ -1,6 +1,35 @@
 /* Controllers */
 angular.module('cap.controllers.admin', []).
 
+controller('SAQCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
+	function($scope, $element, $http, $timeout, $cookies, customer) {
+	}
+]).
+controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
+	function($scope, $element, $http, $timeout, $cookies, customer) {
+		$scope.init = function(mentorId) {
+			$scope.mentorId = mentorId;
+
+			/* get listr of mentees */
+	    $http.get('/rest/mentor/'+$scope.mentorId, {
+	        headers: {'Content-Type': 'application/json'}
+	    }).success(function(data, status) {
+	    	console.log(data);
+	    	$scope.mentees = data.mentees;
+	    }).error(function(data, status){
+	      console.log(data);
+	    });
+	  }
+	}
+]).
+controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
+	function($scope, $element, $http, $timeout, $cookies, customer) {
+	}
+]).
+controller('AdminCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
+	function($scope, $element, $http, $timeout, $cookies, customer) {
+	}
+]).
 controller('SettingsCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
 	function($scope, $element, $http, $timeout, $cookies, customer) {
     $scope.init = function(){
@@ -8,7 +37,7 @@ controller('SettingsCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies
     	$scope.reminderFrequencies = ['DAILY','WEEKLY','MONTHLY','QUARTERLY'];
     	console.log($scope.reminderFrequencies);
 
-    	/* get current settings */
+    	/* get current settings */z
       $http.get('/rest/settings', {
           headers: {'Content-Type': 'application/json'}
       }).success(function(data, status) {
@@ -70,7 +99,7 @@ controller('CreateAccountCtrl', ['$scope', '$element', '$http', '$timeout', '$co
         	if (data.success) {
         		console.log('success');
 	          $scope.success = true;
-	          $scope.msg = "Account was successfully created. A confirmation email has been sent to: "+ $scope.create.email;
+	          $scope.msg = "The account was created and confirmation email has been sent to: "+ $scope.create.email;
 	         } else {
 	         	console.log('error');
 	         	$scope.success = false;
@@ -165,6 +194,7 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
         	$scope.saqList = data.saqList;
         	$scope.mentors = data.mentors;
         	$scope.mentees = data.mentees;
+        	$scope.admins  = data.admins;
 
         }).error(function(data, status){
           console.log(data);

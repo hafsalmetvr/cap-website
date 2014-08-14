@@ -41,6 +41,17 @@ class Customer {
     /**
      * @var string
      *
+     * @ORM\Column(name="title", type="string", length=40, nullable=true)
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options":{"encoding":"UTF-8", "max":40}})
+     */
+    protected $title;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="email", type="string", length=60, nullable=false, unique=true)
      * @Annotation\Type("Zend\Form\Element\Email")
      * @Annotation\Filter({"name":"StripTags"})
@@ -53,6 +64,19 @@ class Customer {
      * })
      */
     protected $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone_number", type="string", length=60, nullable=false, unique=true)
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Attributes({
+     *   "required":"false"
+     * })
+     */
+    protected $phoneNumber;
 
     /**
      * @var string
@@ -237,6 +261,52 @@ class Customer {
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    /**
+     * Set title
+     *
+     * @param  string $title
+     * @return Customer
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set phoneNumber
+     *
+     * @param  string $phoneNumber
+     * @return Customer
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 /**
  * CsnUser - Coolcsn Zend Framework 2 User Module
- * 
+ *
  * @link https://github.com/coolcsn/CsnUser for the canonical source repository
  * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
  * @license https://github.com/coolcsn/CsnUser/blob/master/LICENSE BSDLicense
@@ -37,12 +37,12 @@ class RegistrationController extends AbstractRestfulController
      * @var Doctrine\ORM\EntityManager
      */
     protected $entityManager;
-    
+
     /**
      * @var Zend\Mvc\I18n\Translator
      */
     protected $translatorHelper;
-    
+
     /**
      * @var Zend\Form\Form
      */
@@ -57,17 +57,17 @@ class RegistrationController extends AbstractRestfulController
      */
     public function resetPasswordAction()
     {
-    
+
         return new ViewModel();
     }
-    
+
      public function create($data)
     {
 
         $user = new Customer;
         $message = null;
         if($this->getRequest()->isPost()) {
-           
+
                 $usernameOrEmail = $data['email'];
                 $entityManager = $this->getEntityManager();
                 $user = $entityManager->createQuery("SELECT u FROM CsnUser\Entity\Customer u WHERE u.email = '$usernameOrEmail'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
@@ -97,13 +97,13 @@ $entityManager->persist($user);
                 } else {
                     $message = 'The username or email is not valid!';
                 }
-            
+
         }
 
         return new JsonModel(array('status' => 'failed', 'message' => $message));
     }
- 
-    
+
+
     /**
      * Confirm Email Change Action
      *
@@ -113,7 +113,7 @@ $entityManager->persist($user);
      */
     public function confirmEmailChangePasswordAction()
     {
-      
+
       $token = $this->params()->fromRoute('id');
       try {
         $entityManager = $this->getEntityManager();
@@ -122,7 +122,7 @@ $entityManager->persist($user);
           #$user = new Customer;
           #$entityManager->persist($user);
           #$entityManager->flush();
-    
+
           $viewModel = new ViewModel(array(
               'token' => $user->getRegistrationToken(),
               'form' => $form,
@@ -141,21 +141,21 @@ $entityManager->persist($user);
         );
       }
 
-    
+
    }
 
-    
+
     /**
      * Send Email
      *
      * Sends plain text emails
-     * 
-     */    
+     *
+     */
     private function sendEmail($to = '', $subject = '', $messageText = '')
     {
         $transport = $this->getServiceLocator()->get('mail.transport');
         $message = new Message();
-            
+
         $message->addTo($to)
                 ->addFrom($this->getOptions()->getSenderEmailAdress())
                 ->setSubject($subject)
@@ -163,7 +163,7 @@ $entityManager->persist($user);
 
         $transport->send($message);
     }
-    
+
     /**
      * Get Base Url
      *
@@ -185,7 +185,7 @@ $entityManager->persist($user);
         if(null === $this->options) {
             $this->options = $this->getServiceLocator()->get('csnuser_module_options');
         }
-    
+
         return $this->options;
     }
 
@@ -202,7 +202,7 @@ $entityManager->persist($user);
 
         return $this->entityManager;
     }
-    
+
     /**
      * get translatorHelper
      *
@@ -213,10 +213,10 @@ $entityManager->persist($user);
         if(null === $this->translatorHelper) {
             $this->translatorHelper = $this->getServiceLocator()->get('MvcTranslator');
         }
-    
+
         return $this->translatorHelper;
     }
-    
+
     /**
      * get userFormHelper
      *
@@ -227,7 +227,7 @@ $entityManager->persist($user);
         if(null === $this->userFormHelper) {
             $this->userFormHelper = $this->getServiceLocator()->get('csnuser_user_form');
         }
-    
+
         return $this->userFormHelper;
     }
 }

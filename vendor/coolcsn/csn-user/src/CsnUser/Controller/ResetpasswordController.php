@@ -1,7 +1,7 @@
 <?php
 /**
  * CsnUser - Coolcsn Zend Framework 2 User Module
- * 
+ *
  * @link https://github.com/coolcsn/CsnUser for the canonical source repository
  * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
  * @license https://github.com/coolcsn/CsnUser/blob/master/LICENSE BSDLicense
@@ -37,12 +37,12 @@ class ResetpasswordController extends AbstractRestfulController
      * @var Doctrine\ORM\EntityManager
      */
     protected $entityManager;
-    
+
     /**
      * @var Zend\Mvc\I18n\Translator
      */
     protected $translatorHelper;
-    
+
     /**
      * @var Zend\Form\Form
      */
@@ -57,15 +57,15 @@ class ResetpasswordController extends AbstractRestfulController
      */
     public function confirmEmailChangePasswordAction()
     {
-      
+
 
       $token = $this->params()->fromRoute('id');
       try {
         $entityManager = $this->getEntityManager();
         if($token !== '' && $user = $entityManager->getRepository('CsnUser\Entity\Customer')->findOneBy(array('registrationToken' => $token))) {
 
-          $form = $this->getUserFormHelper()->createUserForm($user, 'ChangePassword'); 
-    
+          $form = $this->getUserFormHelper()->createUserForm($user, 'ChangePassword');
+
           $viewModel = new ViewModel(array(
               'token' => $user->getRegistrationToken(),
               'form' => $form,
@@ -84,9 +84,9 @@ class ResetpasswordController extends AbstractRestfulController
         );
       }
 
-    
+
    }
-     
+
     public function create($data)
     {
       $token  = '';
@@ -99,7 +99,7 @@ class ResetpasswordController extends AbstractRestfulController
                 $token = $data['token'];
                 $entityManager = $this->getEntityManager();
 
-                if($token !== '' && $user = $entityManager->getRepository('CsnUser\Entity\Customer')->findOneBy(array('registrationToken' => $token)))                { 
+                if($token !== '' && $user = $entityManager->getRepository('CsnUser\Entity\Customer')->findOneBy(array('registrationToken' => $token)))                {
                     $user->setPassword(UserCredentialsService::encryptPassword($data['new_password']));
                     $entityManager = $this->getEntityManager();
                     $user->setRegistrationToken(md5(uniqid(mt_rand(), true)));
@@ -114,21 +114,21 @@ class ResetpasswordController extends AbstractRestfulController
           return new JsonModel(array('passwordreset' => 'failed', 'message' => $message));
         } else {
 
-               $message = "New Password and Confirm Password do not match";   
+               $message = "New Password and Confirm Password do not match";
          }
-     
+
     }
     /**
      * Send Email
      *
      * Sends plain text emails
-     * 
-     */    
+     *
+     */
     private function sendEmail($to = '', $subject = '', $messageText = '')
     {
         $transport = $this->getServiceLocator()->get('mail.transport');
         $message = new Message();
-            
+
         $message->addTo($to)
                 ->addFrom($this->getOptions()->getSenderEmailAdress())
                 ->setSubject($subject)
@@ -136,7 +136,7 @@ class ResetpasswordController extends AbstractRestfulController
 
         $transport->send($message);
     }
-    
+
     /**
      * Get Base Url
      *
@@ -158,7 +158,7 @@ class ResetpasswordController extends AbstractRestfulController
         if(null === $this->options) {
             $this->options = $this->getServiceLocator()->get('csnuser_module_options');
         }
-    
+
         return $this->options;
     }
 
@@ -175,7 +175,7 @@ class ResetpasswordController extends AbstractRestfulController
 
         return $this->entityManager;
     }
-    
+
     /**
      * get translatorHelper
      *
@@ -186,10 +186,10 @@ class ResetpasswordController extends AbstractRestfulController
         if(null === $this->translatorHelper) {
             $this->translatorHelper = $this->getServiceLocator()->get('MvcTranslator');
         }
-    
+
         return $this->translatorHelper;
     }
-    
+
     /**
      * get userFormHelper
      *
@@ -200,7 +200,7 @@ class ResetpasswordController extends AbstractRestfulController
         if(null === $this->userFormHelper) {
             $this->userFormHelper = $this->getServiceLocator()->get('csnuser_user_form');
         }
-    
+
         return $this->userFormHelper;
     }
 }

@@ -7782,27 +7782,53 @@ form .text-input.form-group {
 .table-container {
   margin: 20px 0;
 }
-.table-container .table-list-header {
+.table-container .table-header {
   font-size: 18pt;
   font-family: "Roboto Condensed";
 }
-.table-container .table-list-header i {
+.table-container .table-header i {
   margin-right: 20px;
 }
-table th {
+.table-container .table-list .table-list-header {
+  padding: 8px;
   font-weight: normal;
   font-size: 14pt;
   background-color: #333333 !important;
   color: #ffffff;
   vertical-align: middle !important;
 }
-table td {
+.table-container .table-list .table-list-row {
+  padding: 4px 8px;
   font-weight: normal;
   font-size: 14pt;
   vertical-align: middle !important;
 }
-.even {
+.table-container .table-list .table-list-row .text {
+  line-height: 44px;
+}
+.table-container .table-list .even {
+  border-top: 1px solid #b3b3b3;
+  border-bottom: 1px solid #b3b3b3;
   background-color: #f2f2f2;
+}
+.table-container .action-link {
+  width: 68px;
+  font-size: .9em;
+  display: inline-block;
+  text-align: center;
+  margin: 0 10px;
+}
+.table-container .action-link .action-text {
+  font-size: .8em;
+}
+.detail {
+  margin-bottom: 30px;
+}
+.detail .detail-info {
+  font-size: 16pt;
+  font-weight: normal;
+  font-family: "Roboto";
+  margin-top: 8px;
 }
 nav .container-fluid {
   padding-right: 0px;
