@@ -37,8 +37,8 @@ class MentorController extends AbstractRestfulController {
 		/* if not admin make sure this is a parent of the current logged in customer */
 		if ($this->identity()->getRole()->getName() !== "Admin") {
 	    $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')
-	    										->findOneBy(array('parent_customer_id' => $id,
-	    																			'child_customer_id' => $this->identity()->getId()));
+	    										->findOneBy(array('parentCustomer' => $id,
+	    																			'childCustomerd' => $this->identity()->getId()));
 	    if (!$ch) {
 				return new JsonModel();
 	    }

@@ -7836,6 +7836,13 @@ form .text-input.form-group {
   font-family: "Roboto";
   margin-top: 8px;
 }
+.small-text {
+  font-size: 11pt;
+  font-weight: normal;
+}
+.small-text i {
+  margin-right: 5px !important;
+}
 /* modal style */
 .modal .modal-content {
   border: 6px solid #b3b3b3;

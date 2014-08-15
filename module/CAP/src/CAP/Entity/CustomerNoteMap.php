@@ -23,7 +23,7 @@ class CustomerNoteMap {
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created", nullable=false)
+     * @ORM\Column(name="created", nullable=true)
      */
     private $created;
 
@@ -61,6 +61,13 @@ class CustomerNoteMap {
      */
     private $customerNote;
 
+    public function setCreated($created) {
+        $this->created = $created;
+
+        return $this;
+    }
+
+
      /**
      * Set customer
      *
@@ -85,17 +92,6 @@ class CustomerNoteMap {
         return $this;
     }
 
-    /**
-     * Set created
-     *
-     * @param  string $created
-     * @return CustomerNote
-     */
-    public function setCreated($created) {
-        $this->created = $created;
-
-        return $this;
-    }
 
     public function getShare() {
         return $this->share;

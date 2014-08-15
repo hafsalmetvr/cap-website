@@ -37,7 +37,7 @@ class CustomerNote {
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created", nullable=false)
+     * @ORM\Column(name="created", nullable=true)
      */
     private $created;
 
@@ -106,6 +106,16 @@ class CustomerNote {
         return $this;
     }
 
+    public function setCreated($created) {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getCreated() {
+        return $this->created;
+    }
+
     public function getName() {
         return $this->name;
     }
@@ -122,18 +132,6 @@ class CustomerNote {
      */
     public function setCustomer($customer) {
         $this->customer = $customer;
-
-        return $this;
-    }
-
-    /**
-     * Set created
-     *
-     * @param  string $created
-     * @return CustomerNote
-     */
-    public function setCreated($created) {
-        $this->created = $created;
 
         return $this;
     }

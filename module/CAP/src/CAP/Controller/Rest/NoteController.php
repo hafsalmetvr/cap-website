@@ -2,13 +2,10 @@
 namespace CAP\Controller\Rest;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
-use Zend\Session\SessionManager;
-use Zend\Session\Config\StandardConfig;
 use Zend\View\Model\JsonModel;
 use CAP\Entity\Customer;
-use CAP\Options\ModuleOptions;
-use Zend\Mail\Message;
-use CAP\Service\UserService;
+use CAP\Entity\CustomerNote;
+use CAP\Entity\CustomerNoteMap;
 
 class NoteController extends AbstractRestfulController {
 
@@ -39,8 +36,8 @@ class NoteController extends AbstractRestfulController {
 
 	}
 
-	/* PUT /note/:id  - edit a note */
-	public function update($id, $data) {
+  /* PUT /note/:id  - edit a note */
+  public function update($id, $data) {
     if ( !$this->identity() ) {
       return JsonModel( array() );
     }
@@ -63,8 +60,10 @@ class NoteController extends AbstractRestfulController {
     $e->persist( $n );
     $e->flush();
 
+    /* see if share is changing */
+
     return new JsonModel(array('success' => true));
-	}
+  }
 
   public function delete($id) {
     if ( !$this->identity() ) {
@@ -78,6 +77,7 @@ class NoteController extends AbstractRestfulController {
     $e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
     $n = $e->getRepository('CAP\Entity\CustomerNote')->findOneBy(array('id' => $id, 'customerId' => $this->identity()->getId()));
     if (!$n) {
+      $logger->log( \Zend\Log\Logger::INFO, "no note to delete!");
       return JsonModel( array() );
     }
     $e->remove($n);
@@ -86,11 +86,56 @@ class NoteController extends AbstractRestfulController {
     return new JsonModel(array('success' => true));
   }
 
+  /* POST /note  - edit a note */
+  public function create($data) {
+    $logger = $this->getServiceLocator()->get( 'Log\App' );
+    $logger->log( \Zend\Log\Logger::INFO, $data);
 
-	/* POST /customer - should create a new customer */
-	public function create( $data ) {
-		if ( !$this->identity() || !( $this->identity()->getRole()->getName() === 'Admin' ) ) {
-			return JsonModel( array() );
-		}
-	}
+    if ( !$this->identity() ) {
+      return JsonModel( array() );
+    }
+
+    /* make sure the relationship exists between the 2 customers */
+    $sql = "SELECT ch.id FROM CAP\Entity\CustomerHierarchy ch WHERE (ch.parentCustomer = :parentId AND ch.childCustomer = :childId) OR (ch.parentCustomer = :childId AND ch.childCustomer = :parentId)";
+    $ch = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )
+               ->setParameter('childId',$data['customerId'])
+               ->setParameter('parentId',$this->identity()->getId())
+               ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+    if (!$ch || !$ch[0]) {
+      $logger->log( \Zend\Log\Logger::INFO, 'theres no customer relationship');
+      return JsonModel( array() );
+    }
+    $now = date("Y-m-d H:i:s");
+    /* make sure this is my note */
+    $e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $n = new CustomerNote;
+    $n->setCustomer($this->identity());
+    $n->setName($data['note']['name']);
+    $n->setNote($data['note']['note']);
+    $n->setCreated($now);
+    $e->persist( $n );
+
+    /* add the customer_note_map */
+    $nm = new CustomerNoteMap;
+    $nm->setCustomer($e->find( 'CAP\Entity\Customer', $data['customerId'] ));
+    $nm->setCustomerNote($n);
+    $nm->setShare($data['note']['share']);
+    $nm->setCreated($now);
+    $e->persist($nm);
+
+    $e->flush();
+
+    $noteData = array(
+      'id' => $n->getId(),
+      'name' => $n->getName(),
+      'note' => $n->getNote(),
+      'created' => $n->getCreated(),
+      'share' => ($data['note']['share'])
+    );
+
+    return new JsonModel(array('success' => true,'note' => $noteData));
+  }
+
+
 }
