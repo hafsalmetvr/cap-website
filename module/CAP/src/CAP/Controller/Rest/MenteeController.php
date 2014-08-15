@@ -27,7 +27,7 @@ class MenteeController extends AbstractRestfulController {
     $logger = $this->getServiceLocator()->get( 'Log\App' );
     $logger->log( \Zend\Log\Logger::INFO, "Rest call to GET /saq/".$id );
 
-    /* must be logged in & must be either admin or a saq of this mentee */
+    /* must be logged in & must be either admin or a mentor to this mentee */
     if ( !$this->identity() ) {
       return JsonModel( array() );
     }
@@ -37,22 +37,22 @@ class MenteeController extends AbstractRestfulController {
     /* if not admin make sure this is a parent of the current logged in customer */
     if ($this->identity()->getRole()->getName() !== "Admin") {
       $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')
-                          ->findOneBy(array('child_customer_id' => $id,
-                                            'parent_customer_id' => $this->identity()->getId()));
+                          ->findOneBy(array('childCustomer' => $id,
+                                            'parentCustomer' => $this->identity()->getId()));
       if (!$ch) {
         return new JsonModel();
       }
 
-      /* get the mentor for this mentee */
-
     }
 
-    /* still here? that means we're either admin or this mentee is logged in user's mentee */
+    /* still here? that means we're either admin or this mentee is the logged in mentor's mentee */
     $mentee = $entityManager->getRepository('CAP\Entity\Customer')->find($id);
 
     if (!$mentee) {
       return new JsonModel();
     }
+
+    $mentors = null;
 
     /* handle the admin scenario - get list of saqs */
     if ( $this->identity()->getRole()->getName() === 'Admin' ) {
@@ -63,12 +63,38 @@ class MenteeController extends AbstractRestfulController {
                       ->setParameter('childId',$id)
                       ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
+      /* get all notes belonging to this mentee */
+      $notes = $entityManager->createQuery("SELECT n.customerId, n.name, n.note, n.created, n.id FROM CAP\Entity\CustomerNote n  WHERE n.customer = :menteeId")
+                             ->setParameter('menteeId', $id)
+                             ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
+
+    if ( $this->identity()->getRole()->getName() === 'Mentor') {
+
+      /* get mentors notes on this mentee */
+      $myNotes = $entityManager->createQuery("SELECT cn.id, cn.customerId, cn.note, cn.name, cn.id, cn.created, nm.share FROM CAP\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = :mentorId and nm.customer = :menteeId")
+                               ->setParameter('menteeId', $id)
+                               ->setParameter('mentorId', $this->identity()->getId())
+                               ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+
+      /* get mentee notes shared with this mentor */
+      $sharedNotes = $entityManager->createQuery("SELECT cn.id, cn.customerId, cn.note, cn.name, cn.id, cn.created, nm.share FROM CAP\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = :menteeId and nm.customer = :mentorId and nm.share = TRUE")
+                                   ->setParameter('menteeId', $id)
+                                   ->setParameter('mentorId', $this->identity()->getId())
+                                   ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
 
     /* get all saqs for this mentee */
     $saqs = $entityManager->createQuery( "SELECT q.id, c.id as questionnaire_id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where q.customer = :customerId" )
                           ->setParameter('customerId', $id)
                           ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+
+    /* get all notes for this mentee
+      - admin can see all notes
+      - mentor can only see shared notes
+    */
+
 
 
 
@@ -79,6 +105,8 @@ class MenteeController extends AbstractRestfulController {
                                                  'status' => $mentee->getStatus()->getName(),
                                                  'phoneNumber' => $mentee->getPhoneNumber()
                                                  ),
+                               'myNotes' => $myNotes,
+                               'sharedNotes' => $sharedNotes,
                                'saqs' => $saqs,
                                'mentors' => $mentors));
 

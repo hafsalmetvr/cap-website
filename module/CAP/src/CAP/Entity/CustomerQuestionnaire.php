@@ -56,23 +56,25 @@ class CustomerQuestionnaire {
      *
      * @ORM\Column(name="customer_id", type="integer", length=255, nullable=true)
      */
-     protected $customerid;
+     protected $customerId;
 
      /**
      * @var string
      *
      * @ORM\Column(name="questionnaire_id", type="integer", length=255, nullable=true)
      */
-     protected $questionnaireid;
+     protected $questionnaireId;
 
      /**
      * Get customerid
      *
      * @return boolean
      */
-     public function getcustomerid()
-     {
-        return $this->customerid;
+     public function getCustomerId() {
+        return $this->customerId;
+     }
+     public function getCustomer() {
+        return $this->customer;
      }
 
     /**
@@ -80,9 +82,12 @@ class CustomerQuestionnaire {
      *
      * @return boolean
      */
-    public function getquestionnaireid()
-    {
-        return $this->questionnaireid;
+    public function getQuestionnaireId() {
+        return $this->questionnaireId;
+    }
+
+    public function getQuestionnaire() {
+        return $this->questionnaire;
     }
 
      /**
@@ -91,8 +96,7 @@ class CustomerQuestionnaire {
      * @param  customer $customer
      * @return CustomerQuestionnaire
      */
-    public function setcustomer($customer)
-    {
+    public function setCustomer($customer) {
         $this->customer = $customer;
 
         return $this;
@@ -104,8 +108,7 @@ class CustomerQuestionnaire {
      * @param  questionnaire $questionnaire
      * @return CustomerQuestionnaire
      */
-    public function setquestionnaire($questionnaire)
-    {
+    public function setQuestionnaire($questionnaire) {
         $this->questionnaire = $questionnaire;
 
         return $this;
@@ -116,8 +119,7 @@ class CustomerQuestionnaire {
      * @param completionStatus $completionStatus
      * @return CustomerQuestionnaire
      */
-    public function setcompletionStatus($completionStatus)
-    {
+    public function setCompletionStatus($completionStatus) {
         $this->completionStatus = $completionStatus;
 
         return $this;

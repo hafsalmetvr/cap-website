@@ -23,13 +23,18 @@
                           </div>
                           <div class="action-text">View</div>
                         </a>
-                        <a href="#" class="action-link">
+                        <a ng-show="mentees" ng-click="assignSaqModal($index)" data-toggle="modal" data-target="#assign-saq-modal" href="#assign-saq-modal" class="action-link">
                           <div class="action-icon">
                             <i class="fa fa-group "></i>
                           </div>
                           <div class="action-text">Assign</div>
                         </a>
-
+                        <div class="action-link" ng-show="inProgress['saqList'][$index]">
+                            <div class="action-icon">
+                                <i class="fa fa-cog fa-spin"></i>
+                            </div>
+                            <div class="action-text">Updating</div>
+                        </div>
                     </div>
                 </div>
             </div>

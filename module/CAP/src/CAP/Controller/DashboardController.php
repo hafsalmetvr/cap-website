@@ -67,7 +67,7 @@ class DashboardController extends AbstractActionController {
 
 		/* if not admin make sure this is a parent of the current logged in customer */
 		if ($this->identity()->getRole()->getName() !== "Admin") {
-	    $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')->findOneBy(array('parent_customer_id' => $id, 'child_customer_id' => $this->identity()->getId()));
+	    $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')->findOneBy(array('parentCustomer' => $id, 'childCustomer' => $this->identity()->getId()));
 	    if (!$ch) {
 				return $this->redirect()->toRoute('dashboard');
 	    }
@@ -80,7 +80,7 @@ class DashboardController extends AbstractActionController {
     }
 
 		$viewModel = new ViewModel(array(
-			'mentor' => $mentor
+			'mentor' => $mentor,
 		));
 		return $viewModel->setTemplate('cap/dashboard/detail/mentor.phtml');
 	}
@@ -97,7 +97,7 @@ class DashboardController extends AbstractActionController {
 
 		/* if not admin make sure this is a child of the current logged in customer */
 		if ($this->identity()->getRole()->getName() !== "Admin") {
-	    $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')->findOneBy(array('child_customer_id' => $id, 'parent_customer_id' => $this->identity()->getId()));
+	    $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')->findOneBy(array('childCustomer' => $id, 'parentCustomer' => $this->identity()->getId()));
 	    if (!$ch) {
 				return $this->redirect()->toRoute('dashboard');
 	    }
@@ -110,7 +110,7 @@ class DashboardController extends AbstractActionController {
     }
 
 		$viewModel = new ViewModel(array(
-			'mentee' => $mentee
+			'mentee' => $mentee,
 		));
 
 		return $viewModel->setTemplate('cap/dashboard/detail/mentee.phtml');

@@ -70,7 +70,20 @@ return array(
                 ),
             ),
 
-            'rest-mentoe' => array(
+            'rest-note' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/rest/note[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Rest\Note',
+                    )
+                ),
+            ),
+
+            'rest-mentor' => array(
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/rest/mentor[/:id]',
@@ -96,15 +109,15 @@ return array(
                 ),
             ),
 
-            'rest-saq' => array(
+            'rest-questionnaire' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/rest/saq[/:id]',
+                    'route' => '/rest/questionnaire[/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'CAP\Controller\Rest\SAQ',
+                        'controller' => 'CAP\Controller\Rest\Questionnaire',
                     )
                 ),
             ),
@@ -222,7 +235,8 @@ return array(
             'CAP\Controller\Rest\Mentee'     => 'CAP\Controller\Rest\MenteeController',
             'CAP\Controller\Rest\Mentor'     => 'CAP\Controller\Rest\MentorController',
             'CAP\Controller\Rest\Admin'      => 'CAP\Controller\Rest\AdminController',
-            'CAP\Controller\Rest\SAQ'        => 'CAP\Controller\Rest\SaqController',
+            'CAP\Controller\Rest\Note'       => 'CAP\Controller\Rest\NoteController',
+            'CAP\Controller\Rest\Questionnaire' => 'CAP\Controller\Rest\QuestionnaireController',
             'CAP\Controller\Rest\Dashboard'  => 'CAP\Controller\Rest\DashboardController',
             'CAP\Controller\Rest\Login'      => 'CAP\Controller\Rest\LoginController',
             'CAP\Controller\Rest\Password'   => 'CAP\Controller\Rest\PasswordController',

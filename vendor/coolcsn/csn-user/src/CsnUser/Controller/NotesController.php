@@ -1,7 +1,7 @@
 <?php
 /**
  * CsnUser - Coolcsn Zend Framework 2 User Module
- * 
+ *
  * @link https://github.com/coolcsn/CsnUser for the canonical source repository
  * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
  * @license https://github.com/coolcsn/CsnUser/blob/master/LICENSE BSDLicense
@@ -41,12 +41,12 @@ class NotesController extends AbstractRestfulController
      * @var Doctrine\ORM\EntityManager
      */
     protected $entityManager;
-    
+
     /**
      * @var Zend\Mvc\I18n\Translator
      */
     protected $translatorHelper;
-    
+
     /**
      * @var Zend\Form\Form
      */
@@ -62,13 +62,13 @@ class NotesController extends AbstractRestfulController
 
      public function getList()
     {
-   
+
      if (!$user = $this->identity()) {
 
              return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
 
      }
-     
+
     $uid =  $user->getId();
     $entityManager = $this->getEntityManager();
        # $user = $entityManager->getRepository('CsnUser\Entity\Question')->findall();
@@ -81,22 +81,22 @@ class NotesController extends AbstractRestfulController
 
     public function get($id)
     {
-   
+
       if (!$user = $this->identity()) {
 
              return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
 
      }
 
-      $uid =  $user->getId();     
- 
+      $uid =  $user->getId();
+
         $entityManager = $this->getEntityManager();
        # $user = $entityManager->getRepository('CsnUser\Entity\Question')->findall();
- 
+
        $notes = $entityManager->createQuery("SELECT cn.id, cn.note as title, cn.id, cn.created FROM CsnUser\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = '$id' and nm.customer = $uid")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
 
       return new JsonModel(array('data' => $notes));
-   
+
     }
 
     public function create($data)
@@ -112,11 +112,11 @@ class NotesController extends AbstractRestfulController
 
 
       $entityManager = $this->getEntityManager();
- 
+
       $note = new CustomerNote;
-   
+
      # $user = $user[0];
-      
+
       $note->setCustomer($entityManager->find('CsnUser\Entity\Customer', $uid));
       $note->setNote($data['title']);
       $note->setCreated($data['created']);
@@ -126,11 +126,11 @@ class NotesController extends AbstractRestfulController
 
       if($data['share_with_mentee']) {
 
-         
+
          $this->sharenote($data['mentee'], $id);
       }
 
-      
+
       return new JsonModel(array('status' => $id));
 
     }
@@ -159,8 +159,8 @@ class NotesController extends AbstractRestfulController
       $note->setCreated($data['created']);
       $entityManager->persist($note);
       $entityManager->flush();
-   
-      if($data['share_with_mentee']) { 
+
+      if($data['share_with_mentee']) {
          $this->sharenote($data['mentee'], $id);
       }
       return new JsonModel(array('status' => true));
@@ -176,7 +176,7 @@ class NotesController extends AbstractRestfulController
       $note = $entityManager->getRepository('CsnUser\Entity\CustomerNote')->findOneBy(array('id' => $id));
 
       if($note) {
-          
+
           $entityManager->remove($note);
           $entityManager->flush();
           $status = "success";
@@ -207,11 +207,11 @@ class NotesController extends AbstractRestfulController
       $notes->setCreated('434343');
       $entityManager->persist($notes);
       $entityManager->flush();
-   
-      return 1; 
+
+      return 1;
      }
 
-     }    
+     }
     /**
      * Confirm Saq View Action
      *
@@ -224,19 +224,19 @@ class NotesController extends AbstractRestfulController
 
  #            return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
 
- #    }    
+ #    }
 
  #      $this->layout('layout/dashboard');
  #      $viewModel  =  new ViewModel(array('mentor_id' => $this->params('id')));
- #      
+ #
  #      $menuview = new ViewModel(array('name' => $user->getFirstName()));
  #      $menuview->setTemplate('layout/menu');
  #      $viewModel->addChild($menuview, 'menuview');
- #      return $viewModel; 
-    
+ #      return $viewModel;
+
  #   }
 
-    
+
     /**
      * Get Base Url
      *
@@ -258,7 +258,7 @@ class NotesController extends AbstractRestfulController
         if(null === $this->options) {
             $this->options = $this->getServiceLocator()->get('csnuser_module_options');
         }
-    
+
         return $this->options;
     }
 
@@ -275,7 +275,7 @@ class NotesController extends AbstractRestfulController
 
         return $this->entityManager;
     }
-    
+
     /**
      * get translatorHelper
      *
@@ -286,10 +286,10 @@ class NotesController extends AbstractRestfulController
         if(null === $this->translatorHelper) {
             $this->translatorHelper = $this->getServiceLocator()->get('MvcTranslator');
         }
-    
+
         return $this->translatorHelper;
     }
-    
+
     /**
      * get userFormHelper
      *
@@ -300,7 +300,7 @@ class NotesController extends AbstractRestfulController
         if(null === $this->userFormHelper) {
             $this->userFormHelper = $this->getServiceLocator()->get('csnuser_user_form');
         }
-    
+
         return $this->userFormHelper;
     }
 }

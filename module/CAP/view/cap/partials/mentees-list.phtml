@@ -23,34 +23,34 @@
                           </div>
                           <div class="action-text">View</div>
                         </a>
-                        <a ng-show="!inProgress[idx] && {null:true}[mentee.mentor]" ng-click="assignMenteeModal($index)" data-toggle="modal" data-target="#assign-mentee-modal" href="#assign-mentee-modal" class="action-link">
+                        <a ng-show="!inProgress['mentees'][$index] && {null:true}[mentee.mentor] && mentors" ng-click="assignMenteeModal($index)" data-toggle="modal" data-target="#assign-mentee-modal" href="#assign-mentee-modal" class="action-link">
                           <div class="action-icon">
                             <i class="fa fa-group "></i>
                           </div>
                           <div class="action-text">Assign</div>
                         </a>
-                        <a ng-show="!inProgress[idx] && !{null:true}[mentee.mentor]" ng-click="assignMenteeModal($index)" data-toggle="modal" data-target="#assign-mentee-modal" href="#assign-mentee-modal" class="action-link">
+                        <a ng-show="!inProgress['mentees'][$index] && !{null:true}[mentee.mentor] && mentors" ng-click="assignMenteeModal($index)" data-toggle="modal" data-target="#assign-mentee-modal" href="#assign-mentee-modal" class="action-link">
                           <div class="action-icon">
                             <i class="fa fa-group "></i>
                           </div>
                           <div class="action-text">Reassign</div>
                         </a>
                         <!-- TODO only show if admin -->
-                        <a ng-show="!inProgress[$index] && {'INACTIVE':true}[mentee.status]" href="#mentees" ng-click="activate($index,'mentees', true)"b class="action-link">
+                        <a ng-show="!inProgress['mentees'][$index] && {'INACTIVE':true}[mentee.status]" href="#mentees" ng-click="activate($index,'mentees', true)"b class="action-link">
                           <div class="action-icon">
                             <i class="fa fa-user"></i>
                             <i class="fa fa-plus"></i>
                           </div>
                           <div class="action-text">Activate</div>
                         </a>
-                        <a ng-show="!inProgress[$index] && {'ACTIVE':true}[mentee.status]" href="#mentees" ng-click="activate($index,'mentees', false)" class="action-link">
+                        <a ng-show="!inProgress['mentees'][$index] && {'ACTIVE':true}[mentee.status]" href="#mentees" ng-click="activate($index,'mentees', false)" class="action-link">
                           <div class="action-icon">
                             <i class="fa fa-user"></i>
                             <i class="fa fa-minus"></i>
                           </div>
                           <div class="action-text">Deactivate</div>
                         </a>
-                        <div class="action-link" ng-show="inProgress[$index]">
+                        <div class="action-link" ng-show="inProgress['mentees'][$index]">
                             <div class="action-icon">
                                 <i class="fa fa-cog fa-spin"></i>
                             </div>

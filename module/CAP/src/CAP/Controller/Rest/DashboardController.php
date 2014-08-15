@@ -68,6 +68,19 @@ class DashboardController extends AbstractRestfulController {
 
 		}
 
+		if ( $this->identity()->getRole()->getName() == "Mentor" ) {
+			$logger = $this->getServiceLocator()->get( 'Log\App' );
+			/* get all mentees that are children of this mentor */
+			/* get all mentees for this mentor */
+			$sql = "SELECT c.id, c.name FROM CAP\Entity\CustomerHierarchy ch JOIN ch.childCustomer c WHERE ch.parentCustomerId = :parentId";
+			$mentees = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )
+							 				->setParameter('parentId',$this->identity()->getId())
+											->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+			return new JsonModel(array('mentees' => $mentees));
+		}
+
+
 	}
 
 	/* POST /dashboard */

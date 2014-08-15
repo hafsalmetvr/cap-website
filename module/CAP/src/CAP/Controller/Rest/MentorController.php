@@ -54,11 +54,11 @@ class MentorController extends AbstractRestfulController {
 		$logger->log( \Zend\Log\Logger::INFO, $mentor->getName());
 		/* handle the admin scenario - get list of mentees */
 		if ( $this->identity()->getRole()->getName() === 'Admin' ) {
-			/* get all mentees for this mentor */
-			$sql = "SELECT c.id, c.name FROM CAP\Entity\CustomerHierarchy ch JOIN ch.childCustomer c WHERE ch.parentCustomerId = :parentId";
-			$mentees = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )
-							 				->setParameter('parentId',$id)
-											->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+      /* get all mentees for this mentor */
+      $sql = "SELECT c.id, c.name FROM CAP\Entity\CustomerHierarchy ch JOIN ch.childCustomer c WHERE ch.parentCustomerId = :parentId";
+      $mentees = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )
+                      ->setParameter('parentId',$id)
+                      ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 		}
 
 
@@ -75,26 +75,7 @@ class MentorController extends AbstractRestfulController {
 
 	/* will return a list of mentors that belong to the logged in user (or all mentors if Admin) if key is passed in the body it will filter by key */
 	public function getList() {
-		if ( !$this->identity() ) {
-			return JsonModel( array() );
-		}
 
-		$logger = $this->getServiceLocator()->get( 'Log\App' );
-		$logger->log( \Zend\Log\Logger::INFO, "Rest call to /customer" );
-
-		/* this serves as the get call for the create account page */
-		/* get the possible roles */
-		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
-		$r = $e->createQuery( "SELECT r FROM CAP\Entity\Role r" )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
-
-		$results = array();
-
-		foreach ($r as $role) {
-
-			array_push($results, array('id' => $role->getId(),
-																 'name'=> $role->getName()));
-		}
-		return new JsonModel(array('roles' => $results));
 	}
 
 	/* PUT /mentor/:id  - this doesn't modify the mentor (use PUT /customer/:id for that - this assigns a mentee to mentor */
@@ -109,9 +90,9 @@ class MentorController extends AbstractRestfulController {
 		$logger->log( \Zend\Log\Logger::INFO, $data);
 
 		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
-    $ch = $e->createQuery( "SELECT c FROM CAP\Entity\CustomerHierarchy c WHERE c.childCustomer = :menteeId" )
-    				->setParameter('menteeId',$data['mentee'])
-    				->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+    $ch = $e->createQuery( "SELECT c FROM CAP\Entity\CustomerHierarchy c WHERE c.childCustomerId = :menteeId" )
+            ->setParameter('menteeId',$data['mentee'])
+            ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
     if ( $ch ) {
       $ch = $ch[0];

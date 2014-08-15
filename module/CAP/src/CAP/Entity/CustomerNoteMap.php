@@ -28,6 +28,13 @@ class CustomerNoteMap {
     private $created;
 
     /**
+     * @var \share
+     *
+     * @ORM\Column(name="share", type="boolean", nullable=false)
+     */
+    private $share;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="modified", nullable=false)
@@ -87,6 +94,15 @@ class CustomerNoteMap {
     public function setCreated($created) {
         $this->created = $created;
 
+        return $this;
+    }
+
+    public function getShare() {
+        return $this->share;
+    }
+
+    public function setShare($bool) {
+        $this->share = $bool;
         return $this;
     }
 

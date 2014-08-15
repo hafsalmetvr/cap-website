@@ -36,7 +36,8 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 			console.log(mentor);
 			console.log(mentee);
 			$scope.inProgress = {};
-			$scope.inProgress[idx] = true;
+			$scope.inProgress['mentors'] = {};
+			$scope.inProgress['mentors'][idx] = true;
 			$http.put("/rest/mentor/"+mentor.id,{mentee: mentee.id}).success(function(data, status) {
 				console.log('back from mentor put');
 				console.log(data);
@@ -58,8 +59,6 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 
 		};
 
-
-
 		$scope.init = function(mentorId) {
 			$scope.mentorId = mentorId;
 			$scope.inProgress = true;
@@ -77,7 +76,6 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 	  }
 	}
 ]).
-
 controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
 	function($scope, $element, $http, $timeout, $cookies, customer) {
 		$scope.init = function(menteeId) {
@@ -99,7 +97,9 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 
 		$scope.activate = function(idx, type, bool) {
 			$scope.inProgress = {};
-			$scope.inProgress[idx] = true;
+			$scope.inProgress[type] = {};
+			$scope.inProgress[type][idx] = true;
+
 			$scope.success = false;
 			console.log('idx: '+idx);
 			console.log('type: '+ type);
@@ -235,6 +235,55 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 				'mentee' : mentee
 			}
 		}
+		$scope.assignSaqModal = function(idx) {
+			console.log('assign saq modal');
+			var saq = $scope.saqList[idx];
+			$scope.modal = {
+				'saqIdx':idx,
+				'saq' : saq
+			}
+		}
+
+		$scope.assignSaqToMentee = function(idx, menteeIdx) {
+			console.log('assign saq to mentee');
+			console.log(idx);
+			console.log(menteeIdx);
+			console.log($scope.mentees);
+
+			var saq    = $scope.saqList[idx];
+			var mentee = $scope.mentees[menteeIdx];
+
+			if (typeof mentee ==="undefined") {
+				return;
+			}
+
+			if (typeof saq ==="undefined") {
+				return;
+			}
+
+
+			console.log(mentee);
+			console.log(saq);
+			$scope.inProgress = {};
+			$scope.inProgress['mentees'] = {};
+			$scope.inProgress['mentees'][menteeIdx] = true;
+			$http.put("/rest/questionnaire/"+saq.id,{mentee: mentee.id}).success(function(data, status) {
+				console.log('back from questionnaire put');
+				console.log(data);
+				if (data.success) {
+					/* don't do anything? */
+				}
+
+				$('#assign-saq-modal').modal('hide');
+				$scope.inProgress = false;
+
+			}).error(function(data, success) {
+				console.log(data || "Request failed")
+				$scope.inProgress = false;
+			});
+
+		};
+
 
 		$scope.paginate_questionairs = function() {
 			$scope.current_ques_page = 1;
@@ -329,7 +378,8 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 			console.log(mentor);
 			console.log(mentee);
 			$scope.inProgress = {};
-			$scope.inProgress[idx] = true;
+			$scope.inProgress['mentors'] = {};
+			$scope.inProgress['mentors'][idx] = true;
 			$http.put("/rest/mentor/"+mentor.id,{mentee: mentee.id}).success(function(data, status) {
 				console.log('back from mentor put');
 				console.log(data);
@@ -350,7 +400,8 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 
 		$scope.activate = function(idx, type, bool) {
 			$scope.inProgress = {};
-			$scope.inProgress[idx] = true;
+			$scope.inProgress[type] = {};
+			$scope.inProgress[type][idx] = true;
 			$scope.success = false;
 			console.log('idx: '+idx);
 			console.log('type: '+ type);
@@ -378,7 +429,6 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 		$scope.init = function(user, role) {
 			console.log('dboardctrl init');
 
-			$scope.showPopup = false;
 			$scope.ques_page_interval = 5;
 			$scope.mentor_page_interval = 5;
 			$scope.mentee_page_interval = 5;

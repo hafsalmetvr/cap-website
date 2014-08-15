@@ -71,6 +71,31 @@ module.exports = function(grunt) {
           ]
         }
       },
+      "mentor": {
+        "files": {
+          'public/js/mentor.min.js':[
+            'angular/apps/mentor.js',
+            'angular/controllers/mentor.js',
+          ]
+        }
+      },
+      "mentee": {
+        "files": {
+          'public/js/mentee.min.js':[
+            'angular/apps/mentee.js',
+            'angular/controllers/mentee.js',
+          ]
+        }
+      },
+      "questionnaire": {
+        "files": {
+          'public/js/questionnaire.min.js':[
+            'angular/apps/questionnaire.js',
+            'angular/controllers/questionnaire.js',
+          ]
+        }
+      },
+
     },
     watch: {
       styles: {

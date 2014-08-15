@@ -95,6 +95,17 @@ form {
 		}
 	}
 
+	.table-list.small-text {
+		.table-list-header {
+			font-size:10pt;
+		}
+		.table-list-row {
+			.text {
+				font-size:11pt;
+			}
+		}
+	}
+
 	.action-link {
 		width:68px;
 		font-size:.9em;
@@ -140,6 +151,15 @@ form {
 		}
 
 		.modal-body {
+
+			.share-note-group {
+				label {
+					cursor: pointer;
+					span {
+						color:@gray3;
+					}
+				}
+			}
 
 			.search-group {
 				position:relative;
@@ -192,6 +212,12 @@ form {
   }
 }
 
+.red {
+	color:red;
+}
+.green {
+	color:green;
+}
 
 @media (max-width: @screen-xs-max) {
 

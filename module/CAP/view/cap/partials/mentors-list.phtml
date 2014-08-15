@@ -23,21 +23,21 @@
                           </div>
                           <div class="action-text">View</div>
                         </a>
-                        <a ng-show="!inProgress[$index] && {'INACTIVE':true}[mentor.status]" href="#mentors" ng-click="activate($index,'mentors', true)"b class="action-link">
+                        <a ng-show="!inProgress['mentors'][$index] && {'INACTIVE':true}[mentor.status]" href="#mentors" ng-click="activate($index,'mentors', true)"b class="action-link">
                           <div class="action-icon">
                             <i class="fa fa-user"></i>
                             <i class="fa fa-plus"></i>
                           </div>
                           <div class="action-text">Activate</div>
                         </a>
-                        <a ng-show="!inProgress[$index] && {'ACTIVE':true}[mentor.status]" href="#mentors" ng-click="activate($index,'mentors', false)" class="action-link">
+                        <a ng-show="!inProgress['mentors'][$index] && {'ACTIVE':true}[mentor.status]" href="#mentors" ng-click="activate($index,'mentors', false)" class="action-link">
                           <div class="action-icon">
                             <i class="fa fa-user"></i>
                             <i class="fa fa-minus"></i>
                           </div>
                           <div class="action-text">Deactivate</div>
                         </a>
-                        <div class="action-link" ng-show="inProgress[$index]">
+                        <div class="action-link" ng-show="inProgress['mentors'][$index]">
                             <div class="action-icon">
                                 <i class="fa fa-cog fa-spin"></i>
                             </div>

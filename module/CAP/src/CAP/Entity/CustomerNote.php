@@ -28,6 +28,13 @@ class CustomerNote {
     private $note;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", nullable=false)
+     */
+    private $name;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", nullable=false)
@@ -40,6 +47,13 @@ class CustomerNote {
      * @ORM\Column(name="modified", nullable=false)
      */
     private $modified = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_id", type="integer", length=255, nullable=true)
+     */
+    protected $customerId;
 
     /**
      * @var \cool-csn\Entity\Customer
@@ -80,6 +94,24 @@ class CustomerNote {
         $this->note = $note;
 
         return $this;
+    }
+
+    public function getNote() {
+        return $this->note;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getCustomerId() {
+        return $this->customerId;
     }
 
    /**
