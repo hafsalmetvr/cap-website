@@ -46,6 +46,7 @@ class MentorController extends AbstractRestfulController {
 
 	  /* still here? thatmeans we're either admin or this mentor is our parent mentor */
    	$mentor = $entityManager->getRepository('CAP\Entity\Customer')->find($id);
+
     if (!$mentor) {
 			return new JsonModel();
     }
@@ -60,6 +61,7 @@ class MentorController extends AbstractRestfulController {
 											->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 		}
 
+
 		return new JsonModel(array('mentor' => array('id' => $mentor->getId(),
 																								 'name' => $mentor->getName(),
 																								 'email' => $mentor->getEmail(),
@@ -68,10 +70,14 @@ class MentorController extends AbstractRestfulController {
 																								 'phoneNumber' => $mentor->getPhoneNumber()
 																								 ),
 															 'mentees' => $mentees));
+
 	}
 
-	/* will return a list of mentors that belong to the logged in user (or all mentors if Admin) */
+	/* will return a list of mentors that belong to the logged in user (or all mentors if Admin) if key is passed in the body it will filter by key */
 	public function getList() {
+		if ( !$this->identity() ) {
+			return JsonModel( array() );
+		}
 
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
 		$logger->log( \Zend\Log\Logger::INFO, "Rest call to /customer" );
@@ -89,6 +95,36 @@ class MentorController extends AbstractRestfulController {
 																 'name'=> $role->getName()));
 		}
 		return new JsonModel(array('roles' => $results));
+	}
+
+	/* PUT /mentor/:id  - this doesn't modify the mentor (use PUT /customer/:id for that - this assigns a mentee to mentor */
+	public function update($id, $data) {
+		if ( !$this->identity() || !( $this->identity()->getRole()->getName() === 'Admin' ) ) {
+			return JsonModel( array() );
+		}
+
+
+		$logger = $this->getServiceLocator()->get( 'Log\App' );
+		$logger->log( \Zend\Log\Logger::INFO, $id);
+		$logger->log( \Zend\Log\Logger::INFO, $data);
+
+		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $ch = $e->createQuery( "SELECT c FROM CAP\Entity\CustomerHierarchy c WHERE c.childCustomer = :menteeId" )
+    				->setParameter('menteeId',$data['mentee'])
+    				->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+    if ( $ch ) {
+      $ch = $ch[0];
+    } else {
+      $ch = new \CAP\Entity\CustomerHierarchy;
+      $ch->setChildCustomer( $e->find( 'CAP\Entity\Customer', $data['mentee'] ) );
+    }
+    $ch->setParentCustomer( $e->find( 'CAP\Entity\Customer', $id ) );
+
+    $e->persist( $ch );
+    $e->flush();
+
+		return new JsonModel(array('success' => true));
 	}
 
 	/* POST /customer - should create a new customer */

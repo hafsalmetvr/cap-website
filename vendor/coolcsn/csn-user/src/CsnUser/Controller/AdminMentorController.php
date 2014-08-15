@@ -1,7 +1,7 @@
 <?php
 /**
  * CsnUser - Coolcsn Zend Framework 2 User Module
- * 
+ *
  * @link https://github.com/coolcsn/CsnUser for the canonical source repository
  * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
  * @license https://github.com/coolcsn/CsnUser/blob/master/LICENSE BSDLicense
@@ -39,12 +39,12 @@ class AdminMentorController extends AbstractRestfulController
      * @var Doctrine\ORM\EntityManager
      */
     protected $entityManager;
-    
+
     /**
      * @var Zend\Mvc\I18n\Translator
      */
     protected $translatorHelper;
-    
+
     /**
      * @var Zend\Form\Form
      */
@@ -73,15 +73,15 @@ class AdminMentorController extends AbstractRestfulController
 
     public function get($id)
     {
-   
-    
+
+
         $entityManager = $this->getEntityManager();
        # $user = $entityManager->getRepository('CsnUser\Entity\Question')->findall();
- 
+
        $user = $entityManager->createQuery("SELECT ch.firstName, ch.id, ch.email FROM CsnUser\Entity\CustomerHierarchy c JOIN c.childCustomer ch WHERE c.parentCustomer = '$id'")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
 
       return new JsonModel(array('data' => $user));
-   
+
     }
 
     public function create($data)
@@ -89,15 +89,15 @@ class AdminMentorController extends AbstractRestfulController
 
 
       $entityManager = $this->getEntityManager();
- 
+
       $user = $this->getEntityManager()->createQuery("SELECT u FROM CsnUser\Entity\Customer u WHERE u.id = $data[mentor_id]")->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-   
+
       $user = $user[0];
-      if($data['new_status'] == 1) {$status = "ACTIVE";} else if($data['new_status'] == 2) { $status = "INACTIVE";} 
+      if($data['new_status'] == 1) {$status = "ACTIVE";} else if($data['new_status'] == 2) { $status = "INACTIVE";}
       $user->setStatus($entityManager->find('CsnUser\Entity\CustomerStatus', $data['new_status']));
       $entityManager->persist($user);
       $entityManager->flush();
-      
+
       return new JsonModel(array('status' => $status));
 
     }
@@ -109,7 +109,7 @@ class AdminMentorController extends AbstractRestfulController
       $user = $entityManager->getRepository('CsnUser\Entity\CustomerHierarchy')->findOneBy(array('childCustomer' => $id));
 
       if($user) {
-          
+
           $entityManager->remove($user);
           $entityManager->flush();
           $status = "success";
@@ -117,7 +117,7 @@ class AdminMentorController extends AbstractRestfulController
       return new JsonModel(array('status' => $id));
 
     }
-    
+
     /**
      * Confirm Saq View Action
      *
@@ -130,19 +130,19 @@ class AdminMentorController extends AbstractRestfulController
 
              return $this->redirect()->toRoute('user-index',array('action' =>  'login'));
 
-     }    
+     }
 
        $this->layout('layout/dashboard');
        $viewModel  =  new ViewModel(array('mentor_id' => $this->params('id')));
-       
+
        $menuview = new ViewModel(array('name' => $user->getFirstName()));
        $menuview->setTemplate('layout/menu');
        $viewModel->addChild($menuview, 'menuview');
-       return $viewModel; 
-    
+       return $viewModel;
+
     }
 
-    
+
     /**
      * Get Base Url
      *
@@ -164,7 +164,7 @@ class AdminMentorController extends AbstractRestfulController
         if(null === $this->options) {
             $this->options = $this->getServiceLocator()->get('csnuser_module_options');
         }
-    
+
         return $this->options;
     }
 
@@ -181,7 +181,7 @@ class AdminMentorController extends AbstractRestfulController
 
         return $this->entityManager;
     }
-    
+
     /**
      * get translatorHelper
      *
@@ -192,10 +192,10 @@ class AdminMentorController extends AbstractRestfulController
         if(null === $this->translatorHelper) {
             $this->translatorHelper = $this->getServiceLocator()->get('MvcTranslator');
         }
-    
+
         return $this->translatorHelper;
     }
-    
+
     /**
      * get userFormHelper
      *
@@ -206,7 +206,7 @@ class AdminMentorController extends AbstractRestfulController
         if(null === $this->userFormHelper) {
             $this->userFormHelper = $this->getServiceLocator()->get('csnuser_user_form');
         }
-    
+
         return $this->userFormHelper;
     }
 }

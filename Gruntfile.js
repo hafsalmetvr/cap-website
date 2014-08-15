@@ -26,12 +26,14 @@ module.exports = function(grunt) {
         */
         mangle:false,
         beautify: true,
-        compress:true,
+        //compress:true,
+        compress:false,
       },
       "global": {
       	"files": {
       		'public/js/cap.min.js':[
             'bower_components/jquery/jquery.js',
+            'bower_components/bootstrap/js/modal.js',
             'bower_components/bootstrap/js/transition.js',
             'bower_components/bootstrap/js/collapse.js',
             'bower_components/bootstrap/js/alert.js',
@@ -45,8 +47,6 @@ module.exports = function(grunt) {
             'bower_components/angular-route/angular-route.js',
             'bower_components/angular-cookies/angular-cookies.js',
             'bower_components/angular-animate/angular-animate.js',
-            'bower_components/angular-strap/dist/angular-strap.js',
-            'bower_components/angular-strap/dist/angular-strap.tpl.js',
             'angular/controllers.js',
             'angular/directives.js',
             'angular/services.js',

@@ -63,6 +63,13 @@ class LoginController extends AbstractRestfulController {
 
 				if ( $authResult->isValid() ) {
 					$identity = $authResult->getIdentity();
+					/* must be active too */
+					$logger->log( \Zend\Log\Logger::INFO, "STATUS IS: "+$identity->getStatus()->getName() );
+					if ($identity->getStatus()->getName() !== 'ACTIVE') {
+						return new JsonModel( array( 'login' => false, 'message' => 'This account is not active.  Please contact the administrator.' ) );
+					}
+
+
 					$authService->getStorage()->write( $identity );
 
 					if ( $data['rememberme'] ) {

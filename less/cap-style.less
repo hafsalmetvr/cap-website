@@ -120,6 +120,79 @@ form {
 	}
 
 }
+
+/* modal style */
+.modal {
+
+	.modal-content {
+		border:6px solid @gray2;
+		box-shadow: 2px 3px 3px 1px @gray3;
+		border-radius: 0px;
+
+		.error {
+			padding:0px;
+		}
+
+		.modal-header {
+			background-color:@gray3;
+			color:@white;
+			padding:15px;
+		}
+
+		.modal-body {
+
+			.search-group {
+				position:relative;
+
+				.search-input {
+
+				}
+				.search-icon {
+					position:absolute;
+					right:30px;
+					top:10px;
+					color:@gray2;
+					font-size:1.5em;
+				}
+			}
+			.search-results-container {
+				height: 200px;
+				overflow: auto;
+				.result {
+
+				}
+
+				.result.event {
+
+				}
+			}
+		}
+
+		.modal-footer {
+
+		}
+	}
+}
+
+/* modal backdrop */
+.modal-backdrop.am-fade {
+  opacity: .5;
+  transition: opacity .15s linear;
+  &.ng-enter {
+    opacity: 0;
+    &.ng-enter-active {
+      opacity: .5;
+    }
+  }
+  &.ng-leave {
+    opacity: .5;
+    &.ng-leave-active {
+      opacity: 0;
+    }
+  }
+}
+
+
 @media (max-width: @screen-xs-max) {
 
 }

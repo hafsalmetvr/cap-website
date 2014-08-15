@@ -18,6 +18,18 @@ use CAP\Options\ModuleOptions;
 
 class PartialsController extends AbstractActionController {
 
+	public function assignMenteeModalAction() {
+		$viewModel = new ViewModel();
+    $viewModel->setTerminal(true);
+    return $viewModel;
+	}
+
+	public function assignSaqModalAction() {
+		$viewModel = new ViewModel();
+    $viewModel->setTerminal(true);
+    return $viewModel;
+	}
+
 	public function saqListAction() {
 		$logger        = $this->getServiceLocator()->get( 'Log\App' );
    	//$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');

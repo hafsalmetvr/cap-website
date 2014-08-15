@@ -22,48 +22,69 @@ class MenteeController extends AbstractRestfulController {
   protected $translatorHelper;
 
 
-  /* will return mentor info for the given id if Admin or one of the mentor's Mentees.  will also return list of mentees if admin */
+  /* will return saq info for the given id if Admin or one of the saq's mentees.  will also return list of saqs if admin */
 	public function get( $id ) {
-		$logger = $this->getServiceLocator()->get( 'Log\App' );
-		$logger->log( \Zend\Log\Logger::INFO, "Rest call to GET /mentor/".$id );
+    $logger = $this->getServiceLocator()->get( 'Log\App' );
+    $logger->log( \Zend\Log\Logger::INFO, "Rest call to GET /saq/".$id );
 
-		/* must be logged in & must be either admin or a mentee of this mentor */
-		if ( !$this->identity() ) {
-			return JsonModel( array() );
-		}
-
-		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
-
-		/* if not admin make sure this is a parent of the current logged in customer */
-		if ($this->identity()->getRole()->getName() !== "Admin") {
-	    $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')
-	    										->findOneBy(array('parent_customer_id' => $id,
-	    																			'child_customer_id' => $this->identity()->getId()));
-	    if (!$ch) {
-				return new JsonModel();
-	    }
-	  }
-
-	  /* still here? thatmeans we're either admin or this mentor is our parent mentor */
-   	$mentor = $entityManager->getRepository('CAP\Entity\Customer')->find($id);
-    if (!$mentor) {
-			return new JsonModel();
+    /* must be logged in & must be either admin or a saq of this mentee */
+    if ( !$this->identity() ) {
+      return JsonModel( array() );
     }
 
-		/* handle the admin scenario - get list of mentees */
-		if ( $this->identity()->getRole()->getName() === 'Admin' ) {
-			/* get all mentees for this mentor */
-			$sql = "SELECT c.id, c.name FROM CAP\Entity\CustomerHierarchy ch JOIN ch.childCustomer c WHERE ch.parentCustomerId = :parentId";
-			$mentees = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )
-							 				->setParameter('parentId',$id)
-											->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
-		}
-		$mentor['mentees'] = $mentees;
+    $entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
 
-		return new JsonModel($mentor);
+    /* if not admin make sure this is a parent of the current logged in customer */
+    if ($this->identity()->getRole()->getName() !== "Admin") {
+      $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')
+                          ->findOneBy(array('child_customer_id' => $id,
+                                            'parent_customer_id' => $this->identity()->getId()));
+      if (!$ch) {
+        return new JsonModel();
+      }
+
+      /* get the mentor for this mentee */
+
+    }
+
+    /* still here? that means we're either admin or this mentee is logged in user's mentee */
+    $mentee = $entityManager->getRepository('CAP\Entity\Customer')->find($id);
+
+    if (!$mentee) {
+      return new JsonModel();
+    }
+
+    /* handle the admin scenario - get list of saqs */
+    if ( $this->identity()->getRole()->getName() === 'Admin' ) {
+
+      /* get all mentees for this mentor */
+      $sql = "SELECT c.id, c.name, s.name as status FROM CAP\Entity\CustomerHierarchy ch JOIN ch.parentCustomer c JOIN c.status s WHERE ch.childCustomerId = :childId";
+      $mentors = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )
+                      ->setParameter('childId',$id)
+                      ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+    }
+
+    /* get all saqs for this mentee */
+    $saqs = $entityManager->createQuery( "SELECT q.id, c.id as questionnaire_id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where q.customer = :customerId" )
+                          ->setParameter('customerId', $id)
+                          ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+
+
+    return new JsonModel(array('mentee' => array('id' => $mentee->getId(),
+                                                 'name' => $mentee->getName(),
+                                                 'email' => $mentee->getEmail(),
+                                                 'title' => $mentee->getTitle(),
+                                                 'status' => $mentee->getStatus()->getName(),
+                                                 'phoneNumber' => $mentee->getPhoneNumber()
+                                                 ),
+                               'saqs' => $saqs,
+                               'mentors' => $mentors));
+
 	}
 
-	/* will return a list of mentors that belong to the logged in user (or all mentors if Admin) */
+	/* will return a list of mentees that belong to the logged in user (or all mentees if Admin) */
 	public function getList() {
 
 		$logger = $this->getServiceLocator()->get( 'Log\App' );

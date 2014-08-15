@@ -9,21 +9,76 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 	function($scope, $element, $http, $timeout, $cookies, customer) {
 		$scope.init = function(mentorId) {
 			$scope.mentorId = mentorId;
-
+			$scope.inProgress = true;
 			/* get listr of mentees */
 	    $http.get('/rest/mentor/'+$scope.mentorId, {
 	        headers: {'Content-Type': 'application/json'}
 	    }).success(function(data, status) {
+	    	$scope.inProgress = false;
 	    	console.log(data);
 	    	$scope.mentees = data.mentees;
 	    }).error(function(data, status){
+	    	$scope.inProgress = false;
 	      console.log(data);
 	    });
 	  }
 	}
 ]).
+
 controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
 	function($scope, $element, $http, $timeout, $cookies, customer) {
+		$scope.init = function(menteeId) {
+			/* get list of saqs for this mentee */
+			$scope.menteeId = menteeId;
+			$scope.inProgress = true;
+			/* get listr of mentees */
+	    $http.get('/rest/mentee/'+$scope.menteeId).success(function(data, status) {
+	    	$scope.inProgress = false;
+	    	console.log(data);
+	    	$scope.saqList = data.saqs;
+	    	$scope.mentors = data.mentors;
+
+	    }).error(function(data, status){
+	    	$scope.inProgress = false;
+	      console.log(data);
+	    });
+		}
+
+		$scope.activate = function(idx, type, bool) {
+			$scope.inProgress = {};
+			$scope.inProgress[idx] = true;
+			$scope.success = false;
+			console.log('idx: '+idx);
+			console.log('type: '+ type);
+
+			var obj = $scope[type][idx];
+
+			console.log('activate'+ obj.id);
+			var s = bool ? 'ACTIVE' : 'INACTIVE';
+
+			$http.put('/rest/customer/'+obj.id, {'status': s}).success(function(data, status) {
+				if (data.success) {
+					$scope.success = true;
+					obj.status = s;
+
+					/* if this is a mentor that is being set to inactive, then clear out the mentors list for this mentee */
+					if (s === "INACTIVE" && type == 'mentors') {
+						$scope.mentors = null;
+					}
+
+				} else {
+					$scope.msg = "Unable to update "+obj.name+".  Please contact the administrator.";
+				}
+				$scope.inProgress = false;
+
+			}).error(function(data, success) {
+				$scope.msg = "Unable to update "+obj.name+".  Please contact the administrator.";
+				$scope.inProgress = false;
+			});
+		};
+
+
+
 	}
 ]).
 controller('AdminCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
@@ -119,6 +174,14 @@ controller('CreateAccountCtrl', ['$scope', '$element', '$http', '$timeout', '$co
 controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
 	function($scope, $element, $http, $timeout, $cookies, customer) {
 		console.log('dboardctrl');
+		$scope.modal = {};
+		$scope.assignMenteeModal = function(idx) {
+			var mentee = $scope.mentees[idx];
+			$scope.modal = {
+				'menteeIdx':idx,
+				'mentee' : mentee
+			}
+		}
 
 		$scope.paginate_questionairs = function() {
 			$scope.current_ques_page = 1;
@@ -178,18 +241,116 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 			$scope.visible_mentees = $scope.mentees.slice(start, end);
 		}
 
+		/* dont think i need this right now
+		$scope.$watch("assignMenteeSearchKey", function(n, o) {
+			if (n && n !== o) {
+				$http.post({"/rest/mentor",{'key':$scope.assignMenteeSearchKey}).success(function(data, status) {
+
+					$scope.mentors = data.mentors;
+
+				}).error(function(data, success) {
+					console.log(data || "Request failed");
+				});
+
+			}
+		});
+		*/
+		$scope.assignMentorToMentee = function(idx, menteeIdx) {
+			console.log('assign mentor to mentee');
+			console.log(idx);
+			console.log(menteeIdx);
+			console.log($scope.mentors);
+
+			var mentor = $scope.mentors[idx];
+			var mentee = $scope.mentees[menteeIdx];
+
+			if (typeof mentor ==="undefined") {
+				return;
+			}
+
+			if (typeof mentee ==="undefined") {
+				return;
+			}
+
+			console.log('assign mentor to mentee');
+			console.log(mentor);
+			console.log(mentee);
+			$scope.inProgress = {};
+			$scope.inProgress[idx] = true;
+			$http.put("/rest/mentor/"+mentor.id,{mentee: mentee.id}).success(function(data, status) {
+				console.log('back from mentor put');
+				console.log(data);
+				if (data.success) {
+
+					$scope.mentees[menteeIdx].mentor = mentor;
+				}
+
+				$('#assign-mentee-modal').modal('hide');
+				$scope.inProgress = false;
+
+			}).error(function(data, success) {
+				console.log(data || "Request failed")
+				$scope.inProgress = false;
+			});
+
+		};
+
+		$scope.activate = function(idx, type, bool) {
+			$scope.inProgress = {};
+			$scope.inProgress[idx] = true;
+			$scope.success = false;
+			console.log('idx: '+idx);
+			console.log('type: '+ type);
+
+			var obj = $scope[type][idx];
+
+			console.log('activate'+ obj.id);
+			var s = bool ? 'ACTIVE' : 'INACTIVE';
+
+			$http.put('/rest/customer/'+obj.id, {'status': s}).success(function(data, status) {
+				if (data.success) {
+					$scope.success = true;
+					obj.status = s;
+				} else {
+					$scope.msg = "Unable to update "+obj.name+".  Please contact the administrator.";
+				}
+				$scope.inProgress = false;
+
+			}).error(function(data, success) {
+				$scope.msg = "Unable to update "+obj.name+".  Please contact the administrator.";
+				$scope.inProgress = false;
+			});
+		};
+
 		$scope.init = function(user, role) {
 			console.log('dboardctrl init');
+
+			$scope.showPopup = false;
+			$scope.ques_page_interval = 5;
+			$scope.mentor_page_interval = 5;
+			$scope.mentee_page_interval = 5;
+
+
+			/* use this later
+			if ($scope.role_id == 4) {
+
+			} else if ($scope.role_id == 5) {
+				$scope.user_type = "Mentor";
+				$scope.get_mentor_mentees();
+			} else {
+				$scope.user_type = "Mentee";
+				$scope.get_mentee_saq_list();
+				$scope.get_notes();
+				$scope.edit_flag = false;
+			}
+			*/
+
 			/* fetch the logged in identity */
 			customer.get(function(result) {
 				$scope.customer = result;
 				console.log($scope.customer);
 
-        $http.get('/rest/dashboard', {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).success(function(data, status) {
+        $http.get('/rest/dashboard').success(function(data, status) {
         	console.log(data);
         	$scope.saqList = data.saqList;
         	$scope.mentors = data.mentors;
@@ -201,28 +362,7 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
         });
 
 			});
-			return;
 
-			$scope.user_id = user;
-			$scope.role_id = role;
-			$scope.show_popup = false;
-			$scope.ques_page_interval = 5;
-			$scope.mentor_page_interval = 5;
-			$scope.mentee_page_interval = 5;
-			if ($scope.role_id == 4) {
-				$scope.user_type = "Administrator";
-				$scope.get_questionairs();
-				$scope.get_mentors();
-				$scope.get_mentees();
-			} else if ($scope.role_id == 5) {
-				$scope.user_type = "Mentor";
-				$scope.get_mentor_mentees();
-			} else {
-				$scope.user_type = "Mentee";
-				$scope.get_mentee_saq_list();
-				$scope.get_notes();
-				$scope.edit_flag = false;
-			}
 		}
 		$scope.range = function(n) {
 			return new Array(n);
@@ -233,6 +373,8 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 			else
 				return '';
 		}
+
+		/* deprecated
 		$scope.get_questionairs = function() {
 			$http.get("/user/saqlist").success(function(data) {
 				$scope.questionairs = data.data;
@@ -258,40 +400,8 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 				console.log(data || "Request failed");
 			});
 		}
+		*/
 
-		$scope.activate = function(mentor) {
-			params = {
-				'mentor_id': mentor.id,
-				'new_status': 1
-			}
-			$http({
-				method: 'post',
-				url: "/user/adminmentor",
-				data: $.param(params),
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				}
-			}).success(function(data, status) {
-				mentor.status = 'ACTIVE';
-			}).error(function(data, success) {});
-		}
-		$scope.de_activate = function(mentor) {
-			params = {
-				'mentor_id': mentor.id,
-				'new_status': 2
-			}
-			$http({
-				method: 'post',
-				url: "/user/adminmentor",
-				data: $.param(params),
-				headers: {
-
-					'Content-Type': 'application/x-www-form-urlencoded'
-				}
-			}).success(function(data, status) {
-				mentor.status = 'INACTIVE';
-			}).error(function(data, success) {});
-		}
 		$scope.get_mentor_mentees = function() {
 			$http.get("/user/adminmentor/" + $scope.user_id).success(function(data) {
 				$scope.mentees = data.data;
@@ -321,24 +431,6 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 			$scope.selected_mentee = mentee;
 		}
 		$scope.assign_mentee_a_mentor = function(mentor) {
-			params = {
-				'mentor': mentor.id,
-				'mentee': $scope.selected_mentee.id
-			}
-			$http({
-				method: 'post',
-				url: "/user/adminmentee",
-				data: $.param(params),
-				headers: {
-
-					'Content-Type': 'application/x-www-form-urlencoded'
-				}
-			}).success(function(data, status) {
-				$scope.mentee.status = 'ASSIGNED'
-				$scope.show_popup = false;
-			}).error(function(data, success) {
-				console.log(data || "Request failed")
-			});
 		}
 		$scope.assign_saq = function(saq) {
 			$scope.show_popup = true;
@@ -362,27 +454,7 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 				}
 			}).success(function(data, status) {}).error(function(data, success) {});
 		}
-		$scope.search_mentors = function() {
 
-			params = {
-				'key': $scope.mentor_search_key
-			}
-			$http({
-				method: 'post',
-				url: "/user/searchmentor",
-				data: $.param(params),
-				headers: {
-
-					'Content-Type': 'application/x-www-form-urlencoded'
-				}
-			}).success(function(data, status) {
-
-				$scope.mentors_result = data.data;
-
-			}).error(function(data, success) {
-				console.log(data || "Request failed");
-			});
-		}
 		$scope.search_mentees = function() {
 
 			params = {

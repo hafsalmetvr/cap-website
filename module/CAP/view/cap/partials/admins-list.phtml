@@ -1,4 +1,4 @@
-<div class="row">
+<div id="admins", class="row" ng-show="admins">
     <div class="table-container col-xs-12">
         <div class="row table-header">
             <div class="col-xs-12">
@@ -23,20 +23,26 @@
                           </div>
                           <div class="action-text">View</div>
                         </a>
-                        <a ng-show="{'INACTIVE':true}[admin.status]" href="#" class="action-link">
+                        <a ng-show="!inProgress[$index] && {'INACTIVE':true}[admin.status]" href="#admins" ng-click="activate($index,'admins', true)"b class="action-link">
                           <div class="action-icon">
                             <i class="fa fa-user"></i>
                             <i class="fa fa-plus"></i>
                           </div>
                           <div class="action-text">Activate</div>
                         </a>
-                        <a ng-show="{'ACTIVE':true}[admin.status]" href="#" class="action-link">
+                        <a ng-show="!inProgress[$index] && {'ACTIVE':true}[admin.status]" href="#admins" ng-click="activate($index,'admins', false)" class="action-link">
                           <div class="action-icon">
                             <i class="fa fa-user"></i>
                             <i class="fa fa-minus"></i>
                           </div>
                           <div class="action-text">Deactivate</div>
                         </a>
+                        <div class="action-link" ng-show="inProgress[$index]">
+                            <div class="action-icon">
+                                <i class="fa fa-cog fa-spin"></i>
+                            </div>
+                            <div class="action-text">Updating</div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -52,6 +52,7 @@ class DashboardController extends AbstractActionController {
 		return $viewModel->setTemplate('cap/dashboard/detail/saq.phtml');
 	}
 
+	/* view mentor detail page */
 	public function mentorAction() {
     $id = $this->params()->fromRoute('id');
 		$logger        = $this->getServiceLocator()->get( 'Log\App' );
@@ -84,13 +85,34 @@ class DashboardController extends AbstractActionController {
 		return $viewModel->setTemplate('cap/dashboard/detail/mentor.phtml');
 	}
 
+	/* view mentee detail page */
 	public function menteeAction() {
     $id = $this->params()->fromRoute('id');
 		/* if they're not logged in - redirect to login */
 		if ( !$user = $this->identity() ) {
 			return $this->redirect()->toRoute( 'home' );
 		}
-		$viewModel = new ViewModel();
+
+		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+
+		/* if not admin make sure this is a child of the current logged in customer */
+		if ($this->identity()->getRole()->getName() !== "Admin") {
+	    $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')->findOneBy(array('child_customer_id' => $id, 'parent_customer_id' => $this->identity()->getId()));
+	    if (!$ch) {
+				return $this->redirect()->toRoute('dashboard');
+	    }
+	  }
+
+   	$mentee = $entityManager->getRepository('CAP\Entity\Customer')->find($id);
+
+    if (!$mentee) {
+			return $this->redirect()->toRoute('dashboard');
+    }
+
+		$viewModel = new ViewModel(array(
+			'mentee' => $mentee
+		));
+
 		return $viewModel->setTemplate('cap/dashboard/detail/mentee.phtml');
 	}
 
@@ -103,7 +125,18 @@ class DashboardController extends AbstractActionController {
 		if ( $this->identity()->getRole()->getName() !=='Admin' ) {
 			return $this->redirect()->toRoute( 'home' );
 		}
-		$viewModel = new ViewModel();
+
+		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+   	$admin = $entityManager->getRepository('CAP\Entity\Customer')->find($id);
+
+    if (!$admin) {
+			return $this->redirect()->toRoute('dashboard');
+    }
+
+		$viewModel = new ViewModel(array(
+			'admin' => $admin
+		));
+
 		return $viewModel->setTemplate('cap/dashboard/detail/admin.phtml');
 	}
 

@@ -121,7 +121,7 @@ controller('LoginCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '
                     } else {
                         $scope.inProgress = false;
                         $scope.success = false;
-                        $scope.msg = data.msg || "Your email or password was incorrect.";
+                        $scope.msg = data.message || "Your email or password was incorrect.";
                     }
 
                 }).error(function(data, success){

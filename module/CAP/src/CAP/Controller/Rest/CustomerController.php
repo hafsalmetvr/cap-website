@@ -21,10 +21,58 @@ class CustomerController extends AbstractRestfulController {
    */
   protected $translatorHelper;
 
+  public function update( $id, $data ) {
+    $logger = $this->getServiceLocator()->get( 'Log\App' );
+    $logger->log( \Zend\Log\Logger::INFO, "Rest call to PUT /customer/".$id );
+    $logger->log( \Zend\Log\Logger::INFO, $data );
+    /* only admins can modify a customer */
+    if ( !$this->identity() || !( $this->identity()->getRole()->getName() === 'Admin' ) ) {
+      return new JsonModel( array('success' => false) );
+    }
+
+    /* must have a cust id to update */
+    if (!$id) {
+      return new JsonModel( array('success' => false) );
+    }
+
+    $e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $c = $e->find("CAP\Entity\Customer", $id);
+
+    /* if there's no existing customer then bail */
+    if ( !$c ) {
+      return JsonModel( array('success' => false) );
+    }
+
+    if ($data['status']) {
+      /* get a status obj for this name */
+      $cs = $e->getRepository("CAP\Entity\CustomerStatus")->findOneBy(array('name' => $data['status']));
+
+      if (!$cs->getId()) {
+        return JsonModel( array('success' => false, 'message' => 'invalid status') );
+      }
+
+      $c->setStatus( $cs );
+
+      /* if status is being set to INACTIVE or DELETED, destory the customer hierarchy records */
+      if ($data['status'] !== "ACTIVE") {
+        $chs = $e->getRepository('CAP\Entity\CustomerHierarchy')->findBy(array('parentCustomer' => $id));
+        foreach ($chs as $ch) {
+          $logger->log( \Zend\Log\Logger::INFO, "remove customer hierarchy for ".$id." and ".$ch->getId() );
+          $e->remove($ch);
+          $e->flush();
+        }
+      }
+    }
+
+    $e->persist( $c );
+    $e->flush();
+
+    return new JsonModel( array('success' => true) );
+  }
 
 	public function get( $id ) {
-		$logger = $this->getServiceLocator()->get( 'Log\App' );
-		$logger->log( \Zend\Log\Logger::INFO, "Rest call to GET /customer/".$id );
+    $logger = $this->getServiceLocator()->get( 'Log\App' );
+    $logger->log( \Zend\Log\Logger::INFO, "Rest call to GET /customer/".$id );
 		if ( $id == 'current' ) {
 			$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
 			$hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject( $e );
@@ -43,8 +91,8 @@ class CustomerController extends AbstractRestfulController {
 
 		/* this serves as the get call for the create account page */
 		/* get the possible roles */
-		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
-		$r = $e->createQuery( "SELECT r FROM CAP\Entity\Role r" )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+    $e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $r = $e->createQuery( "SELECT r FROM CAP\Entity\Role r" )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
 		$results = array();
 
@@ -58,9 +106,9 @@ class CustomerController extends AbstractRestfulController {
 
 	/* POST /customer - should create a new customer */
 	public function create( $data ) {
-		if ( !$this->identity() || !( $this->identity()->getRole()->getName() === 'Admin' ) ) {
-			return JsonModel( array() );
-		}
+    if ( !$this->identity() || !( $this->identity()->getRole()->getName() === 'Admin' ) ) {
+      return JsonModel( array() );
+    }
 
 		/* TODO Validate $data */
 		if (!$data['email']) {
@@ -71,20 +119,20 @@ class CustomerController extends AbstractRestfulController {
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
 		$logger->log( \Zend\Log\Logger::INFO, $data );
 
-		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
-		$c = $entityManager->createQuery( "SELECT u FROM CAP\Entity\Customer u WHERE u.email = :email" )
-			->setParameter('email', $data['email'])
-			->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
-		/* if there's no existing customer then its ok to create one */
-		if ( !$c ) {
+    $c = $entityManager->createQuery( "SELECT u FROM CAP\Entity\Customer u WHERE u.email = :email" )
+      ->setParameter('email', $data['email'])
+      ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+    /* if there's no existing customer then its ok to create one */
+    if ( !$c ) {
 
 			$customer = new Customer;
 			/* TODO : make domain a global */
 			$customer->setDomain( $entityManager->find( 'CAP\Entity\Domain', 3 ) );
 			$customer->setRole(   $entityManager->find( 'CAP\Entity\Role', $data['role_id'] ) );
 
-			$customer->setStatus( $entityManager->find( 'CAP\Entity\CustomerStatus', 2 ) );
+      $customer->setStatus( $entityManager->find( 'CAP\Entity\CustomerStatus', 2 ) );
 			$customer->setName( $data['name'] );
 			$customer->setEmail( $data['email'] );
 			$customer->setRegistrationToken( md5( uniqid( mt_rand(), true ) ) );
@@ -97,8 +145,8 @@ class CustomerController extends AbstractRestfulController {
 					$this->getTranslatorHelper()->translate( 'Please, confirm your registration!' ),
 					sprintf( $this->getTranslatorHelper()->translate( 'Please, click the link to confirm your registration => %s' ), $fullLink )
 				);
-				$entityManager->persist( $customer );
-				$entityManager->flush();
+        $entityManager->persist( $customer );
+        $entityManager->flush();
 
 				return new JsonModel( array( 'success' => true, 'message' => 'An email has been sent to '.$customer->getEmail() ) );
 			} catch ( \Exception $e ) {

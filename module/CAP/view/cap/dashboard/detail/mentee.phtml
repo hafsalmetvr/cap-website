@@ -1,5 +1,45 @@
 <?php $this->headScript()->prependFile($this->basePath() . '/js/'. strtolower($this->identity()->getRole()->getName()) .'.min.js') ?>
 
-<div class="row">
-<div class="col-xs-12">Mentor Detail</div>
+<div class="row" ng-controller="MenteeCtrl" ng-init="init('<?php echo $mentee->getId()?>')">
+    <div class="col-xs-10 col-xs-offset-1">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>
+                	<i class="fa fa-graduation-cap"></i>
+                	<span>Mentee Information</span>
+                </h1>
+            </div>
+        </div>
+
+        <div class="row detail">
+        	<div class="col-xs-12">
+		        <div class="row">
+		            <label class="col-sm-4 col-md-3">Name:</label>
+		            <div class="col-sm-8 col-md-9 detail-info"><?php echo $mentee->getName()?></div>
+		        </div>
+		        <div class="row">
+		            <label class="col-sm-4 col-md-3">Status:</label>
+		            <div class="col-sm-8 col-md-9 detail-info"><?php echo $mentee->getStatus()->getName()?></div>
+		        </div>
+		        <div class="row">
+		            <label class="col-sm-4 col-md-3">Title:</label>
+		            <div class="col-sm-8 col-md-9 detail-info"><?php echo $mentee->getTitle()?></div>
+		        </div>
+		        <div class="row">
+		            <label class="col-sm-4 col-md-3">Phone Number:</label>
+		            <div class="col-sm-8 col-md-9 detail-info"><?php echo $mentee->getPhoneNumber()?></div>
+		        </div>
+		        <div class="row">
+		            <label class="col-sm-4 col-md-3">Email Address:</label>
+		            <div class="col-sm-8 col-md-9 detail-info">
+		            	<a href="mailto:<?php echo $mentee->getEmail()?>"><?php echo $mentee->getEmail()?></a>
+		            </div>
+		        </div>
+	        </div>
+	      </div>
+
+	      <?php echo $this->partial("cap/partials/mentors-list")?>
+	      <?php echo $this->partial("cap/partials/saq-list")?>
+	  </div>
 </div>
+
