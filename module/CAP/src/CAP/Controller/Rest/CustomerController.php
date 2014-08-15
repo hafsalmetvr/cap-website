@@ -119,7 +119,7 @@ class CustomerController extends AbstractRestfulController {
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
 		$logger->log( \Zend\Log\Logger::INFO, $data );
 
-
+    $entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
     $c = $entityManager->createQuery( "SELECT u FROM CAP\Entity\Customer u WHERE u.email = :email" )
       ->setParameter('email', $data['email'])
       ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
