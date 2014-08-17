@@ -3,18 +3,9 @@
 <html lang="en" ng-app="cap">
     <head>
         <meta charset="utf-8">
-        <?php if (0) {?>
-        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet' type='text/css'>
-        <?php } ?>
         <?php echo $this->headTitle($this->translate('Centurion Assesment Portal'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0')->appendHttpEquiv('X-UA-Compatible', 'IE=edge'); ?>
 
-        <?php echo $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-        ?>
-
-        <!-- Le styles -->
         <?php
             /*
             echo $this->headLink(array('rel' => 'shortcut icon',
@@ -37,7 +28,6 @@
             <?php echo $this->content ?>
             <?php echo $this->partial('layout/footer') ?>
         </div>
-
         <?php echo $this->inlineScript() ?>
     </body>
 </html>

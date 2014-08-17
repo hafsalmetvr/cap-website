@@ -1,0 +1,110 @@
+<?php $this->headScript()->prependFile($this->basePath() . '/js/'. strtolower($this->identity()->getRole()->getName()) .'.min.js') ?>
+<div class="row" ng-controller="QuestionnairePageCtrl" ng-init="init(<?php echo $questionnaireId ?>,<?php echo $sectionNumber ?>,<?php echo $pageNumber ?>,<?php echo $customerId ?>)">
+  <div class="col-xs-10 col-xs-offset-1 questionnaire page">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1 class="row">
+        	<div class="col-xs-8"><?php echo $questionnaire->getName(); ?></div>
+        	<div class="col-xs-4 percent-complete text-right"><?php echo round($percentComplete); ?>% Completed</div>
+        </h1>
+        <h2 class="row">
+        	<div class="col-xs-6">Section <?php echo $section->getSectionNumber(); ?>: <?php echo $section->getName(); ?></div>
+        	<?php
+        		$firstNum = $questions[0]->getQuestionNumber();
+        		$last     = end($questions);
+        		$lastNum  = $last->getQuestionNumber();
+        		reset($questions);
+        	?>
+        	<div class="col-xs-6 text-right">Questions <?php echo $firstNum; ?> - <?php echo $lastNum; ?></div>
+        </h2>
+      </div>
+    </div>
+    <?php foreach ($questions as $question) { ?>
+	    <div class="row">
+	    	<div class="col-xs-12 question">
+	    		<div class="row">
+	    			<div class="col-xs-12 text"><?php echo $question->getQuestionNumber(); ?>. <?php echo $question->getQuestionText(); ?></div>
+	    		</div>
+	    		<div class="row">
+	    			<div class="col-xs-12">
+	    				<answer-type-<?php echo $question->getAnswerType(); ?> class="answer" <?php if (isset($customer)) { echo 'customer-id="'.$customer->getId().'"'; }; ?> question-id="<?php echo $question->getId();?>" ></<?php echo $question->getAnswerType();?>>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	  <?php } ?>
+	  <div class="row">
+			<?php
+
+				$nextUrl = null;
+
+				$nextUrlArgs = array('questionnaireId' => $questionnaire->getId());
+				/* if lastPage then go to results */
+				if (isset($lastPage)) {
+					/* there are no results to view if there's no customer */
+					if (isset($customer)) {
+						$nextUrlArgs['customerId'] = $customer->getId();
+						$nextUrl = $this->url('questionnaire/results', $nextUrlArgs);
+					} else {
+						/* what to do? send them back to summary? or nothing? */
+					}
+
+				} else {
+					/* next url is not going to results */
+					$nextUrlArgs['action']        = 'page';
+					$nextUrlArgs['sectionNumber'] = $nextSection;
+					$nextUrlArgs['id']            = $nextPage;
+
+					$key = 'questionnaire/view';
+
+					if (isset($customer)) {
+						$key = 'questionnaire/complete';
+						$nextUrlArgs['customerId'] = $customer->getId();
+					}
+
+					$nextUrl = $this->url($key, $nextUrlArgs);
+				}
+
+				$prevUrl = null;
+				$prevUrlArgs = array('questionnaireId' => $questionnaire->getId());
+				/* go back to the summary */
+				if (isset($firstPage)) {
+					$key = 'questionnaire';
+
+					if (isset($customer)) {
+						$key = 'questionnaire/complete';
+						$prevUrlArgs['customerId'] = $customer->getId();
+					}
+
+					$prevUrl = $this->url($key, $prevUrlArgs);
+
+				} else {
+					/* go back using prevPage and PrevSection */
+					/* next url is not going to results */
+					$prevUrlArgs['action']        = 'page';
+					$prevUrlArgs['sectionNumber'] = $prevSection;
+					$prevUrlArgs['id']            = $prevPage;
+
+					$key = 'questionnaire/view';
+
+					if (isset($customer)) {
+						$key = 'questionnaire/complete';
+						$prevUrlArgs['customerId'] = $customer->getId();
+					}
+
+					$prevUrl = $this->url($key, $prevUrlArgs);
+
+				}
+
+			?>
+			<div class="col-xs-6">
+        <a href="<?php echo $prevUrl; ?>" class="btn btn-default form-control">Back</a>
+			</div>
+			<?php if (!is_null($nextUrl)) { ?>
+		  	<div class="col-xs-6">
+	        <a href="<?php echo $nextUrl; ?>" class="btn btn-primary form-control"><?php echo isset($lastPage) ? "Finished" : "Continue"; ?></a>
+		  	</div>
+		  <?php } ?>
+	  </div>
+  </div>
+</div>

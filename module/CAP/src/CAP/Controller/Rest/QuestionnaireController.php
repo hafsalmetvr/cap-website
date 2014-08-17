@@ -66,7 +66,7 @@ class QuestionnaireController extends AbstractRestfulController {
 
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
 		$logger->log( \Zend\Log\Logger::INFO, $id);
-		$logger->log( \Zend\Log\Logger::INFO, $data);
+    $logger->log( \Zend\Log\Logger::INFO, $data);
 
 		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
 
@@ -79,21 +79,49 @@ class QuestionnaireController extends AbstractRestfulController {
 	    				->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
 	    if ( $cq ) {
-	      $cq = $cq[0];
-	    } else {
-	      $cq = new \CAP\Entity\CustomerQuestionnaire;
-	      $cq->setCustomer( $e->find( 'CAP\Entity\Customer', $data['mentee'] ) );
+        /* TODO: handlethis better */
+        $logger->log( \Zend\Log\Logger::INFO, "already assigned");
+        return new JsonModel(array('success' => true));
 	    }
-	    $cq->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
-	    $cq->setQuestionnaire( $e->find( 'CAP\Entity\Questionnaire', $id ) );
 
-	    $e->persist( $cq );
+      try {
+        $now = date("Y-m-d H:i:s");
+
+        /* add section and question rows to customer_section and customer_question */
+        $cq = new \CAP\Entity\CustomerQuestionnaire;
+        $cq->setCustomer( $e->find( 'CAP\Entity\Customer', $data['mentee'] ) );
+        $cq->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
+        $cq->setQuestionnaire( $e->find( 'CAP\Entity\Questionnaire', $id ) );
+        $e->persist( $cq );
+
+        /* for each section of the questionnaire */
+        $sections = $e->getRepository("\CAP\Entity\Section")->findBy(array("questionnaire" => $id));
+        foreach ($sections as $section) {
+          $cs = new \CAP\Entity\CustomerSection;
+          $cs->setCustomer( $e->find( 'CAP\Entity\Customer', $data['mentee'] ) );
+          $cs->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
+          $cs->setSection( $e->find( 'CAP\Entity\Section', $section->getId() ) );
+          $cs->setCreated($now);
+          $e->persist( $cs );
+        }
+
+        /* get all the questions for this questionnaire */
+        $questions = $e->getRepository("\CAP\Entity\Question")->findBy(array("questionnaire" => $id));
+        foreach ($questions as $q) {
+          $cq2 = new \CAP\Entity\CustomerQuestion;
+          $cq2->setCustomer( $e->find( 'CAP\Entity\Customer', $data['mentee'] ) );
+          $cq2->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
+          $cq2->setQuestion( $e->find( 'CAP\Entity\Question', $q->getId() ) );
+          $cq2->setCreated($now);
+          $e->persist( $cq2 );
+        }
+      } catch (Exception $e) {
+        return new JsonModel(array('success' => false));
+      }
 	    $e->flush();
-
-
 		}
 
-		return new JsonModel(array('success' => true));
+    return new JsonModel(array('success' => true));
 	}
 
 	/* POST /customer - should create a new customer */

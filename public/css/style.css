@@ -1,3 +1,5 @@
+/* @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400italic,700italic,400,700); */
+/* @import url(http://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic); */
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -7735,7 +7737,7 @@ h1 {
   font-size: 28pt;
   padding: 0;
   margin: 0 0 10px 0;
-  font-family: "Roboto Condensed";
+  font-family: "Roboto Condensed", Tahoma;
   display: block;
   border-bottom: thin dashed #333333;
 }
@@ -7743,18 +7745,21 @@ h2 {
   font-size: 22pt;
   padding: 0;
   margin: 0;
-  font-family: "Roboto Condensed";
+  font-family: "Roboto Condensed", Tahoma;
 }
 body {
   font-size: 12pt;
-  font-family: "Helvetica Neue";
+  font-family: Verdana;
   color: #333333;
 }
 label {
   font-size: 16pt;
   font-weight: normal;
-  font-family: "Roboto";
+  font-family: "Roboto", Verdana;
   margin-top: 8px;
+}
+a:hover {
+  text-decoration: none;
 }
 form {
   padding: 20px;
@@ -7762,7 +7767,7 @@ form {
 form .text-input.form-group {
   background-color: #b3b3b3;
   padding: 10px;
-  font-family: "Roboto";
+  font-family: "Roboto", Verdana;
 }
 .form-control {
   font-size: 14pt;
@@ -7784,7 +7789,7 @@ form .text-input.form-group {
 }
 .table-container .table-header {
   font-size: 18pt;
-  font-family: "Roboto Condensed";
+  font-family: "Roboto Condensed", Tahoma;
 }
 .table-container .table-header i {
   margin-right: 20px;
@@ -7804,7 +7809,7 @@ form .text-input.form-group {
   vertical-align: middle !important;
 }
 .table-container .table-list .table-list-row .text {
-  line-height: 44px;
+  margin: 6px 0;
 }
 .table-container .table-list .even {
   border-top: 1px solid #b3b3b3;
@@ -7818,11 +7823,11 @@ form .text-input.form-group {
   font-size: 11pt;
 }
 .table-container .action-link {
-  width: 68px;
-  font-size: .9em;
+  width: 58px;
+  font-size: .8em;
   display: inline-block;
   text-align: center;
-  margin: 0 10px;
+  margin: 0 5px;
 }
 .table-container .action-link .action-text {
   font-size: .8em;
@@ -7833,7 +7838,7 @@ form .text-input.form-group {
 .detail .detail-info {
   font-size: 16pt;
   font-weight: normal;
-  font-family: "Roboto";
+  font-family: "Roboto", Verdana;
   margin-top: 8px;
 }
 .small-text {
@@ -7905,7 +7910,7 @@ nav .container-fluid {
 }
 nav .navbar-header {
   color: #ffffff;
-  font-family: 'Roboto Condensed';
+  font-family: 'Roboto Condensed', Tahoma;
 }
 nav .navbar-header .navbar-brand {
   color: #ffffff;
@@ -7914,7 +7919,7 @@ nav .navbar-header .navbar-brand {
 nav .navbar-logged-in-user-info {
   color: #ffffff;
   font-size: 1.5em;
-  font-family: "Roboto Condensed";
+  font-family: "Roboto Condensed", Tahoma;
   font-weight: normal;
   line-height: 48px;
 }
@@ -7938,7 +7943,7 @@ nav .hover-menu-container.active ul.hover-menu {
   padding: 15px 0px 15px 0px;
 }
 nav .hover-menu-container.active ul.hover-menu li {
-  font-family: "Roboto";
+  font-family: "Roboto", Verdana;
   list-style: none;
   display: block;
 }

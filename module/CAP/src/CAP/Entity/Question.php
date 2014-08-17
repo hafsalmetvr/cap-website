@@ -64,6 +64,9 @@ class Question {
      * })
      */
     private $questionnaire;
+    public function getQuestionnaire() {
+        return $this->questionnaire;
+    }
 
     /**
      * @var \CAP\Entity\Section
@@ -74,6 +77,9 @@ class Question {
      * })
      */
     private $section;
+    public function getSection() {
+        return $this->section;
+    }
 
     /**
      * @var string
@@ -90,6 +96,14 @@ class Question {
      */
 
     private $questionnaireid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="answer_type", type="string", nullable=true)
+     */
+    private $answerType = 'TEXT';
+
 
      /**
      * Get id
@@ -126,4 +140,15 @@ class Question {
     public function getQuestionOrder() {
         return $this->questionOrder;
     }
+    public function getQuestionNumber() {
+        return $this->questionNumber;
+    }
+    public function getQuestionText() {
+        return $this->questionText;
+    }
+
+    public function getAnswerType() {
+        return $this->answerType;
+    }
 }
+

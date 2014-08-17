@@ -31,6 +31,21 @@ factory('customer', ['$http',
         }
     }
 ]).
+factory('answer', ['$http',
+    function($http) {
+        var self = this;
+        self.answer = null;
+
+        return {
+            get: function(params, cb) {
+            },
+            save: function(params, cb) {
+                console.log(params);
+                cb(null,params);
+            }
+        }
+    }
+]).
 
 factory('share', function() {
     return {

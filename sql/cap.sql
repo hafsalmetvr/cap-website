@@ -26,7 +26,6 @@ CREATE TABLE `answer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `answer_number` int(11) NOT NULL,
   `answer_text` text NOT NULL,
-  `answer_type` enum('TEXT','CHECKBOX','RADIO','TEXTAREA','SELECT','MULTISELECT','ENUM') DEFAULT 'TEXT',
   `answer_order` int(11) NOT NULL DEFAULT '0',
   `question_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
@@ -43,7 +42,7 @@ CREATE TABLE `answer` (
 
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,1,'Multiselect Option 1','MULTISELECT',1,1,'2014-07-19 17:33:26','2014-07-22 19:30:06'),(2,1,'Multiselect Option 2','MULTISELECT',2,1,'2014-07-19 17:33:52','2014-07-22 19:30:18'),(3,1,'This is third multiselection option','MULTISELECT',3,1,'2014-07-19 17:34:03','2014-07-22 19:30:28'),(4,1,'This is Enum Answer Text number 1','ENUM',1,4,'2014-07-22 21:40:36','2014-07-22 16:10:36'),(5,2,'This is Enum Answer Text number 2','ENUM',2,4,'2014-07-22 21:40:56','2014-07-22 16:10:56'),(6,3,'This is Enum Answer Text number 3','ENUM',3,4,'2014-07-22 21:41:37','2014-07-22 16:11:37'),(7,1,'','TEXT',1,2,'2014-07-24 00:41:10','2014-07-23 19:11:10'),(8,1,'check box option 1','CHECKBOX',1,5,'2014-07-24 02:07:55','2014-07-23 20:37:55'),(9,2,'check box option 2','CHECKBOX',2,5,'2014-07-24 02:08:17','2014-07-23 20:38:17'),(10,3,'check box option 3','CHECKBOX',3,5,'2014-07-24 02:09:00','2014-07-23 20:39:00'),(11,1,'Radio option 1','RADIO',1,6,'2014-07-24 02:09:37','2014-07-23 20:39:37'),(12,2,'Radio option 2','RADIO',2,6,'2014-07-24 02:09:50','2014-07-23 20:39:50'),(13,3,'Radio option 3','RADIO',3,6,'2014-07-24 02:10:00','2014-07-23 20:40:00'),(14,1,'Select option 1','SELECT',1,7,'2014-07-24 02:11:03','2014-07-23 20:41:03'),(15,2,'Select option 2','SELECT',2,7,'2014-07-24 02:11:17','2014-07-23 20:41:17'),(16,3,'Select option 3','SELECT',3,7,'2014-07-24 02:11:33','2014-07-23 20:41:33'),(17,4,'Select option 4','SELECT',4,7,'2014-07-24 02:11:48','2014-07-23 20:41:48'),(19,1,'','TEXTAREA',1,8,'2014-07-24 02:56:25','2014-07-23 21:26:25');
+/* INSERT INTO `answer` VALUES (1,1,'Multiselect Option 1','MULTISELECT',1,1,'2014-07-19 17:33:26','2014-07-22 19:30:06'),(2,1,'Multiselect Option 2','MULTISELECT',2,1,'2014-07-19 17:33:52','2014-07-22 19:30:18'),(3,1,'This is third multiselection option','MULTISELECT',3,1,'2014-07-19 17:34:03','2014-07-22 19:30:28'),(4,1,'This is Enum Answer Text number 1','ENUM',1,4,'2014-07-22 21:40:36','2014-07-22 16:10:36'),(5,2,'This is Enum Answer Text number 2','ENUM',2,4,'2014-07-22 21:40:56','2014-07-22 16:10:56'),(6,3,'This is Enum Answer Text number 3','ENUM',3,4,'2014-07-22 21:41:37','2014-07-22 16:11:37'),(7,1,'','TEXT',1,2,'2014-07-24 00:41:10','2014-07-23 19:11:10'),(8,1,'check box option 1','CHECKBOX',1,5,'2014-07-24 02:07:55','2014-07-23 20:37:55'),(9,2,'check box option 2','CHECKBOX',2,5,'2014-07-24 02:08:17','2014-07-23 20:38:17'),(10,3,'check box option 3','CHECKBOX',3,5,'2014-07-24 02:09:00','2014-07-23 20:39:00'),(11,1,'Radio option 1','RADIO',1,6,'2014-07-24 02:09:37','2014-07-23 20:39:37'),(12,2,'Radio option 2','RADIO',2,6,'2014-07-24 02:09:50','2014-07-23 20:39:50'),(13,3,'Radio option 3','RADIO',3,6,'2014-07-24 02:10:00','2014-07-23 20:40:00'),(14,1,'Select option 1','SELECT',1,7,'2014-07-24 02:11:03','2014-07-23 20:41:03'),(15,2,'Select option 2','SELECT',2,7,'2014-07-24 02:11:17','2014-07-23 20:41:17'),(16,3,'Select option 3','SELECT',3,7,'2014-07-24 02:11:33','2014-07-23 20:41:33'),(17,4,'Select option 4','SELECT',4,7,'2014-07-24 02:11:48','2014-07-23 20:41:48'),(19,1,'','TEXTAREA',1,8,'2014-07-24 02:56:25','2014-07-23 21:26:25'); */
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -866,6 +865,7 @@ CREATE TABLE `question` (
   `question_order` int(11) NOT NULL DEFAULT '0',
   `section_id` int(11) NOT NULL,
   `questionnaire_id` int(11) NOT NULL,
+  `answer_type` enum('TEXT','CHECKBOX','RADIO','TEXTAREA','SELECT','MULTISELECT','ENUM') DEFAULT 'TEXT',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -912,6 +912,7 @@ CREATE TABLE `questionnaire` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `questions_per_page` int(11) NOT NULL DEFAULT 10,
   `organization_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -1138,6 +1139,7 @@ CREATE TABLE `section` (
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `questionnaire_id` (`questionnaire_id`),
+  KEY `section_number` (`section_number`),
   CONSTRAINT `section_ibfk_1` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

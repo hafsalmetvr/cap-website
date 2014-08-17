@@ -140,6 +140,14 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 		}
 	}
 ]).
+controller('QuestionnaireCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies',
+  function($scope, $element, $http, $timeout, $window, $cookies) {
+  }
+]).
+controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
+	function($scope, $element, $http, $timeout, $cookies, customer) {
+	}
+]).
 
 /* do i need this? */
 controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies',

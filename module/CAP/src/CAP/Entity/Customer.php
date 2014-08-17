@@ -231,7 +231,7 @@ class Customer {
     }
 
     /**
-     * Get firstName
+     * Get Name
      *
      * @return string
      */

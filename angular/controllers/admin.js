@@ -1,7 +1,12 @@
 /* Controllers */
 angular.module('cap.controllers.admin', []).
 
-controller('SAQCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
+controller('QuestionnaireCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies',
+  function($scope, $element, $http, $timeout, $window, $cookies) {
+  }
+]).
+
+controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
 	function($scope, $element, $http, $timeout, $cookies, customer) {
 	}
 ]).

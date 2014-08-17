@@ -72,20 +72,20 @@ class MenteeController extends AbstractRestfulController {
     if ( $this->identity()->getRole()->getName() === 'Mentor') {
 
       /* get mentors notes on this mentee */
-      $myNotes = $entityManager->createQuery("SELECT cn.id, cn.customerId, cn.note, cn.name, cn.id, cn.created, nm.share FROM CAP\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = :mentorId and nm.customer = :menteeId")
+      $myNotes = $entityManager->createQuery("SELECT cn.id, cn.customerId, cn.note, cn.name, cn.created, nm.share FROM CAP\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = :mentorId and nm.customer = :menteeId")
                                ->setParameter('menteeId', $id)
                                ->setParameter('mentorId', $this->identity()->getId())
                                ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
 
       /* get mentee notes shared with this mentor */
-      $sharedNotes = $entityManager->createQuery("SELECT cn.id, cn.customerId, cn.note, cn.name, cn.id, cn.created, nm.share FROM CAP\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = :menteeId and nm.customer = :mentorId and nm.share = TRUE")
+      $sharedNotes = $entityManager->createQuery("SELECT cn.id, cn.customerId, cn.note, cn.name, cn.created, nm.share FROM CAP\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = :menteeId and nm.customer = :mentorId and nm.share = TRUE")
                                    ->setParameter('menteeId', $id)
                                    ->setParameter('mentorId', $this->identity()->getId())
                                    ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
 
     /* get all saqs for this mentee */
-    $saqs = $entityManager->createQuery( "SELECT q.id, c.id as questionnaire_id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where q.customer = :customerId" )
+    $saqs = $entityManager->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where q.customer = :customerId" )
                           ->setParameter('customerId', $id)
                           ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
@@ -97,19 +97,20 @@ class MenteeController extends AbstractRestfulController {
 
 
 
+    $modelArgs = array('mentee' => array('id'          => $mentee->getId(),
+                                         'name'        => $mentee->getName(),
+                                         'email'       => $mentee->getEmail(),
+                                         'title'       => $mentee->getTitle(),
+                                         'status'      => $mentee->getStatus()->getName(),
+                                         'phoneNumber' => $mentee->getPhoneNumber()
+                                         )
+                      );
+    $modelArgs['myNotes']     = isset($myNotes) ? $myNotes : null;
+    $modelArgs['sharedNotes'] = isset($sharedNotes) ? $sharedNotes : null;
+    $modelArgs['saqs']        = isset($saqs) ? $saqs : null;
+    $modelArgs['mentors']     = isset($mentors) ? $mentors : null;
 
-    return new JsonModel(array('mentee' => array('id' => $mentee->getId(),
-                                                 'name' => $mentee->getName(),
-                                                 'email' => $mentee->getEmail(),
-                                                 'title' => $mentee->getTitle(),
-                                                 'status' => $mentee->getStatus()->getName(),
-                                                 'phoneNumber' => $mentee->getPhoneNumber()
-                                                 ),
-                               'myNotes' => $myNotes,
-                               'sharedNotes' => $sharedNotes,
-                               'saqs' => $saqs,
-                               'mentors' => $mentors));
-
+    return new JsonModel($modelArgs);
 	}
 
 	/* will return a list of mentees that belong to the logged in user (or all mentees if Admin) */

@@ -122,6 +122,16 @@ return array(
                 ),
             ),
 
+            'rest-answer' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/rest/answer/[:answerType]/[:questionId][/:customerId]',
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Rest\Answer',
+                    )
+                ),
+            ),
+
 
             'rest-dashboard' => array(
                 'type' => 'segment',
@@ -185,6 +195,60 @@ return array(
                 'may_terminate' => true,
             ),
 
+            'questionnaire' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/questionnaire/[:questionnaireId]',
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Questionnaire',
+                        'action' => 'index'
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'view' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/view/section/[:sectionNumber][/:action][/:id]',
+                            'constraints' => array(
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'CAP\Controller\Questionnaire',
+                                'action' => 'index'
+                            ),
+                        ),
+                    ),
+                    'complete' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/complete/[:customerId][/section/:sectionNumber][/:action][/:id]',
+                            'constraints' => array(
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'CAP\Controller\Questionnaire',
+                                'action' => 'index'
+                            ),
+                        ),
+                    ),
+                    'results' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/results[/:customerId]',
+                            'defaults' => array(
+                                'controller' => 'CAP\Controller\Questionnaire',
+                                'action' => 'results'
+                            ),
+                        ),
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+
             /* partials */
             'partials-index' => array(
                 'type'    => 'segment',
@@ -199,6 +263,18 @@ return array(
                     ),
                 ),
             ),
+            'answer-type' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/answer-type[/:action]',
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\AnswerType',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -207,6 +283,8 @@ return array(
             'Zend\Log\LoggerAbstractServiceFactory',
         ),
         'factories' => array(
+            'Zend\Session\SessionManager'               => 'Zend\Session\Service\SessionManagerFactory',
+            'Zend\Session\Config\ConfigInterface'       => 'Zend\Session\Service\SessionConfigFactory',
             'Zend\Authentication\AuthenticationService' => 'CAP\Service\Factory\AuthenticationFactory',
             'mail.transport'                            => 'CAP\Service\Factory\MailTransportFactory',
             'cap_module_options'                        => 'CAP\Service\Factory\ModuleOptionsFactory',
@@ -215,6 +293,25 @@ return array(
             'translator' => 'MvcTranslator',
         ),
     ),
+    'session' => array(
+        'config' => array(
+            'class' => 'Zend\Session\Config\SessionConfig',
+            'options' => array(
+                'name' => 'cap',
+            ),
+        ),
+        'storage' => 'Zend\Session\Storage\SessionArrayStorage',
+        'validators' => array(
+            'Zend\Session\Validator\RemoteAddr',
+            'Zend\Session\Validator\HttpUserAgent',
+        ),
+    ),
+    'session_config' => [
+        'remember_me_seconds' => 1209600,
+        'use_cookies' => true,
+        'cookie_httponly' => true,
+    ],
+
     'translator' => array(
         'locale' => 'en_US',
         'translation_file_patterns' => array(
@@ -227,9 +324,11 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'CAP\Controller\Index'      => 'CAP\Controller\IndexController',
-            'CAP\Controller\Dashboard'  => 'CAP\Controller\DashboardController',
-            'CAP\Controller\Partials'   => 'CAP\Controller\PartialsController',
+            'CAP\Controller\Index'           => 'CAP\Controller\IndexController',
+            'CAP\Controller\Dashboard'       => 'CAP\Controller\DashboardController',
+            'CAP\Controller\Questionnaire'   => 'CAP\Controller\QuestionnaireController',
+            'CAP\Controller\Partials'        => 'CAP\Controller\PartialsController',
+            'CAP\Controller\AnswerType'      => 'CAP\Controller\AnswerTypeController',
 
             'CAP\Controller\Rest\Customer'   => 'CAP\Controller\Rest\CustomerController',
             'CAP\Controller\Rest\Mentee'     => 'CAP\Controller\Rest\MenteeController',
@@ -241,6 +340,7 @@ return array(
             'CAP\Controller\Rest\Login'      => 'CAP\Controller\Rest\LoginController',
             'CAP\Controller\Rest\Password'   => 'CAP\Controller\Rest\PasswordController',
             'CAP\Controller\Rest\Settings'   => 'CAP\Controller\Rest\SettingsController',
+            'CAP\Controller\Rest\Answer'     => 'CAP\Controller\Rest\AnswerController',
         ),
     ),
     'view_manager' => array(

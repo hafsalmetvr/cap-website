@@ -20,6 +20,21 @@ class Questionnaire {
      */
     private $id;
 
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="questions_per_page", type="integer", nullable=false)
+     */
+    private $questionsPerPage;
+
+    public function getQuestionsPerPage() {
+        return $this->questionsPerPage;
+    }
+
     /**
      * @var string
      *
@@ -28,11 +43,79 @@ class Questionnaire {
     private $name;
 
     /**
+     * Set Name
+     *
+     * @param  string $name
+     * @return User
+     */
+    public function setName($name) {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get Name
+     *
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=false)
      */
     private $description;
+
+    /**
+     * Set Name
+     *
+     * @param  string $name
+     * @return User
+     */
+    public function setDescription($desc) {
+        $this->description = $desc;
+
+        return $this;
+    }
+
+    /**
+     * Get Name
+     *
+     * @return string
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+
+    /**
+     * Set Name
+     *
+     * @param  string $name
+     * @return User
+     */
+    public function setSectionOrder($order) {
+        $this->sectionOrder = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get Name
+     *
+     * @return string
+     */
+    public function getSectionOrder() {
+        return $this->sectionOrder;
+    }
+
+
 
     /**
      * @var \DateTime

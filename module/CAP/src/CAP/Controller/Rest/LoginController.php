@@ -33,7 +33,6 @@ class LoginController extends AbstractRestfulController {
 	/* POST /login - create is a misnomer its actually the login function */
 	public function create( $data ) {
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
-		$logger->log( \Zend\Log\Logger::INFO, $data );
 
     //$bcrypt = new Bcrypt(array('cost' => 10));
     //$logger->log(\Zend\Log\Logger::INFO, $bcrypt->create($data['password']));
@@ -72,12 +71,13 @@ class LoginController extends AbstractRestfulController {
 
 					$authService->getStorage()->write( $identity );
 
+					/*
 					if ( $data['rememberme'] ) {
 						$time = 1209600; // 14 days (1209600/3600 = 336 hours => 336/24 = 14 days)
 						$sessionManager = new SessionManager();
 						$sessionManager->rememberMe( $time );
 					}
-
+					*/
 					return new JsonModel( array( 'login' => true, 'message' => 'success' ) );
 				}
 

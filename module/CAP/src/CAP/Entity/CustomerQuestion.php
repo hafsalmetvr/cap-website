@@ -1,5 +1,4 @@
 <?php
-
 namespace CAP\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -105,6 +104,10 @@ class CustomerQuestion {
         $this->completionStatus = $completionStatus;
 
         return $this;
+    }
+
+    public function getCompletionStatus() {
+        return $this->completionStatus;
     }
 
      /**

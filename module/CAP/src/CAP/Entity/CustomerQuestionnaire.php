@@ -124,4 +124,7 @@ class CustomerQuestionnaire {
 
         return $this;
     }
+    public function getCompletionStatus() {
+        return $this->completionStatus;
+    }
 }

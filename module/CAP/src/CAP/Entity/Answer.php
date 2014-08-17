@@ -35,13 +35,6 @@ class Answer {
     private $answerText;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="answer_type", type="string", nullable=true)
-     */
-    private $answerType = 'TEXT';
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="answer_order", type="integer", nullable=false)
