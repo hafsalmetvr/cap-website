@@ -76,7 +76,7 @@ class QuestionnaireController extends AbstractActionController {
 			$viewArgs['sectionData']['completedQuestionCount'] = 0;
 			$viewArgs['sectionData']['percentComplete']    = 0;
 
-	 		$customerSections = $entityManager->createQuery( "SELECT cs FROM CAP\Entity\CustomerSection cs JOIN cs.section s JOIN s.questionnaire q JOIN cs.completionStatus cst WHERE s.id = :questionnaireId AND cs.customer = :customerId" )
+	 		$customerSections = $entityManager->createQuery( "SELECT cs FROM CAP\Entity\CustomerSection cs JOIN cs.section s JOIN s.questionnaire q JOIN cs.completionStatus cst WHERE s.questionnaire = :questionnaireId AND cs.customer = :customerId" )
 					  																 ->setParameter('questionnaireId',$qId)
 					  																 ->setParameter('customerId',$cId)
 					 																	 ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
@@ -87,7 +87,7 @@ class QuestionnaireController extends AbstractActionController {
 
 			foreach ($customerSections as $cs) {
 				$section = $cs->getSection();
-
+				$logger->log( \Zend\Log\Logger::INFO, "got questionnaire: " . $section->getName());
 
 	   		$questionCount = $entityManager->createQuery( "SELECT count(q.id) FROM CAP\Entity\Question q JOIN q.section s JOIN s.questionnaire q2 WHERE q.questionnaire = :questionnaireId AND s.sectionNumber = :sectionNumber" )
 	    																 ->setParameter('questionnaireId',$qId)
@@ -122,7 +122,7 @@ class QuestionnaireController extends AbstractActionController {
 				$viewArgs['sectionData']['completedQuestionCount'] += $completedQuestionCount;
 
 				array_push($viewArgs['sections'],$section);
-				$viewArgs['customerSection'][$section->getSectionNumber()] = $cq;
+				$viewArgs['customerSection'][$section->getSectionNumber()] = $cs;
 			}
 
 	   	if ($viewArgs['sectionData']['questionCount'] && $viewArgs['sectionData']['completedQuestionCount'] ) {
@@ -132,7 +132,7 @@ class QuestionnaireController extends AbstractActionController {
 
     } else {
 
-	 		$sections = $entityManager->createQuery( "SELECT s FROM CAP\Entity\Section s JOIN s.questionnaire q WHERE q.id = :questionnaireId" )
+	 		$sections = $entityManager->createQuery( "SELECT s FROM CAP\Entity\Section s JOIN s.questionnaire q WHERE s.questionnaire = :questionnaireId" )
 					  																 ->setParameter('questionnaireId',$qId)
 					 																	 ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
@@ -144,7 +144,7 @@ class QuestionnaireController extends AbstractActionController {
 			$viewArgs['sections'] = array();
 
 			foreach ($sections as $section) {
-
+			$logger->log( \Zend\Log\Logger::INFO, "got section: " . $section->getName());
 	   		$questionCount = $entityManager->createQuery( "SELECT count(q.id) FROM CAP\Entity\Question q JOIN q.section s JOIN s.questionnaire q2 WHERE q.questionnaire = :questionnaireId AND s.sectionNumber = :sectionNumber" )
 	    																 ->setParameter('questionnaireId',$qId)
 	    																 ->setParameter('sectionNumber',$section->getSectionNumber())

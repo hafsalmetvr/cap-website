@@ -1,10 +1,10 @@
-<div class="row">
-	<div class="col-xs-12 form-group" ng-repeat="answer in answers">
-		<div class="row">
-			<div class="col-xs-3">[[answer.answerNumber]]. [[answer.answerText]]</div>
-			<div class="col-xs-9">
+<div class="row enum-container">
+	<div ng-class="{0:'first'}[$index]" class="col-xs-12 enum-row" ng-repeat="answer in answers">
+		<div class="row enum-answer-row">
+			<div class="col-xs-4 enum-answer-heading">[[answer.answerNumber]]. [[answer.answerText]]</div>
+			<div class="col-xs-8 enum-answer-enum-container">
 				<div class="row">
-					<div class="[[enumColsClass]]" ng-repeat="answerEnum in answer.answerEnums">
+					<div class="[[enumColsClass]] enum-answer-col" ng-repeat="answerEnum in answer.answerEnums">
 						<label ng-disabled="disabled">
 							<i ng-hide="answer.selectedEnumId==answerEnum.id" class="fa fa-circle-o fa-fw"></i>
 							<i ng-show="answer.selectedEnumId==answerEnum.id" class="fa fa-check-circle-o green fa-fw"></i>

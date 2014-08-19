@@ -82,6 +82,10 @@ class CustomerQuestion {
         return $this;
     }
 
+    public function getCustomer() {
+        return $this->customer;
+    }
+
      /**
      * Set question
      *

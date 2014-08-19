@@ -87,7 +87,7 @@ class Question {
      * @ORM\Column(name="section_id", type="integer", length=255, nullable=true)
      */
 
-    private $sectionid;
+    private $sectionId;
 
      /**
      * @var string
@@ -95,7 +95,7 @@ class Question {
      * @ORM\Column(name="questionnaire_id", type="integer", length=255, nullable=true)
      */
 
-    private $questionnaireid;
+    private $questionnaireId;
 
     /**
      * @var string
@@ -119,8 +119,8 @@ class Question {
      *
      * @return sectionid
      */
-    public function getSectionid() {
-        return $this->sectionid;
+    public function getSectionId() {
+        return $this->sectionId;
     }
 
     /**
@@ -128,8 +128,8 @@ class Question {
      *
      * @return questionnaireid
      */
-    public function getQuestionnaireid() {
-        return $this->questionnaireid;
+    public function getQuestionnaireId() {
+        return $this->questionnaireId;
     }
 
     /**

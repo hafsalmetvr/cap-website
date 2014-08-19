@@ -64,10 +64,10 @@ class Question extends \CAP\Entity\Question implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionNumber', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionText', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionOrder', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionnaire', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'section', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'sectionid', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionnaireid', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'answerType');
+            return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionNumber', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionText', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionOrder', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionnaire', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'section', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'sectionId', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionnaireId', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'answerType');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionNumber', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionText', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionOrder', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionnaire', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'section', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'sectionid', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionnaireid', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'answerType');
+        return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionNumber', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionText', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionOrder', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionnaire', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'section', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'sectionId', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'questionnaireId', '' . "\0" . 'CAP\\Entity\\Question' . "\0" . 'answerType');
     }
 
     /**
@@ -213,23 +213,23 @@ class Question extends \CAP\Entity\Question implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getSectionid()
+    public function getSectionId()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSectionid', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSectionId', array());
 
-        return parent::getSectionid();
+        return parent::getSectionId();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getQuestionnaireid()
+    public function getQuestionnaireId()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getQuestionnaireid', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getQuestionnaireId', array());
 
-        return parent::getQuestionnaireid();
+        return parent::getQuestionnaireId();
     }
 
     /**

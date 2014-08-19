@@ -7747,6 +7747,15 @@ h2 {
   margin: 0;
   font-family: "Roboto Condensed", Tahoma;
 }
+h2.alt {
+  font-size: 28pt;
+  font-family: "Roboto", Verdana;
+  font-weight: normal;
+}
+h3 {
+  margin: 0;
+  padding: 0;
+}
 body {
   font-size: 12pt;
   font-family: Verdana;
@@ -7988,4 +7997,100 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
 }
 .reminder-frequency select {
   width: 100% !important;
+}
+.questionnaire .percent-complete {
+  font-family: "Roboto", Verdana;
+  color: #008000;
+  font-size: 20pt;
+  margin-top: 2px;
+}
+.questionnaire.summary .summary-header {
+  margin-top: 30px;
+}
+.questionnaire.summary .description {
+  font-family: "Roboto", Verdana;
+  margin-top: 20px;
+}
+.questionnaire.summary .summary-box {
+  margin: 20px 0;
+  border: 2px solid #333333;
+}
+.questionnaire.summary .summary-box .section-row.even {
+  background-color: #f2f2f2;
+}
+.questionnaire.summary .summary-box .section-row {
+  font-family: "Roboto", Verdana;
+}
+.questionnaire.summary .summary-box .section-row .section-name {
+  padding: 20px 0;
+  margin-top: 5px;
+}
+.questionnaire.summary .summary-box .section-row .section-text {
+  margin-top: 10px;
+  padding: 20px 0;
+}
+.questionnaire.summary .summary-box .section-row .completion-status {
+  margin-top: 10px;
+  padding: 20px 0;
+  font-weight: bold;
+}
+.questionnaire.summary .summary-box .section-row .completion-status.NOT.COMPLETED {
+  color: #008000;
+}
+.questionnaire.summary .summary-box .section-row .completion-status.NOT.STARTED {
+  color: #333333;
+}
+.questionnaire.summary .summary-box .section-row .completion-status.COMPLETED {
+  color: #b3b3b3;
+}
+.questionnaire.page .questionnaire-page-header h1 {
+  font-weight: normal;
+  margin-bottom: 4px;
+}
+.questionnaire.page .questionnaire-page-header h2 {
+  font-size: 16pt;
+}
+.questionnaire.page .page-sub-header .question-numbers {
+  color: #b3b3b3;
+  font-style: italic;
+  font-size: 14pt;
+}
+.questionnaire.page .question {
+  margin-top: 10px;
+  padding-top: 20px;
+}
+.questionnaire.page .question .text {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.questionnaire.page .actions {
+  border-top: 1px solid #f2f2f2;
+  margin-top: 20px;
+  padding-top: 20px;
+}
+.questionnaire.page .enum-container .enum-row.first .enum-answer-heading {
+  border-top: 1px solid #b3b3b3;
+}
+.questionnaire.page .enum-container .enum-row.first .enum-answer-col {
+  border-top: 1px solid #b3b3b3;
+}
+.questionnaire.page .enum-container .enum-row .enum-answer-row {
+  margin: 0;
+}
+.questionnaire.page .enum-container .enum-row .enum-answer-row .enum-answer-heading {
+  background-color: #f2f2f2;
+  border-left: 1px solid #b3b3b3;
+  border-right: 1px solid #b3b3b3;
+  border-bottom: 1px solid #b3b3b3;
+  height: 55px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.questionnaire.page .enum-container .enum-row .enum-answer-row .enum-answer-enum-container .enum-answer-col {
+  height: 55px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-weight: normal;
+  border-right: 1px solid #b3b3b3;
+  border-bottom: 1px solid #b3b3b3;
 }

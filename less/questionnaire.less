@@ -1,0 +1,135 @@
+.questionnaire {
+	.percent-complete {
+		font-family: "Roboto",Verdana;
+		color:@green;
+		font-size:20pt;
+		margin-top:2px;
+	}
+
+}
+
+.questionnaire.summary {
+	.summary-header {
+		margin-top:30px;
+	}
+
+	.description {
+		font-family: "Roboto", Verdana;
+		margin-top:20px;
+	}
+
+	.summary-box {
+		margin:20px 0;
+		border:2px solid @gray3;
+
+		.section-row.even {
+			background-color:@gray1;
+		}
+
+		.section-row {
+			font-family: "Roboto", Verdana;
+
+			.section-name {
+				padding:20px 0;
+				margin-top:5px;
+			}
+
+			.section-text {
+				margin-top:10px;
+				padding:20px 0;
+
+			}
+			.completion-status {
+				margin-top:10px;
+				padding:20px 0;
+				font-weight:bold;
+			}
+
+			.completion-status.NOT.COMPLETED {
+				color:@green;
+			}
+			.completion-status.NOT.STARTED {
+				color:@gray3;
+			}
+			.completion-status.COMPLETED {
+				color:@gray2;
+			}
+
+		}
+	}
+}
+
+.questionnaire.page {
+	.questionnaire-page-header {
+		h1 {
+			font-weight:normal;
+			margin-bottom:4px;
+		}
+		h2 {
+			font-size:16pt;
+		}
+	}
+	.page-sub-header {
+		.section-name {
+
+		}
+		.question-numbers {
+			color:@gray2;
+			font-style:italic;
+			font-size:14pt;
+		}
+	}
+	.question {
+		margin-top:10px;
+		padding-top:20px;
+
+		.text {
+			font-weight:bold;
+			margin-bottom:10px;
+		}
+	}
+
+	.actions {
+		border-top:1px solid @gray1;
+		margin-top: 20px;
+		padding-top:20px;
+	}
+
+	.enum-container {
+		.enum-row.first {
+			.enum-answer-heading {
+				border-top:1px solid @gray2;
+			}
+
+			.enum-answer-col {
+				border-top:1px solid @gray2;
+			}
+		}
+		.enum-row {
+
+			.enum-answer-row {
+				margin:0;
+
+				.enum-answer-heading {
+					background-color:@gray1;
+					border-left:1px solid @gray2;
+					border-right:1px solid @gray2;
+					border-bottom:1px solid @gray2;
+					height:55px;
+					padding-top:5px;
+					padding-bottom:5px;
+				}
+				.enum-answer-enum-container {
+					.enum-answer-col {
+						height:55px;
+						padding-top:5px;
+						padding-bottom:5px;
+						font-weight:normal;
+						border-right:1px solid @gray2;
+						border-bottom:1px solid @gray2;
+					}
+				}
+			}
+		}
+	}
+}

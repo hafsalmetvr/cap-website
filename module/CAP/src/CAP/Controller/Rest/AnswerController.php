@@ -129,7 +129,45 @@ class AnswerController extends AbstractRestfulController {
       $e->persist( $a );
     }
 
+    /* update the status for the question */
+    $cq = $e->getRepository("CAP\Entity\CustomerQuestion")->findOneBy( array('id' => $data['questionId'],
+                                                                             'customer' => $data['customerId'] ) );
+
+    $cq->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'COMPLETED') ) );
+    $e->persist($cq);
     $e->flush();
+
+    /* get the questionnaire_id */
+    $questionnaireId = $e->createQuery( "SELECT q.questionnaireId FROM CAP\Entity\Question q WHERE q.id = :questionId" )
+                         ->setParameter('questionId',$data['questionId'])
+                         ->getSingleScalarResult();
+
+    $logger->log( \Zend\Log\Logger::INFO, "questionnaire id: ".$questionnaireId );
+
+    /* update statuses for all sections */
+
+    $conn = $e->getConnection();
+    $sql = "select count(*) as count,s.id from customer_question cq join question q on q.id = cq.question_id join completion_status cs on cs.id = cq.completion_status_id join section s on s.id = q.section_id where cs.name != 'COMPLETED' AND cq.customer_id = " .$cq->getCustomer()->getId() ." AND q.questionnaire_id = $questionnaireId group by s.id";
+    $iterator = $conn->query($sql);
+
+    while (is_object($iterator) AND ($array = $iterator->fetch()) !== FALSE) {
+      $logger->log( \Zend\Log\Logger::INFO, $array);
+      if ($array['count'] == 0) {
+        /* set the completion status for the section to completed */
+      }
+      $total += $array['count'];
+    }
+
+    if ($total == 0) {
+      /* set the completion status for customer_questionnaire to COMPLETED */
+    }
+
+    /* determine the percent completed */
+    $sql = "select (select count(*) as completed_questions from customer_question cq join question q on q.id = cq.question_id join completion_status cs on cs.id = cq.completion_status_id where q.questionnaire_id = $questionnaireId  and cq.customer_id = ".$cq->getCustomer()->getId()." and cs.name = 'COMPLETED') / (select count(*) as total_questions from question where questionnaire_id = $questionnaireId ) * 100 as percent_complete";
+    $iterator = $conn->query($sql);
+    while (is_object($iterator) AND ($array = $iterator->fetch()) !== FALSE) {
+      $logger->log( \Zend\Log\Logger::INFO, $array);
+    }
 
     $viewArgs = array("success" => true);
 
