@@ -91,6 +91,11 @@ class CustomerSection {
         return $this;
     }
 
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
      /**
      * Set section
      *
@@ -129,5 +134,21 @@ class CustomerSection {
 
         return $this;
     }
+     /**
+     * Set completed
+     *
+     * @param  string $date
+     * @return CustomerQuestionnaire
+     */
+    public function setCompleted($date) {
+        $this->completed = $date;
+        return $this;
+    }
+
+
+    public function getCompleted() {
+        return $this->completed;
+    }
+
 
 }

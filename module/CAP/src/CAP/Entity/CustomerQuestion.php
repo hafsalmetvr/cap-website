@@ -97,6 +97,9 @@ class CustomerQuestion {
 
         return $this;
     }
+    public function getQuestion() {
+        return $this->question;
+    }
 
      /**
      * Set completionStatus
@@ -124,6 +127,22 @@ class CustomerQuestion {
         $this->created = $created;
 
         return $this;
+    }
+
+     /**
+     * Set completed
+     *
+     * @param  string $date
+     * @return CustomerQuestionnaire
+     */
+    public function setCompleted($date) {
+        $this->completed = $date;
+        return $this;
+    }
+
+
+    public function getCompleted() {
+        return $this->completed;
     }
 
 

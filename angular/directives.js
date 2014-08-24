@@ -28,7 +28,7 @@ directive('answerTypeSelect', ['$http',
   function($http) {
     return {
       restrict: 'E',
-      scope:{},
+      scope:{'percentComplete':'='},
       templateUrl: '/answer-type/select',
       link: function(scope, element, attr) {
         console.log('fetching a select answer type');
@@ -88,7 +88,7 @@ directive('answerTypeTextarea', ['$http',
   function($http) {
     return {
       restrict: 'E',
-      scope:{},
+      scope:{'percentComplete':'='},
       templateUrl: '/answer-type/textarea',
       link: function(scope, element, attr) {
         console.log('fetching a textarea answer type');
@@ -158,7 +158,7 @@ directive('answerTypeText', ['$http',
   function($http) {
     return {
       restrict: 'E',
-      scope:{},
+      scope:{'percentComplete':'='},
       templateUrl: '/answer-type/text',
       link: function(scope, element, attr) {
         console.log('fetching a text answer type');
@@ -227,7 +227,7 @@ directive('answerTypeMultiselect', ['$http', 'answer',
   function($http, answer) {
     return {
       restrict: 'E',
-      scope:{},
+      scope:{'percentComplete':'='},
       templateUrl: '/answer-type/multiselect',
       link: function(scope, element, attr) {
         console.log('fetching a multiselect answer type');
@@ -302,7 +302,7 @@ directive('answerTypeCheckbox', ['$http',
   function($http) {
     return {
       restrict: 'E',
-      scope:{},
+      scope:{'percentComplete':'='},
       templateUrl: '/answer-type/checkbox',
       link: function(scope, element, attr) {
         console.log('fetching a checkbox answer type');
@@ -376,7 +376,7 @@ directive('answerTypeCheckbox', ['$http',
 directive('answerTypeRadio', ['$http',
   function($http) {
     return {
-      scope:{},
+      scope:{'percentComplete':'='},
       restrict: 'E',
       templateUrl: '/answer-type/radio',
       link: function(scope, element, attr) {
@@ -448,7 +448,7 @@ directive('answerTypeRadio', ['$http',
 directive('answerTypeEnum', ['$http',
   function($http) {
     return {
-      scope:{},
+      scope:{"startQuestionNumber":"=","endQuestionNumber":"=","percentComplete":'='},
       restrict: 'E',
       templateUrl: '/answer-type/enum',
       link: function(scope, element, attr) {
@@ -456,7 +456,6 @@ directive('answerTypeEnum', ['$http',
         scope.success = false;
         scope.inProgress = false;
         scope.questionId = attr.questionId;
-
         var url = '/rest/answer/enum/'+attr.questionId;
         if (attr.customerId) {
           url += '/'+attr.customerId;
@@ -481,6 +480,7 @@ directive('answerTypeEnum', ['$http',
           }).success(function(data, status) {
             /* do something? */
             console.log(data);
+            scope.percentComplete = data.percentComplete;
           }).error(function(data, status) {
 
           });
@@ -492,15 +492,19 @@ directive('answerTypeEnum', ['$http',
           scope.inProgress = false;
           console.log(data);
           scope.answers = data.answers;
-          //scope.disabled = data.disabled;
-          scope.disabled = false;
+          scope.disabled = data.disabled;
+          scope.startQuestionNumber = scope.answers[0].answerNumber;
+          scope.endQuestionNumber = scope.answers[scope.answers.length-1].answerNumber;
+          scope.percentComplete = data.percentComplete;
+
+          console.log("start: "+scope.startQuestionNumber);
+          //scope.disabled = false;
           /* loop through the answers and set checked to true or false depending on customer answers */
           angular.forEach(scope.answers, function(a) {
-            console.log(a);
 
             /* figure out the enumColsClass: how many enums do we have? */
-            var totalCols = 12 //bootstrap total columns
-            var maxCols = 4; //no more than 4 columns (col-xs-3)
+            var totalCols = 10 //bootstrap total columns
+            var maxCols = 5; //no more than 12 columns (col-xs-1)
             if (a.answerEnums.length <= maxCols) {
               maxCols = a.answerEnums.length;
             } else {
@@ -520,7 +524,6 @@ directive('answerTypeEnum', ['$http',
                 }
               };
             }
-
             scope.enumColsClass = 'col-xs-'+ parseInt(Math.floor(totalCols/maxCols));
             if (data.customerAnswers[0]) {
               angular.forEach(data.customerAnswers, function(ca) {

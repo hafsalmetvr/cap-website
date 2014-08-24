@@ -17,7 +17,8 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
+        "mvlabs/mvlabs-snappy": "dev-master",
         "doctrine/common" : ">=2.1",
-          "coolcsn/csn-user": "dev-master"
+        //"coolcsn/csn-user": "dev-master"
     }
 }

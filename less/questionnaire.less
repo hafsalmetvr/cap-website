@@ -59,74 +59,101 @@
 	}
 }
 
-.questionnaire.page {
-	.questionnaire-page-header {
-		h1 {
-			font-weight:normal;
-			margin-bottom:4px;
-		}
-		h2 {
-			font-size:16pt;
-		}
-	}
-	.page-sub-header {
-		.section-name {
-
-		}
-		.question-numbers {
-			color:@gray2;
-			font-style:italic;
-			font-size:14pt;
-		}
-	}
-	.question {
-		margin-top:10px;
-		padding-top:20px;
-
-		.text {
-			font-weight:bold;
-			margin-bottom:10px;
-		}
-	}
-
-	.actions {
-		border-top:1px solid @gray1;
-		margin-top: 20px;
-		padding-top:20px;
-	}
-
-	.enum-container {
-		.enum-row.first {
-			.enum-answer-heading {
-				border-top:1px solid @gray2;
+#page {
+	margin-bottom:20px;
+	.questionnaire.page {
+		.questionnaire-page-header {
+			h1 {
+				font-weight:normal;
+				margin-bottom:4px;
 			}
-
-			.enum-answer-col {
-				border-top:1px solid @gray2;
+			h2 {
+				font-size:16pt;
 			}
 		}
-		.enum-row {
+		.page-sub-header {
+			.section-name {
 
-			.enum-answer-row {
-				margin:0;
+			}
+			.question-numbers {
+				color:@gray2;
+				font-style:italic;
+				font-size:14pt;
+			}
+		}
+		.question {
+			margin-top:10px;
+			padding-top:20px;
 
-				.enum-answer-heading {
-					background-color:@gray1;
-					border-left:1px solid @gray2;
-					border-right:1px solid @gray2;
-					border-bottom:1px solid @gray2;
-					height:55px;
-					padding-top:5px;
-					padding-bottom:5px;
+			.text {
+				font-weight:bold;
+				margin-bottom:10px;
+			}
+		}
+
+		.actions {
+			border-top:1px solid @gray1;
+			margin-top: 20px;
+			padding-top:20px;
+		}
+
+		.enum-container,.enum-heading {
+			.enum-grid {
+				.col-xs-2 {
+					width:20% !important;
 				}
-				.enum-answer-enum-container {
-					.enum-answer-col {
-						height:55px;
-						padding-top:5px;
-						padding-bottom:5px;
-						font-weight:normal;
+			}
+		}
+
+		.enum-heading {
+			.enum-answer-col-heading {
+				font-weight:bold;
+				font-size:.9em;
+				font-familt:"Roboto Condensed";
+			}
+		}
+
+		.enum-container {
+			.enum-row.first {
+				.enum-answer-heading {
+					border-top:1px solid @gray2;
+				}
+
+				.enum-answer-col {
+					border-top:1px solid @gray2;
+				}
+				.enum-answer-heading {
+					font-size: .9em;
+				}
+			}
+			.enum-row {
+
+				.enum-answer-row {
+					margin:0;
+
+					.enum-answer-heading {
+						background-color:@gray1;
+						border-left:1px solid @gray2;
 						border-right:1px solid @gray2;
 						border-bottom:1px solid @gray2;
+						height:75px;
+						padding-top:5px;
+						padding-bottom:5px;
+						font-size:.9em;
+					}
+					.enum-answer-enum-container {
+						.enum-answer-col {
+							height:75px;
+							padding-top:5px;
+							padding-bottom:5px;
+							font-weight:normal;
+							border-right:1px solid @gray2;
+							border-bottom:1px solid @gray2;
+
+							label {
+								margin-top:20px;
+							}
+						}
 					}
 				}
 			}

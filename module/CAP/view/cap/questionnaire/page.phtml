@@ -1,33 +1,49 @@
 <?php $this->headScript()->prependFile($this->basePath() . '/js/'. strtolower($this->identity()->getRole()->getName()) .'.min.js') ?>
-<div class="row" ng-controller="QuestionnairePageCtrl" ng-init="init(<?php echo $questionnaireId ?>,<?php echo $sectionNumber ?>,<?php echo $pageNumber ?>,<?php echo $customerId ?>)">
+<div id="page" class="row" ng-controller="QuestionnairePageCtrl" ng-init="init(<?php echo $questionnaireId ?>,<?php echo $sectionNumber ?>,<?php echo $pageNumber ?><?php echo $customerId ? ', '.$customerId : ''; ?>)">
   <div class="col-xs-10 col-xs-offset-1 questionnaire page">
     <div class="row questionnaire-page-header">
       <div class="col-xs-12">
         <h1 class="row">
         	<div class="col-xs-8"><?php echo $questionnaire->getName(); ?></div>
-        	<div class="col-xs-4 percent-complete text-right"><?php echo round($percentComplete); ?>% Completed</div>
+        	<div class="col-xs-4 percent-complete text-right ng-cloak"><span ng-model="percentComplete">[[percentComplete]]</span><span>% Complete</span></div>
         </h1>
         <h2 class="row page-sub-header">
         	<div class="col-xs-6 section-name">Section <?php echo $section->getSectionNumber(); ?>: <?php echo $section->getName(); ?></div>
         	<?php
+
         		$firstNum = $questions[0]->getQuestionNumber();
         		$last     = end($questions);
         		$lastNum  = $last->getQuestionNumber();
+
+        		/* special exception - if there's only 1 q and its an enum - then use the answer numbers */
+        		if ( ($questions[0]->getId() === $last->getId() ) && $last->getAnswerType() === 'ENUM') {
+        			/* angular will fill in the quetion numbers */
+        			$firstNum = "[[startQuestionNumber]]";
+        			$lastNum  = "[[endQuestionNumber]]";
+        		}
+
         		reset($questions);
         	?>
-        	<div class="col-xs-6 text-right question-numbers">Questions <?php echo $firstNum; ?> - <?php echo $lastNum; ?></div>
+        	<div class="col-xs-6 text-right question-numbers ng-cloak" >
+        		<span>Questions&nbsp;</span>
+        		<span ng-model="startQuestionNumber"><?php echo $firstNum; ?></span>
+        		<span>&nbsp;-&nbsp;</span>
+        		<span ng-model="endQuestionNumber"><?php echo $lastNum; ?></span>
+        	</div>
         </h2>
       </div>
     </div>
     <?php foreach ($questions as $question) { ?>
 	    <div class="row">
 	    	<div class="col-xs-12 question">
+	    		<?php if (!is_null($question->getQuestionText())) { ?>
 	    		<div class="row">
 	    			<div class="col-xs-12 text"><?php echo $question->getQuestionNumber(); ?>. <?php echo $question->getQuestionText(); ?></div>
 	    		</div>
+	    		<?php } ?>
 	    		<div class="row">
 	    			<div class="col-xs-12">
-	    				<answer-type-<?php echo $question->getAnswerType(); ?> class="answer" <?php if (isset($customer)) { echo 'customer-id="'.$customer->getId().'"'; }; ?> question-id="<?php echo $question->getId();?>" ></<?php echo $question->getAnswerType();?>>
+	    				<answer-type-<?php echo $question->getAnswerType(); ?> percent-complete="percentComplete" start-question-number="startQuestionNumber" end-question-number="endQuestionNumber" class="answer" <?php if (isset($customer)) { echo 'customer-id="'.$customer->getId().'"'; }; ?> question-id="<?php echo $question->getId();?>" ></<?php echo $question->getAnswerType();?>>
 	    			</div>
 	    		</div>
 	    	</div>

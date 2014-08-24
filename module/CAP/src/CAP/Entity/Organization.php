@@ -19,6 +19,10 @@ class Organization {
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+    public function getId() {
+        return $this->id;
+    }
+
 
     /**
      * @var string
@@ -26,7 +30,9 @@ class Organization {
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
-
+    public function getName() {
+        return $this->name;
+    }
     /**
      * @var \DateTime
      *

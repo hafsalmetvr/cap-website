@@ -71,6 +71,7 @@ class CustomerAnswer {
      */
     private $answerEnum;
 
+
      /**
      * Set customer
      *
@@ -108,6 +109,10 @@ class CustomerAnswer {
         $this->answerEnum = $answerEnum;
 
         return $this;
+    }
+    public function getAnswerEnum()
+    {
+        return $this->answerEnum;
     }
 
     /**

@@ -24,16 +24,17 @@ class AnswerController extends AbstractRestfulController {
 
     $viewArgs = array();
 
-    $e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $e        = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $qService = $this->getServiceLocator()->get( 'cap_questionnaire_service' );
+
 
     $viewArgs['question'] = $e->getRepository('CAP\Entity\Question')->find($qId);
-    $p = $this->checkPermissions($viewArgs['question']->getQuestionnaireId(), $cId);
+    $p = $qService->checkPermissions($viewArgs['question']->getQuestionnaireId(), $cId, $this->identity());
     if (!$p) {
       return new JsonModel();
     }
 
-
-    /* get a list of answers for a give question id */
+    /* get a list of answers for a given question id */
     $viewArgs['answers'] = $e->createQuery( "SELECT a FROM CAP\Entity\Answer a JOIN a.question q WHERE a.question = :questionId ORDER BY a.answerOrder" )
                                             ->setParameter('questionId',$qId)
                                             ->getResult( \Doctrine\ORM\Query::HYDRATE_ARRAY );
@@ -46,13 +47,9 @@ class AnswerController extends AbstractRestfulController {
                                               ->getResult( \Doctrine\ORM\Query::HYDRATE_ARRAY );
 
 
-
       if ($em) {
         /* load the enums on to the answers */
         foreach ($viewArgs['answers'] as $index => $a) {
-
-          $logger->log( \Zend\Log\Logger::INFO, $index );
-          $logger->log( \Zend\Log\Logger::INFO, $a );
 
           $viewArgs['answers'][$index]['answerEnums'] = array();
           foreach ($em as $enum) {
@@ -81,8 +78,19 @@ class AnswerController extends AbstractRestfulController {
         $e->persist($customerQuestion);
         $e->flush();
       }
+
+      /* if the section is complete its read only */
+      $customerSection = $e->getRepository('CAP\Entity\CustomerSection')->findOneBy(array('customer' => $cId, 'section' => $viewArgs['question']->getSection()->getId()));
+      $logger->log( \Zend\Log\Logger::INFO, "section completion status is: ".$customerSection->getCompletionStatus()->getName() );
+      if ($customerSection->getCompletionStatus()->getName() === "COMPLETED") {
+        $p = READ;
+        $logger->log( \Zend\Log\Logger::INFO, "section is complete so making this question read only" );
+      }
+
+
     }
 
+    $viewArgs['percentComplete'] = $qService->percentComplete($viewArgs['question']->getQuestionnaireId(), $cId, $e);
     $viewArgs['success'] = true;
     $viewArgs['disabled'] = ($p === READ);
     return new JsonModel($viewArgs);
@@ -100,7 +108,7 @@ class AnswerController extends AbstractRestfulController {
 
     $now = date("Y-m-d H:i:s");
     $e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
-
+    $qService = $this->getServiceLocator()->get( 'cap_questionnaire_service' );
 
     /* get all customer answers for this question id and customerid and delete them */
     $answers = $e->createQuery("SELECT ca FROM CAP\Entity\CustomerAnswer ca JOIN ca.answer a WHERE a.question = :questionId AND ca.customer = :customerId")
@@ -119,7 +127,7 @@ class AnswerController extends AbstractRestfulController {
       $a = new \CAP\Entity\CustomerAnswer;
       $a->setCustomer( $e->find( 'CAP\Entity\Customer', $data['customerId'] ) );
       $a->setAnswer( $e->find( 'CAP\Entity\Answer', $answerData['answerId'] ) );
-      if ($answerData['answerEnumId']) {
+      if (isset($answerData['answerEnumId'])) {
         $a->setAnswerEnum($e->find( 'CAP\Entity\AnswerEnum', $answerData['answerEnumId'] ) );
       }
       if ($answerData['answerText']) {
@@ -133,7 +141,23 @@ class AnswerController extends AbstractRestfulController {
     $cq = $e->getRepository("CAP\Entity\CustomerQuestion")->findOneBy( array('id' => $data['questionId'],
                                                                              'customer' => $data['customerId'] ) );
 
-    $cq->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'COMPLETED') ) );
+
+    /* if this question is ENUM then all answers must have an enum_id in order to be COMPLETE otherwise - NOT COMPLETED */
+    $statusToSet = 'COMPLETED';
+    if ($cq->getQuestion()->getAnswerType() == 'ENUM') {
+      /* make sure all the answers are answered */
+      foreach ($data['answers'] as $answerData) {
+        if (is_null($answerData['answerEnumId'])) {
+          $statusToSet = 'NOT COMPLETED';
+          break;
+        }
+      }
+    }
+    $cq->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => $statusToSet) ) );
+    if ($statusToSet === 'COMPLETED') {
+      $cq->setCompleted($now);
+    }
+
     $e->persist($cq);
     $e->flush();
 
@@ -147,120 +171,92 @@ class AnswerController extends AbstractRestfulController {
     /* update statuses for all sections */
 
     $conn = $e->getConnection();
-    $sql = "select count(*) as count,s.id from customer_question cq join question q on q.id = cq.question_id join completion_status cs on cs.id = cq.completion_status_id join section s on s.id = q.section_id where cs.name != 'COMPLETED' AND cq.customer_id = " .$cq->getCustomer()->getId() ." AND q.questionnaire_id = $questionnaireId group by s.id";
+    /* count of questions that are not complete, by section */
+    $sql = "select count(*) as count,cs.name, s.id from customer_question cq join question q on q.id = cq.question_id join completion_status cs on cs.id = cq.completion_status_id join section s on s.id = q.section_id where cq.customer_id = " .$cq->getCustomer()->getId() ." AND q.questionnaire_id = $questionnaireId group by cs.name, s.id";
     $iterator = $conn->query($sql);
 
+    /*
+     * - if all questions are completed then section should be completed
+     * - if all questions are NOT STARTED then section should be not started
+     * - if at least 1 question is NOT COMPLETED then section should be NOT COMPLETED
+     */
+
+    $sectionCountData = array();
     while (is_object($iterator) AND ($array = $iterator->fetch()) !== FALSE) {
-      $logger->log( \Zend\Log\Logger::INFO, $array);
-      if ($array['count'] == 0) {
-        /* set the completion status for the section to completed */
+      if (!isset($sectionCountData[$array['id']])) {
+        $sectionCountData[$array['id']] = array();
       }
-      $total += $array['count'];
+      $sectionCountData[$array['id']][$array['name']] = $array['count'];
     }
 
-    if ($total == 0) {
-      /* set the completion status for customer_questionnaire to COMPLETED */
+    $sectionStatusCount = array('NOT COMPLETED' => 0, 'NOT STARTED' => 0, 'COMPLETED' => 0);
+    foreach ($sectionCountData as $sectionId => $counts) {
+      if (!isset($counts['NOT COMPLETED'])) {
+        $counts['NOT COMPLETED'] = 0;
+      }
+
+      if (!isset($counts['NOT STARTED'])) {
+        $counts['NOT STARTED'] = 0;
+      }
+
+      if (!isset($counts['COMPLETED'])) {
+        $counts['COMPLETED'] = 0;
+      }
+
+
+      $sectionStatusToSet = 'NOT COMPLETED';
+      /* if there is at least 1 not completed uestion */
+      if ( ($counts['NOT COMPLETED'] == 0) && ($counts['NOT STARTED'] == 0) ) {
+        /* all questions in this section are COMPLETED */
+        $sectionStatusToSet = 'COMPLETED';
+        $sectionStatusCount['COMPLETED']++;
+      } elseif ( ($counts['NOT COMPLETED'] == 0) && ($counts['COMPLETED'] == 0) ) {
+        /* all questions are NOT STARTED */
+        $sectionStatusToSet = 'NOT STARTED';
+        $sectionStatusCount['NOT STARTED']++;
+      } else {
+        $sectionStatusCount['NOT COMPLETED']++;
+      }
+
+      /* set section status */
+      $cs = $e->getRepository("CAP\Entity\CustomerSection")->findOneBy( array('id' => $sectionId,
+                                                                              'customer' => $data['customerId'] ) );
+
+      $cs->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => $sectionStatusToSet) ) );
+      if ($sectionStatusToSet === 'COMPLETED') {
+        $cs->setCompleted($now);
+      }
+
+
+      $e->persist($cs);
     }
 
-    /* determine the percent completed */
-    $sql = "select (select count(*) as completed_questions from customer_question cq join question q on q.id = cq.question_id join completion_status cs on cs.id = cq.completion_status_id where q.questionnaire_id = $questionnaireId  and cq.customer_id = ".$cq->getCustomer()->getId()." and cs.name = 'COMPLETED') / (select count(*) as total_questions from question where questionnaire_id = $questionnaireId ) * 100 as percent_complete";
-    $iterator = $conn->query($sql);
-    while (is_object($iterator) AND ($array = $iterator->fetch()) !== FALSE) {
-      $logger->log( \Zend\Log\Logger::INFO, $array);
+    /* questionnaire status */
+    $questionnaireStatusToSet = 'NOT COMPLETED';
+    if ( ($sectionStatusCount['NOT COMPLETED'] == 0) && ($sectionStatusCount['COMPLETED'] == 0) ) {
+      /* all of the sections are NOT STARTED */
+      $questionnaireStatusToSet = 'NOT STARTED';
+    } elseif (($sectionStatusCount['NOT COMPLETED'] == 0) && ($sectionStatusCount['NOT STARTED'] == 0)) {
+      /* all sections are completed */
+      $questionnaireStatusToSet = 'COMPLETED';
     }
+    /* set section status */
+    $cqr = $e->getRepository("CAP\Entity\CustomerQuestionnaire")->findOneBy( array('id' => $questionnaireId,
+                                                                            'customer' => $data['customerId'] ) );
+
+    $cqr->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => $questionnaireStatusToSet) ) );
+    if ($questionnaireStatusToSet === 'COMPLETED') {
+      $cqr->setCompleted($now);
+    }
+
+    $e->persist($cqr);
+
+    $e->flush();
 
     $viewArgs = array("success" => true);
+    $viewArgs['percentComplete'] = $qService->percentComplete($questionnaireId, $cq->getCustomer()->getId(), $e);
 
     return new JsonModel($viewArgs);
-  }
-
-  /* read or write privs? */
-  private function checkPermissions($qId, $cId) {
-    $logger        = $this->getServiceLocator()->get( 'Log\App' );
-    $logger->log( \Zend\Log\Logger::INFO, "check permissions on questionnaire" );
-
-    /* check the session for permission first */
-    $session = new Container('user');
-    if (!isset($session->permissions)) {
-      $session->permissions = array();
-    } else {
-      if (isset($session->permissions[$qId]) ) {
-        $logger->log( \Zend\Log\Logger::INFO, "session says " . $session->permissions[$qId]);
-        return $session->permissions[$qId];
-      }
-
-    }
-
-
-    /* scenarios:
-     * - Admin can view
-     * - parent customer of customer who owns it can view
-     * - customer who owns it can view
-     */
-    $e = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-    /* check if this logged in user owns this questionnaire */
-
-    $cqs = array();
-    if (isset($cId)) {
-      $cqs = $e->createQuery("SELECT cq FROM CAP\Entity\CustomerQuestionnaire cq WHERE cq.questionnaire = :questionnaireId AND cq.customerId = :customerId")
-               ->setParameter("questionnaireId", $qId)
-               ->setParameter("customerId", $cId)
-               ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-
-      if (!isset($cqs[0])) {
-        /* there is a customer passed in but it is not assigned to this questionnaire */
-        $session->permissions[$qId] = false;
-        return false;
-      }
-
-      /* got here? then the customer is assigned the questionnaire */
-
-      /* if the customer who is assigned the questionnaire is the same person who is logged in */
-      if ($cId === $this->identity()->getId()) {
-        /* i can only WRITE if its not completed */
-        if ($cqs[0]->getCompletionStatus()->getName() === "COMPLETED") {
-          $session->permissions[$qId] = READ;
-          return READ;
-        } else {
-          $session->permissions[$qId] = WRITE;
-          return WRITE;
-        }
-      }
-
-
-      /* check if the logged in user is the parent of this customer */
-      $ch = $e->getRepository('CAP\Entity\CustomerHierarchy')->findOneBy(array('parentCustomer' => $this->identity()->getId(),
-                                                                               'childCustomer'  => $cId));
-      /* this logged in user is the parent customer its ok to view */
-      if ($ch) {
-        $session->permissions[$qId] = READ;
-        return READ;
-      }
-
-    }
-
-    /* no customer? does this logged in user own it? */
-    $cq = $e->getRepository("\CAP\Entity\CustomerQuestionnaire")->findOneBy(array('questionnaire' => $qId, 'customer' => $this->identity()->getId()));
-    if ($cq) {
-      /* i own it write if its not completed otherwise read only */
-      if ($cq->getCompletionStatus()->getName() === "COMPLETED") {
-        $session->permissions[$qId] = READ;
-        return READ;
-      } else {
-        $session->permissions[$qId] = WRITE;
-        return WRITE;
-      }
-    }
-
-
-    /* still here? only admin can view */
-    if ($this->identity()->getRole()->getName() == 'Admin') {
-      $session->permissions[$qId] = READ;
-      return READ;
-    }
-
-    $session->permissions[$qId] = false;
-    return false;
   }
 
 }

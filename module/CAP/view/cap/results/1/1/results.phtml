@@ -1,0 +1,14 @@
+<?php
+
+	$this->headScript()->prependFile($this->basePath() . '/js/'. strtolower($this->identity()->getRole()->getName()) .'.min.js');
+
+	$tmplPath = "cap/results/".$organizationId."/".$questionnaireId."/";
+
+	echo $this->partial($tmplPath.'cover');
+	echo $this->partial($tmplPath.'introduction');
+	echo $this->partial($tmplPath.'summary');
+	/* for each section, render the section partial */
+	echo $this->partial($tmplPath.'5-5');
+
+
+?>

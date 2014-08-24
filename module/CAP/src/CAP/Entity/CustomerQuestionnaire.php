@@ -65,6 +65,31 @@ class CustomerQuestionnaire {
      */
      protected $questionnaireId;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="completed", nullable=true)
+     */
+    private $completed;
+
+
+     /**
+     * Set completed
+     *
+     * @param  string $date
+     * @return CustomerQuestionnaire
+     */
+    public function setCompleted($date) {
+        $this->completed = $date;
+        return $this;
+    }
+
+
+    public function getCompleted() {
+        return $this->completed;
+    }
+
+
      /**
      * Get customerid
      *

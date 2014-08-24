@@ -288,6 +288,8 @@ return array(
             'Zend\Authentication\AuthenticationService' => 'CAP\Service\Factory\AuthenticationFactory',
             'mail.transport'                            => 'CAP\Service\Factory\MailTransportFactory',
             'cap_module_options'                        => 'CAP\Service\Factory\ModuleOptionsFactory',
+            'cap_questionnaire_service'                 => 'CAP\Service\Factory\QuestionnaireFactory',
+            'cap_results_algorithm_1'                   => 'CAP\Service\Factory\OrbitalResultsAlgorithmFactory'
         ),
         'aliases' => array(
             'translator' => 'MvcTranslator',

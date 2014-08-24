@@ -185,6 +185,7 @@ class ModuleManager implements ModuleManagerInterface
         });
 
         $module = $result->last();
+
         if (!is_object($module)) {
             throw new Exception\RuntimeException(sprintf(
                 'Module (%s) could not be initialized.',
