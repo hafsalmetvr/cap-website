@@ -644,62 +644,6 @@
         }
     },
     {
-        "name": "mvlabs/mvlabs-snappy",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/mvlabs/MvlabsSnappy.git",
-            "reference": "2bf39dcf633942e1d7528f4f6eb81977e585fdc6"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/mvlabs/MvlabsSnappy/zipball/2bf39dcf633942e1d7528f4f6eb81977e585fdc6",
-            "reference": "2bf39dcf633942e1d7528f4f6eb81977e585fdc6",
-            "shasum": ""
-        },
-        "require": {
-            "knplabs/knp-snappy": "0.1.0",
-            "php": ">=5.3.3",
-            "zendframework/zendframework": "2.*"
-        },
-        "time": "2014-04-29 08:48:52",
-        "type": "zf2-module",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "MvlabsSnappy": "src/"
-            },
-            "classmap": [
-                "./Module.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Diego Drigani",
-                "email": "d.drigani@mvassociati.it",
-                "homepage": "http://www.mvassociati.it/en/"
-            }
-        ],
-        "description": "MvlabsSnappy is a ZF2 module that allow easy to thumbnail, snapshot or PDF generation from a url or a html page using Snappy PHP (5.3+) wrapper for the  wkhtmltopdf/wkhtmltoimage conversion utility.",
-        "homepage": "https://github.com/mvlabs/MvlabsSnappy.git",
-        "keywords": [
-            "MvLabs",
-            "MvaAssociati",
-            "pdf",
-            "snappy",
-            "snapshot",
-            "thumbnail",
-            "wkhtmltoimage",
-            "wkhtmltopdf",
-            "zf2"
-        ]
-    },
-    {
         "name": "doctrine/dbal",
         "version": "v2.4.2",
         "version_normalized": "2.4.2.0",
@@ -1070,6 +1014,62 @@
             "doctrine",
             "module",
             "orm",
+            "zf2"
+        ]
+    },
+    {
+        "name": "mvlabs/mvlabs-snappy",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mvlabs/MvlabsSnappy.git",
+            "reference": "2bf39dcf633942e1d7528f4f6eb81977e585fdc6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mvlabs/MvlabsSnappy/zipball/2bf39dcf633942e1d7528f4f6eb81977e585fdc6",
+            "reference": "2bf39dcf633942e1d7528f4f6eb81977e585fdc6",
+            "shasum": ""
+        },
+        "require": {
+            "knplabs/knp-snappy": "0.1.0",
+            "php": ">=5.3.3",
+            "zendframework/zendframework": "2.*"
+        },
+        "time": "2014-04-29 08:48:52",
+        "type": "zf2-module",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "MvlabsSnappy": "src/"
+            },
+            "classmap": [
+                "./Module.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Diego Drigani",
+                "email": "d.drigani@mvassociati.it",
+                "homepage": "http://www.mvassociati.it/en/"
+            }
+        ],
+        "description": "MvlabsSnappy is a ZF2 module that allow easy to thumbnail, snapshot or PDF generation from a url or a html page using Snappy PHP (5.3+) wrapper for the  wkhtmltopdf/wkhtmltoimage conversion utility.",
+        "homepage": "https://github.com/mvlabs/MvlabsSnappy.git",
+        "keywords": [
+            "MvLabs",
+            "MvaAssociati",
+            "pdf",
+            "snappy",
+            "snapshot",
+            "thumbnail",
+            "wkhtmltoimage",
+            "wkhtmltopdf",
             "zf2"
         ]
     }
