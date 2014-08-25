@@ -13,14 +13,14 @@
                     <div class="col-xs-7">Name</div>
                 </div>
 
-                <div ng-class="{1:'even'}[$index%2]" class="row table-list-row" ng-repeat="saq in saqList track by $index">
+                <div ng-cloak ng-class="{1:'even'}[$index%2]" class="row table-list-row" ng-repeat="saq in saqList track by $index">
                     <div class="col-xs-1 text">[[$index+1]].</div>
                     <div class="col-xs-7 text">[[saq.name]]</div>
                     <div class="actions text-right col-xs-4">
                         <?php
                             $link = "/questionnaire/[[saq.id]]";
                             if (isset($mentee)) {
-                                $link .= '/view/'.$mentee->getId();
+                                $link .= '/summary/'.$mentee->getId();
                             }
                         ?>
                         <a ng-href="<?php echo $link; ?>" class="action-link">

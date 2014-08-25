@@ -27,7 +27,7 @@ class QuestionnaireController extends AbstractActionController {
 		/* this questionnaire must be assigned to the person who is logged in else redirect to view */
     $qId = $this->params()->fromRoute('questionnaireId');
     $cId = $this->params()->fromRoute('customerId');
-
+		$logger->log( \Zend\Log\Logger::INFO, "qId: ".$qId." cust: ".$cId );
     /* check if this logged in person has access (TODO: make this a service) */
     $p = $qService->checkPermissions($qId, $cId, $this->identity());
 		$logger->log( \Zend\Log\Logger::INFO, $p );

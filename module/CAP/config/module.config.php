@@ -209,6 +209,16 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
+                    'summary' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/summary/[:customerId]',
+                            'defaults' => array(
+                                'controller' => 'CAP\Controller\Questionnaire',
+                                'action' => 'index'
+                            ),
+                        ),
+                    ),
                     'view' => array(
                         'type'    => 'segment',
                         'options' => array(

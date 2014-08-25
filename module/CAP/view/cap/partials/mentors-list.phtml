@@ -13,7 +13,7 @@
                     <div class="col-xs-7">Name</div>
                 </div>
 
-                <div ng-class="{1:'even'}[$index%2]" class="row table-list-row" ng-repeat="mentor in mentors track by $index">
+                <div ng-cloak ng-class="{1:'even'}[$index%2]" class="row table-list-row" ng-repeat="mentor in mentors track by $index">
                     <div class="col-xs-1 text">[[$index+1]].</div>
                     <div class="col-xs-7 text">[[mentor.name]]</div>
                     <div class="actions text-right col-xs-4">
@@ -64,7 +64,7 @@
                 <li class="arrow unavailable">
                     <a href="" ng-click="select_mentor_page(-1)">&laquo;</a>
                 </li>
-                <li ng-repeat="page in range(mentor_pages)" ng-class="getClass($index+1)">
+                <li ng-cloak ng-repeat="page in range(mentor_pages)" ng-class="getClass($index+1)">
                     <a href="" ng-click="select_mentor_page($index+1)">[[$index+1]]</a>
                 </li>
                 <!-- <li class="unavailable">
