@@ -38,7 +38,7 @@ class MentorController extends AbstractRestfulController {
 		if ($this->identity()->getRole()->getName() !== "Admin") {
 	    $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')
 	    										->findOneBy(array('parentCustomer' => $id,
-	    																			'childCustomerd' => $this->identity()->getId()));
+	    																			'childCustomerId' => $this->identity()->getId()));
 	    if (!$ch) {
 				return new JsonModel();
 	    }
@@ -62,15 +62,37 @@ class MentorController extends AbstractRestfulController {
 		}
 
 
-		return new JsonModel(array('mentor' => array('id' => $mentor->getId(),
-																								 'name' => $mentor->getName(),
-																								 'email' => $mentor->getEmail(),
-																								 'title' => $mentor->getTitle(),
-																								 'status' => $mentor->getStatus()->getName(),
-																								 'phoneNumber' => $mentor->getPhoneNumber()
-																								 ),
-															 'mentees' => $mentees));
+    if ( $this->identity()->getRole()->getName() === 'Mentee') {
 
+      /* get mentors notes on this mentee */
+      $myNotes = $entityManager->createQuery("SELECT cn.id, cn.customerId, cn.note, cn.name, cn.created, nm.share FROM CAP\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = :menteeId and nm.customer = :mentorId")
+                               ->setParameter('mentorId', $id)
+                               ->setParameter('menteeId', $this->identity()->getId())
+                               ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+
+      /* get mentee notes shared with this mentor */
+      $sharedNotes = $entityManager->createQuery("SELECT cn.id, cn.customerId, cn.note, cn.name, cn.created, nm.share FROM CAP\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = :mentorId and nm.customer = :menteeId and nm.share = TRUE")
+                                   ->setParameter('mentorId', $id)
+                                   ->setParameter('menteeId', $this->identity()->getId())
+                                   ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
+
+
+		$modelArgs = array('mentor' => array('id' => $mentor->getId(),
+																				 'name' => $mentor->getName(),
+																				 'email' => $mentor->getEmail(),
+																				 'title' => $mentor->getTitle(),
+																				 'status' => $mentor->getStatus()->getName(),
+																				 'phoneNumber' => $mentor->getPhoneNumber()
+																				 ),
+											 'mentees' => $mentees,
+                      );
+
+    $modelArgs['myNotes']     = isset($myNotes) ? $myNotes : null;
+    $modelArgs['sharedNotes'] = isset($sharedNotes) ? $sharedNotes : null;
+
+
+    return new JsonModel($modelArgs);
 	}
 
 	/* will return a list of mentors that belong to the logged in user (or all mentors if Admin) if key is passed in the body it will filter by key */

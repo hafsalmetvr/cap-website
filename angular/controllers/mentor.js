@@ -43,7 +43,7 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 			console.log(note);
 			$scope.createInProgress = true;
 
-			$http.post('/rest/note/'+note.id,{'note':note,'customerId':$scope.menteeId}).success(function(data,staus) {
+			$http.post('/rest/note/'+note.id,{'note':note,'customerId':$scope.menteeId}).success(function(data,status) {
 	    	$scope.createInProgress = false;
 	    	console.log(data);
 	    	if (data.success) {
@@ -68,7 +68,7 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 			$scope.inProgress = {'myNotes': {}};
 			$scope.inProgress['myNotes'][note.noteIdx] = true;
 
-			$http.put('/rest/note/'+note.id,note).success(function(data,staus) {
+			$http.put('/rest/note/'+note.id,note).success(function(data,status) {
 	    	$scope.inProgress = false;
 	    	console.log(data);
 	    	if (data.success) {

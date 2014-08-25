@@ -401,7 +401,7 @@ CREATE TABLE `customer_note_map` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_note_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `shared` boolean DEFAULT FALSE,
+  `share` boolean DEFAULT FALSE,
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
