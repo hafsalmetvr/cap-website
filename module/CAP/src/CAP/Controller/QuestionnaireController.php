@@ -342,6 +342,9 @@ class QuestionnaireController extends AbstractActionController {
     $algorithmServiceAlias = 'cap_results_algorithm_'.$organizationId;
     $algorithm = $this->getServiceLocator()->get($algorithmServiceAlias);
     $viewArgs['results'] = $algorithm->compute($qId, $customer);
+
+		$logger->log( \Zend\Log\Logger::INFO, $viewArgs['top-5'] );
+
     $viewArgs['organizationId'] = $organizationId;
     $viewArgs['questionnaireId'] = $qId;
 
@@ -356,7 +359,7 @@ class QuestionnaireController extends AbstractActionController {
 
 	public function PdfAction() {
 
-
+		$logger        = $this->getServiceLocator()->get( 'Log\App' );
 		$qService      = $this->getServiceLocator()->get( 'cap_questionnaire_service' );
 		$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
@@ -409,7 +412,7 @@ class QuestionnaireController extends AbstractActionController {
     $viewRenderer = $this->serviceLocator->get('view_manager')->getRenderer();
 
     $layoutViewModel = $this->layout();
-    //$layoutViewModel->setTemplate('layout/pdf-layout');
+    $layoutViewModel->setTemplate('layout/pdf-layout');
 
 		$viewModel = new ViewModel($viewArgs);
 		$template = 'cap/results/'.$organizationId.'/'.$qId.'/results.phtml';
@@ -420,7 +423,6 @@ class QuestionnaireController extends AbstractActionController {
     ));
 
     $htmlOutput = $viewRenderer->render($layoutViewModel);
-
     $output = $this->serviceLocator->get('mvlabssnappy.pdf.service')->getOutputFromHtml($htmlOutput);
 
     $response = $this->getResponse();

@@ -1,4 +1,4 @@
-<div class="row 5-5-report">
+<div class="row top-report">
 	<div class="col-xs-12">
 		<div class="row">
 			<div class="col-xs-12">
@@ -7,13 +7,27 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
-				<h4>Top 5 Development Needs</h4>
+				<h3>Top 5 Development Needs</h3>
 			</div>
 		</div>
+		<?php foreach ($results['bottom-5'] as $ary) { ?>
+			<div class="row top-list">
+				<div class="col-xs-3"><?php echo ucwords(strtolower($ary['section']['name'])) ?></div>
+				<div class="col-xs-7"><?php echo $ary['answer']['answerNumber'].". ".$ary['answer']['answerText'];?></div>
+				<div class="col-xs-2 text-center"><?php echo number_format($ary['score'], 1) ?></div>
+			</div>
+		<?php } ?>
 		<div class="row">
 			<div class="col-xs-12">
-				<h4>Top 5 Strengths</h4>
+				<h3>Top 5 Strengths</h3>
 			</div>
 		</div>
+		<?php foreach ($results['top-5'] as $ary) { ?>
+			<div class="row top-list">
+				<div class="col-xs-3"><?php echo ucwords(strtolower($ary['section']['name'])) ?></div>
+				<div class="col-xs-7"><?php echo $ary['answer']['answerNumber'].". ".$ary['answer']['answerText'];?></div>
+				<div class="col-xs-2 text-center"><?php echo number_format($ary['score'],1) ?></div>
+			</div>
+		<?php } ?>
 	</div>
 </div>

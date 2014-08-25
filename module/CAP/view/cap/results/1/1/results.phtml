@@ -1,14 +1,25 @@
 <?php
 
 	$this->headScript()->prependFile($this->basePath() . '/js/'. strtolower($this->identity()->getRole()->getName()) .'.min.js');
+	$this->headLink()->appendStylesheet($this->basePath() . '/css/pdf-style.css');
+
+
+?>
+<div class="row">
+	<div class="col-xs-10 col-xs-offset-1">
+
+<?php
+
 
 	$tmplPath = "cap/results/".$organizationId."/".$questionnaireId."/";
 
 	echo $this->partial($tmplPath.'cover');
 	echo $this->partial($tmplPath.'introduction');
 	echo $this->partial($tmplPath.'summary');
-	/* for each section, render the section partial */
+	echo $this->partial($tmplPath.'sections');
 	echo $this->partial($tmplPath.'5-5');
 
 
 ?>
+	</div>
+</div>

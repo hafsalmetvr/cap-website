@@ -19,6 +19,7 @@
         "zendframework/zendframework": "2.3.*",
         "mvlabs/mvlabs-snappy": "dev-master",
         "doctrine/common" : ">=2.1",
-        //"coolcsn/csn-user": "dev-master"
+        "doctrine/doctrine-module":">=0.8.0",
+        "doctrine/doctrine-orm-module":">=0.8.0"
     }
 }

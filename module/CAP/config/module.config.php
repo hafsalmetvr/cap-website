@@ -245,6 +245,16 @@ return array(
                             ),
                         ),
                     ),
+                    'pdf' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/pdf[/:customerId]',
+                            'defaults' => array(
+                                'controller' => 'CAP\Controller\Questionnaire',
+                                'action' => 'pdf'
+                            ),
+                        ),
+                    ),
                 ),
                 'may_terminate' => true,
             ),

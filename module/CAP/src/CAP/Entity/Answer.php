@@ -65,5 +65,11 @@ class Answer {
      */
     private $question;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="question_id", type="integer", length=255, nullable=false)
+     */
 
+    private $questionId;
 }
