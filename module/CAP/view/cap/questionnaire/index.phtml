@@ -44,7 +44,7 @@
                                     <div class="section-text text-center"><?php echo $sectionData[$section->getSectionNumber()]['completedQuestionCount'] ." of ".$sectionData[$section->getSectionNumber()]['questionCount'] . ' questions completed.' ?></div>
                                 </div>
 	        					<div class="col-xs-4">
-	        						<div class="text-center completion-status <? php echo $sectionData[$section->getSectionNumber()]['completionStatus']; ?>">
+	        						<div class="text-center completion-status <?php echo $sectionData[$section->getSectionNumber()]['completionStatus']; ?>">
 	        							<?php if ($sectionData[$section->getSectionNumber()]['completionStatus'] === "COMPLETED") { ?>
 	        								<i class="fa fa-check-circle-o green"></i>
 	        							<?php } ?>
