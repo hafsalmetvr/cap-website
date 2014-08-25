@@ -1,0 +1,258 @@
+/* @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400italic,700italic,400,700); */
+/* @import url(http://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic); */
+
+@import "../bower_components/bootstrap/less/bootstrap.less";
+@import "../bower_components/components-font-awesome/less/font-awesome.less";
+
+@import "cap-variables.less";  // Modify this for custom colors, font-sizes, etc
+
+
+h2 {
+	padding:20px 0;
+}
+
+
+.footer-chart-heading {
+	position:relative;
+	right:23%;
+	top:15px;
+}
+.footer-chart {
+	margin-right:13% !important;
+	height:40px;
+	width:10%;
+	.chart-scale {
+		height:20px;
+		.chart-heading-space {
+			height:20px;
+		}
+
+		.chart-columns {
+			.chart-col-line {
+				height:20px;
+			}
+		}
+		.chart-label-space {
+			height: 10px;
+		}
+		.chart-labels {
+			right:-3px;
+			font-weight:bold;
+			font-size:.8em;
+			.chart-label {
+				height:16px;
+			}
+		}
+	}
+	.chart-bars {
+		top:2px;
+		height:20px;
+		.chart-row {
+			padding:10px 0;
+		}
+	}
+
+}
+
+.chart-large {
+	height:270px;
+	width:80%;
+	.chart-scale {
+		height:200px;
+		.chart-heading-space {
+			height:200px;
+		}
+
+		.chart-columns {
+			.chart-col-line {
+				height:200px;
+			}
+		}
+		.chart-label-space {
+			height: 20px;
+		}
+		.chart-labels {
+			right:-4px;
+
+			.chart-label {
+				height:20px;
+				margin-top:10px;
+			}
+		}
+	}
+	.chart-bars {
+		height:220px;
+		.chart-row {
+			padding:20px 0;
+		}
+	}
+}
+
+.chart-small {
+	width:10%;
+}
+
+.chart {
+	margin:auto;
+	position:relative;
+	.chart-scale {
+		width:80%;
+		margin-left:10%;
+		position:absolute;
+
+		.chart-heading-space {
+			width:30%;
+		}
+
+		.chart-columns {
+			width:70%;
+
+			.chart-col-line {
+				width:20%;
+				float:left;
+				border-right:1px solid @gray3;
+			}
+		}
+		.chart-label-space {
+			width:30%;
+		}
+
+		.chart-labels {
+			width:70%;
+			position:relative;
+
+			.chart-label {
+				width:20%;
+				float:left;
+				text-align:right;
+			}
+		}
+	}
+
+	.chart-bars {
+		width:80%;
+		margin:auto;
+		position:relative;
+
+		.chart-row {
+			.chart-bar-heading {
+				width:30%;
+				font-weight: bold;
+			}
+
+			.chart-bar {
+				width:70%;
+				.bar {
+					border:1px solid @gray3;
+				}
+			}
+		}
+	}
+}
+
+.summary {
+	margin-top: 50px;
+}
+
+.section {
+	margin-top:50px;
+
+	.footer-chart-container {
+		margin:20px 0;
+		.footer-chart-heading {
+			margin-right:0% !important;
+		}
+		.footer-chart {
+			margin-right: 10% !important;
+		}
+	}
+
+	.section-content-container {
+		border:1px solid @gray3;
+
+		h2 {
+			padding:20px 0 0;
+		}
+
+		h3 {
+			margin:0 0 20px 0;
+			color:blue;
+		}
+
+		.answer-container {
+			height:800px;
+
+			position:relative;
+			.chart-scale {
+				position: absolute;
+				width:100%;
+			}
+			.answer-col-space {
+				width:40%;
+				height:800px;
+			}
+			.answer-columns {
+				width:55%;
+				height:600%;
+				.answer-col {
+					float:left;
+					border-right:1px solid @gray3;
+					height:800px;
+					width:20%;
+				}
+			}
+			.answer-content {
+				height:800px;
+			}
+			.answer {
+				position:relative; /* take this out if you want the lines in front of the bars */
+
+				.answer-heading {
+					width:40%;
+					padding:20px 40px 20px 10px;
+				}
+				.answer-bar-container {
+					width:55%;
+					.answer-bar {
+						margin-top:20px;
+						height:20px;
+						background-color:@gray2;
+						border:1px solid @gray3;
+					}
+				}
+			}
+			.answer-labels-container {
+				position:relative;
+				right:-4px;
+				margin-top:10px;
+				.answer-label-space {
+					width:40%;
+					height:40px;
+				}
+				.answer-labels {
+					width:55%;
+					height:40px;
+					.answer-label {
+						width:20%;
+						float:left;
+					}
+				}
+			}
+			.answer-key {
+				padding:20px;
+			}
+		}
+	}
+}
+
+.section-writeup {
+	margin-top:50px;
+}
+
+.top-report {
+	margin-top:50px;
+	margin-bottom:50px;
+	.top-list {
+		padding:10px 0;
+	}
+}
