@@ -45,6 +45,9 @@ class QuestionnaireService {
 	}
 
   public function percentComplete($questionnaireId, $customerId) {
+  	if (!$customerId) {
+  		return 0;
+  	}
 		$e      = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
     $logger = $this->getServiceLocator()->get( 'Log\App' );
     $conn   = $e->getConnection();
