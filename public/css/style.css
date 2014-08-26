@@ -7922,21 +7922,28 @@ nav .navbar-header {
   font-family: 'Roboto Condensed', Tahoma;
 }
 nav .navbar-header .navbar-brand {
+  line-height: 50px;
+  height: 60px;
   color: #ffffff;
   font-size: 1.5em;
+  display: block;
+  padding: 5px;
+}
+nav .navbar-header .navbar-brand img {
+  margin: 0 10px;
 }
 nav .navbar-logged-in-user-info {
   color: #ffffff;
   font-size: 1.5em;
   font-family: "Roboto Condensed", Tahoma;
   font-weight: normal;
-  line-height: 48px;
+  line-height: 60px;
 }
 nav .hover-menu-container .hover-menu-toggle {
   color: #b3b3b3;
-  height: 50px;
+  height: 60px;
   width: 50px;
-  line-height: 50px;
+  line-height: 60px;
   text-align: center;
   display: block;
   margin-left: 20px;
@@ -8113,6 +8120,23 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
 #page .questionnaire.page .enum-container .enum-row .enum-answer-row .enum-answer-enum-container .enum-answer-col label {
   margin-top: 20px;
 }
+#footer {
+  position: fixed;
+  bottom: 0;
+  background-color: #333333;
+  margin: 20px 0 0 0;
+  padding: 10px 0;
+  width: 100%;
+}
+#footer img {
+  height: 30px;
+}
+#footer .powered-by {
+  height: 30px;
+  line-height: 30px;
+  color: #f2f2f2;
+  margin-right: 20px;
+}
 #overlay.overlay {
   display: block;
   position: fixed;
@@ -8125,7 +8149,7 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   background-color: #ffffff;
   opacity: 0.85;
   filter: alpha(opacity=85);
-  z-index: 1000;
+  z-index: 1001;
 }
 #overlay.overlay .overlay-loading {
   text-align: center;
