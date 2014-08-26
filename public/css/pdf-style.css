@@ -7736,6 +7736,11 @@ button.close {
 h2 {
   padding: 20px 0;
 }
+.back-to-top {
+  display: block;
+  padding: 20px 0;
+  font-size: 1.3em;
+}
 .footer-chart-heading {
   position: relative;
   right: 23%;

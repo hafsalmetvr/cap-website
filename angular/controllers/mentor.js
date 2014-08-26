@@ -25,7 +25,9 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 	function($scope, $element, $http, $timeout, $cookies, customer) {
 		/* can only edit my note */
 		$scope.createNoteModal = function() {
-			$scope.modal = {};
+			$scope.modal = {
+				'shareWith' : 'mentee'
+			};
 		}
 
 		$scope.editNoteModal = function(idx) {
@@ -33,6 +35,7 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 			$scope.modal = {
 				'noteIdx':idx,
 				'note': note,
+				'shareWith' : 'mentee'
 			};
 
 		}
@@ -91,6 +94,7 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 				'noteIdx':idx,
 				'type':type,
 				'note': note,
+				'shareWith' : 'mentee'
 			};
 		}
 

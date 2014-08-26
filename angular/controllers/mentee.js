@@ -26,7 +26,9 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', 
   function($scope, $element, $http, $timeout, $window, $cookies) {
     /* can only edit my note */
     $scope.createNoteModal = function() {
-      $scope.modal = {};
+      $scope.modal = {
+        'shareWith':'mentor'
+      };
     }
 
     $scope.editNoteModal = function(idx) {
@@ -34,6 +36,7 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', 
       $scope.modal = {
         'noteIdx':idx,
         'note': note,
+        'shareWith':'mentor'
       };
 
     }
@@ -92,6 +95,7 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', 
         'noteIdx':idx,
         'type':type,
         'note': note,
+        'shareWith':'mentor'
       };
     }
 
