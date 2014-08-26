@@ -129,7 +129,7 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', 
     }
 
     $scope.init = function(mentorId) {
-      overlay.message('loading your dashboard...').loading(true).show();
+      overlay.message('loading mentor information...').loading(true).show();
       /* get list of saqs for this mentee */
       $scope.mentorId = mentorId;
       $scope.inProgress = true;
