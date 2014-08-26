@@ -1,5 +1,6 @@
 <?php $this->headScript()->prependFile($this->basePath() . '/js/'. strtolower($this->identity()->getRole()->getName()) .'.min.js') ?>
 <div id="page" class="row" ng-controller="QuestionnairePageCtrl" ng-init="init(<?php echo $questionnaireId ?>,<?php echo $sectionNumber ?>,<?php echo $pageNumber ?><?php echo $customerId ? ', '.$customerId : ''; ?>)">
+	<?php echo $this->partial('cap/partials/confirm-continue-modal'); ?>
   <div class="col-xs-10 col-xs-offset-1 questionnaire page">
     <div class="row questionnaire-page-header">
       <div class="col-xs-12">
@@ -118,7 +119,7 @@
 			</div>
 			<?php if (!is_null($nextUrl)) { ?>
 		  	<div class="col-xs-6">
-	        <a href="<?php echo $nextUrl; ?>" class="btn btn-primary form-control"><?php echo isset($lastPage) ? "Finished" : "Continue"; ?></a>
+	        <button ng-click="continue('<?php echo $nextUrl; ?>','<?php echo $questionnaireCompletionStatus ? $questionnaireCompletionStatus : null ?>','<?php echo $sectionCompletionStatus ? $sectionCompletionStatus : null ?>')" class="btn btn-primary form-control"><?php echo isset($lastPage) ? "Finished" : "Continue"; ?></a>
 		  	</div>
 		  <?php } ?>
 	  </div>

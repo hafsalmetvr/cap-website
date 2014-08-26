@@ -122,6 +122,19 @@ return array(
                 ),
             ),
 
+            'rest-questionnaire-status' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/rest/questionnaire-status[/:questionnaireId][/:sectionNumber][/:customerId]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Rest\QuestionnaireStatus',
+                    )
+                ),
+            ),
+
             'rest-answer' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -358,6 +371,7 @@ return array(
             'CAP\Controller\Rest\Admin'      => 'CAP\Controller\Rest\AdminController',
             'CAP\Controller\Rest\Note'       => 'CAP\Controller\Rest\NoteController',
             'CAP\Controller\Rest\Questionnaire' => 'CAP\Controller\Rest\QuestionnaireController',
+            'CAP\Controller\Rest\QuestionnaireStatus' => 'CAP\Controller\Rest\QuestionnaireStatusController',
             'CAP\Controller\Rest\Dashboard'  => 'CAP\Controller\Rest\DashboardController',
             'CAP\Controller\Rest\Login'      => 'CAP\Controller\Rest\LoginController',
             'CAP\Controller\Rest\Password'   => 'CAP\Controller\Rest\PasswordController',

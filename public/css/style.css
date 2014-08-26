@@ -8137,6 +8137,9 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   color: #f2f2f2;
   margin-right: 20px;
 }
+#content {
+  margin-bottom: 100px;
+}
 #overlay.overlay {
   display: block;
   position: fixed;

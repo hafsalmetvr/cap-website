@@ -277,6 +277,18 @@ class QuestionnaireController extends AbstractActionController {
 
 
 		if (isset($customer)) {
+			/* section completion status */
+			$viewArgs['questionnaireCompletionStatus'] = $entityManager->createQuery( "SELECT cs.name FROM CAP\Entity\CustomerQuestionnaire cq JOIN cq.completionStatus cs WHERE cq.questionnaire = :questionnaireId AND cq.customer = :customerId " )
+ 																						->setParameter('questionnaireId',$qId)
+ 																						->setParameter('customerId', $customer->getId())
+ 																						->getSingleScalarResult();
+
+			$viewArgs['sectionCompletionStatus'] = $entityManager->createQuery( "SELECT cs2.name FROM CAP\Entity\CustomerSection cs JOIN cs.section s JOIN cs.completionStatus cs2 JOIN s.questionnaire q WHERE s.questionnaire = :questionnaireId AND s.sectionNumber = :sectionNumber AND cs.customer = :customerId " )
+ 																						->setParameter('questionnaireId',$qId)
+ 																						->setParameter('sectionNumber', $sectionNumber)
+ 																						->setParameter('customerId', $customer->getId())
+ 																						->getSingleScalarResult();
+
 			/* total number of questions this customer has completed */
 			$viewArgs['completedQuestionCount'] = $qService->getCompletedQuestionCountBySection($qId, $sectionNumber, $customer->getId());
 

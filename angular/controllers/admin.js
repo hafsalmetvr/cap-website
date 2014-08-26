@@ -6,9 +6,12 @@ controller('QuestionnaireCtrl', ['$scope', '$element', '$http', '$timeout', '$wi
   }
 ]).
 
-controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
-	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
+controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay', '$window',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay, $window) {
   	overlay.message('loading questions...').loading(true).show();
+  	$scope.continue = function(nextUrl) {
+  		$window.location.href = nextUrl;
+  	}
 	}
 ]).
 controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',

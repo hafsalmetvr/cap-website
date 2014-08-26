@@ -150,9 +150,29 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', 
 
   }
 ]).
-controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
-	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
+controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay', '$window',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay, $window) {
+    $scope.confirmContinue = false;
+
     overlay.message('loading questions...').loading(true).show();
+    $scope.init = function(qId, sectionNumber, pageNumber, cId) {
+      $scope.qId = qId;
+      $scope.sectionNumber = sectionNumber;
+      $scope.pageNumber = pageNumber;
+      $scope.cId = cId;
+    };
+
+    $scope.continue = function(nextUrl, qCompletionStatus, sCompletionStatus) {
+      $scope.nextUrl = nextUrl;
+
+      if (sCompletionStatus === "COMPLETED" && qCompletionStatus !== "COMPLETED") {
+        /* display a confirmation before continuing */
+        $('#confirm-continue-modal').modal('show');
+      } else {
+        $window.location.href = $scope.nextUrl;
+      }
+    }
+
 	}
 ]).
 controller('QuestionnaireCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies',
