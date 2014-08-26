@@ -1,9 +1,10 @@
 /* Controllers */
 angular.module('cap.controllers.mentee', []).
 
-controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies', 'customer',
-  function($scope, $element, $http, $timeout, $window, $cookies, customer) {
+controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies', 'customer', 'overlay',
+  function($scope, $element, $http, $timeout, $window, $cookies, customer, overlay) {
   	$scope.init = function() {
+      overlay.message('loading your dashboard...').loading(true).show();
 			/* fetch the logged in identity */
 			customer.get(function(result) {
 				$scope.customer = result;
@@ -13,8 +14,10 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window
         	console.log(data);
         	$scope.mentors = data.mentors;
         	$scope.saqList = data.saqs;
+          overlay.loading(false).hide();
         }).error(function(data, status){
           console.log(data);
+          overlay.loading(false).hide();
         });
 
 			});
@@ -22,8 +25,9 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window
   }
 ]).
 
-controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies',
-  function($scope, $element, $http, $timeout, $window, $cookies) {
+controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies', 'overlay',
+  function($scope, $element, $http, $timeout, $window, $cookies, overlay) {
+
     /* can only edit my note */
     $scope.createNoteModal = function() {
       $scope.modal = {
@@ -125,6 +129,7 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', 
     }
 
     $scope.init = function(mentorId) {
+      overlay.message('loading your dashboard...').loading(true).show();
       /* get list of saqs for this mentee */
       $scope.mentorId = mentorId;
       $scope.inProgress = true;
@@ -134,10 +139,11 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', 
         console.log(data);
         $scope.myNotes     = data.myNotes;
         $scope.sharedNotes = data.sharedNotes;
-
+        overlay.loading(false).hide();
       }).error(function(data, status){
         $scope.inProgress = false;
         console.log(data);
+        overlay.loading(false).hide();
       });
     }
 
