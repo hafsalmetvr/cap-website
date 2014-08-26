@@ -8097,13 +8097,13 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   border-left: 1px solid #b3b3b3;
   border-right: 1px solid #b3b3b3;
   border-bottom: 1px solid #b3b3b3;
-  height: 76px;
+  height: 96px;
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: .9em;
 }
 #page .questionnaire.page .enum-container .enum-row .enum-answer-row .enum-answer-enum-container .enum-answer-col {
-  height: 76px;
+  height: 96px;
   padding-top: 5px;
   padding-bottom: 5px;
   font-weight: normal;
@@ -8112,4 +8112,26 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
 }
 #page .questionnaire.page .enum-container .enum-row .enum-answer-row .enum-answer-enum-container .enum-answer-col label {
   margin-top: 20px;
+}
+#overlay.overlay {
+  display: block;
+  position: fixed;
+  top: 0
+	bottom:0;
+  right: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  opacity: 0.85;
+  filter: alpha(opacity=85);
+  z-index: 1000;
+}
+#overlay.overlay .overlay-loading {
+  text-align: center;
+  width: 400px;
+  margin: 200px auto;
+}
+#overlay.overlay .overlay-loading img {
+  margin-bottom: 20px;
 }

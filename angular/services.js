@@ -46,6 +46,34 @@ factory('answer', ['$http',
         }
     }
 ]).
+factory('overlay', ['$rootScope',
+    function($rootScope) {
+        return {
+            show: function() {
+                console.log('show overlay');
+                angular.element('#overlay').addClass('overlay');
+                return this;
+            },
+            hide: function() {
+                angular.element('#overlay').removeClass('overlay');
+                return this;
+            },
+            loading: function(bool) {
+                if (bool) {
+                    angular.element('#overlay > .overlay-loading').removeClass('hide');
+                } else {
+                    angular.element('#overlay > .overlay-loading').addClass('hide');
+                }
+                return this;
+            },
+            message: function(message) {
+                $rootScope.$broadcast('overlay-message',{'message':message});
+                return this;
+            }
+        }
+    }
+]).
+
 
 factory('share', function() {
     return {

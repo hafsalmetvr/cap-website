@@ -1,9 +1,11 @@
 /* Controllers */
 angular.module('cap.controllers.mentor', []).
 
-controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies', 'customer',
-  function($scope, $element, $http, $timeout, $window, $cookies, customer) {
+controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies', 'customer', 'overlay',
+  function($scope, $element, $http, $timeout, $window, $cookies, customer, overlay) {
   	$scope.init = function() {
+  		overlay.message('loading your dashboard...').loading(true).show();
+
 			/* fetch the logged in identity */
 			customer.get(function(result) {
 				$scope.customer = result;
@@ -12,8 +14,10 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window
         $http.get('/rest/dashboard').success(function(data, status) {
         	console.log(data);
         	$scope.mentees = data.mentees;
+        	overlay.loading(false).hide();
         }).error(function(data, status){
           console.log(data);
+        	overlay.loading(false).hide();
         });
 
 			});
@@ -21,8 +25,8 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window
   }
 ]).
 
-controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $cookies, customer) {
+controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
 		/* can only edit my note */
 		$scope.createNoteModal = function() {
 			$scope.modal = {
@@ -124,6 +128,8 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 		}
 
 		$scope.init = function(menteeId) {
+  		overlay.message('loading mentee information...').loading(true).show();
+
 			/* get list of saqs for this mentee */
 			$scope.menteeId = menteeId;
 			$scope.inProgress = true;
@@ -136,10 +142,11 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 	    	$scope.myNotes     = data.myNotes;
 	    	$scope.sharedNotes = data.sharedNotes;
 
-
+        overlay.loading(false).hide();
 	    }).error(function(data, status){
 	    	$scope.inProgress = false;
 	      console.log(data);
+        overlay.loading(false).hide();
 	    });
 		}
 	}
@@ -148,8 +155,9 @@ controller('QuestionnaireCtrl', ['$scope', '$element', '$http', '$timeout', '$wi
   function($scope, $element, $http, $timeout, $window, $cookies) {
   }
 ]).
-controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $cookies, customer) {
+controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
+  	overlay.message('loading questions...').loading(true).show();
 	}
 ]).
 

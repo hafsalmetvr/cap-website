@@ -144,8 +144,9 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', 
 
   }
 ]).
-controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $cookies, customer) {
+controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
+    overlay.message('loading questions...').loading(true).show();
 	}
 ]).
 controller('QuestionnaireCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies',

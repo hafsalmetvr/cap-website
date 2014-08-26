@@ -6,12 +6,13 @@ controller('QuestionnaireCtrl', ['$scope', '$element', '$http', '$timeout', '$wi
   }
 ]).
 
-controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $cookies, customer) {
+controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
+  	overlay.message('loading questions...').loading(true).show();
 	}
 ]).
-controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $cookies, customer) {
+controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
 		$scope.modal = {};
 		$scope.assignMenteeModal = function(idx) {
 			var mentee = $scope.mentees[idx];
@@ -65,6 +66,7 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 		};
 
 		$scope.init = function(mentorId) {
+  		overlay.message('loading mentor information...').loading(true).show();
 			$scope.mentorId = mentorId;
 			$scope.inProgress = true;
 			/* get listr of mentees */
@@ -74,16 +76,19 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 	    	$scope.inProgress = false;
 	    	console.log(data);
 	    	$scope.mentees = data.mentees;
+	    	overlay.loading(false).hide();
 	    }).error(function(data, status){
 	    	$scope.inProgress = false;
 	      console.log(data);
+	    	overlay.loading(false).hide();
 	    });
 	  }
 	}
 ]).
-controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $cookies, customer) {
+controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
 		$scope.init = function(menteeId) {
+  		overlay.message('loading mentee information...').loading(true).show();
 			/* get list of saqs for this mentee */
 			$scope.menteeId = menteeId;
 			$scope.inProgress = true;
@@ -93,10 +98,11 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 	    	console.log(data);
 	    	$scope.saqList = data.saqs;
 	    	$scope.mentors = data.mentors;
-
+	    	overlay.loading(false).hide();
 	    }).error(function(data, status){
 	    	$scope.inProgress = false;
 	      console.log(data);
+	    	overlay.loading(false).hide();
 	    });
 		}
 
@@ -139,13 +145,14 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 
 	}
 ]).
-controller('AdminCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $cookies, customer) {
+controller('AdminCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
 	}
 ]).
-controller('SettingsCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $cookies, customer) {
+controller('SettingsCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
     $scope.init = function(){
+  		overlay.message('loading settings...').loading(true).show();
       $scope.inProgress = false;
     	$scope.reminderFrequencies = ['DAILY','WEEKLY','MONTHLY','QUARTERLY'];
     	console.log($scope.reminderFrequencies);
@@ -229,8 +236,8 @@ controller('CreateAccountCtrl', ['$scope', '$element', '$http', '$timeout', '$co
 	}
 ]).
 
-controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $cookies, customer) {
+controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
 		console.log('dboardctrl');
 		$scope.modal = {};
 		$scope.assignMenteeModal = function(idx) {
@@ -433,7 +440,7 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 
 		$scope.init = function(user, role) {
 			console.log('dboardctrl init');
-
+  		overlay.message('loading your dashboard...').loading(true).show();
 			$scope.ques_page_interval = 5;
 			$scope.mentor_page_interval = 5;
 			$scope.mentee_page_interval = 5;
@@ -464,9 +471,10 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
         	$scope.mentors = data.mentors;
         	$scope.mentees = data.mentees;
         	$scope.admins  = data.admins;
-
+        	overlay.loading(false).hide();
         }).error(function(data, status){
           console.log(data);
+        	overlay.loading(false).hide();
         });
 
 			});

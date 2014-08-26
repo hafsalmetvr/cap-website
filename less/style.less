@@ -15,3 +15,25 @@
 @import "settings.less";
 @import "questionnaire.less";
 
+#overlay.overlay {
+	display:block;
+	position: fixed;
+	top:0
+	bottom:0;
+	right:0;
+	left:0;
+	height:100%;
+	width:100%;
+  background-color: @white;
+  .opacity(.85);
+  z-index:1000;
+  .overlay-loading {
+  	text-align:center;
+  	width:400px;
+  	margin:200px auto;
+  	img {
+  		margin-bottom:20px;
+  	}
+  }
+}
+

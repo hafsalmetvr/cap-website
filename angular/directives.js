@@ -23,6 +23,26 @@ directive('ngEnter', [
   }
 ]).
 */
+directive('capOverlay', ['$rootScope',
+  function($rootScope) {
+    return {
+      restrict: 'A',
+      compile: function(element, attr, transclude) {
+        return function(scope, element, attr, controller) {
+          $rootScope.$on('overlay-message', function(e, data) {
+            scope.message = data.message;
+          });
+
+          element.click(function() {
+            console.log('broadcast overlay clicked');
+            $rootScope.$broadcast('overlay-clicked');
+          });
+        }
+      }
+    }
+  }
+]).
+
 
 directive('answerTypeSelect', ['$http',
   function($http) {
@@ -445,8 +465,8 @@ directive('answerTypeRadio', ['$http',
   }
 ]).
 
-directive('answerTypeEnum', ['$http',
-  function($http) {
+directive('answerTypeEnum', ['$http', 'overlay',
+  function($http, overlay) {
     return {
       scope:{"startQuestionNumber":"=","endQuestionNumber":"=","percentComplete":'='},
       restrict: 'E',
@@ -486,7 +506,6 @@ directive('answerTypeEnum', ['$http',
           });
 
         }
-
 
         $http.get(url).success(function(data, status) {
           scope.inProgress = false;
@@ -533,9 +552,11 @@ directive('answerTypeEnum', ['$http',
               });
             }
           });
+          overlay.loading(false).hide();
         }).error(function(data, status){
           scope.inProgress = false;
           console.log(data);
+          overlay.loading(false).hide();
         });
 
       }

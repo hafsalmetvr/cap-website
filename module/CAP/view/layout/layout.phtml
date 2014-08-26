@@ -23,6 +23,17 @@
         ; ?>
     </head>
     <body>
+        <div id="overlay" cap-overlay>
+            <div class="overlay-loading hide">
+                <div>
+                    <img src="/img/Optimum-Training-Logo-left-light1.png"/>
+                </div>
+                <div ng-show="message">
+                    <i class="fa fa-cog fa-spin fa-fw"></i>
+                    <span>[[message]]</span>
+                </div>
+            </div>
+        </div>
         <?php echo $this->partial('layout/nav') ?>
         <div class="container-fluid">
             <?php echo $this->content ?>

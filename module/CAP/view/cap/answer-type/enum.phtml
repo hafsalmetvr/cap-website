@@ -16,7 +16,12 @@
 <div class="row enum-container">
 	<div ng-class="{0:'first'}[$index]" class="col-xs-12 enum-row" ng-repeat="answer in answers">
 		<div class="row enum-answer-row">
-			<div class="col-xs-4 enum-answer-heading">[[answer.answerNumber]]. [[answer.answerText]]</div>
+			<div class="col-xs-4 enum-answer-heading">
+				<div class="row">
+					<div class="col-xs-1">[[answer.answerNumber]].</div>
+					<div class="col-xs-10">[[answer.answerText]]</div>
+				</div>
+			</div>
 			<div class="col-xs-8 enum-answer-enum-container">
 				<div class="row enum-grid">
 					<div class="[[enumColsClass]] enum-answer-col text-center" ng-repeat="answerEnum in answer.answerEnums">
