@@ -125,7 +125,15 @@ return array(
             'rest-questionnaire-status' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/rest/questionnaire-status[/:questionnaireId][/:sectionNumber][/:customerId]',
+                    'route' => '/rest/questionnaire-status[/:questionnaireId][/:sectionNumber][
+
+
+
+
+
+
+
+                    /:customerId]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
@@ -275,6 +283,36 @@ return array(
                             'defaults' => array(
                                 'controller' => 'CAP\Controller\Questionnaire',
                                 'action' => 'pdf'
+                            ),
+                        ),
+                    ),
+                    'pdf-cover' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/pdf-cover[/:customerId]',
+                            'defaults' => array(
+                                'controller' => 'CAP\Controller\Questionnaire',
+                                'action' => 'pdf-cover'
+                            ),
+                        ),
+                    ),
+                    'pdf-header' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/pdf-header[/:customerId]',
+                            'defaults' => array(
+                                'controller' => 'CAP\Controller\Questionnaire',
+                                'action' => 'pdf-header'
+                            ),
+                        ),
+                    ),
+                    'pdf-footer' => array(
+                        'type'    => 'segment',
+                        'options' => array(
+                            'route'    => '/pdf-footer[/:customerId]',
+                            'defaults' => array(
+                                'controller' => 'CAP\Controller\Questionnaire',
+                                'action' => 'pdf-footer'
                             ),
                         ),
                     ),

@@ -1,0 +1,32 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->translate('Centurion Assesment Portal'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0')->appendHttpEquiv('X-UA-Compatible', 'IE=edge'); ?>
+
+        <?php
+            /*
+            echo $this->headLink(array('rel' => 'shortcut icon',
+                                       'type' => 'image/vnd.microsoft.icon',
+                                       'href' => $this->basePath() . '/img/favicon.ico'));
+            */
+            //echo $this->headLink()->prependStylesheet($this->basePath() . '/css/style.css');
+
+        ?>
+        <link href="http://localhost/css/pdf-style.css" media="screen" rel="stylesheet" type="text/css"/>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            //->prependFile($this->basePath() . '/js/cap.min.js')
+            //->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript')
+            //->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript')
+        ; ?>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <?php echo $this->content ?>
+        </div>
+    </body>
+</html>

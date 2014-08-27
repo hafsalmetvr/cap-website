@@ -8120,6 +8120,11 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
 #page .questionnaire.page .enum-container .enum-row .enum-answer-row .enum-answer-enum-container .enum-answer-col label {
   margin-top: 20px;
 }
+.cover .download-as-pdf {
+  display: block;
+  font-size: 14px;
+  margin-top: 12px;
+}
 #footer {
   position: fixed;
   bottom: 0;

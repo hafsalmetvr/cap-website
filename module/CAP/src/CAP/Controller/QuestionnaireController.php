@@ -359,15 +359,135 @@ class QuestionnaireController extends AbstractActionController {
 
     $viewArgs['organizationId'] = $organizationId;
     $viewArgs['questionnaireId'] = $qId;
+    $viewArgs['tmplPath']   = "cap/results/".$organizationId."/".$qId."/web/";
+		$viewArgs['partialsPath'] = "cap/results/".$organizationId."/".$qId."/partials/";
 
 		/* this questionnaire must be assigned to the person who is logged in else redirect to view */
 		$viewModel = new ViewModel($viewArgs);
-		$template = 'cap/results/'.$organizationId.'/'.$qId.'/results.phtml';
+		$template = $viewArgs['tmplPath'] . 'results.phtml';
 		$viewModel->setTemplate($template);
 		return $viewModel;
 	}
 
+	public function PdfFooterAction() {
+		/* TODO lock down so only wkhtmltopdf can request this */
 
+		$logger        = $this->getServiceLocator()->get( 'Log\App' );
+		$qService      = $this->getServiceLocator()->get( 'cap_questionnaire_service' );
+		$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+    $qId = $this->params()->fromRoute('questionnaireId');
+    $cId = $this->params()->fromRoute('customerId');
+
+    /* check if this logged in person has access (TODO: make this a service) */
+    $viewArgs = array();
+
+    if (isset($cId)) {
+    	$customer = $entityManager->getRepository('CAP\Entity\Customer')->find($cId);
+			$viewArgs['customer'] = $customer;
+    } else {
+    	/* no customer passed in - but check if i am assigned this SAQ - in which case treat it as if that were passed in */
+	  	$cq = $entityManager->getRepository("CAP\Entity\CustomerQuestionnaire")->findOneBy(array('questionnaire' => $qId, 'customer' => $this->identity()->getId()));
+	  	if ($cq) {
+	  		$customer = $cq->getCustomer();
+	  		$cId = $customer->getId();
+	  		$viewArgs['customer'] = $customer;
+	  	}
+    }
+
+    $organizationId = $customer->getDomain()->getOrganization()->getId();
+    $viewArgs['organizationId'] = $organizationId;
+    $viewArgs['questionnaireId'] = $qId;
+    $viewArgs['customerId'] = $cId;
+    $viewArgs['tmplPath']   = "cap/results/".$organizationId."/".$qId."/pdf/";
+		$viewArgs['partialsPath'] = "cap/results/".$organizationId."/".$qId."/partials/";
+
+    $this->layout('layout/pdf/footer');
+		$viewModel = new ViewModel($viewArgs);
+		$template = $viewArgs['tmplPath'].'footer.phtml';
+		$viewModel->setTemplate($template);
+    return $viewModel;
+	}
+
+	public function PdfHeaderAction() {
+		/* TODO lock down so only wkhtmltopdf can request this */
+
+		$logger        = $this->getServiceLocator()->get( 'Log\App' );
+		$qService      = $this->getServiceLocator()->get( 'cap_questionnaire_service' );
+		$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+    $qId = $this->params()->fromRoute('questionnaireId');
+    $cId = $this->params()->fromRoute('customerId');
+
+    /* check if this logged in person has access (TODO: make this a service) */
+    $viewArgs = array();
+
+    if (isset($cId)) {
+    	$customer = $entityManager->getRepository('CAP\Entity\Customer')->find($cId);
+			$viewArgs['customer'] = $customer;
+    } else {
+    	/* no customer passed in - but check if i am assigned this SAQ - in which case treat it as if that were passed in */
+	  	$cq = $entityManager->getRepository("CAP\Entity\CustomerQuestionnaire")->findOneBy(array('questionnaire' => $qId, 'customer' => $this->identity()->getId()));
+	  	if ($cq) {
+	  		$customer = $cq->getCustomer();
+	  		$cId = $customer->getId();
+	  		$viewArgs['customer'] = $customer;
+	  	}
+    }
+
+    $organizationId = $customer->getDomain()->getOrganization()->getId();
+    $viewArgs['organizationId'] = $organizationId;
+    $viewArgs['questionnaireId'] = $qId;
+    $viewArgs['customerId'] = $cId;
+    $viewArgs['tmplPath']   = "cap/results/".$organizationId."/".$qId."/pdf/";
+		$viewArgs['partialsPath'] = "cap/results/".$organizationId."/".$qId."/partials/";
+
+    $this->layout('layout/pdf/header');
+		$viewModel = new ViewModel($viewArgs);
+		$template = $viewArgs['tmplPath'].'header.phtml';
+		$viewModel->setTemplate($template);
+    return $viewModel;
+	}
+
+	public function PdfCoverAction() {
+		/* TODO lock down so only wkhtmltopdf can request this */
+
+		$logger        = $this->getServiceLocator()->get( 'Log\App' );
+		$qService      = $this->getServiceLocator()->get( 'cap_questionnaire_service' );
+		$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+    $qId = $this->params()->fromRoute('questionnaireId');
+    $cId = $this->params()->fromRoute('customerId');
+
+    /* check if this logged in person has access (TODO: make this a service) */
+    $viewArgs = array();
+
+    if (isset($cId)) {
+    	$customer = $entityManager->getRepository('CAP\Entity\Customer')->find($cId);
+			$viewArgs['customer'] = $customer;
+    } else {
+    	/* no customer passed in - but check if i am assigned this SAQ - in which case treat it as if that were passed in */
+	  	$cq = $entityManager->getRepository("CAP\Entity\CustomerQuestionnaire")->findOneBy(array('questionnaire' => $qId, 'customer' => $this->identity()->getId()));
+	  	if ($cq) {
+	  		$customer = $cq->getCustomer();
+	  		$cId = $customer->getId();
+	  		$viewArgs['customer'] = $customer;
+	  	}
+    }
+
+    $organizationId = $customer->getDomain()->getOrganization()->getId();
+    $viewArgs['organizationId'] = $organizationId;
+    $viewArgs['questionnaireId'] = $qId;
+    $viewArgs['customerId'] = $cId;
+    $viewArgs['tmplPath']   = "cap/results/".$organizationId."/".$qId."/pdf/";
+		$viewArgs['partialsPath'] = "cap/results/".$organizationId."/".$qId."/partials/";
+
+    $this->layout('layout/pdf/cover');
+		$viewModel = new ViewModel($viewArgs);
+		$template = $viewArgs['tmplPath'].'cover.phtml';
+		$viewModel->setTemplate($template);
+    return $viewModel;
+	}
 
 	public function PdfAction() {
 
@@ -419,15 +539,19 @@ class QuestionnaireController extends AbstractActionController {
     $viewArgs['results'] = $algorithm->compute($qId, $customer);
     $viewArgs['organizationId'] = $organizationId;
     $viewArgs['questionnaireId'] = $qId;
+    $viewArgs['customerId'] = $cId;
+    $viewArgs['tmplPath']   = "cap/results/".$organizationId."/".$qId."/pdf/";
+		$viewArgs['partialsPath'] = "cap/results/".$organizationId."/".$qId."/partials/";
+
 
 		/* this questionnaire must be assigned to the person who is logged in else redirect to view */
     $viewRenderer = $this->serviceLocator->get('view_manager')->getRenderer();
 
     $layoutViewModel = $this->layout();
-    $layoutViewModel->setTemplate('layout/pdf-layout');
+    $layoutViewModel->setTemplate('layout/pdf/page');
 
 		$viewModel = new ViewModel($viewArgs);
-		$template = 'cap/results/'.$organizationId.'/'.$qId.'/results.phtml';
+		$template = $viewArgs['tmplPath'].'results.phtml';
 		$viewModel->setTemplate($template);
 
     $layoutViewModel->setVariables(array(
@@ -435,13 +559,21 @@ class QuestionnaireController extends AbstractActionController {
     ));
 
     $htmlOutput = $viewRenderer->render($layoutViewModel);
-    $output = $this->serviceLocator->get('mvlabssnappy.pdf.service')->getOutputFromHtml($htmlOutput);
+  	//echo $htmlOutput;
+  	//exit(0);
+    $snappy = $this->serviceLocator->get('mvlabssnappy.pdf.service');
+    $snappy->setOption('cover', "http://localhost/questionnaire/".$qId."/pdf-cover/".$cId);
+    $snappy->setOption('header-html', "http://localhost/questionnaire/".$qId."/pdf-header/".$cId);
+    $snappy->setOption('footer-html', "http://localhost/questionnaire/".$qId."/pdf-footer/".$cId);
+    $snappy->setOption('margin-bottom', '20mm');
+    $snappy->setOption('margin-top', '10mm');
+  	$output = $snappy->getOutputFromHtml($htmlOutput);
 
     $response = $this->getResponse();
     $headers  = $response->getHeaders();
     $headers->addHeaderLine('Content-Type', 'application/pdf');
 		$now = new \DateTime();
-    $headers->addHeaderLine('Content-Disposition', "attachment; filename=\"export-" . $now->format('d-m-Y H:i:s') . ".pdf\"");
+    //$headers->addHeaderLine('Content-Disposition', "attachment; filename=\"export-" . $now->format('d-m-Y H:i:s') . ".pdf\"");
 
     $response->setContent($output);
 
