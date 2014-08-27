@@ -63,6 +63,15 @@ class Questionnaire {
         return $this->name;
     }
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="template_dir", type="string", length=255, nullable=false)
+     */
+    private $templateDir;
+    public function getTemplateDir() {
+        return $this->templateDir;
+    }
 
 
     /**

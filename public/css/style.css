@@ -7753,6 +7753,8 @@ h2.alt {
   font-weight: normal;
 }
 h3 {
+  font-family: "Roboto Condensed", Tahoma;
+  font-size: 16pt;
   margin: 0;
   padding: 0;
 }
@@ -8029,7 +8031,7 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   font-family: "Roboto", Verdana;
 }
 .questionnaire.summary .summary-box .section-row .section-name {
-  padding: 20px 0;
+  padding: 22px 0;
   margin-top: 5px;
 }
 .questionnaire.summary .summary-box .section-row .section-text {
@@ -8078,9 +8080,45 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   margin-top: 20px;
   padding-top: 20px;
 }
-#page .questionnaire.page .enum-container .enum-grid .col-xs-2,
-#page .questionnaire.page .enum-heading .enum-grid .col-xs-2 {
+#page .questionnaire.page .enum-container .enum-grid .width-100,
+#page .questionnaire.page .enum-heading .enum-grid .width-100 {
+  width: 100% !important;
+}
+#page .questionnaire.page .enum-container .enum-grid .width-50,
+#page .questionnaire.page .enum-heading .enum-grid .width-50 {
+  width: 50% !important;
+}
+#page .questionnaire.page .enum-container .enum-grid .width-33,
+#page .questionnaire.page .enum-heading .enum-grid .width-33 {
+  width: 33% !important;
+}
+#page .questionnaire.page .enum-container .enum-grid .width-25,
+#page .questionnaire.page .enum-heading .enum-grid .width-25 {
+  width: 25% !important;
+}
+#page .questionnaire.page .enum-container .enum-grid .width-20,
+#page .questionnaire.page .enum-heading .enum-grid .width-20 {
   width: 20% !important;
+}
+#page .questionnaire.page .enum-container .enum-grid .width-16,
+#page .questionnaire.page .enum-heading .enum-grid .width-16 {
+  width: 16% !important;
+}
+#page .questionnaire.page .enum-container .enum-grid .width-14,
+#page .questionnaire.page .enum-heading .enum-grid .width-14 {
+  width: 14% !important;
+}
+#page .questionnaire.page .enum-container .enum-grid .width-12,
+#page .questionnaire.page .enum-heading .enum-grid .width-12 {
+  width: 12% !important;
+}
+#page .questionnaire.page .enum-container .enum-grid .width-11,
+#page .questionnaire.page .enum-heading .enum-grid .width-11 {
+  width: 11% !important;
+}
+#page .questionnaire.page .enum-container .enum-grid .width-10,
+#page .questionnaire.page .enum-heading .enum-grid .width-10 {
+  width: 10% !important;
 }
 #page .questionnaire.page .enum-heading .enum-answer-col-heading {
   font-weight: bold;
@@ -8126,8 +8164,7 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   margin-top: 12px;
 }
 #footer {
-  position: fixed;
-  bottom: 0;
+  position: relative;
   background-color: #333333;
   margin: 20px 0 0 0;
   padding: 10px 0;

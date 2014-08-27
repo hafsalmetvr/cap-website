@@ -64,10 +64,10 @@ class Organization extends \CAP\Entity\Organization implements \Doctrine\ORM\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'name', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'modified');
+            return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'name', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'templateDir', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'modified');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'name', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'modified');
+        return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'name', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'templateDir', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Organization' . "\0" . 'modified');
     }
 
     /**
@@ -197,6 +197,17 @@ class Organization extends \CAP\Entity\Organization implements \Doctrine\ORM\Pro
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
 
         return parent::getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTemplateDir()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTemplateDir', array());
+
+        return parent::getTemplateDir();
     }
 
 }

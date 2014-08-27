@@ -471,94 +471,107 @@ directive('answerTypeEnum', ['$http', 'overlay',
       scope:{"startQuestionNumber":"=","endQuestionNumber":"=","percentComplete":'='},
       restrict: 'E',
       templateUrl: '/answer-type/enum',
-      link: function(scope, element, attr) {
-        console.log('fetching an enum answer type');
-        scope.success = false;
-        scope.inProgress = false;
-        scope.questionId = attr.questionId;
-        var url = '/rest/answer/enum/'+attr.questionId;
-        if (attr.customerId) {
-          url += '/'+attr.customerId;
-        }
+      controller: function() {
 
-        scope.save = function() {
-          /* grab any selected answers from the model */
-          var answers = [];
+      },
+      controller: ['$scope', '$element', '$attrs', '$transclude',
+        function($scope, $element, $attrs, $transclude) {
+          console.log('fetching an enum answer type');
+          $scope.success = false;
+          $scope.inProgress = false;
+          $scope.questionId = $attrs.questionId;
+          var url = '/rest/answer/enum/'+$attrs.questionId;
+          if ($attrs.customerId) {
+            url += '/'+$attrs.customerId;
+          }
 
-          angular.forEach(scope.answers, function(answer) {
-            answers.push({
-              'answerId':answer.id,
-              'answerText':null,
-              'answerEnumId': answer.selectedEnumId
-            });
-          });
 
-          $http.post(url,{
-            'customerId':attr.customerId,
-            'questionId':attr.questionId,
-            'answers':answers
-          }).success(function(data, status) {
-            /* do something? */
-            console.log(data);
-            scope.percentComplete = data.percentComplete;
-          }).error(function(data, status) {
+          $scope.save = function() {
+            /* grab any selected answers from the model */
+            var answers = [];
 
-          });
-
-        }
-
-        $http.get(url).success(function(data, status) {
-          scope.inProgress = false;
-          console.log(data);
-          scope.answers = data.answers;
-          scope.disabled = data.disabled;
-          scope.startQuestionNumber = scope.answers[0].answerNumber;
-          scope.endQuestionNumber = scope.answers[scope.answers.length-1].answerNumber;
-          scope.percentComplete = data.percentComplete;
-
-          console.log("start: "+scope.startQuestionNumber);
-          //scope.disabled = false;
-          /* loop through the answers and set checked to true or false depending on customer answers */
-          angular.forEach(scope.answers, function(a) {
-
-            /* figure out the enumColsClass: how many enums do we have? */
-            var totalCols = 10 //bootstrap total columns
-            var maxCols = 5; //no more than 12 columns (col-xs-1)
-            if (a.answerEnums.length <= maxCols) {
-              maxCols = a.answerEnums.length;
-            } else {
-              /* find an acceptable maxCols */
-              var leastDistance = maxCols;
-              for (var i = maxCols; i > 0; i--) {
-                if (a.answerEnums.length % i) {
-                  var l = i - (a.answerEnums.length % i);
-                  if (l < leastDistance) {
-                    leastDistance = l;
-                    maxCols = i;
-                  }
-                } else {
-                  /* winner! */
-                  maxCols = i;
-                  break;
-                }
-              };
-            }
-            scope.enumColsClass = 'col-xs-'+ parseInt(Math.floor(totalCols/maxCols));
-            if (data.customerAnswers[0]) {
-              angular.forEach(data.customerAnswers, function(ca) {
-                if (a.id === ca.answerId) {
-                  a.selectedEnumId = ca.answerEnumId
-                }
+            angular.forEach($scope.answers, function(answer) {
+              answers.push({
+                'answerId':answer.id,
+                'answerText':null,
+                'answerEnumId': answer.selectedEnumId
               });
-            }
-          });
-          overlay.loading(false).hide();
-        }).error(function(data, status){
-          scope.inProgress = false;
-          console.log(data);
-          overlay.loading(false).hide();
-        });
+            });
 
+            $http.post(url,{
+              'customerId':$attrs.customerId,
+              'questionId':$attrs.questionId,
+              'answers':answers
+            }).success(function(data, status) {
+              /* do something? */
+              console.log(data);
+              $scope.percentComplete = data.percentComplete;
+            }).error(function(data, status) {
+
+            });
+
+          }
+
+          $http.get(url).success(function(data, status) {
+            $scope.inProgress = false;
+            console.log(data);
+            $scope.answers = data.answers;
+            $scope.disabled = data.disabled;
+            $scope.startQuestionNumber = $scope.answers[0].answerNumber;
+            $scope.endQuestionNumber = $scope.answers[$scope.answers.length-1].answerNumber;
+            $scope.percentComplete = data.percentComplete;
+
+            console.log("start: "+$scope.startQuestionNumber);
+            //scope.disabled = false;
+            /* loop through the answers and set checked to true or false depending on customer answers */
+            angular.forEach($scope.answers, function(a) {
+
+              /* figure out the enumColsClass: how many enums do we have? */
+              var totalCols = 12 //bootstrap total columns
+              var maxCols = 10; //no more than 12 columns (col-xs-1)
+              if (a.answerEnums.length <= maxCols) {
+                maxCols = a.answerEnums.length;
+              } else {
+                /* find an acceptable maxCols */
+                var leastDistance = maxCols;
+                for (var i = maxCols; i > 0; i--) {
+                  if (a.answerEnums.length % i) {
+                    var l = i - (a.answerEnums.length % i);
+                    if (l < leastDistance) {
+                      leastDistance = l;
+                      maxCols = i;
+                    }
+                  } else {
+                    /* winner! */
+                    maxCols = i;
+                    break;
+                  }
+                };
+              }
+              $scope.enumColsClass = 'col-xs-'+ parseInt(Math.floor(totalCols/maxCols));
+              w = parseInt( (Math.floor(100/maxCols) ) );
+              $scope.enumColsClass += ' width-'+w; /* make sure this class exists! */
+
+              if (data.customerAnswers[0]) {
+                angular.forEach(data.customerAnswers, function(ca) {
+                  if (a.id === ca.answerId) {
+                    a.selectedEnumId = ca.answerEnumId
+                  }
+                });
+              }
+            });
+            overlay.loading(false).hide();
+          }).error(function(data, status){
+            $scope.inProgress = false;
+            console.log(data);
+            overlay.loading(false).hide();
+          });
+
+        }
+      ],
+      compile: function(element, attr, transclude) {
+        return function(scope, element, attr, controller) {
+        }
       }
     };
   }

@@ -1,0 +1,122 @@
+<div class="row summary page" style="page-break-inside:avoid;">
+	<div class="col-xs-12">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<h2>OVERALL SUMMARY & INTERPRETATION</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="chart chart-large">
+					<div class="chart-scale">
+						<div class="clearfix">
+							<div class="chart-heading-space pull-left"></div>
+							<div class="chart-columns pull-left clearfix">
+								<div class="chart-col-line"></div>
+								<div class="chart-col-line"></div>
+								<div class="chart-col-line"></div>
+								<div class="chart-col-line"></div>
+								<div class="chart-col-line last"></div>
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class="chart-label-space pull-left"></div>
+							<div class="chart-labels pull-left clearfix">
+								<div class="chart-label">1</div>
+								<div class="chart-label">2</div>
+								<div class="chart-label">3</div>
+								<div class="chart-label">4</div>
+								<div class="chart-label">5</div>
+							</div>
+						</div>
+					</div>
+					<div class="chart-bars">
+						<?php foreach ($results['sections'] as $s) { ?>
+							<div class="chart-row clearfix">
+								<div class="chart-bar-heading pull-left"><?php echo $s['name'];?></div>
+								<div class="chart-bar pull-left">
+									<?php $width = ($results['score'][$s['id']]['average'] * 20) ?>
+									<div class="bar" style="height:20px; width:<?php echo $width ?>%;background-color:#CCC"></div>
+								</div>
+							</div>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="footer-chart-container clearfix">
+					<div class="footer-chart-heading pull-right">AGGREGATE SELF SCORE (<?php echo $results['score']['average'] ?>)</div>
+					<div class="footer-chart chart">
+						<div class="chart-scale">
+							<div class="clearfix">
+								<div class="chart-labels pull-left clearfix">
+									<div class="chart-label">1</div>
+									<div class="chart-label">2</div>
+									<div class="chart-label">3</div>
+									<div class="chart-label">4</div>
+									<div class="chart-label">5</div>
+								</div>
+							</div>
+							<div class="clearfix">
+								<div class="chart-columns pull-left clearfix">
+									<div class="chart-col-line"></div>
+									<div class="chart-col-line"></div>
+									<div class="chart-col-line"></div>
+									<div class="chart-col-line"></div>
+									<div class="chart-col-line last"></div>
+								</div>
+							</div>
+						</div>
+						<div class="chart-bars">
+							<div class="chart-row clearfix">
+								<div class="chart-bar pull-left">
+									<?php $width = ($results['score']['average'] * 20) ?>
+									<div class="bar" style="height:8px; width:<?php echo $width ?>%;background-color:#CCC"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<hr/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h3>LOW LEVEL (up to 2.0)</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<p>Your results indicate that you use very few, if any strategies to help you set and achieve your goals - or if you do, they are not being explored to their full potential. If success and accomplishment are really important to you, you need to start developing a realistic and solid plan to get there. Some effective goal-setting techniques that many people use include writing a detailed list of their goals and deadlines to achieve them, rewarding themselves after accomplishing a specific step or objective, stating their goals in positive terms, and segmenting larger goals into smaller steps. It's not only essential to have a detailed plan of action, but you must also be willing to make adjustments along the way, as certain developments may require that you adjust the timeline, or the goal itself. Remember that you need more than a will to accomplish your goals - you also need a way!</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h3>MEDIUM LEVEL (2.1 to 4.0)</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<p>Your results indicate that although you do use some strategies to help you set and achieve your goals, you may not be using them to their full potential. If success and accomplishment are really important to you, you need to further develop a more realistic and solid plan to get there. Some effective goal-setting techniques that many people use include writing a detailed list of their goals and deadlines to achieve them, rewarding themselves after accomplishing a specific step or objective, stating their goals in positive terms, and segmenting larger goals into smaller steps. It's not only essential to have a detailed plan of action, but you must also be willing to make adjustments along the way, as certain developments may require you to adjust the timeline, or the goal itself. Remember that you need more than a will to accomplish your goals - you also need a way!</p>
+			</div>
+		</div>
+		<div style="page-break-inside:avoid;">
+			<div class="row">
+				<div class="col-xs-12">
+					<h3>HIGH LEVEL (4.1 to 5)</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<p style="page-break-inside:avoid;">Your results indicate that you use many helpful and productive strategies to help you set and achieve your goals. You seem to be well-aware that in order to be successful and accomplish all your ambitions, it's obviously important to develop a realistic and solid plan to get there. Some effective goal-setting techniques that many people use include writing a detailed list of their goals and deadlines to achieve them, rewarding themselves after accomplishing a specific step or objective, stating their goals in positive terms, and segmenting goals into smaller steps. In addition, it's not just a matter of having a detailed plan of action, but you must also be willing to make adjustments along the way, as certain developments may require you to adjust the timeline, or the goal itself. Overall, you seem to be right on track and well on the road to success. Well done!</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

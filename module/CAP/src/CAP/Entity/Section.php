@@ -32,7 +32,7 @@ class Section {
     private $sectionNumber;
 
     public function getSectionNumber() {
-        return $this->id;
+        return $this->sectionNumber;
     }
 
     /**

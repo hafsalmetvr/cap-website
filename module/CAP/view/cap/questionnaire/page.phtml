@@ -5,8 +5,8 @@
     <div class="row questionnaire-page-header">
       <div class="col-xs-12">
         <h1 class="row">
-        	<div class="col-xs-8"><?php echo $questionnaire->getName(); ?></div>
-        	<div class="col-xs-4 percent-complete text-right ng-cloak"><span ng-model="percentComplete">[[percentComplete]]</span><span>% Complete</span></div>
+        	<div class="col-xs-10"><?php echo $questionnaire->getName(); ?></div>
+        	<div class="col-xs-2 percent-complete text-right ng-cloak"><span ng-model="percentComplete">[[percentComplete]]</span><span>% Complete</span></div>
         </h1>
         <h2 class="row page-sub-header">
         	<div class="col-xs-6 section-name">Section <?php echo $section->getSectionNumber(); ?>: <?php echo $section->getName(); ?></div>
@@ -59,8 +59,8 @@
 				/* if lastPage then go to results */
 				if (isset($lastPage)) {
 					/* there are no results to view if there's no customer */
-					if (isset($customer)) {
-						$nextUrlArgs['customerId'] = $customer->getId();
+					if (isset($customerId)) {
+						$nextUrlArgs['customerId'] = $customerId;
 						$nextUrl = $this->url('questionnaire/pdf', $nextUrlArgs);
 					} else {
 						/* what to do? send them back to summary? or nothing? */
@@ -74,9 +74,9 @@
 
 					$key = 'questionnaire/view';
 
-					if (isset($customer)) {
+					if (isset($customerId)) {
 						$key = 'questionnaire/complete';
-						$nextUrlArgs['customerId'] = $customer->getId();
+						$nextUrlArgs['customerId'] = $customerId;
 					}
 
 					$nextUrl = $this->url($key, $nextUrlArgs);
@@ -88,9 +88,9 @@
 				if (isset($firstPage)) {
 					$key = 'questionnaire';
 
-					if (isset($customer)) {
+					if (isset($customerId)) {
 						$key = 'questionnaire/complete';
-						$prevUrlArgs['customerId'] = $customer->getId();
+						$prevUrlArgs['customerId'] = $customerId;
 					}
 
 					$prevUrl = $this->url($key, $prevUrlArgs);
@@ -104,9 +104,9 @@
 
 					$key = 'questionnaire/view';
 
-					if (isset($customer)) {
+					if (isset($customerId)) {
 						$key = 'questionnaire/complete';
-						$prevUrlArgs['customerId'] = $customer->getId();
+						$prevUrlArgs['customerId'] = $customerId;
 					}
 
 					$prevUrl = $this->url($key, $prevUrlArgs);

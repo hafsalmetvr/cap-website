@@ -774,6 +774,7 @@ DROP TABLE IF EXISTS `organization`;
 CREATE TABLE `organization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `template_dir` varchar(255) NOT NULL DEFAULT '',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -912,6 +913,7 @@ CREATE TABLE `questionnaire` (
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `questions_per_page` int(11) NOT NULL DEFAULT 10,
+  `template_dir` varchar(255) NOT NULL DEFAULT '',
   `organization_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

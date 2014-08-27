@@ -348,9 +348,12 @@ class QuestionnaireController extends AbstractActionController {
      * - compute results: avg
      *
      */
+	  $questionnaire = $entityManager->getRepository("CAP\Entity\Questionnaire")->find($qId);
+    $qTemplate = $questionnaire->getTemplateDir();
 
     /* get the service for the algorithm for this organization */
     $organizationId = $customer->getDomain()->getOrganization()->getId();
+    $organizationTemplate = $customer->getDomain()->getOrganization()->getTemplateDir();
     $algorithmServiceAlias = 'cap_results_algorithm_'.$organizationId;
     $algorithm = $this->getServiceLocator()->get($algorithmServiceAlias);
     $viewArgs['results'] = $algorithm->compute($qId, $customer);
@@ -358,9 +361,12 @@ class QuestionnaireController extends AbstractActionController {
 		$logger->log( \Zend\Log\Logger::INFO, $viewArgs['top-5'] );
 
     $viewArgs['organizationId'] = $organizationId;
+    $viewArgs['organizationTemplate'] = $organizationTemplate;
     $viewArgs['questionnaireId'] = $qId;
-    $viewArgs['tmplPath']   = "cap/results/".$organizationId."/".$qId."/web/";
-		$viewArgs['partialsPath'] = "cap/results/".$organizationId."/".$qId."/partials/";
+    $viewArgs['questionnaireTemplate'] = $qTemplate;
+    $viewArgs['tmplPath']   = "cap/results/".$organizationTemplate."/".$qTemplate."/web/";
+		$viewArgs['partialsPath'] = "cap/results/".$organizationTemplate."/".$qTemplate."/partials/";
+    $viewArgs['customerId'] = $cId;
 
 		/* this questionnaire must be assigned to the person who is logged in else redirect to view */
 		$viewModel = new ViewModel($viewArgs);
@@ -395,12 +401,18 @@ class QuestionnaireController extends AbstractActionController {
 	  	}
     }
 
+	  $questionnaire = $entityManager->getRepository("CAP\Entity\Questionnaire")->find($qId);
+    $qTemplate = $questionnaire->getTemplateDir();
+
     $organizationId = $customer->getDomain()->getOrganization()->getId();
+    $organizationTemplate = $customer->getDomain()->getOrganization()->getTemplateDir();
     $viewArgs['organizationId'] = $organizationId;
+    $viewArgs['organizationTemplate'] = $organizationTemplate;
     $viewArgs['questionnaireId'] = $qId;
+    $viewArgs['questionnaireTemplate'] = $qTemplate;
+    $viewArgs['tmplPath']   = "cap/results/".$organizationTemplate."/".$qTemplate."/pdf/";
+		$viewArgs['partialsPath'] = "cap/results/".$organizationTemplate."/".$qTemplate."/partials/";
     $viewArgs['customerId'] = $cId;
-    $viewArgs['tmplPath']   = "cap/results/".$organizationId."/".$qId."/pdf/";
-		$viewArgs['partialsPath'] = "cap/results/".$organizationId."/".$qId."/partials/";
 
     $this->layout('layout/pdf/footer');
 		$viewModel = new ViewModel($viewArgs);
@@ -434,13 +446,19 @@ class QuestionnaireController extends AbstractActionController {
 	  		$viewArgs['customer'] = $customer;
 	  	}
     }
+	  $questionnaire = $entityManager->getRepository("CAP\Entity\Questionnaire")->find($qId);
+    $qTemplate = $questionnaire->getTemplateDir();
 
     $organizationId = $customer->getDomain()->getOrganization()->getId();
+    $organizationTemplate = $customer->getDomain()->getOrganization()->getTemplateDir();
+
     $viewArgs['organizationId'] = $organizationId;
+    $viewArgs['organizationTemplate'] = $organizationTemplate;
     $viewArgs['questionnaireId'] = $qId;
+    $viewArgs['questionnaireTemplate'] = $qTemplate;
+    $viewArgs['tmplPath']   = "cap/results/".$organizationTemplate."/".$qTemplate."/pdf/";
+		$viewArgs['partialsPath'] = "cap/results/".$organizationTemplate."/".$qTemplate."/partials/";
     $viewArgs['customerId'] = $cId;
-    $viewArgs['tmplPath']   = "cap/results/".$organizationId."/".$qId."/pdf/";
-		$viewArgs['partialsPath'] = "cap/results/".$organizationId."/".$qId."/partials/";
 
     $this->layout('layout/pdf/header');
 		$viewModel = new ViewModel($viewArgs);
@@ -475,12 +493,19 @@ class QuestionnaireController extends AbstractActionController {
 	  	}
     }
 
+	  $questionnaire = $entityManager->getRepository("CAP\Entity\Questionnaire")->find($qId);
+    $qTemplate = $questionnaire->getTemplateDir();
+
     $organizationId = $customer->getDomain()->getOrganization()->getId();
+    $organizationTemplate = $customer->getDomain()->getOrganization()->getTemplateDir();
+
     $viewArgs['organizationId'] = $organizationId;
+    $viewArgs['organizationTemplate'] = $organizationTemplate;
     $viewArgs['questionnaireId'] = $qId;
+    $viewArgs['questionnaireTemplate'] = $qTemplate;
+    $viewArgs['tmplPath']   = "cap/results/".$organizationTemplate."/".$qTemplate."/pdf/";
+		$viewArgs['partialsPath'] = "cap/results/".$organizationTemplate."/".$qTemplate."/partials/";
     $viewArgs['customerId'] = $cId;
-    $viewArgs['tmplPath']   = "cap/results/".$organizationId."/".$qId."/pdf/";
-		$viewArgs['partialsPath'] = "cap/results/".$organizationId."/".$qId."/partials/";
 
     $this->layout('layout/pdf/cover');
 		$viewModel = new ViewModel($viewArgs);
@@ -512,6 +537,9 @@ class QuestionnaireController extends AbstractActionController {
     	'permission' => $permission
     );
 
+	  $questionnaire = $entityManager->getRepository("CAP\Entity\Questionnaire")->find($qId);
+    $qTemplate = $questionnaire->getTemplateDir();
+
     if (isset($cId)) {
     	$customer = $entityManager->getRepository('CAP\Entity\Customer')->find($cId);
 			$viewArgs['customer'] = $customer;
@@ -534,15 +562,19 @@ class QuestionnaireController extends AbstractActionController {
 
     /* get the service for the algorithm for this organization */
     $organizationId = $customer->getDomain()->getOrganization()->getId();
+    $organizationTemplate = $customer->getDomain()->getOrganization()->getTemplateDir();
+
     $algorithmServiceAlias = 'cap_results_algorithm_'.$organizationId;
     $algorithm = $this->getServiceLocator()->get($algorithmServiceAlias);
     $viewArgs['results'] = $algorithm->compute($qId, $customer);
-    $viewArgs['organizationId'] = $organizationId;
-    $viewArgs['questionnaireId'] = $qId;
-    $viewArgs['customerId'] = $cId;
-    $viewArgs['tmplPath']   = "cap/results/".$organizationId."/".$qId."/pdf/";
-		$viewArgs['partialsPath'] = "cap/results/".$organizationId."/".$qId."/partials/";
 
+    $viewArgs['organizationId'] = $organizationId;
+    $viewArgs['organizationTemplate'] = $organizationTemplate;
+    $viewArgs['questionnaireId'] = $qId;
+    $viewArgs['questionnaireTemplate'] = $qTemplate;
+    $viewArgs['tmplPath']   = "cap/results/".$organizationTemplate."/".$qTemplate."/pdf/";
+		$viewArgs['partialsPath'] = "cap/results/".$organizationTemplate."/".$qTemplate."/partials/";
+    $viewArgs['customerId'] = $cId;
 
 		/* this questionnaire must be assigned to the person who is logged in else redirect to view */
     $viewRenderer = $this->serviceLocator->get('view_manager')->getRenderer();

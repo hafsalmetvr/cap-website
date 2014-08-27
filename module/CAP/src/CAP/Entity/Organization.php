@@ -34,6 +34,15 @@ class Organization {
         return $this->name;
     }
     /**
+     * @var string
+     *
+     * @ORM\Column(name="template_dir", type="string", length=255, nullable=false)
+     */
+    private $templateDir;
+    public function getTemplateDir() {
+        return $this->templateDir;
+    }
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime", nullable=false)
