@@ -61,7 +61,7 @@
 					/* there are no results to view if there's no customer */
 					if (isset($customer)) {
 						$nextUrlArgs['customerId'] = $customer->getId();
-						$nextUrl = $this->url('questionnaire/results', $nextUrlArgs);
+						$nextUrl = $this->url('questionnaire/pdf', $nextUrlArgs);
 					} else {
 						/* what to do? send them back to summary? or nothing? */
 					}
