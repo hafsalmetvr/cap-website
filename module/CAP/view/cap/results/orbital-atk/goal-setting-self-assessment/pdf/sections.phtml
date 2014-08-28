@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="footer-chart-container clearfix">
-					<div class="footer-chart-heading pull-right">CATEGORY SELF SCORE (<?php echo $results['score'][$s['id']]['average'] ?>)</div>
+					<div class="footer-chart-heading pull-right">CATEGORY SELF SCORE (<?php echo $results['score'][$s['sectionNumber']]['average'] ?>)</div>
 					<div class="footer-chart chart">
 						<div class="chart-scale">
 							<div class="clearfix">
@@ -32,7 +32,7 @@
 						<div class="chart-bars">
 							<div class="chart-row clearfix">
 								<div class="chart-bar pull-left">
-									<?php $width = ($results['score'][$s['id']]['average'] * 20) ?>
+									<?php $width = ($results['score'][$s['sectionNumber']]['average'] * 20) ?>
 									<div class="bar" style="height:8px; width:<?php echo $width ?>%;background-color:#CCC"></div>
 								</div>
 							</div>
@@ -106,7 +106,7 @@
 	</div>
 </div>
 
-<?php echo $this->partial($tmplPath."section/".$s['id'], array('section' => $s)); ?>
+<?php echo $this->partial($tmplPath."section/".$s['sectionNumber'], array('section' => $s)); ?>
 
 <?php
 

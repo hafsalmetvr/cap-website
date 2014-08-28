@@ -18,18 +18,33 @@ class QuestionnaireController extends AbstractRestfulController {
 	public function get( $id ) {
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
 		$logger->log( \Zend\Log\Logger::INFO, "Rest call to GET /mentor/".$id );
+    $cId = $this->params()->fromRoute('customerId');
+    $qService = $this->getServiceLocator()->get( 'cap_questionnaire_service' );
 
 		/* must be logged in & must be either admin or a mentee of this mentor */
 		if ( !$this->identity() ) {
 			return JsonModel( array() );
 		}
 
-		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $p = $qService->checkPermissions($id, $cId, $this->identity());
+    if (!$p) {
+      return new JsonModel();
+    }
 
-		/* if not admin make sure this is a parent of the current logged in customer */
-		if ($this->identity()->getRole()->getName() !== "Admin") {
-			/* make sure this customer has the saq in customer_questionnaire */
-	  }
+		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $q = $e->createQuery( "SELECT q FROM CAP\Entity\Questionnaire q WHERE q.id = :questionnaireId" )
+           ->setParameter('questionnaireId', $id)
+           ->getResult( \Doctrine\ORM\Query::HYDRATE_ARRAY );
+
+    $cq = $e->createQuery("SELECT cq.id, cq.completed, cs.name as completionStatus FROM CAP\Entity\CustomerQuestionnaire cq JOIN CAP\Entity\CompletionStatus cs WHERE cs.id = cq.completionStatus AND cq.customer = :customerId AND cq.questionnaire = :questionnaireId")
+            ->setParameter('questionnaireId', $id)
+            ->setParameter('customerId', $cId)
+            ->getResult( \Doctrine\ORM\Query::HYDRATE_ARRAY );
+
+    $q[0]['completed'] = $cq[0]['completed'];
+    $q[0]['completionStatus'] = $cq[0]['completionStatus'];
+
+    return new JsonModel($q[0]);
 
 	}
 
@@ -43,7 +58,7 @@ class QuestionnaireController extends AbstractRestfulController {
 		$logger->log( \Zend\Log\Logger::INFO, "Rest call to /customer" );
 
 		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
-		$r = $e->createQuery( "SELECT q FROM CAP\Entity\Questionnaire q" )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+    $r = $e->createQuery( "SELECT q FROM CAP\Entity\Questionnaire q" )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
 		$results = array();
 

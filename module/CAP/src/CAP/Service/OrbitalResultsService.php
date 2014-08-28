@@ -34,7 +34,14 @@ class OrbitalResultsService {
 			'Most of the time' => 1
 		);
 
-
+		$six = array(
+			'0' => 0,
+			'1' => 1,
+			'2' => 2,
+			'3' => 3,
+			'4' => 4,
+			'5' => 5,
+		);
 		/* questionnaire->templateDir => sectionNumber => answerId */
 		$scoringMap = array(
 			'goal-setting-self-assessment' => array(
@@ -77,7 +84,104 @@ class OrbitalResultsService {
 				),
 			),
 			'communication-self-assessment' => array(
-				1 => array(	)
+				1 => array(
+					1 => $six,
+					2 => $six,
+					3 => $six,
+					4 => $six,
+					5 => $six,
+					6 => $six,
+					7 => $six,
+					8 => $six,
+					9 => $six,
+					10 => $six,
+					11 => $six,
+					12 => $six
+				),
+				2 => array(
+					1 => $six,
+					2 => $six,
+					3 => $six,
+					4 => $six,
+					5 => $six,
+					6 => $six,
+					7 => $six,
+					8 => $six,
+					9 => $six,
+					10 => $six,
+					11 => $six,
+					12 => $six
+				),
+				3 => array(
+					1 => $six,
+					2 => $six,
+					3 => $six,
+					4 => $six,
+					5 => $six,
+					6 => $six,
+					7 => $six,
+					8 => $six,
+					9 => $six,
+					10 => $six,
+					11 => $six,
+					12 => $six
+				),
+				4 => array(
+					1 => $six,
+					2 => $six,
+					3 => $six,
+					4 => $six,
+					5 => $six,
+					6 => $six,
+					7 => $six,
+					8 => $six,
+					9 => $six,
+					10 => $six,
+					11 => $six,
+					12 => $six
+				),
+				5 => array(
+					1 => $six,
+					2 => $six,
+					3 => $six,
+					4 => $six,
+					5 => $six,
+					6 => $six,
+					7 => $six,
+					8 => $six,
+					9 => $six,
+					10 => $six,
+					11 => $six,
+					12 => $six
+				),
+				6 => array(
+					1 => $six,
+					2 => $six,
+					3 => $six,
+					4 => $six,
+					5 => $six,
+					6 => $six,
+					7 => $six,
+					8 => $six,
+					9 => $six,
+					10 => $six,
+					11 => $six,
+					12 => $six
+				),
+				7 => array(
+					1 => $six,
+					2 => $six,
+					3 => $six,
+					4 => $six,
+					5 => $six,
+					6 => $six,
+					7 => $six,
+					8 => $six,
+					9 => $six,
+					10 => $six,
+					11 => $six,
+					12 => $six
+				)
 			)
 		);
 
@@ -135,11 +239,10 @@ class OrbitalResultsService {
 			foreach ($res['questions'][$s['id']] as $q) {
 				foreach ($res['answers'][$q['questionId']] as $a) {
 					$points = $scoringMap[$qTemplate][$s['sectionNumber']][$a['answerNumber']][$a['name']];
-					//$logger->log( \Zend\Log\Logger::INFO, "points for ".$s['id']." ".$a['answerId']." ".$points );
 					$score[$s['sectionNumber']]['count']++;
 					$score[$s['sectionNumber']]['tally'] += $points;
 					$score[$s['sectionNumber']]['answers'][$a['answerNumber']] = $points;
-					$tmp = array('answer' =>$a, 'section' => $s, 'score' => $points);
+					$tmp = array('answer' => $a, 'section' => $s, 'score' => $points);
 					$allAnswers[] = $tmp;
 				}
 			}

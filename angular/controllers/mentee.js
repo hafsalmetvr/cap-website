@@ -153,6 +153,7 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$window', 
 controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay', '$window',
 	function($scope, $element, $http, $timeout, $cookies, customer, overlay, $window) {
     $scope.confirmContinue = false;
+    $scope.inProgress = false;
 
     overlay.message('loading questions...').loading(true).show();
     $scope.init = function(qId, sectionNumber, pageNumber, cId) {
@@ -162,16 +163,27 @@ controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', 
       $scope.cId = cId;
     };
 
-    $scope.continue = function(nextUrl, qCompletionStatus, sCompletionStatus) {
+    $scope.continue = function(nextUrl, qId, cId) {
       $scope.nextUrl = nextUrl;
+      $scope.inProgress = true;
+      $http.get('/rest/questionnaire/'+qId+'/'+cId).success(function(data, status) {
+        console.log(data);
 
-      if (sCompletionStatus === "COMPLETED" && qCompletionStatus === "COMPLETED") {
-        console.log('show modal');
-        /* display a confirmation before continuing */
-        $('#confirm-continue-modal').modal('show');
-      } else {
-        $window.location.href = $scope.nextUrl;
-      }
+        if (data['completionStatus'] === "COMPLETED") {
+          $scope.inProgress = false;
+          console.log('show modal');
+          /* display a confirmation before continuing */
+          $('#confirm-continue-modal').modal('show');
+        } else {
+          $window.location.href = $scope.nextUrl;
+        }
+
+      }).error(function(data, status){
+        console.log(data);
+        //$window.location.href = $scope.nextUrl;
+      });
+
+
     }
 
 	}

@@ -112,7 +112,7 @@ return array(
             'rest-questionnaire' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/rest/questionnaire[/:id]',
+                    'route' => '/rest/questionnaire[/:id][/:customerId]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
@@ -120,20 +120,13 @@ return array(
                         'controller' => 'CAP\Controller\Rest\Questionnaire',
                     )
                 ),
+                'may_terminate' => true,
             ),
 
             'rest-questionnaire-status' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/rest/questionnaire-status[/:questionnaireId][/:sectionNumber][
-
-
-
-
-
-
-
-                    /:customerId]',
+                    'route' => '/rest/questionnaire-status[/:questionnaireId][/:sectionNumber][/:customerId]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),

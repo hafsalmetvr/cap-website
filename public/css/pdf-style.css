@@ -7878,46 +7878,100 @@ h3 {
 .chart-small {
   width: 10% !important;
 }
+/* footer chart has become small-chart
 .footer-chart-heading {
+	position:relative;
+	right:23%;
+	top:15px;
+}
+
+.footer-chart-container {
+	height:12mm;
+
+}
+
+.footer-chart {
+	@chartHeight:10mm;
+	@chartLabelHeight:5mm;
+	margin:0 0 0 0 !important;
+	height:@chartHeight;
+	width:15%;
+	position:absolute;
+	right:10mm;
+
+	.chart-scale {
+		height:@chartHeight;
+		.chart-heading-space {
+			height:@chartHeight;
+		}
+
+		.chart-columns {
+			.chart-col-line {
+				height:6mm;
+			}
+		}
+		.chart-label-space {
+			height: @chartLabelHeight;
+		}
+		.chart-labels {
+			right:-.5mm;
+			font-weight:bold;
+			font-size:3mm;
+
+			.chart-label {
+				height:@chartLabelHeight;
+			}
+		}
+	}
+	.chart-bars {
+		top:1mm;
+		height:@chartHeight;
+		.chart-row {
+			padding:6mm 0;
+		}
+	}
+}
+*/
+.small-chart-heading {
   position: relative;
   right: 23%;
   top: 15px;
 }
-.footer-chart-container {
+.small-chart-container {
   height: 12mm;
 }
-.footer-chart {
+.small-chart {
   margin: 0 0 0 0 !important;
   height: 10mm;
   width: 15%;
   position: absolute;
   right: 10mm;
 }
-.footer-chart .chart-scale {
+.small-chart .chart-scale {
   height: 10mm;
 }
-.footer-chart .chart-scale .chart-heading-space {
+.small-chart .chart-scale .chart-heading-space {
   height: 10mm;
 }
-.footer-chart .chart-scale .chart-columns .chart-col-line {
+.small-chart .chart-scale .chart-columns .chart-col-line {
   height: 6mm;
 }
-.footer-chart .chart-scale .chart-label-space {
+.small-chart .chart-scale .chart-label-space {
   height: 5mm;
 }
-.footer-chart .chart-scale .chart-labels {
+.small-chart .chart-scale .chart-labels {
   right: -0.5mm;
   font-weight: bold;
   font-size: 3mm;
 }
-.footer-chart .chart-scale .chart-labels .chart-label {
+.small-chart .chart-scale .chart-labels .chart-label {
   height: 5mm;
 }
-.footer-chart .chart-bars {
+.small-chart .chart-bars {
   top: 1mm;
   height: 10mm;
 }
-.footer-chart .chart-bars .chart-row {
+.small-chart .chart-bars .chart-row {
   padding: 6mm 0;
 }
 .introduction {
@@ -7934,7 +7988,7 @@ h3 {
   height: 20mm;
 }
 .section .section-content-container {
-  border: 1px solid #333333;
+  border: 0.5mm solid #333333;
 }
 .section .section-content-container h2 {
   padding: 8mm 0 0 0;
@@ -8021,4 +8075,181 @@ h3 {
 }
 .top-report .top-list {
   padding: 10px 0;
+}
+.communication-self-assessment .section-interpretation {
+  min-height: 260mm;
+}
+.communication-self-assessment .section-page h2 {
+  margin: 4mm 0;
+  padding: 0;
+}
+.communication-self-assessment .section-page p {
+  margin-top: 5mm;
+}
+.communication-self-assessment .section-page .section-writeup {
+  margin-top: 0;
+}
+.communication-self-assessment .answer-col {
+  width: 16% !important;
+}
+.communication-self-assessment .answer-label {
+  width: 16% !important;
+}
+.communication-self-assessment .chart-col-line {
+  width: 16% !important;
+  border-right: none !important;
+  border-left: 0.5mm solid #b3b3b3 !important;
+}
+.communication-self-assessment .chart-labels {
+  right: 1mm !important;
+}
+.communication-self-assessment .chart-label {
+  width: 16% !important;
+  text-align: left !important;
+}
+.communication-self-assessment .section-answers {
+  border: 0.5mm solid #333333;
+  padding: 4mm;
+}
+.communication-self-assessment .answer-container {
+  position: relative;
+}
+.communication-self-assessment .answer-container .chart-scale {
+  position: absolute;
+  width: 100%;
+}
+.communication-self-assessment .answer-container .answer-col-space {
+  width: 45%;
+  height: 200mm;
+}
+.communication-self-assessment .answer-container .answer-columns {
+  width: 50%;
+  height: 80mm;
+}
+.communication-self-assessment .answer-container .answer-columns .answer-col {
+  float: left;
+  border-right: none !important;
+  border-left: 0.5mm solid #b3b3b3 !important;
+  height: 200mm;
+  width: 20%;
+}
+.communication-self-assessment .answer-container .answer-content {
+  height: 200mm;
+}
+.communication-self-assessment .answer-container .answer {
+  position: relative;
+  /* take this out if you want the lines in front of the bars */
+  padding-top: 5mm;
+  padding-bottom: 2mm;
+}
+.communication-self-assessment .answer-container .answer .answer-number {
+  width: 5%;
+}
+.communication-self-assessment .answer-container .answer .answer-text {
+  width: 95%;
+  padding: 0 4mm;
+}
+.communication-self-assessment .answer-container .answer .answer-heading {
+  width: 45%;
+  padding: 0;
+}
+.communication-self-assessment .answer-container .answer .answer-bar-container {
+  width: 50%;
+}
+.communication-self-assessment .answer-container .answer .answer-bar-container .answer-bar {
+  height: 4.5mm;
+  background-color: #9999ff;
+  border: 0.5mm solid #333333;
+}
+.communication-self-assessment .answer-container .answer-labels-container {
+  position: relative;
+  right: 1mm;
+  margin-top: 2mm;
+  height: 10mm;
+}
+.communication-self-assessment .answer-container .answer-labels-container .answer-label-space {
+  width: 45%;
+  height: 4mm;
+}
+.communication-self-assessment .answer-container .answer-labels-container .answer-labels {
+  width: 50%;
+  height: 4mm;
+}
+.communication-self-assessment .answer-container .answer-labels-container .answer-labels .answer-label {
+  width: 20%;
+  float: left;
+  text-align: left;
+}
+.communication-self-assessment .answer-container .answer-key {
+  padding: 0;
+}
+.communication-self-assessment .chart-large {
+  margin-bottom: 10mm;
+}
+.communication-self-assessment .chart-large .chart-scale {
+  height: 100mm;
+}
+.communication-self-assessment .chart-large .chart-scale .chart-heading-space {
+  height: 100mm;
+}
+.communication-self-assessment .chart-large .chart-scale .chart-columns .chart-col-line {
+  height: 100mm;
+}
+.communication-self-assessment .chart-large .chart-scale .chart-label-space {
+  height: 8mm;
+}
+.communication-self-assessment .chart-large .chart-scale .chart-labels {
+  right: -1mm;
+}
+.communication-self-assessment .chart-large .chart-scale .chart-labels .chart-label {
+  height: 8mm;
+  margin-top: 2mm;
+}
+.communication-self-assessment .chart-large .chart-bars {
+  height: 100mm;
+}
+.communication-self-assessment .chart-large .chart-bars .chart-row {
+  padding: 4mm 0;
+}
+.communication-self-assessment .small-chart-heading {
+  position: relative;
+  right: 23%;
+  top: 15px;
+}
+.communication-self-assessment .small-chart-container {
+  height: 12mm;
+}
+.communication-self-assessment .small-chart {
+  margin: 0 0 0 0 !important;
+  height: 10mm;
+  width: 15%;
+  position: absolute;
+  right: 10mm;
+}
+.communication-self-assessment .small-chart .chart-scale {
+  height: 10mm;
+}
+.communication-self-assessment .small-chart .chart-scale .chart-heading-space {
+  height: 10mm;
+}
+.communication-self-assessment .small-chart .chart-scale .chart-columns .chart-col-line {
+  height: 6mm;
+}
+.communication-self-assessment .small-chart .chart-scale .chart-label-space {
+  height: 5mm;
+}
+.communication-self-assessment .small-chart .chart-scale .chart-labels {
+  right: 1mm;
+  font-weight: bold;
+  font-size: 3mm;
+}
+.communication-self-assessment .small-chart .chart-scale .chart-labels .chart-label {
+  height: 5mm;
+}
+.communication-self-assessment .small-chart .chart-bars {
+  top: 1mm;
+  height: 10mm;
+}
+.communication-self-assessment .small-chart .chart-bars .chart-row {
+  padding: 6mm 0;
 }

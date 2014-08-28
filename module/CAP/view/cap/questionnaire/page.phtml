@@ -119,7 +119,7 @@
 			</div>
 			<?php if (!is_null($nextUrl)) { ?>
 		  	<div class="col-xs-6">
-	        <button ng-click="continue('<?php echo $nextUrl; ?>','<?php echo $questionnaireCompletionStatus ? $questionnaireCompletionStatus : null ?>','<?php echo $sectionCompletionStatus ? $sectionCompletionStatus : null ?>')" class="btn btn-primary form-control"><?php echo isset($lastPage) ? "Finished" : "Continue"; ?></a>
+	        <button ng-click="continue('<?php echo $nextUrl; ?>','<?php echo $questionnaire->getId(); ?>','<?php echo $customerId; ?>')" class="btn btn-primary form-control"><?php echo isset($lastPage) ? "Finished" : "Continue"; ?></button>
 		  	</div>
 		  <?php } ?>
 	  </div>

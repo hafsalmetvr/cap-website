@@ -327,4 +327,4 @@ insert into answer_enum_map (answer_id, answer_enum_id, answer_enum_order) value
 insert into answer_enum_map (answer_id, answer_enum_id, answer_enum_order) values (@answer_id, @often, 4);
 insert into answer_enum_map (answer_id, answer_enum_id, answer_enum_order) values (@answer_id, @most, 5);
 
-SET FOREIGN_KEY_CHECKS 1;
+SET FOREIGN_KEY_CHECKS = 1;

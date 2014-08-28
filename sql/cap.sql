@@ -229,7 +229,12 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` (email,domain_id,role_id,name,password,status_id) VALUES ('kwalpole@go-optimum.com',0,1,'Kim Walpole','$2y$10$hxluqSwKn1A5ydOBf/BB0Oe1NH6PBt9xx/bRDm5Vfb0ZIoux4l1VS',1),('tom@eighty.co',0,1,'Tom Walpole','$2y$10$hxluqSwKn1A5ydOBf/BB0Oe1NH6PBt9xx/bRDm5Vfb0ZIoux4l1VS',1);
+INSERT INTO `customer` (email,domain_id,role_id,name,password,status_id) VALUES
+('kwalpole@go-optimum.com',0,1,'Kim Walpole','$2y$10$hxluqSwKn1A5ydOBf/BB0Oe1NH6PBt9xx/bRDm5Vfb0ZIoux4l1VS',1),
+('demo-admin@go-optimum.com',1,1,'Demo Admin','$2y$10$bgNH98TWY9BCpP79Dg8AOu7r7z9UvR/atrdXONC2dVkQdjhV.Wzia',1),
+('demo-mentor@go-optimum.com',1,2,'Demo Mentor','$2y$10$/VUVit1FoYkDl1fCyDoGpuVC2oXGzYFof0/mG1KkYGqhnHv838xTq',1),
+('demo-mentee@go-optimum.com',1,3,'Demo Mentee','$2y$10$zXflcw3.BuBCbFerdq.YTOd3mffFqH01tAUXpnfo/GkrmaUSBuDFC',1);
+
 
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;

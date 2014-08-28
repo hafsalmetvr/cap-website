@@ -1,0 +1,46 @@
+<div class="row">
+	<div class="col-xs-12">
+		<h3><?php echo $s['name']; ?></h3>
+	</div>
+</div>
+
+<div class="answer-container">
+	<div class="chart-scale clearfix">
+		<div class="answer-col-space pull-left"></div>
+		<div class="answer-columns clearfix pull-left">
+			<div class="answer-col"></div>
+			<div class="answer-col"></div>
+			<div class="answer-col"></div>
+			<div class="answer-col"></div>
+			<div class="answer-col"></div>
+			<div class="answer-col"></div>
+		</div>
+	</div>
+	<div class="answer-content">
+		<?php foreach ($results['questions'][$s['id']] as $q) { ?>
+			<?php foreach ($results['answers'][$q['questionId']] as $a) { ?>
+				<div class="answer clearfix">
+					<div class="answer-heading pull-left clearfix">
+						<div class="answer-number pull-left"><?php echo $a['answerNumber'].".&nbsp;"; ?></div>
+						<div class="answer-text pull-left"><?php echo $a['answerText']; ?></div>
+					</div>
+					<div class="answer-bar-container pull-left">
+						<?php $width = ($results['score'][$s['sectionNumber']]['answers'][$a['answerNumber']] * 16) ?>
+						<div class="answer-bar" style="width:<?php echo $width; ?>%"></div>
+					</div>
+				</div>
+			<?php } ?>
+		<?php } ?>
+	</div>
+	<div class="answer-labels-container clearfix">
+		<div class="answer-label-space pull-left"></div>
+		<div class="answer-labels pull-left clearfix text-right">
+			<div class="answer-label">0</div>
+			<div class="answer-label">1</div>
+			<div class="answer-label">2</div>
+			<div class="answer-label">3</div>
+			<div class="answer-label">4</div>
+			<div class="answer-label">5</div>
+		</div>
+	</div>
+</div>
