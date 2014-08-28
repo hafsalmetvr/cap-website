@@ -13,30 +13,31 @@ class OrbitalResultsService {
 		return $this->sl;
 	}
 
-	public function compute($qId, $customer) {
+	public function compute($qId, $qTemplate, $customer) {
 		$logger        = $this->getServiceLocator()->get( 'Log\App' );
 		$e = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
 		/* answer id -> point value for enum */
 		$ascending = array(
-			1 => 1,
-			2 => 2,
-			3 => 3,
-			4 => 4,
-			5 => 5
+			'Almost Never'     => 1,
+			'Rarely'           => 2,
+			'Sometimes'        => 3,
+			'Often'            => 4,
+			'Most of the time' => 5
 		);
 
 		$descending = array(
-			1 => 5,
-			2 => 4,
-			3 => 3,
-			4 => 2,
-			5 => 1
+			'Almost Never'     => 5,
+			'Rarely'           => 4,
+			'Sometimes'        => 3,
+			'Often'            => 2,
+			'Most of the time' => 1
 		);
 
-		/* questionnaireId => sectionId => answerId */
+
+		/* questionnaire->templateDir => sectionNumber => answerId */
 		$scoringMap = array(
-			1 => array(
+			'goal-setting-self-assessment' => array(
 				1 => array(
 					1 => $descending,
 					2 => $ascending,
@@ -51,30 +52,33 @@ class OrbitalResultsService {
 					11 => $ascending,
 				),
 				2 => array(
-					12 => $descending,
-					13 => $ascending,
-					14 => $ascending,
-					15 => $descending,
-					16 => $descending,
-					17 => $ascending,
-					18 => $ascending,
-					19 => $descending,
-					20 => $ascending,
-					21 => $ascending,
+					1 => $descending,
+					2 => $ascending,
+					3 => $ascending,
+					4 => $descending,
+					5 => $descending,
+					6 => $ascending,
+					7 => $ascending,
+					8 => $descending,
+					9 => $ascending,
+					10 => $ascending,
 				),
 				3 => array(
-					22 => $descending,
-					23 => $descending,
-					24 => $descending,
-					25 => $ascending,
-					26 => $ascending,
-					27 => $descending,
-					28 => $descending,
-					29 => $descending,
-					30 => $descending,
-					31 => $ascending,
+					1 => $descending,
+					2 => $descending,
+					3 => $descending,
+					4 => $ascending,
+					5 => $ascending,
+					6 => $descending,
+					7 => $descending,
+					8 => $descending,
+					9 => $descending,
+					10 => $ascending,
 				),
 			),
+			'communication-self-assessment' => array(
+				1 => array(	)
+			)
 		);
 
 
@@ -127,21 +131,21 @@ class OrbitalResultsService {
 
 		$score = array('tally' => 0,'average' => 0, 'count' => 0);
 		foreach ($res['sections'] as $s) {
-			$score[$s['id']] = array('count' => 0, 'tally' => 0, 'average' => 0, 'answers' => array());
+			$score[$s['sectionNumber']] = array('count' => 0, 'tally' => 0, 'average' => 0, 'answers' => array());
 			foreach ($res['questions'][$s['id']] as $q) {
 				foreach ($res['answers'][$q['questionId']] as $a) {
-					$points = $scoringMap[$qId][$s['id']][$a['answerId']][$a['answerEnumId']];
+					$points = $scoringMap[$qTemplate][$s['sectionNumber']][$a['answerNumber']][$a['name']];
 					//$logger->log( \Zend\Log\Logger::INFO, "points for ".$s['id']." ".$a['answerId']." ".$points );
-					$score[$s['id']]['count']++;
-					$score[$s['id']]['tally'] += $points;
-					$score[$s['id']]['answers'][$a['answerId']] = $points;
+					$score[$s['sectionNumber']]['count']++;
+					$score[$s['sectionNumber']]['tally'] += $points;
+					$score[$s['sectionNumber']]['answers'][$a['answerNumber']] = $points;
 					$tmp = array('answer' =>$a, 'section' => $s, 'score' => $points);
 					$allAnswers[] = $tmp;
 				}
 			}
-			$score[$s['id']]['average'] = number_format( ($score[$s['id']]['tally'] / $score[$s['id']]['count']), 2);
-			$score['tally'] += $score[$s['id']]['tally'];
-			$score['count'] += $score[$s['id']]['count'];
+			$score[$s['sectionNumber']]['average'] = number_format( ($score[$s['sectionNumber']]['tally'] / $score[$s['sectionNumber']]['count']), 2);
+			$score['tally'] += $score[$s['sectionNumber']]['tally'];
+			$score['count'] += $score[$s['sectionNumber']]['count'];
 		}
 		$score['average'] = number_format( ($score['tally'] / $score['count']), 2 );
 		$res['score'] = $score;

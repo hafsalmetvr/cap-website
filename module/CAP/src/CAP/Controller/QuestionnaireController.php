@@ -356,7 +356,7 @@ class QuestionnaireController extends AbstractActionController {
     $organizationTemplate = $customer->getDomain()->getOrganization()->getTemplateDir();
     $algorithmServiceAlias = 'cap_results_algorithm_'.$organizationId;
     $algorithm = $this->getServiceLocator()->get($algorithmServiceAlias);
-    $viewArgs['results'] = $algorithm->compute($qId, $customer);
+    $viewArgs['results'] = $algorithm->compute($qId, $qTemplate, $customer);
 
 		$logger->log( \Zend\Log\Logger::INFO, $viewArgs['top-5'] );
 
@@ -566,8 +566,8 @@ class QuestionnaireController extends AbstractActionController {
 
     $algorithmServiceAlias = 'cap_results_algorithm_'.$organizationId;
     $algorithm = $this->getServiceLocator()->get($algorithmServiceAlias);
-    $viewArgs['results'] = $algorithm->compute($qId, $customer);
-
+    $viewArgs['results'] = $algorithm->compute($qId, $qTemplate, $customer);
+		$logger->log( \Zend\Log\Logger::INFO, $viewArgs['results'] );
     $viewArgs['organizationId'] = $organizationId;
     $viewArgs['organizationTemplate'] = $organizationTemplate;
     $viewArgs['questionnaireId'] = $qId;
