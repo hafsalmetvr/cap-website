@@ -85,10 +85,10 @@ class QuestionnaireController extends AbstractActionController {
 
 			foreach ($customerSections as $cs) {
 				$section = $cs->getSection();
-				$logger->log( \Zend\Log\Logger::INFO, "got questionnaire: " . $section->getName());
+				$logger->log( \Zend\Log\Logger::INFO, "got section: " . $section->getName());
 
 				$questionCount = $qService->getQuestionCountBySection($qId, $section->getSectionNumber());
-
+				$logger->log( \Zend\Log\Logger::INFO, "got question count:" . $questionCount);
 				$completedQuestionCount = $qService->getCompletedQuestionCountBySection($qId, $section->getSectionNumber(), $cs->getCustomer()->getId());
 
 				$percentComplete = 0;

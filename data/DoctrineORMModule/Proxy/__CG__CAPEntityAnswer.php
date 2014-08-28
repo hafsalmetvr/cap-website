@@ -64,10 +64,10 @@ class Answer extends \CAP\Entity\Answer implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerNumber', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerText', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerOrder', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'question');
+            return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerNumber', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerText', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerOrder', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'question', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'questionId');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerNumber', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerText', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerOrder', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'question');
+        return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerNumber', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerText', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'answerOrder', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'question', '' . "\0" . 'CAP\\Entity\\Answer' . "\0" . 'questionId');
     }
 
     /**

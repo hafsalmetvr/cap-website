@@ -138,7 +138,7 @@ class AnswerController extends AbstractRestfulController {
     }
 
     /* update the status for the question */
-    $cq = $e->getRepository("CAP\Entity\CustomerQuestion")->findOneBy( array('id' => $data['questionId'],
+    $cq = $e->getRepository("CAP\Entity\CustomerQuestion")->findOneBy( array('question' => $data['questionId'],
                                                                              'customer' => $data['customerId'] ) );
 
 
@@ -147,7 +147,7 @@ class AnswerController extends AbstractRestfulController {
     if ($cq->getQuestion()->getAnswerType() == 'ENUM') {
       /* make sure all the answers are answered */
       foreach ($data['answers'] as $answerData) {
-        if (is_null($answerData['answerEnumId'])) {
+        if (!isset($answerData['answerEnumId']) || is_null($answerData['answerEnumId'])) {
           $statusToSet = 'NOT COMPLETED';
           break;
         }
@@ -219,8 +219,11 @@ class AnswerController extends AbstractRestfulController {
       }
 
       /* set section status */
-      $cs = $e->getRepository("CAP\Entity\CustomerSection")->findOneBy( array('id' => $sectionId,
+      $cs = $e->getRepository("CAP\Entity\CustomerSection")->findOneBy( array('section' => $sectionId,
                                                                               'customer' => $data['customerId'] ) );
+
+      $logger->log( \Zend\Log\Logger::INFO, $sectionId );
+      $logger->log( \Zend\Log\Logger::INFO, $data['customerId'] );
 
       $cs->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => $sectionStatusToSet) ) );
       if ($sectionStatusToSet === 'COMPLETED') {
@@ -241,7 +244,7 @@ class AnswerController extends AbstractRestfulController {
       $questionnaireStatusToSet = 'COMPLETED';
     }
     /* set section status */
-    $cqr = $e->getRepository("CAP\Entity\CustomerQuestionnaire")->findOneBy( array('id' => $questionnaireId,
+    $cqr = $e->getRepository("CAP\Entity\CustomerQuestionnaire")->findOneBy( array('questionnaire' => $questionnaireId,
                                                                             'customer' => $data['customerId'] ) );
 
     $cqr->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => $questionnaireStatusToSet) ) );

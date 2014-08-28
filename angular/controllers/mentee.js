@@ -165,7 +165,8 @@ controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', 
     $scope.continue = function(nextUrl, qCompletionStatus, sCompletionStatus) {
       $scope.nextUrl = nextUrl;
 
-      if (sCompletionStatus === "COMPLETED" && qCompletionStatus !== "COMPLETED") {
+      if (sCompletionStatus === "COMPLETED" && qCompletionStatus === "COMPLETED") {
+        console.log('show modal');
         /* display a confirmation before continuing */
         $('#confirm-continue-modal').modal('show');
       } else {

@@ -125,11 +125,16 @@ class QuestionnaireService {
 																	 ->getSingleScalarResult();
 																	//->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT ) );
 
+		$logger        = $this->getServiceLocator()->get( 'Log\App' );
+		$logger->log( \Zend\Log\Logger::INFO, "questioncount not enum".$questionCount );
+
 		/* now add the count of answers for each enum question in this section */
-		$enumCount = $entityManager->createQuery("SELECT count(a.id) from CAP\Entity\Answer a JOIN a.question q WHERE q.answerType = 'ENUM' AND q.section = :sectionNumber AND q.questionnaire = :questionnaireId")
+		$enumCount = $entityManager->createQuery("SELECT count(a.id) from CAP\Entity\Answer a JOIN a.question q JOIN q.section s WHERE q.answerType = 'ENUM' AND s.sectionNumber = :sectionNumber AND q.questionnaire = :questionnaireId")
 																	 ->setParameter('questionnaireId',$qId)
 																	 ->setParameter('sectionNumber',$sectionNumber)
 																	 ->getSingleScalarResult();
+
+		$logger->log( \Zend\Log\Logger::INFO, "enum count".$enumCount );
 
 		$questionCount += $enumCount;
 		return $questionCount;
