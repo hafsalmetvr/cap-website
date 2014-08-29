@@ -237,16 +237,18 @@ class OrbitalResultsService {
 		foreach ($res['sections'] as $s) {
 			$score[$s['sectionNumber']] = array('count' => 0, 'tally' => 0, 'average' => 0, 'answers' => array());
 			foreach ($res['questions'][$s['id']] as $q) {
-				foreach ($res['answers'][$q['questionId']] as $a) {
-					$points = null;
-    			if (isset($scoringMap[$qTemplate])) {
-						$points = $scoringMap[$qTemplate][$s['sectionNumber']][$a['answerNumber']][$a['name']];
-						$score[$s['sectionNumber']]['count']++;
-						$score[$s['sectionNumber']]['tally'] += $points;
-						$score[$s['sectionNumber']]['answers'][$a['answerNumber']] = $points;
+				if (isset($res['answers'][$q['questionId']])) {
+					foreach ($res['answers'][$q['questionId']] as $a) {
+						$points = null;
+	    			if (isset($scoringMap[$qTemplate])) {
+							$points = $scoringMap[$qTemplate][$s['sectionNumber']][$a['answerNumber']][$a['name']];
+							$score[$s['sectionNumber']]['count']++;
+							$score[$s['sectionNumber']]['tally'] += $points;
+							$score[$s['sectionNumber']]['answers'][$a['answerNumber']] = $points;
+						}
+						$tmp = array('answer' => $a, 'section' => $s, 'score' => $points);
+						$allAnswers[] = $tmp;
 					}
-					$tmp = array('answer' => $a, 'section' => $s, 'score' => $points);
-					$allAnswers[] = $tmp;
 				}
 			}
 			$score[$s['sectionNumber']]['average'] = number_format( ($score[$s['sectionNumber']]['tally'] / $score[$s['sectionNumber']]['count']), 2);
