@@ -8254,18 +8254,37 @@ h3 {
 .communication-self-assessment .small-chart .chart-bars .chart-row {
   padding: 6mm 0;
 }
+.mentor-profile.header-spacing,
+.mentee-profile.header-spacing {
+  height: 25mm;
+}
+.mentor-profile.header h2,
+.mentee-profile.header h2 {
+  padding: 0;
+  margin: 2mm 0;
+}
+.mentor-profile .summary,
 .mentee-profile .summary {
   height: 250mm;
 }
+.mentor-profile .sections-container .section,
+.mentee-profile .sections-container .section {
+  padding-top: 20mm;
+  height: 260mm;
+}
+.mentor-profile .sections-container h2,
 .mentee-profile .sections-container h2 {
+  text-transform: uppercase;
   margin: 4mm 0;
   padding: 0;
 }
+.mentor-profile .small-chart-heading,
 .mentee-profile .small-chart-heading {
   position: relative;
   right: 23%;
   top: 15px;
 }
+.mentor-profile .small-chart-container,
 .mentee-profile .small-chart-container {
   height: 12mm;
 }

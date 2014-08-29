@@ -60,8 +60,8 @@ directive('capFooter', ['footer',
   }
 ]).
 
-directive('answerTypeSelect', ['$http',
-  function($http) {
+directive('answerTypeSelect', ['$http', 'overlay',
+  function($http, overlay) {
     return {
       restrict: 'E',
       scope:{'percentComplete':'='},
@@ -111,15 +111,19 @@ directive('answerTypeSelect', ['$http',
             /* select can only have 1 answer */
             scope.answerId = data.customerAnswers[0].answerId;
           }
+          overlay.loading(false).hide();
+
         }).error(function(data, status){
           scope.inProgress = false;
           console.log(data);
+          overlay.loading(false).hide();
         });
 
       }
     };
   }
 ]).
+
 directive('answerTypeTextarea', ['$http', 'overlay',
   function($http, overlay) {
     return {
@@ -193,8 +197,8 @@ directive('answerTypeTextarea', ['$http', 'overlay',
     };
   }
 ]).
-directive('answerTypeText', ['$http',
-  function($http) {
+directive('answerTypeText', ['$http', 'overlay',
+  function($http, overlay) {
     return {
       restrict: 'E',
       scope:{'percentComplete':'='},
@@ -253,9 +257,13 @@ directive('answerTypeText', ['$http',
             /* textarea can only have 1 answer */
             scope.answerText = data.customerAnswers[0].answerText;
           }
+          overlay.loading(false).hide();
+
         }).error(function(data, status){
           scope.inProgress = false;
           console.log(data);
+          overlay.loading(false).hide();
+
         });
 
       }
@@ -327,9 +335,12 @@ directive('answerTypeMultiselect', ['$http', 'answer',
               });
             });
           }
+          overlay.loading(false).hide();
+
         }).error(function(data, status){
           scope.inProgress = false;
           console.log(data);
+          overlay.loading(false).hide();
         });
 
       }
@@ -337,8 +348,8 @@ directive('answerTypeMultiselect', ['$http', 'answer',
   }
 ]).
 
-directive('answerTypeCheckbox', ['$http',
-  function($http) {
+directive('answerTypeCheckbox', ['$http', 'overlay',
+  function($http, overlay) {
     return {
       restrict: 'E',
       scope:{'percentComplete':'='},
@@ -402,9 +413,12 @@ directive('answerTypeCheckbox', ['$http',
               });
             });
           }
+          overlay.loading(false).hide();
+
         }).error(function(data, status){
           scope.inProgress = false;
           console.log(data);
+          overlay.loading(false).hide();
         });
 
       }
@@ -412,8 +426,8 @@ directive('answerTypeCheckbox', ['$http',
   }
 ]).
 
-directive('answerTypeRadio', ['$http',
-  function($http) {
+directive('answerTypeRadio', ['$http', 'overlay',
+  function($http, overlay) {
     return {
       scope:{'percentComplete':'='},
       restrict: 'E',
@@ -459,7 +473,6 @@ directive('answerTypeRadio', ['$http',
           console.log(data);
           scope.answers = data.answers;
           scope.disabled = data.disabled;
-
           if (data.customerAnswers[0]) {
             console.log('got customer answers');
             /* loop through the answers and set checked to true or false depending on customer answers */
@@ -474,9 +487,11 @@ directive('answerTypeRadio', ['$http',
               });
             });
           }
+          overlay.loading(false).hide();
         }).error(function(data, status){
           scope.inProgress = false;
           console.log(data);
+          overlay.loading(false).hide();
         });
 
       }

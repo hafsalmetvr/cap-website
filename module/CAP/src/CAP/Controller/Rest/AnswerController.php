@@ -79,10 +79,10 @@ class AnswerController extends AbstractRestfulController {
         $e->flush();
       }
 
-      /* if the questionnaire is complete its read only */
+      /* if the questionnaire is complete its read only (FORMS stay writeable though */
       $customerQuestionnaire = $e->getRepository('CAP\Entity\CustomerQuestionnaire')->findOneBy(array('customer' => $cId, 'questionnaireId' => $viewArgs['question']->getQuestionnaireId()));
       $logger->log( \Zend\Log\Logger::INFO, "questionnaire completion status is: ".$customerQuestionnaire->getCompletionStatus()->getName() );
-      if ($customerQuestionnaire->getCompletionStatus()->getName() === "COMPLETED") {
+      if ($customerQuestionnaire->getCompletionStatus()->getName() === "COMPLETED" && $customerQuestionnaire->getQuestionnaire()->getType() == 'QUESTIONNAIRE') {
         $p = READ;
         $logger->log( \Zend\Log\Logger::INFO, "section is complete so making this question read only" );
       }

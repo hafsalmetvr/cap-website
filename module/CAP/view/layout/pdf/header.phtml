@@ -30,7 +30,7 @@
             //echo $this->headLink()->prependStylesheet($this->basePath() . '/css/style.css');
 
         ?>
-        <link href="http://localhost/css/pdf-style.css" media="screen" rel="stylesheet" type="text/css"/>
+        <link href="http://localhost/css/pdf-style.css" media="all" rel="stylesheet" type="text/css"/>
 
         <!-- Scripts -->
         <?php echo $this->headScript()
@@ -39,7 +39,7 @@
             //->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript')
         ; ?>
     </head>
-    <body onload="subst()">
+    <body onload="subst()" style="margin:0; padding:0;height:30mm;">
         <div class="container-fluid">
             <?php echo $this->content ?>
         </div>
