@@ -7976,6 +7976,7 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
 .login-box {
   border: 6px solid #b3b3b3;
   box-shadow: 2px 3px 3px 1px #333333;
+  margin-top: 50px;
 }
 .login-box .login-error {
   padding: 0px;
