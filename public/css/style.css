@@ -7769,6 +7769,9 @@ label {
   font-family: "Roboto", Verdana;
   margin-top: 8px;
 }
+a {
+  color: #2a6496;
+}
 a:hover {
   text-decoration: none;
 }
