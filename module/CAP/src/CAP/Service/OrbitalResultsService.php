@@ -190,8 +190,8 @@ class OrbitalResultsService {
 			'answers' => array(),
 			'questions' => array(),
 			'sections' => array(),
-			'top-5' => array(),
-			'bottom-5' => array(),
+			'top-list' => array(),
+			'bottom-list' => array(),
 		);
 
     $answers = $e->createQuery( "SELECT a.answerNumber, a.id as answerId, a.answerOrder, a.answerText, a.questionId, ae.id as answerEnumId, ae.name, ca.answerText as customerAnswerText FROM CAP\Entity\CustomerAnswer ca JOIN ca.answer a LEFT JOIN ca.answerEnum ae JOIN a.question q WHERE q.questionnaire = :questionnaireId AND ca.customer = :customerId ORDER BY a.answerOrder" )
@@ -238,10 +238,13 @@ class OrbitalResultsService {
 			$score[$s['sectionNumber']] = array('count' => 0, 'tally' => 0, 'average' => 0, 'answers' => array());
 			foreach ($res['questions'][$s['id']] as $q) {
 				foreach ($res['answers'][$q['questionId']] as $a) {
-					$points = $scoringMap[$qTemplate][$s['sectionNumber']][$a['answerNumber']][$a['name']];
-					$score[$s['sectionNumber']]['count']++;
-					$score[$s['sectionNumber']]['tally'] += $points;
-					$score[$s['sectionNumber']]['answers'][$a['answerNumber']] = $points;
+					$points = null;
+    			if (isset($scoringMap[$qTemplate])) {
+						$points = $scoringMap[$qTemplate][$s['sectionNumber']][$a['answerNumber']][$a['name']];
+						$score[$s['sectionNumber']]['count']++;
+						$score[$s['sectionNumber']]['tally'] += $points;
+						$score[$s['sectionNumber']]['answers'][$a['answerNumber']] = $points;
+					}
 					$tmp = array('answer' => $a, 'section' => $s, 'score' => $points);
 					$allAnswers[] = $tmp;
 				}

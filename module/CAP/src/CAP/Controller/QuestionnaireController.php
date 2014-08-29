@@ -245,7 +245,8 @@ class QuestionnaireController extends AbstractActionController {
 		$logger->log( \Zend\Log\Logger::INFO, 'total questions in this section: ' . count($questions));
 
 		/* if we're on the last page of this section: */
-		if (($endIndex) > (count($questions) - $viewArgs['questionnaire']->getQuestionsPerPage() - 1) ) {
+		//if (($endIndex) > (count($questions) - $viewArgs['questionnaire']->getQuestionsPerPage() - 1) ) {
+		if (($endIndex) >= (count($questions) - 1) ) {
 			/* check to make sure we're not at the last section */
 			if ($sectionNumber >= $viewArgs['totalSections']) {
 				/* we're done! */

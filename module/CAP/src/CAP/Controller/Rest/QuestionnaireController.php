@@ -85,11 +85,11 @@ class QuestionnaireController extends AbstractRestfulController {
 
 		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
 
-		if ($data['mentee']) {
+		if ($data['account']) {
 
-			/* check if this questionnaire is already assigned to this mentee */
-	    $cq = $e->createQuery( "SELECT cq FROM CAP\Entity\CustomerQuestionnaire cq WHERE cq.questionnaireId = :questionnaireId AND cq.customerId = :menteeId" )
-	    				->setParameter('menteeId',$data['mentee'])
+			/* check if this questionnaire is already assigned to this account */
+	    $cq = $e->createQuery( "SELECT cq FROM CAP\Entity\CustomerQuestionnaire cq WHERE cq.questionnaireId = :questionnaireId AND cq.customerId = :accountId" )
+	    				->setParameter('accountId',$data['account'])
 	    				->setParameter('questionnaireId',$id)
 	    				->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
@@ -104,7 +104,7 @@ class QuestionnaireController extends AbstractRestfulController {
 
         /* add section and question rows to customer_section and customer_question */
         $cq = new \CAP\Entity\CustomerQuestionnaire;
-        $cq->setCustomer( $e->find( 'CAP\Entity\Customer', $data['mentee'] ) );
+        $cq->setCustomer( $e->find( 'CAP\Entity\Customer', $data['account'] ) );
         $cq->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
         $cq->setQuestionnaire( $e->find( 'CAP\Entity\Questionnaire', $id ) );
         $e->persist( $cq );
@@ -113,7 +113,7 @@ class QuestionnaireController extends AbstractRestfulController {
         $sections = $e->getRepository("\CAP\Entity\Section")->findBy(array("questionnaire" => $id));
         foreach ($sections as $section) {
           $cs = new \CAP\Entity\CustomerSection;
-          $cs->setCustomer( $e->find( 'CAP\Entity\Customer', $data['mentee'] ) );
+          $cs->setCustomer( $e->find( 'CAP\Entity\Customer', $data['account'] ) );
           $cs->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
           $cs->setSection( $e->find( 'CAP\Entity\Section', $section->getId() ) );
           $cs->setCreated($now);
@@ -124,7 +124,7 @@ class QuestionnaireController extends AbstractRestfulController {
         $questions = $e->getRepository("\CAP\Entity\Question")->findBy(array("questionnaire" => $id));
         foreach ($questions as $q) {
           $cq2 = new \CAP\Entity\CustomerQuestion;
-          $cq2->setCustomer( $e->find( 'CAP\Entity\Customer', $data['mentee'] ) );
+          $cq2->setCustomer( $e->find( 'CAP\Entity\Customer', $data['account'] ) );
           $cq2->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
           $cq2->setQuestion( $e->find( 'CAP\Entity\Question', $q->getId() ) );
           $cq2->setCreated($now);

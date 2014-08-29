@@ -918,11 +918,13 @@ CREATE TABLE `questionnaire` (
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `questions_per_page` int(11) NOT NULL DEFAULT 10,
+  `type` enum('QUESTIONNAIRE', 'FORM') NOT NULL DEFAULT 'QUESTIONNAIRE',
   `template_dir` varchar(255) NOT NULL DEFAULT '',
   `organization_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  KEY `type` (`type`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `questionnaire_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

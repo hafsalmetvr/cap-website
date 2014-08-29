@@ -64,10 +64,10 @@ class Questionnaire extends \CAP\Entity\Questionnaire implements \Doctrine\ORM\P
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'questionsPerPage', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'name', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'templateDir', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'description', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'organization');
+            return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'questionsPerPage', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'name', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'templateDir', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'description', 'type', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'organization');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'questionsPerPage', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'name', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'templateDir', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'description', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'organization');
+        return array('__isInitialized__', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'id', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'questionsPerPage', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'name', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'templateDir', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'description', 'type', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'created', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'modified', '' . "\0" . 'CAP\\Entity\\Questionnaire' . "\0" . 'organization');
     }
 
     /**
@@ -252,6 +252,28 @@ class Questionnaire extends \CAP\Entity\Questionnaire implements \Doctrine\ORM\P
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', array());
 
         return parent::getDescription();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getType()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getType', array());
+
+        return parent::getType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setType($type)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setType', array($type));
+
+        return parent::setType($type);
     }
 
     /**

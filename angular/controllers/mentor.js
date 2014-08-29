@@ -14,6 +14,9 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window
         $http.get('/rest/dashboard').success(function(data, status) {
         	console.log(data);
         	$scope.mentees = data.mentees;
+        	$scope.forms = data.forms;
+        	$scope.saqList = data.saqList;
+
         	overlay.loading(false).hide();
         }).error(function(data, status){
           console.log(data);
@@ -138,6 +141,7 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 	    	$scope.inProgress = false;
 	    	console.log(data);
 	    	$scope.saqList = data.saqs;
+	    	$scope.forms = data.forms;
 	    	$scope.mentors = data.mentors;
 	    	$scope.myNotes     = data.myNotes;
 	    	$scope.sharedNotes = data.sharedNotes;

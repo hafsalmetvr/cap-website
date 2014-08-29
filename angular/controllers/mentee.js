@@ -14,6 +14,8 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window
         	console.log(data);
         	$scope.mentors = data.mentors;
         	$scope.saqList = data.saqs;
+          $scope.forms = data.forms;
+
           overlay.loading(false).hide();
         }).error(function(data, status){
           console.log(data);

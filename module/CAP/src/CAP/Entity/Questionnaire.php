@@ -102,7 +102,21 @@ class Questionnaire {
         return $this->description;
     }
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", columnDefinition="ENUM('QUESTIONNAIRE','FORM')")
+     */
+    protected $type;
 
+    public function getType() {
+        return $this->type;
+    }
+
+    public function setType($type) {
+        $this->type = $type;
+        return $this;
+    }
     /**
      * Set Name
      *

@@ -120,8 +120,8 @@ directive('answerTypeSelect', ['$http',
     };
   }
 ]).
-directive('answerTypeTextarea', ['$http',
-  function($http) {
+directive('answerTypeTextarea', ['$http', 'overlay',
+  function($http, overlay) {
     return {
       restrict: 'E',
       scope:{'percentComplete':'='},
@@ -181,8 +181,11 @@ directive('answerTypeTextarea', ['$http',
             /* textarea can only have 1 answer */
             scope.answerText = data.customerAnswers[0].answerText;
           }
+          overlay.loading(false).hide();
+
         }).error(function(data, status){
           scope.inProgress = false;
+          overlay.loading(false).hide();
           console.log(data);
         });
 

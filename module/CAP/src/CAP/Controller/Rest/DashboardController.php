@@ -36,6 +36,7 @@ class DashboardController extends AbstractRestfulController {
 					'mentors' => $this->getAllMentors(),
 					'mentees' => $this->getAllMentees(),
 					'admins'  => $this->getAllAdmins(),
+					'forms'   => $this->getAllForms(),
 				)
 			);
 
@@ -49,7 +50,17 @@ class DashboardController extends AbstractRestfulController {
 							 				->setParameter('parentId',$this->identity()->getId())
 											->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
-			return new JsonModel(array('mentees' => $mentees));
+	    $saqs = $e->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where c.type = 'QUESTIONNAIRE' AND q.customer = :customerId" )
+	              ->setParameter('customerId', $this->identity()->getId())
+	              ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+	    $forms = $e->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where c.type = 'FORM' AND q.customer = :customerId" )
+	              ->setParameter('customerId', $this->identity()->getId())
+	              ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+			return new JsonModel(array('mentees' => $mentees,
+																 'saqs' => $saqs,
+																 'forms' => $forms));
 		}
 
 
@@ -62,12 +73,17 @@ class DashboardController extends AbstractRestfulController {
 									 ->getResult( \Doctrine\ORM\Query::HYDRATE_ARRAY );
 
 	    /* get all saqs for this mentee */
-	    $saqs = $e->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where q.customer = :customerId" )
+	    $saqs = $e->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where c.type = 'QUESTIONNAIRE' AND q.customer = :customerId" )
+	              ->setParameter('customerId', $this->identity()->getId())
+	              ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+	    $forms = $e->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where c.type = 'FORM' AND q.customer = :customerId" )
 	              ->setParameter('customerId', $this->identity()->getId())
 	              ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
 			return new JsonModel(array('mentors' => $mentors,
-																 'saqs' => $saqs
+																 'saqs' => $saqs,
+																 'forms' => $forms
 																)
 													);
 		}
@@ -84,8 +100,15 @@ class DashboardController extends AbstractRestfulController {
 	private function getSAQList() {
 		/* get SAQ List */
 		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
-		$saqList = $entityManager->createQuery( "SELECT q.name, q.id FROM CAP\Entity\Questionnaire q " )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+		$saqList = $entityManager->createQuery( "SELECT q.name, q.id FROM CAP\Entity\Questionnaire q WHERE q.type = 'QUESTIONNAIRE'" )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 		return $saqList;
+	}
+
+	private function getAllForms() {
+		/* get SAQ List */
+		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+		$forms = $entityManager->createQuery( "SELECT q.name, q.id FROM CAP\Entity\Questionnaire q WHERE q.type = 'FORM'" )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+		return $forms;
 	}
 
 	private function getAllMentors() {

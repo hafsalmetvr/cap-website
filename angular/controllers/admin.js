@@ -79,6 +79,8 @@ controller('MentorCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 	    	$scope.inProgress = false;
 	    	console.log(data);
 	    	$scope.mentees = data.mentees;
+	    	$scope.forms =data.forms;
+	    	$scope.saqList= data.saqList;
 	    	overlay.loading(false).hide();
 	    }).error(function(data, status){
 	    	$scope.inProgress = false;
@@ -99,6 +101,7 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 	    $http.get('/rest/mentee/'+$scope.menteeId).success(function(data, status) {
 	    	$scope.inProgress = false;
 	    	console.log(data);
+	    	$scope.forms = data.forms;
 	    	$scope.saqList = data.saqs;
 	    	$scope.mentors = data.mentors;
 	    	overlay.loading(false).hide();
@@ -258,6 +261,55 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 				'saq' : saq
 			}
 		}
+		$scope.assignFormModal = function(idx) {
+			console.log('assign form modal');
+			var form = $scope.forms[idx];
+			$scope.modal = {
+				'formIdx':idx,
+				'form' : form
+			}
+		}
+
+		$scope.assignFormToAccount = function(idx, accountIdx) {
+			console.log('assign form to mentee');
+			console.log(idx);
+			console.log(accountIdx);
+			console.log($scope.accounts);
+
+			var form    = $scope.forms[idx];
+			var account = $scope.accounts[accountIdx];
+
+			if (typeof account ==="undefined") {
+				return;
+			}
+
+			if (typeof form ==="undefined") {
+				return;
+			}
+
+
+			console.log(account);
+			console.log(form);
+			$scope.inProgress = {};
+			$scope.inProgress['accounts'] = {};
+			$scope.inProgress['accounts'][accountIdx] = true;
+			$http.put("/rest/questionnaire/"+form.id,{account: account.id}).success(function(data, status) {
+				console.log('back from questionnaire put');
+				console.log(data);
+				if (data.success) {
+					/* don't do anything? */
+				}
+
+				$('#assign-form-modal').modal('hide');
+				$scope.inProgress = false;
+
+			}).error(function(data, success) {
+				console.log(data || "Request failed")
+				$scope.inProgress = false;
+			});
+
+		};
+
 
 		$scope.assignSaqToMentee = function(idx, menteeIdx) {
 			console.log('assign saq to mentee');
@@ -282,7 +334,7 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
 			$scope.inProgress = {};
 			$scope.inProgress['mentees'] = {};
 			$scope.inProgress['mentees'][menteeIdx] = true;
-			$http.put("/rest/questionnaire/"+saq.id,{mentee: mentee.id}).success(function(data, status) {
+			$http.put("/rest/questionnaire/"+saq.id,{account: mentee.id}).success(function(data, status) {
 				console.log('back from questionnaire put');
 				console.log(data);
 				if (data.success) {
@@ -474,6 +526,9 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$cookie
         	$scope.mentors = data.mentors;
         	$scope.mentees = data.mentees;
         	$scope.admins  = data.admins;
+        	$scope.forms   = data.forms;
+        	$scope.accounts = data.mentors.concat(data.mentees);
+        	console.log($scope.accounts);
         	overlay.loading(false).hide();
         }).error(function(data, status){
           console.log(data);

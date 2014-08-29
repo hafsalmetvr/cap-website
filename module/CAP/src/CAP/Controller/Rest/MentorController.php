@@ -59,6 +59,18 @@ class MentorController extends AbstractRestfulController {
       $mentees = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )
                       ->setParameter('parentId',$id)
                       ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+      /* get all saqs for this mentor */
+      $saqs = $entityManager->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where c.type = 'QUESTIONNAIRE' AND q.customer = :customerId" )
+                            ->setParameter('customerId', $id)
+                            ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+      /* get all saqs for this mentor */
+      $forms = $entityManager->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where c.type = 'FORM' AND q.customer = :customerId" )
+                            ->setParameter('customerId', $id)
+                            ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+
 		}
 
 
@@ -86,6 +98,8 @@ class MentorController extends AbstractRestfulController {
 																				 'phoneNumber' => $mentor->getPhoneNumber()
 																				 ),
 											 'mentees' => $mentees,
+                       'saqList' => $saqs,
+                       'forms'   => $forms
                       );
 
     $modelArgs['myNotes']     = isset($myNotes) ? $myNotes : null;

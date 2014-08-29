@@ -85,7 +85,12 @@ class MenteeController extends AbstractRestfulController {
     }
 
     /* get all saqs for this mentee */
-    $saqs = $entityManager->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where q.customer = :customerId" )
+    $saqs = $entityManager->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where c.type = 'QUESTIONNAIRE' AND q.customer = :customerId" )
+                          ->setParameter('customerId', $id)
+                          ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+    /* get all saqs for this mentee */
+    $forms = $entityManager->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where c.type = 'FORM' AND q.customer = :customerId" )
                           ->setParameter('customerId', $id)
                           ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
@@ -108,6 +113,7 @@ class MenteeController extends AbstractRestfulController {
     $modelArgs['myNotes']     = isset($myNotes) ? $myNotes : null;
     $modelArgs['sharedNotes'] = isset($sharedNotes) ? $sharedNotes : null;
     $modelArgs['saqs']        = isset($saqs) ? $saqs : null;
+    $modelArgs['forms']       = isset($forms) ? $forms : null;
     $modelArgs['mentors']     = isset($mentors) ? $mentors : null;
 
     return new JsonModel($modelArgs);

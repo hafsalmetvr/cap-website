@@ -10,6 +10,8 @@
 	      	echo $this->partial("cap/partials/create-note-modal");
         	echo $this->partial("cap/partials/customer-info", array('type' => 'mentor', 'title' => 'Mentor Information', 'customer' => $mentor));
 	      	echo $this->partial("cap/partials/mentees-list");
+	      	echo $this->partial("cap/partials/saq-list");
+	      	echo $this->partial("cap/partials/forms-list");
 
 	      	if ($this->identity()->getRole()->getName() !== 'Admin') {
 	      		echo $this->partial("cap/partials/notes-list",array('title' => 'My Notes','notes' => 'myNotes'));
