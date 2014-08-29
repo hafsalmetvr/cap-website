@@ -7997,6 +7997,10 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   margin-left: 0;
   margin-right: 0;
 }
+#dashboard .welcome-text {
+  margin-bottom: 30px;
+  border-bottom: 1px dashed #333333;
+}
 .create-account-info {
   font-size: 14pt;
   font-family: "Roboto";
