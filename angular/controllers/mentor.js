@@ -163,7 +163,8 @@ controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', 
 	function($scope, $element, $http, $timeout, $cookies, customer, overlay, $window) {
   	overlay.message('loading questions...').loading(true).show();
   	$scope.continue = function(nextUrl) {
-  		$window.location.href = nextUrl;
+  		$window.location.href = '/dashboard';
+  		$window.open(nextUrl,'_blank');
   	}
 
 	}

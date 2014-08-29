@@ -283,10 +283,6 @@ insert into answer (answer_number, answer_text, answer_order, question_id) value
 SET @answer_id = LAST_INSERT_ID();
 
 
-
-
-
-
 insert into section (section_number, name, section_order, questionnaire_id) values (5, 'Personal Growth:  Health and Wellness', 5, @questionnaire_id);
 SET @section_id = LAST_INSERT_ID();
 
@@ -317,11 +313,6 @@ SET @question_id = LAST_INSERT_ID();
 insert into answer (answer_number, answer_text, answer_order, question_id) values (1, '', 1, @question_id);
 SET @answer_id = LAST_INSERT_ID();
 
-
- 
-
-
-
 insert into section (section_number, name, section_order, questionnaire_id) values (6, 'Personal Growth:  Ethical Behavior and Outside Interests', 6, @questionnaire_id);
 SET @section_id = LAST_INSERT_ID();
 
@@ -345,9 +336,6 @@ SET @question_id = LAST_INSERT_ID();
 
 insert into answer (answer_number, answer_text, answer_order, question_id) values (1, '', 1, @question_id);
 SET @answer_id = LAST_INSERT_ID();
-
-
-
 
 
 
