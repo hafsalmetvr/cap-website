@@ -251,11 +251,15 @@ class OrbitalResultsService {
 					}
 				}
 			}
-			$score[$s['sectionNumber']]['average'] = number_format( ($score[$s['sectionNumber']]['tally'] / $score[$s['sectionNumber']]['count']), 2);
-			$score['tally'] += $score[$s['sectionNumber']]['tally'];
-			$score['count'] += $score[$s['sectionNumber']]['count'];
+			if ($score[$s['sectionNumber']]['count'] > 0) {
+				$score[$s['sectionNumber']]['average'] = number_format( ($score[$s['sectionNumber']]['tally'] / $score[$s['sectionNumber']]['count']), 2);
+				$score['tally'] += $score[$s['sectionNumber']]['tally'];
+				$score['count'] += $score[$s['sectionNumber']]['count'];
+			}
 		}
-		$score['average'] = number_format( ($score['tally'] / $score['count']), 2 );
+		if ($score['count'] > 0) {
+			$score['average'] = number_format( ($score['tally'] / $score['count']), 2 );
+		}
 		$res['score'] = $score;
 
 		/* determine top 5 and bottom 5 */
