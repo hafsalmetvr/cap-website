@@ -175,12 +175,13 @@ controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', 
           /* display a confirmation before continuing */
           $('#confirm-continue-modal').modal('show');
         } else {
-          $window.open($scope.nextUrl,'_blank');
+          $window.location.href = $scope.nextUrl;
         }
 
       }).error(function(data, status){
+        $scope.inProgress = false;
         console.log(data);
-        $window.open($scope.nextUrl,'_blank');
+        $window.location.href = $scope.nextUrl;
       });
 
 
