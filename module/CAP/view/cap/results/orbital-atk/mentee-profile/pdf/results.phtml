@@ -13,16 +13,18 @@
 					<div class="row" style="page-break-inside:avoid;">
 						<div class="col-xs-12">
 							<?php foreach ($results['questions'][$s['id']] as $q) { ?>
-								<?php foreach ($results['answers'][$q['questionId']] as $a) { ?>
-									<div class="row">
-										<div class="col-xs-1 text-center"><?php echo $q['questionNumber']; ?>. </div>
-										<div class="col-xs-11">
-											<div class="row">
-												<div class="col-xs-12 question"><p><strong>QUESTION:&nbsp;</strong><?php echo $q['questionText']; ?></p></div>
-												<div class="col-xs-12 answer"><p><strong>ANSWER:&nbsp;</strong><?php echo $a['customerAnswerText']; ?></p></div>
+								<?php if (isset($results['answers'][$q['questionId']] )) { ?>
+									<?php foreach ($results['answers'][$q['questionId']] as $a) { ?>
+										<div class="row">
+											<div class="col-xs-1 text-center"><?php echo $q['questionNumber']; ?>. </div>
+											<div class="col-xs-11">
+												<div class="row">
+													<div class="col-xs-12 question"><p><strong>QUESTION:&nbsp;</strong><?php echo $q['questionText']; ?></p></div>
+													<div class="col-xs-12 answer"><p><strong>ANSWER:&nbsp;</strong><?php echo $a['customerAnswerText']; ?></p></div>
+												</div>
 											</div>
 										</div>
-									</div>
+									<?php } ?>
 								<?php } ?>
 							<?php } ?>
 						</div>
