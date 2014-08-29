@@ -8261,3 +8261,11 @@ h3 {
   margin: 4mm 0;
   padding: 0;
 }
+.mentee-profile .small-chart-heading {
+  position: relative;
+  right: 23%;
+  top: 15px;
+}
+.mentee-profile .small-chart-container {
+  height: 12mm;
+}
