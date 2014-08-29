@@ -163,6 +163,10 @@ controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', 
       $scope.cId = cId;
     };
 
+    $scope.redirect = function(url) {
+      $window.location.href = url;
+    }
+
     $scope.continue = function(nextUrl, qId, cId) {
       $scope.nextUrl = nextUrl;
       $scope.inProgress = true;
