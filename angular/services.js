@@ -74,6 +74,58 @@ factory('overlay', ['$rootScope',
     }
 ]).
 
+factory('footer', [
+    function() {
+        var self = this;
+
+        return {
+            init: function(footer, scroll) {
+                footer = footer || '#footer';
+                scroll = scroll || 'window';
+                /* window is a special case - use the window obj */
+                if (scroll === 'window') {
+                    scroll = window;
+                }
+
+                self.scroll = scroll;
+                self.prevScroll = angular.element(scroll).scrollTop();
+
+                angular.element(footer).show();
+                angular.element(scroll).on('scroll', function() {
+                    /* at the top? */
+                    if (angular.element(scroll).scrollTop() < 1) {
+                        angular.element(footer).show();
+                        return;
+                    }
+
+                    /* at the bottom? */
+                    if (angular.element(scroll).height() < angular.element(scroll).scrollTop()) {
+                        angular.element(footer).show();
+                        return;
+                    }
+
+                    /* are we scrolling up or down? */
+                    if (angular.element(scroll).scrollTop() > self.prevScroll) {
+                        if (angular.element(footer).is(':visible')) {
+                            angular.element(footer).fadeOut(250);
+                        }
+                    } else {
+                        if (!angular.element(footer).is(':visible')) {
+                            //angular.element(footer).fadeIn(250);
+                        }
+                    }
+
+                    self.prevScroll = angular.element(scroll).scrollTop();
+                });
+            },
+            fixed: function() {
+                console.log('turn off footer scroll handler: '+self.scroll);
+                angular.element(self.scroll).off('scroll');
+            }
+        }
+    }
+]).
+
 
 factory('share', function() {
     return {

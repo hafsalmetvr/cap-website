@@ -43,6 +43,22 @@ directive('capOverlay', ['$rootScope',
   }
 ]).
 
+directive('capFooter', ['footer',
+  function(footer) {
+    return {
+      restrict: 'C',
+      replace: false,
+      compile: function(element, attr, transclude) {
+        return function(scope, element, attr) {
+          attr.footer = attr.footer || '#footer';
+          attr.scroll = attr.scroll || 'window';
+
+          footer.init(attr.footer, attr.scroll);
+        }
+      }
+    }
+  }
+]).
 
 directive('answerTypeSelect', ['$http',
   function($http) {

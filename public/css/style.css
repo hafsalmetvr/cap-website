@@ -8164,11 +8164,12 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
   margin-top: 12px;
 }
 #footer {
-  position: relative;
+  position: fixed;
   background-color: #333333;
   margin: 20px 0 0 0;
   padding: 10px 0;
   width: 100%;
+  bottom: 0px;
 }
 #footer img {
   height: 30px;
