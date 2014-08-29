@@ -208,10 +208,6 @@ function ForgotPasswordController($scope, $element, $http, $timeout, $location)
 }
 
 
-
-{
-}
-
 function MentorMenteeController($scope, $element, $http, $timeout, $location, $cookies)
 {
     $scope.init = function(mentor_id){

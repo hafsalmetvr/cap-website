@@ -28,6 +28,9 @@ class CompletionStatus
      */
     private $name;
 
+    public function getName() {
+        return $this->name;
+    }
     /**
      * @var \DateTime
      *

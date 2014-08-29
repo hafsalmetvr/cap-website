@@ -1,3 +1,6 @@
+/* @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400italic,700italic,400,700); */
+/* @import url(http://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic); */
+
 @import "../bower_components/bootstrap/less/bootstrap.less";
 @import "../bower_components/components-font-awesome/less/font-awesome.less";
 
@@ -10,4 +13,32 @@
 @import "login.less";
 @import "dashboard.less";
 @import "settings.less";
+@import "questionnaire.less";
+@import "footer.less";
+
+#content {
+	margin-bottom:100px;
+}
+
+#overlay.overlay {
+	display:block;
+	position: fixed;
+	top:0
+	bottom:0;
+	right:0;
+	left:0;
+	height:100%;
+	width:100%;
+  background-color: @white;
+  .opacity(.85);
+  z-index:1001;
+  .overlay-loading {
+  	text-align:center;
+  	width:400px;
+  	margin:200px auto;
+  	img {
+  		margin-bottom:20px;
+  	}
+  }
+}
 

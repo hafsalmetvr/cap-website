@@ -51,6 +51,13 @@ class AnswerEnumMap {
      */
     private $answer;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="answer_id", type="integer", length=255, nullable=true)
+     */
+    private $answerId;
+
     /**
      * @var \CAP\Entity\AnswerEnum
      *

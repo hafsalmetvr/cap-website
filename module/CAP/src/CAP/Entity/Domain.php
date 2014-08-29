@@ -27,6 +27,24 @@ class Domain {
     protected $name;
 
     /**
+     * @var CAP\Entity\Organization
+     *
+     * @ORM\ManyToOne(targetEntity="CAP\Entity\Organization")
+     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", nullable=false)
+     */
+    protected $organization;
+
+    public function getOrganization() {
+        return $this->organization;
+    }
+
+    public function setOrganization($o) {
+        $this->organization = $o;
+        return $this;
+    }
+
+
+    /**
      * Get id
      *
      * @return integer

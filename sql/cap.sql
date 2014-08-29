@@ -1,3 +1,4 @@
+set FOREIGN_KEY_CHECKS = 0;
 -- MySQL dump 10.13  Distrib 5.5.32, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: cap
@@ -26,7 +27,6 @@ CREATE TABLE `answer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `answer_number` int(11) NOT NULL,
   `answer_text` text NOT NULL,
-  `answer_type` enum('TEXT','CHECKBOX','RADIO','TEXTAREA','SELECT','MULTISELECT','ENUM') DEFAULT 'TEXT',
   `answer_order` int(11) NOT NULL DEFAULT '0',
   `question_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `answer` (
 
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,1,'Multiselect Option 1','MULTISELECT',1,1,'2014-07-19 17:33:26','2014-07-22 19:30:06'),(2,1,'Multiselect Option 2','MULTISELECT',2,1,'2014-07-19 17:33:52','2014-07-22 19:30:18'),(3,1,'This is third multiselection option','MULTISELECT',3,1,'2014-07-19 17:34:03','2014-07-22 19:30:28'),(4,1,'This is Enum Answer Text number 1','ENUM',1,4,'2014-07-22 21:40:36','2014-07-22 16:10:36'),(5,2,'This is Enum Answer Text number 2','ENUM',2,4,'2014-07-22 21:40:56','2014-07-22 16:10:56'),(6,3,'This is Enum Answer Text number 3','ENUM',3,4,'2014-07-22 21:41:37','2014-07-22 16:11:37'),(7,1,'','TEXT',1,2,'2014-07-24 00:41:10','2014-07-23 19:11:10'),(8,1,'check box option 1','CHECKBOX',1,5,'2014-07-24 02:07:55','2014-07-23 20:37:55'),(9,2,'check box option 2','CHECKBOX',2,5,'2014-07-24 02:08:17','2014-07-23 20:38:17'),(10,3,'check box option 3','CHECKBOX',3,5,'2014-07-24 02:09:00','2014-07-23 20:39:00'),(11,1,'Radio option 1','RADIO',1,6,'2014-07-24 02:09:37','2014-07-23 20:39:37'),(12,2,'Radio option 2','RADIO',2,6,'2014-07-24 02:09:50','2014-07-23 20:39:50'),(13,3,'Radio option 3','RADIO',3,6,'2014-07-24 02:10:00','2014-07-23 20:40:00'),(14,1,'Select option 1','SELECT',1,7,'2014-07-24 02:11:03','2014-07-23 20:41:03'),(15,2,'Select option 2','SELECT',2,7,'2014-07-24 02:11:17','2014-07-23 20:41:17'),(16,3,'Select option 3','SELECT',3,7,'2014-07-24 02:11:33','2014-07-23 20:41:33'),(17,4,'Select option 4','SELECT',4,7,'2014-07-24 02:11:48','2014-07-23 20:41:48'),(19,1,'','TEXTAREA',1,8,'2014-07-24 02:56:25','2014-07-23 21:26:25');
+/* INSERT INTO `answer` VALUES (1,1,'Multiselect Option 1','MULTISELECT',1,1,'2014-07-19 17:33:26','2014-07-22 19:30:06'),(2,1,'Multiselect Option 2','MULTISELECT',2,1,'2014-07-19 17:33:52','2014-07-22 19:30:18'),(3,1,'This is third multiselection option','MULTISELECT',3,1,'2014-07-19 17:34:03','2014-07-22 19:30:28'),(4,1,'This is Enum Answer Text number 1','ENUM',1,4,'2014-07-22 21:40:36','2014-07-22 16:10:36'),(5,2,'This is Enum Answer Text number 2','ENUM',2,4,'2014-07-22 21:40:56','2014-07-22 16:10:56'),(6,3,'This is Enum Answer Text number 3','ENUM',3,4,'2014-07-22 21:41:37','2014-07-22 16:11:37'),(7,1,'','TEXT',1,2,'2014-07-24 00:41:10','2014-07-23 19:11:10'),(8,1,'check box option 1','CHECKBOX',1,5,'2014-07-24 02:07:55','2014-07-23 20:37:55'),(9,2,'check box option 2','CHECKBOX',2,5,'2014-07-24 02:08:17','2014-07-23 20:38:17'),(10,3,'check box option 3','CHECKBOX',3,5,'2014-07-24 02:09:00','2014-07-23 20:39:00'),(11,1,'Radio option 1','RADIO',1,6,'2014-07-24 02:09:37','2014-07-23 20:39:37'),(12,2,'Radio option 2','RADIO',2,6,'2014-07-24 02:09:50','2014-07-23 20:39:50'),(13,3,'Radio option 3','RADIO',3,6,'2014-07-24 02:10:00','2014-07-23 20:40:00'),(14,1,'Select option 1','SELECT',1,7,'2014-07-24 02:11:03','2014-07-23 20:41:03'),(15,2,'Select option 2','SELECT',2,7,'2014-07-24 02:11:17','2014-07-23 20:41:17'),(16,3,'Select option 3','SELECT',3,7,'2014-07-24 02:11:33','2014-07-23 20:41:33'),(17,4,'Select option 4','SELECT',4,7,'2014-07-24 02:11:48','2014-07-23 20:41:48'),(19,1,'','TEXTAREA',1,8,'2014-07-24 02:56:25','2014-07-23 21:26:25'); */
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -84,7 +84,7 @@ CREATE TABLE `answer_enum` (
 
 LOCK TABLES `answer_enum` WRITE;
 /*!40000 ALTER TABLE `answer_enum` DISABLE KEYS */;
-INSERT INTO `answer_enum` VALUES (1,'Agree','2014-07-19 17:02:03','2014-07-19 11:32:03'),(2,'Don\'t Care','2014-07-19 17:02:40','2014-07-19 11:32:40'),(3,'Disagree','2014-07-19 17:02:53','2014-07-19 11:32:53');
+
 /*!40000 ALTER TABLE `answer_enum` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -131,7 +131,7 @@ CREATE TABLE `answer_enum_map` (
 
 LOCK TABLES `answer_enum_map` WRITE;
 /*!40000 ALTER TABLE `answer_enum_map` DISABLE KEYS */;
-INSERT INTO `answer_enum_map` VALUES (1,4,1,1,'2014-07-22 21:48:09','2014-07-22 16:18:09'),(2,4,2,2,'2014-07-22 21:48:27','2014-07-22 16:18:27'),(3,4,3,3,'2014-07-22 21:48:34','2014-07-22 16:18:34'),(4,5,1,1,'2014-07-22 21:48:40','2014-07-22 16:18:40'),(5,5,2,2,'2014-07-22 21:48:46','2014-07-22 16:18:46'),(6,5,3,3,'2014-07-22 21:48:53','2014-07-22 16:18:53'),(7,6,1,1,'2014-07-22 21:48:59','2014-07-22 16:18:59'),(8,6,2,2,'2014-07-22 21:49:03','2014-07-22 16:19:03'),(9,6,3,3,'2014-07-22 21:49:11','2014-07-22 16:19:11');
+
 /*!40000 ALTER TABLE `answer_enum_map` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -229,7 +229,12 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` (email,domain_id,role_id,name,password,status_id) VALUES ('kwalpole@go-optimum.com',0,4,'Kim Walpole','$2y$10$hxluqSwKn1A5ydOBf/BB0Oe1NH6PBt9xx/bRDm5Vfb0ZIoux4l1VS',1),('tom@eighty.co',0,4,'Tom Walpole','$2y$10$hxluqSwKn1A5ydOBf/BB0Oe1NH6PBt9xx/bRDm5Vfb0ZIoux4l1VS',1);
+INSERT INTO `customer` (email,domain_id,role_id,name,password,status_id) VALUES
+('kwalpole@go-optimum.com',0,1,'Kim Walpole','$2y$10$hxluqSwKn1A5ydOBf/BB0Oe1NH6PBt9xx/bRDm5Vfb0ZIoux4l1VS',1),
+('demo-admin@go-optimum.com',1,1,'Demo Admin','$2y$10$bgNH98TWY9BCpP79Dg8AOu7r7z9UvR/atrdXONC2dVkQdjhV.Wzia',1),
+('demo-mentor@go-optimum.com',1,2,'Demo Mentor','$2y$10$/VUVit1FoYkDl1fCyDoGpuVC2oXGzYFof0/mG1KkYGqhnHv838xTq',1),
+('demo-mentee@go-optimum.com',1,3,'Demo Mentee','$2y$10$zXflcw3.BuBCbFerdq.YTOd3mffFqH01tAUXpnfo/GkrmaUSBuDFC',1);
+
 
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -314,8 +319,8 @@ CREATE TABLE `customer_hierarchy` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `child_customer_id` (`child_customer_id`),
   KEY `customer_hierarchy_ibfk_1` (`parent_customer_id`),
-  CONSTRAINT `customer_hierarchy_ibfk_1` FOREIGN KEY (`parent_customer_id`) REFERENCES `customer` (`id`),
-  CONSTRAINT `customer_hierarchy_ibfk_2` FOREIGN KEY (`child_customer_id`) REFERENCES `customer` (`id`)
+  CONSTRAINT `customer_hierarchy_ibfk_1` FOREIGN KEY (`parent_customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `customer_hierarchy_ibfk_2` FOREIGN KEY (`child_customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -401,7 +406,7 @@ CREATE TABLE `customer_note_map` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_note_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `shared` boolean DEFAULT FALSE,
+  `share` boolean DEFAULT FALSE,
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -560,7 +565,7 @@ CREATE TABLE `customer_questionnaire` (
 
 LOCK TABLES `customer_questionnaire` WRITE;
 /*!40000 ALTER TABLE `customer_questionnaire` DISABLE KEYS */;
-INSERT INTO `customer_questionnaire` VALUES (3,27,2,1,NULL,'2014-06-29 05:03:49','2014-06-28 23:33:49'),(4,30,2,1,NULL,'2014-06-29 23:34:53','2014-06-29 18:04:53'),(6,31,2,1,NULL,'2014-07-04 00:22:08','2014-07-03 18:52:08'),(7,14,2,1,NULL,'2014-07-04 00:38:26','2014-07-03 19:08:26'),(8,28,2,1,NULL,'2014-07-04 00:49:43','2014-07-03 19:19:43'),(9,27,1,1,NULL,'2014-07-07 23:56:22','2014-07-07 18:26:22');
+
 /*!40000 ALTER TABLE `customer_questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -609,7 +614,7 @@ CREATE TABLE `customer_recommendation` (
 
 LOCK TABLES `customer_recommendation` WRITE;
 /*!40000 ALTER TABLE `customer_recommendation` DISABLE KEYS */;
-INSERT INTO `customer_recommendation` VALUES (2,27,2,1,'2014-06-30 00:42:07','2014-06-29 19:12:07'),(3,27,2,1,'2014-06-30 00:51:28','2014-06-29 19:21:28');
+
 /*!40000 ALTER TABLE `customer_recommendation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -774,6 +779,7 @@ DROP TABLE IF EXISTS `organization`;
 CREATE TABLE `organization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `template_dir` varchar(255) NOT NULL DEFAULT '',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -786,7 +792,6 @@ CREATE TABLE `organization` (
 
 LOCK TABLES `organization` WRITE;
 /*!40000 ALTER TABLE `organization` DISABLE KEYS */;
-INSERT INTO `organization` (name) VALUES ('Optimum Training & Consulting, Inc.');
 /*!40000 ALTER TABLE `organization` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -830,7 +835,6 @@ CREATE TABLE `domain` (
 
 LOCK TABLES `domain` WRITE;
 /*!40000 ALTER TABLE `domain` DISABLE KEYS */;
-INSERT INTO `domain` (name,organization_id) VALUES ('go-optimum.com',1);
 /*!40000 ALTER TABLE `domain` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -862,10 +866,11 @@ DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `question_number` int(11) NOT NULL,
-  `question_text` text NOT NULL,
+  `question_text` text DEFAULT NULL,
   `question_order` int(11) NOT NULL DEFAULT '0',
   `section_id` int(11) NOT NULL,
   `questionnaire_id` int(11) NOT NULL,
+  `answer_type` enum('TEXT','CHECKBOX','RADIO','TEXTAREA','SELECT','MULTISELECT','ENUM') DEFAULT 'TEXT',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -882,7 +887,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (1,1,'This is a question with answer type MULTISELECT',1,1,1,'2014-06-16 21:44:21','2014-07-22 19:34:53'),(2,1,'This is a question with Answer type of TEXT, it just has an input type = text',2,2,1,'2014-06-16 21:44:33','2014-07-22 19:39:01'),(3,1,'What is python',1,1,2,'2014-06-16 21:44:36','2014-07-19 10:57:38'),(4,1,'This is a question with answer type ENUM',1,2,1,'2014-06-16 21:44:47','2014-07-22 16:07:27'),(5,1,'This is a question with anser type of CHECKBOX',3,2,1,'2014-07-24 02:02:42','2014-07-23 20:32:42'),(6,1,'This is a question with anser type of RADIO',4,2,1,'2014-07-24 02:03:22','2014-07-23 20:33:22'),(7,1,'This is a question with anser type of SELECT',5,2,1,'2014-07-24 02:03:44','2014-07-23 20:33:44'),(8,1,'This is a text area type question',6,2,1,'2014-07-24 02:50:47','2014-07-23 21:24:05');
+-- INSERT INTO `question` VALUES (1,1,'This is a question with answer type MULTISELECT',1,1,1,'2014-06-16 21:44:21','2014-07-22 19:34:53'),(2,1,'This is a question with Answer type of TEXT, it just has an input type = text',2,2,1,'2014-06-16 21:44:33','2014-07-22 19:39:01'),(3,1,'What is python',1,1,2,'2014-06-16 21:44:36','2014-07-19 10:57:38'),(4,1,'This is a question with answer type ENUM',1,2,1,'2014-06-16 21:44:47','2014-07-22 16:07:27'),(5,1,'This is a question with anser type of CHECKBOX',3,2,1,'2014-07-24 02:02:42','2014-07-23 20:32:42'),(6,1,'This is a question with anser type of RADIO',4,2,1,'2014-07-24 02:03:22','2014-07-23 20:33:22'),(7,1,'This is a question with anser type of SELECT',5,2,1,'2014-07-24 02:03:44','2014-07-23 20:33:44'),(8,1,'This is a text area type question',6,2,1,'2014-07-24 02:50:47','2014-07-23 21:24:05');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -912,10 +917,14 @@ CREATE TABLE `questionnaire` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `questions_per_page` int(11) NOT NULL DEFAULT 10,
+  `type` enum('QUESTIONNAIRE', 'FORM') NOT NULL DEFAULT 'QUESTIONNAIRE',
+  `template_dir` varchar(255) NOT NULL DEFAULT '',
   `organization_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  KEY `type` (`type`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `questionnaire_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -927,7 +936,6 @@ CREATE TABLE `questionnaire` (
 
 LOCK TABLES `questionnaire` WRITE;
 /*!40000 ALTER TABLE `questionnaire` DISABLE KEYS */;
-INSERT INTO `questionnaire` VALUES (1,'Learning To Use The Force','',1,'2014-06-16 01:01:44','2014-07-23 21:02:23'),(2,'Test2','',1,'2014-06-16 20:48:59','2014-06-16 15:18:59'),(3,'Test3','',1,'2014-06-16 20:49:05','2014-06-16 15:19:05'),(4,'Test4','',1,'2014-06-16 20:49:09','2014-06-16 15:19:09');
 /*!40000 ALTER TABLE `questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1015,7 +1023,6 @@ CREATE TABLE `recommendation` (
 
 LOCK TABLES `recommendation` WRITE;
 /*!40000 ALTER TABLE `recommendation` DISABLE KEYS */;
-INSERT INTO `recommendation` VALUES (1,'Recommendation1','This is test recommendation','2014-06-30 00:34:37','2014-06-29 19:04:37');
 /*!40000 ALTER TABLE `recommendation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1056,7 +1063,6 @@ CREATE TABLE `reminder_frequency` (
 
 LOCK TABLES `reminder_frequency` WRITE;
 /*!40000 ALTER TABLE `reminder_frequency` DISABLE KEYS */;
-INSERT INTO `reminder_frequency` (frequency) VALUES ('MONTHLY');
 /*!40000 ALTER TABLE `reminder_frequency` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1101,7 +1107,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` (name,level,domain_id) VALUES ('Admin',0,1),('Mentor',0,1),('Mentee',0,1);
+-- INSERT INTO `role` (name,level,domain_id) VALUES ('Admin',0,1),('Mentor',0,1),('Mentee',0,1);
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1138,6 +1144,7 @@ CREATE TABLE `section` (
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `questionnaire_id` (`questionnaire_id`),
+  KEY `section_number` (`section_number`),
   CONSTRAINT `section_ibfk_1` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1148,7 +1155,6 @@ CREATE TABLE `section` (
 
 LOCK TABLES `section` WRITE;
 /*!40000 ALTER TABLE `section` DISABLE KEYS */;
-INSERT INTO `section` VALUES (1,1,'section1','',0,2,'2014-06-16 21:41:53','2014-06-16 16:11:53'),(2,1,'section2','',0,2,'2014-06-16 21:42:01','2014-06-16 16:12:01');
 /*!40000 ALTER TABLE `section` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1227,7 +1233,7 @@ CREATE TABLE `version` (
 
 LOCK TABLES `version` WRITE;
 /*!40000 ALTER TABLE `version` DISABLE KEYS */;
-INSERT INTO `version` VALUES (1,'2014-05-28 15:29:11');
+INSERT INTO `version` VALUES (1,now());
 /*!40000 ALTER TABLE `version` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1241,3 +1247,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2014-07-24  3:21:34
+set FOREIGN_KEY_CHECKS = 1;

@@ -129,7 +129,7 @@ class CustomerController extends AbstractRestfulController {
 
 			$customer = new Customer;
 			/* TODO : make domain a global */
-			$customer->setDomain( $entityManager->find( 'CAP\Entity\Domain', 3 ) );
+			$customer->setDomain( $entityManager->find( 'CAP\Entity\Domain', 1 ) );
 			$customer->setRole(   $entityManager->find( 'CAP\Entity\Role', $data['role_id'] ) );
 
       $customer->setStatus( $entityManager->find( 'CAP\Entity\CustomerStatus', 2 ) );

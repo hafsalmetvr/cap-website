@@ -64,10 +64,10 @@ class Domain extends \CAP\Entity\Domain implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'name');
+            return array('__isInitialized__', 'id', 'name', 'organization');
         }
 
-        return array('__isInitialized__', 'id', 'name');
+        return array('__isInitialized__', 'id', 'name', 'organization');
     }
 
     /**
@@ -173,6 +173,28 @@ class Domain extends \CAP\Entity\Domain implements \Doctrine\ORM\Proxy\Proxy
     }
 
     
+    /**
+     * {@inheritDoc}
+     */
+    public function getOrganization()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOrganization', array());
+
+        return parent::getOrganization();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setOrganization($o)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOrganization', array($o));
+
+        return parent::setOrganization($o);
+    }
+
     /**
      * {@inheritDoc}
      */

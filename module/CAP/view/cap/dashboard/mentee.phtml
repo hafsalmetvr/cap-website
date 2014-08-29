@@ -1,0 +1,18 @@
+<?php //TODO: what to do if there are no mentees for a mentor ?>
+
+<div class="row" ng-controller="DashboardCtrl", ng-init="init()" id="dashboard">
+    <div class="col-xs-10 col-xs-offset-1">
+    	<div class="row">
+    		<div class="col-xs-12 welcome-text">
+    			<p>Congratulations!  You have been selected by Orbital as one of the engineers identified as the company’s next generation of technical and business leader candidates.  You will be challenged to work above and beyond what is generally expected of our early career engineers in order to have the unique opportunity to gain immeasurable experience in the aerospace industry while contributing to a new vision of Orbitals future.</p>
+    			<p>This Centurion Assessment Portal (CAP) will be used to assess your overall skills in specific areas identified as core skills required to be successful here at Orbital.  You may complete any assessments listed below.</p>
+    		</div>
+    	</div>
+
+        <?php
+            echo $this->partial('/cap/partials/forms-list');
+            echo $this->partial('/cap/partials/saq-list');
+            echo $this->partial('/cap/partials/mentors-list');
+        ?>
+    </div>
+</div>

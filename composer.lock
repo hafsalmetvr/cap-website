@@ -4,81 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5e395ec31ec237621c909ac0301f173c",
+    "hash": "6c9e6a07714ece0fb3b3d63e052449ac",
     "packages": [
         {
-            "name": "coolcsn/csn-user",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/coolcsn/CsnUser.git",
-                "reference": "c0128675cd767f599a2c193ba24220afcde04959"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/coolcsn/CsnUser/zipball/c0128675cd767f599a2c193ba24220afcde04959",
-                "reference": "c0128675cd767f599a2c193ba24220afcde04959",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/doctrine-orm-module": ">=0.7",
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "CsnUser\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Stoyan Cheresharov",
-                    "email": "stoyancheresharov@gmail.com",
-                    "homepage": "http://coolcsn.com/",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Stoyan Revov",
-                    "email": "st.revov@gmail.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Svetoslav Chonkov",
-                    "email": "svetoslav.chonkov@gmail.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Nikola Vasilev",
-                    "email": "niko7vasilev@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Authentication based on DoctrineORMModule",
-            "homepage": "https://github.com/coolcsn/CsnUser",
-            "keywords": [
-                "csn-user",
-                "doctrine",
-                "doctrine-orm-module",
-                "zf2"
-            ],
-            "time": "2014-04-24 20:35:03"
-        },
-        {
             "name": "doctrine/annotations",
-            "version": "v1.1.2",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "40db0c96985aab2822edbc4848b3bd2429e02670"
+                "reference": "d9b1a37e9351ddde1f19f09a02e3d6ee92e82efd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/40db0c96985aab2822edbc4848b3bd2429e02670",
-                "reference": "40db0c96985aab2822edbc4848b3bd2429e02670",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/d9b1a37e9351ddde1f19f09a02e3d6ee92e82efd",
+                "reference": "d9b1a37e9351ddde1f19f09a02e3d6ee92e82efd",
                 "shasum": ""
             },
             "require": {
@@ -86,12 +25,13 @@
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "doctrine/cache": "1.*"
+                "doctrine/cache": "1.*",
+                "phpunit/phpunit": "4.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -105,7 +45,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -126,7 +66,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -137,7 +77,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2013-06-16 21:33:03"
+            "time": "2014-07-06 15:52:21"
         },
         {
             "name": "doctrine/cache",
@@ -201,7 +141,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -268,7 +208,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -344,7 +284,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -487,7 +427,7 @@
                 {
                     "name": "Marco Pivetta",
                     "email": "ocramius@gmail.com",
-                    "homepage": "http://marco-pivetta.com/",
+                    "homepage": "http://ocramius.github.com/",
                     "role": "Developer"
                 },
                 {
@@ -497,7 +437,7 @@
                 {
                     "name": "Michaël Gallego",
                     "email": "mic.gallego@gmail.com",
-                    "homepage": "http://www.michaelgallego.fr"
+                    "homepage": "http://michaelgallego.fr"
                 }
             ],
             "description": "Zend Framework 2 Module that provides Doctrine basic functionality required for ORM and ODM modules",
@@ -569,7 +509,7 @@
                 {
                     "name": "Marco Pivetta",
                     "email": "ocramius@gmail.com",
-                    "homepage": "http://marco-pivetta.com/",
+                    "homepage": "http://ocramius.github.com/",
                     "role": "Developer"
                 },
                 {
@@ -642,7 +582,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -696,7 +636,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -710,16 +650,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "v2.4.2",
+            "version": "v2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "0363a5548d9263f979f9ca149decb9cfc66419ab"
+                "reference": "fc19c3b53dcd00e6584db40669fdd699c4671f97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/0363a5548d9263f979f9ca149decb9cfc66419ab",
-                "reference": "0363a5548d9263f979f9ca149decb9cfc66419ab",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/fc19c3b53dcd00e6584db40669fdd699c4671f97",
+                "reference": "fc19c3b53dcd00e6584db40669fdd699c4671f97",
                 "shasum": ""
             },
             "require": {
@@ -782,21 +722,126 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-02-08 16:35:09"
+            "time": "2014-07-11 03:05:53"
+        },
+        {
+            "name": "knplabs/knp-snappy",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/snappy.git",
+                "reference": "ad1a2dd0b5d9bbdbd7e2b9818c480a9b9cbaff93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/ad1a2dd0b5d9bbdbd7e2b9818c480a9b9cbaff93",
+                "reference": "ad1a2dd0b5d9bbdbd7e2b9818c480a9b9cbaff93",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "symfony/process": "Process Component of Symfony2."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Knp\\Snappy": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://github.com/KnpLabs/snappy/contributors"
+                }
+            ],
+            "description": "PHP5 library allowing thumbnail, snapshot or PDF generation from a url or a html page. Wrapper for wkhtmltopdf/wkhtmltoimage.",
+            "homepage": "http://github.com/KnpLabs/snappy",
+            "keywords": [
+                "knp",
+                "knplabs",
+                "pdf",
+                "snapshot",
+                "thumbnail"
+            ],
+            "time": "2012-11-07 09:48:01"
+        },
+        {
+            "name": "mvlabs/mvlabs-snappy",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mvlabs/MvlabsSnappy.git",
+                "reference": "2bf39dcf633942e1d7528f4f6eb81977e585fdc6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mvlabs/MvlabsSnappy/zipball/2bf39dcf633942e1d7528f4f6eb81977e585fdc6",
+                "reference": "2bf39dcf633942e1d7528f4f6eb81977e585fdc6",
+                "shasum": ""
+            },
+            "require": {
+                "knplabs/knp-snappy": "0.1.0",
+                "php": ">=5.3.3",
+                "zendframework/zendframework": "2.*"
+            },
+            "type": "zf2-module",
+            "autoload": {
+                "psr-0": {
+                    "MvlabsSnappy": "src/"
+                },
+                "classmap": [
+                    "./Module.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Diego Drigani",
+                    "email": "d.drigani@mvassociati.it",
+                    "homepage": "http://www.mvassociati.it/en/"
+                }
+            ],
+            "description": "MvlabsSnappy is a ZF2 module that allow easy to thumbnail, snapshot or PDF generation from a url or a html page using Snappy PHP (5.3+) wrapper for the  wkhtmltopdf/wkhtmltoimage conversion utility.",
+            "homepage": "https://github.com/mvlabs/MvlabsSnappy.git",
+            "keywords": [
+                "MvLabs",
+                "MvaAssociati",
+                "pdf",
+                "snappy",
+                "snapshot",
+                "thumbnail",
+                "wkhtmltoimage",
+                "wkhtmltopdf",
+                "zf2"
+            ],
+            "time": "2014-04-29 08:48:52"
         },
         {
             "name": "symfony/console",
-            "version": "v2.5.0",
+            "version": "v2.5.3",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "ef4ca73b0b3a10cbac653d3ca482d0cdd4502b2c"
+                "reference": "cd2d1e4bac2206b337326b0140ff475fe9ad5f63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/ef4ca73b0b3a10cbac653d3ca482d0cdd4502b2c",
-                "reference": "ef4ca73b0b3a10cbac653d3ca482d0cdd4502b2c",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/cd2d1e4bac2206b337326b0140ff475fe9ad5f63",
+                "reference": "cd2d1e4bac2206b337326b0140ff475fe9ad5f63",
                 "shasum": ""
             },
             "require": {
@@ -827,33 +872,31 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2014-05-22 08:54:24"
+            "time": "2014-08-05 09:00:40"
         },
         {
             "name": "zendframework/zendframework",
-            "version": "2.3.1",
+            "version": "2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "055eac4314425c291f3ef0e104a6196a8fc24cd5"
+                "reference": "0b74b66dc07ff88140287bdf67d230c1bd32ee0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/055eac4314425c291f3ef0e104a6196a8fc24cd5",
-                "reference": "055eac4314425c291f3ef0e104a6196a8fc24cd5",
-                "shasum": ""
+                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-0b74b66dc07ff88140287bdf67d230c1bd32ee0c-zip-9b89fd.zip",
+                "reference": "2.3.2",
+                "shasum": "ff3a5cbffa07c22894669eca7be0de818d3dad20"
             },
             "require": {
                 "php": ">=5.3.23",
@@ -914,7 +957,7 @@
             },
             "require-dev": {
                 "doctrine/annotations": ">=1.0",
-                "fabpot/php-cs-fixer": "*@dev",
+                "fabpot/php-cs-fixer": "dev-master",
                 "ircmaxell/random-lib": "dev-master",
                 "ircmaxell/security-lib": "dev-master",
                 "mikey179/vfsstream": "1.2.*",
@@ -947,7 +990,6 @@
                     "Zend\\": "library/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -957,7 +999,11 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-04-15 14:47:18"
+            "support": {
+                "source": "https://github.com/zendframework/zf2/tree/release-2.3.2",
+                "issues": "https://github.com/zendframework/zf2/issues"
+            },
+            "time": "2014-08-12 16:48:34"
         },
         {
             "name": "zendframework/zendxml",
@@ -969,9 +1015,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZendXml/zipball/559b34f426d33a11c3db118e00ce14bb8dc64e5f",
-                "reference": "559b34f426d33a11c3db118e00ce14bb8dc64e5f",
-                "shasum": ""
+                "url": "https://packages.zendframework.com/composer/zendframework-zendxml-559b34f426d33a11c3db118e00ce14bb8dc64e5f-zip-6cf7a2.zip",
+                "reference": "1.0.0",
+                "shasum": "39abc614b5c26bcbf8102e203c52dee73c4460a8"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -991,7 +1037,6 @@
                     "ZendXml": "library/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -1002,6 +1047,10 @@
                 "xml",
                 "zf2"
             ],
+            "support": {
+                "source": "https://github.com/zendframework/ZendXml/tree/master",
+                "issues": "https://github.com/zendframework/ZendXml/issues"
+            },
             "time": "2014-03-05 22:25:44"
         }
     ],
@@ -1013,7 +1062,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "coolcsn/csn-user": 20
+        "mvlabs/mvlabs-snappy": 20
     },
     "platform": {
         "php": ">=5.3.3"

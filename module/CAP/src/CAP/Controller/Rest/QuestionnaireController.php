@@ -18,18 +18,33 @@ class QuestionnaireController extends AbstractRestfulController {
 	public function get( $id ) {
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
 		$logger->log( \Zend\Log\Logger::INFO, "Rest call to GET /mentor/".$id );
+    $cId = $this->params()->fromRoute('customerId');
+    $qService = $this->getServiceLocator()->get( 'cap_questionnaire_service' );
 
 		/* must be logged in & must be either admin or a mentee of this mentor */
 		if ( !$this->identity() ) {
 			return JsonModel( array() );
 		}
 
-		$entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $p = $qService->checkPermissions($id, $cId, $this->identity());
+    if (!$p) {
+      return new JsonModel();
+    }
 
-		/* if not admin make sure this is a parent of the current logged in customer */
-		if ($this->identity()->getRole()->getName() !== "Admin") {
-			/* make sure this customer has the saq in customer_questionnaire */
-	  }
+		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
+    $q = $e->createQuery( "SELECT q FROM CAP\Entity\Questionnaire q WHERE q.id = :questionnaireId" )
+           ->setParameter('questionnaireId', $id)
+           ->getResult( \Doctrine\ORM\Query::HYDRATE_ARRAY );
+
+    $cq = $e->createQuery("SELECT cq.id, cq.completed, cs.name as completionStatus FROM CAP\Entity\CustomerQuestionnaire cq JOIN CAP\Entity\CompletionStatus cs WHERE cs.id = cq.completionStatus AND cq.customer = :customerId AND cq.questionnaire = :questionnaireId")
+            ->setParameter('questionnaireId', $id)
+            ->setParameter('customerId', $cId)
+            ->getResult( \Doctrine\ORM\Query::HYDRATE_ARRAY );
+
+    $q[0]['completed'] = $cq[0]['completed'];
+    $q[0]['completionStatus'] = $cq[0]['completionStatus'];
+
+    return new JsonModel($q[0]);
 
 	}
 
@@ -43,7 +58,7 @@ class QuestionnaireController extends AbstractRestfulController {
 		$logger->log( \Zend\Log\Logger::INFO, "Rest call to /customer" );
 
 		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
-		$r = $e->createQuery( "SELECT q FROM CAP\Entity\Questionnaire q" )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+    $r = $e->createQuery( "SELECT q FROM CAP\Entity\Questionnaire q" )->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
 		$results = array();
 
@@ -66,34 +81,62 @@ class QuestionnaireController extends AbstractRestfulController {
 
 		$logger = $this->getServiceLocator()->get( 'Log\App' );
 		$logger->log( \Zend\Log\Logger::INFO, $id);
-		$logger->log( \Zend\Log\Logger::INFO, $data);
+    $logger->log( \Zend\Log\Logger::INFO, $data);
 
 		$e = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
 
-		if ($data['mentee']) {
+		if ($data['account']) {
 
-			/* check if this questionnaire is already assigned to this mentee */
-	    $cq = $e->createQuery( "SELECT cq FROM CAP\Entity\CustomerQuestionnaire cq WHERE cq.questionnaireId = :questionnaireId AND cq.customerId = :menteeId" )
-	    				->setParameter('menteeId',$data['mentee'])
+			/* check if this questionnaire is already assigned to this account */
+	    $cq = $e->createQuery( "SELECT cq FROM CAP\Entity\CustomerQuestionnaire cq WHERE cq.questionnaireId = :questionnaireId AND cq.customerId = :accountId" )
+	    				->setParameter('accountId',$data['account'])
 	    				->setParameter('questionnaireId',$id)
 	    				->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
 
 	    if ( $cq ) {
-	      $cq = $cq[0];
-	    } else {
-	      $cq = new \CAP\Entity\CustomerQuestionnaire;
-	      $cq->setCustomer( $e->find( 'CAP\Entity\Customer', $data['mentee'] ) );
+        /* TODO: handlethis better */
+        $logger->log( \Zend\Log\Logger::INFO, "already assigned");
+        return new JsonModel(array('success' => true));
 	    }
-	    $cq->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
-	    $cq->setQuestionnaire( $e->find( 'CAP\Entity\Questionnaire', $id ) );
 
-	    $e->persist( $cq );
+      try {
+        $now = date("Y-m-d H:i:s");
+
+        /* add section and question rows to customer_section and customer_question */
+        $cq = new \CAP\Entity\CustomerQuestionnaire;
+        $cq->setCustomer( $e->find( 'CAP\Entity\Customer', $data['account'] ) );
+        $cq->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
+        $cq->setQuestionnaire( $e->find( 'CAP\Entity\Questionnaire', $id ) );
+        $e->persist( $cq );
+
+        /* for each section of the questionnaire */
+        $sections = $e->getRepository("\CAP\Entity\Section")->findBy(array("questionnaire" => $id));
+        foreach ($sections as $section) {
+          $cs = new \CAP\Entity\CustomerSection;
+          $cs->setCustomer( $e->find( 'CAP\Entity\Customer', $data['account'] ) );
+          $cs->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
+          $cs->setSection( $e->find( 'CAP\Entity\Section', $section->getId() ) );
+          $cs->setCreated($now);
+          $e->persist( $cs );
+        }
+
+        /* get all the questions for this questionnaire */
+        $questions = $e->getRepository("\CAP\Entity\Question")->findBy(array("questionnaire" => $id));
+        foreach ($questions as $q) {
+          $cq2 = new \CAP\Entity\CustomerQuestion;
+          $cq2->setCustomer( $e->find( 'CAP\Entity\Customer', $data['account'] ) );
+          $cq2->setCompletionStatus( $e->getRepository('CAP\Entity\CompletionStatus')->findOneBy( array('name' => 'NOT STARTED') ) );
+          $cq2->setQuestion( $e->find( 'CAP\Entity\Question', $q->getId() ) );
+          $cq2->setCreated($now);
+          $e->persist( $cq2 );
+        }
+      } catch (Exception $e) {
+        return new JsonModel(array('success' => false));
+      }
 	    $e->flush();
-
-
 		}
 
-		return new JsonModel(array('success' => true));
+    return new JsonModel(array('success' => true));
 	}
 
 	/* POST /customer - should create a new customer */

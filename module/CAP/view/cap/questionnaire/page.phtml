@@ -1,0 +1,131 @@
+<?php $this->headScript()->prependFile($this->basePath() . '/js/'. strtolower($this->identity()->getRole()->getName()) .'.min.js') ?>
+<div id="page" class="row" ng-controller="QuestionnairePageCtrl" ng-init="init(<?php echo $questionnaireId ?>,<?php echo $sectionNumber ?>,<?php echo $pageNumber ?><?php echo $customerId ? ', '.$customerId : ''; ?>)">
+	<?php echo $this->partial('cap/partials/confirm-continue-modal'); ?>
+  <div class="col-xs-10 col-xs-offset-1 questionnaire page">
+    <div class="row questionnaire-page-header">
+      <div class="col-xs-12">
+        <h1 class="row">
+        	<div class="col-xs-9"><?php echo $questionnaire->getName(); ?></div>
+        	<div class="col-xs-3 percent-complete text-right ng-cloak"><span ng-model="percentComplete">[[percentComplete]]</span><span>% Complete</span></div>
+        </h1>
+        <h2 class="row page-sub-header">
+        	<div class="col-xs-9 section-name">Section <?php echo $section->getSectionNumber(); ?>: <?php echo $section->getName(); ?></div>
+        	<?php
+
+        		$firstNum = $questions[0]->getQuestionNumber();
+        		$last     = end($questions);
+        		$lastNum  = $last->getQuestionNumber();
+
+        		/* special exception - if there's only 1 q and its an enum - then use the answer numbers */
+        		if ( ($questions[0]->getId() === $last->getId() ) && $last->getAnswerType() === 'ENUM') {
+        			/* angular will fill in the quetion numbers */
+        			$firstNum = "[[startQuestionNumber]]";
+        			$lastNum  = "[[endQuestionNumber]]";
+        		}
+
+        		reset($questions);
+        	?>
+        	<div class="col-xs-3 text-right question-numbers ng-cloak" >
+        		<span>Questions&nbsp;</span>
+        		<span ng-model="startQuestionNumber"><?php echo $firstNum; ?></span>
+        		<span>&nbsp;-&nbsp;</span>
+        		<span ng-model="endQuestionNumber"><?php echo $lastNum; ?></span>
+        	</div>
+        </h2>
+      </div>
+    </div>
+    <?php foreach ($questions as $question) { ?>
+	    <div class="row">
+	    	<div class="col-xs-12 question">
+	    		<?php if (!is_null($question->getQuestionText())) { ?>
+	    		<div class="row">
+	    			<div class="col-xs-12 text"><?php echo $question->getQuestionNumber(); ?>. <?php echo $question->getQuestionText(); ?></div>
+	    		</div>
+	    		<?php } ?>
+	    		<div class="row">
+	    			<div class="col-xs-12">
+	    				<answer-type-<?php echo $question->getAnswerType(); ?> percent-complete="percentComplete" start-question-number="startQuestionNumber" end-question-number="endQuestionNumber" class="answer" <?php if (isset($customer)) { echo 'customer-id="'.$customer->getId().'"'; }; ?> question-id="<?php echo $question->getId();?>" ></<?php echo $question->getAnswerType();?>>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	  <?php } ?>
+	  <div class="row actions">
+			<?php
+
+				$nextUrl = null;
+
+				$nextUrlArgs = array('questionnaireId' => $questionnaire->getId());
+				/* if lastPage then go to results */
+				if (isset($lastPage)) {
+					/* there are no results to view if there's no customer */
+					if (isset($customerId)) {
+						$nextUrlArgs['customerId'] = $customerId;
+						$nextUrl = $this->url('questionnaire/pdf', $nextUrlArgs);
+					} else {
+						/* what to do? send them back to summary? or nothing? */
+					}
+
+				} else {
+					/* next url is not going to results */
+					$nextUrlArgs['action']        = 'page';
+					$nextUrlArgs['sectionNumber'] = $nextSection;
+					$nextUrlArgs['id']            = $nextPage;
+
+					$key = 'questionnaire/view';
+
+					if (isset($customerId)) {
+						$key = 'questionnaire/complete';
+						$nextUrlArgs['customerId'] = $customerId;
+					}
+
+					$nextUrl = $this->url($key, $nextUrlArgs);
+				}
+
+				$prevUrl = null;
+				$prevUrlArgs = array('questionnaireId' => $questionnaire->getId());
+				/* go back to the summary */
+				if (isset($firstPage)) {
+					$key = 'questionnaire';
+
+					if (isset($customerId)) {
+						$key = 'questionnaire/complete';
+						$prevUrlArgs['customerId'] = $customerId;
+					}
+
+					$prevUrl = $this->url($key, $prevUrlArgs);
+
+				} else {
+					/* go back using prevPage and PrevSection */
+					/* next url is not going to results */
+					$prevUrlArgs['action']        = 'page';
+					$prevUrlArgs['sectionNumber'] = $prevSection;
+					$prevUrlArgs['id']            = $prevPage;
+
+					$key = 'questionnaire/view';
+
+					if (isset($customerId)) {
+						$key = 'questionnaire/complete';
+						$prevUrlArgs['customerId'] = $customerId;
+					}
+
+					$prevUrl = $this->url($key, $prevUrlArgs);
+
+				}
+
+			?>
+			<div class="col-xs-6">
+        <a href="<?php echo $prevUrl; ?>" class="btn btn-default form-control">Back</a>
+			</div>
+			<?php if (!is_null($nextUrl)) { ?>
+		  	<div class="col-xs-6">
+					<?php if (isset($lastPage)) { ?>
+	        	<button ng-click="continue('<?php echo $nextUrl; ?>','<?php echo $questionnaire->getId(); ?>','<?php echo $customerId; ?>')" class="btn btn-primary form-control">Finished</button>
+	        <?php } else { ?>
+	        	<a href="<?php echo $nextUrl; ?>" class="btn btn-primary form-control">Continue</a>
+	        <?php } ?>
+		  	</div>
+		  <?php } ?>
+	  </div>
+  </div>
+</div>

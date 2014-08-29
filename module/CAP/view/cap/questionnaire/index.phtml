@@ -1,0 +1,90 @@
+<?php $this->headScript()->prependFile($this->basePath() . '/js/'. strtolower($this->identity()->getRole()->getName()) .'.min.js') ?>
+
+<div class="row" ng-controller="QuestionnaireCtrl" ng-init="init()">
+    <div class="col-xs-10 col-xs-offset-1 questionnaire summary">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Skills Assesment Questionnaire</h1>
+            </div>
+        </div>
+
+        <div class="row">
+        	<div class="col-xs-12">
+        		<div class="row summary-header">
+        			<div class="col-xs-9">
+        				<h2 class="alt"><?php echo $questionnaire->getName() ?></h2>
+        			</div>
+                    <?php if (!is_null($sectionData['percentComplete'])) { ?>
+        			<div class="col-xs-3 text-right">
+        				<div class="percent-complete"><?php echo $sectionData['percentComplete'] ?>% Complete</div>
+        			</div>
+                    <?php } ?>
+        		</div>
+        		<div class="row">
+        			<div class="col-xs-12">
+        				<div class="description"><?php echo $questionnaire->getDescription() ?></div>
+        			</div>
+        		</div>
+        		<div class="row summary-box">
+        			<div class="col-xs-12">
+        				<?php
+        					$cnt = 0;
+        					foreach ($sections as $section) {
+        				?>
+	        				<div class="row section-row <?php echo $cnt % 2 ? 'even' : 'odd' ?> ">
+	        					<div class="col-xs-5">
+	        						<h3 class="section-name"><?php echo $section->getSectionNumber() .". " . $section->getName() ?></h3>
+	        					</div>
+                                <?php if (is_null($sectionData['completedQuestionCount'])) { ?>
+                                <div class="col-xs-7">
+                                    <div class="section-text text-center"><?php echo $sectionData[$section->getSectionNumber()]['questionCount'] . ' questions.' ?></div>
+                                </div>
+                                <?php } else { ?>
+                                <div class="col-xs-4">
+                                    <div class="section-text text-center"><?php echo $sectionData[$section->getSectionNumber()]['completedQuestionCount'] ." of ".$sectionData[$section->getSectionNumber()]['questionCount'] . ' questions completed.' ?></div>
+                                </div>
+	        					<div class="col-xs-3">
+	        						<div class="text-center completion-status <?php echo $sectionData[$section->getSectionNumber()]['completionStatus']; ?>">
+	        							<?php if ($sectionData[$section->getSectionNumber()]['completionStatus'] === "COMPLETED") { ?>
+	        								<i class="fa fa-check-circle-o green"></i>
+	        							<?php } ?>
+	        							<span><?php echo $sectionData[$section->getSectionNumber()]['completionStatus'] ?></span>
+	        						</div>
+	        					</div>
+                                <?php } ?>
+	        				</div>
+	        			<?php $cnt++; } ?>
+	        		</div>
+	        	</div>
+    				<div class="row">
+    					<div class="col-xs-12">
+    						<?php
+    							if (!isset($nextSection)) {
+    								$nextSection = 1;
+    							}
+    							if (!isset($nextPage)) {
+    								$nextPage = 1;
+    							}
+
+    							$key = 'questionnaire/view';
+    							$urlArgs = array('questionnaireId' => $questionnaire->getId(),
+    															 'sectionNumber'   => $nextSection,
+																	 'action'          => 'page',
+																	 'id'              => $nextPage);
+
+    							if (isset($customer)) {
+    								$key = 'questionnaire/complete';
+										$urlArgs['customerId'] = $customer->getId();
+    							}
+
+    							$url = $this->url($key, $urlArgs);
+
+    						?>
+                <a href="<?php echo $url; ?>" class="btn btn-primary form-control">Continue</a>
+
+    					</div>
+    				</div>
+        	</div>
+        </div>
+    </div>
+</div>

@@ -20,12 +20,20 @@ class Section {
      */
     private $id;
 
+    public function getId() {
+        return $this->id;
+    }
+
     /**
      * @var integer
      *
      * @ORM\Column(name="section_number", type="integer", nullable=false)
      */
     private $sectionNumber;
+
+    public function getSectionNumber() {
+        return $this->sectionNumber;
+    }
 
     /**
      * @var string
@@ -35,11 +43,38 @@ class Section {
     private $name;
 
     /**
+     * Set Name
+     *
+     * @param  string $name
+     * @return User
+     */
+    public function setName($name) {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get Name
+     *
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=false)
      */
     private $description;
+
+    public function getDescription() {
+        return $this->description;
+    }
 
     /**
      * @var integer
@@ -47,6 +82,10 @@ class Section {
      * @ORM\Column(name="section_order", type="integer", nullable=false)
      */
     private $sectionOrder = '0';
+
+    public function getSectionOrder() {
+        return $this->sectionOrder;
+    }
 
     /**
      * @var \DateTime
@@ -72,5 +111,7 @@ class Section {
      */
     private $questionnaire;
 
-
+    public function getQuestionnaire() {
+        return $this->questionnaire;
+    }
 }

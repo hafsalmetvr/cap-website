@@ -18,7 +18,7 @@
  */
 
 return array(
-    'csnuser' => array(
+    'cap' => array(
         /**
          * Login Redirect Route
          *
@@ -49,7 +49,7 @@ return array(
          * Default value: 'no-reply@example.com'
          * Accepted values:  A valid email address
          */
-        'sender_email_adress' => 'no-reply@example.com',
+        'sender_email_adress' => 'cap@go-optimum.com',
 
         /**
          * Visibility of navigation menu

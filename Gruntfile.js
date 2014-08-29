@@ -10,6 +10,11 @@ module.exports = function(grunt) {
         yuicompress: true,
         optimization: 2
       },
+      "pdf-style":{
+        "files": {
+          "public/css/pdf-style.css":'less/pdf-style.less'
+        }
+      },
       "style":{
         "files": {
           'public/css/style.css':'less/style.less'
@@ -33,6 +38,7 @@ module.exports = function(grunt) {
       	"files": {
       		'public/js/cap.min.js':[
             'bower_components/jquery/jquery.js',
+            'bower_components/underscore/underscore.js',
             'bower_components/bootstrap/js/modal.js',
             'bower_components/bootstrap/js/transition.js',
             'bower_components/bootstrap/js/collapse.js',

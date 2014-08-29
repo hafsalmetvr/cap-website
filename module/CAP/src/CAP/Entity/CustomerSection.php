@@ -61,6 +61,9 @@ class CustomerSection {
      */
     private $section;
 
+    public function getSection() {
+        return $this->section;
+    }
     /**
      * @var \CAP\Entity\CompletionStatus
      *
@@ -70,6 +73,10 @@ class CustomerSection {
      * })
      */
     private $completionStatus;
+
+    public function getCompletionStatus() {
+        return $this->completionStatus;
+    }
 
            /**
      * Set customer
@@ -82,6 +89,11 @@ class CustomerSection {
         $this->customer = $customer;
 
         return $this;
+    }
+
+    public function getCustomer()
+    {
+        return $this->customer;
     }
 
      /**
@@ -122,5 +134,21 @@ class CustomerSection {
 
         return $this;
     }
+     /**
+     * Set completed
+     *
+     * @param  string $date
+     * @return CustomerQuestionnaire
+     */
+    public function setCompleted($date) {
+        $this->completed = $date;
+        return $this;
+    }
+
+
+    public function getCompleted() {
+        return $this->completed;
+    }
+
 
 }

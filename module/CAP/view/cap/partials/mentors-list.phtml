@@ -1,4 +1,4 @@
-<div class="row" id="mentors" ng-show="mentors">
+<div class="row" id="mentors" ng-cloak ng-show="mentors">
     <div class="table-container col-xs-12">
         <div class="row table-header">
             <div class="col-xs-12">
@@ -57,6 +57,7 @@
         </div>
     </div>
 </div>
+<?php if (0) { ?>
 <div class="row">
     <div class="col-xs-12">
         <div class="page" ng-show="mentor_pages > 1">
@@ -64,7 +65,7 @@
                 <li class="arrow unavailable">
                     <a href="" ng-click="select_mentor_page(-1)">&laquo;</a>
                 </li>
-                <li ng-repeat="page in range(mentor_pages)" ng-class="getClass($index+1)">
+                <li ng-cloak ng-repeat="page in range(mentor_pages)" ng-class="getClass($index+1)">
                     <a href="" ng-click="select_mentor_page($index+1)">[[$index+1]]</a>
                 </li>
                 <!-- <li class="unavailable">
@@ -77,3 +78,4 @@
         </div>
     </div>
 </div>
+<?php } ?>

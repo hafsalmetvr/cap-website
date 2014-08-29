@@ -6,4 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'MvlabsSnappy\\Module' => $vendorDir . '/mvlabs/mvlabs-snappy/Module.php',
 );

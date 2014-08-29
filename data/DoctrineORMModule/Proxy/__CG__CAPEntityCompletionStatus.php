@@ -173,4 +173,15 @@ class CompletionStatus extends \CAP\Entity\CompletionStatus implements \Doctrine
     }
 
     
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+
+        return parent::getName();
+    }
+
 }
