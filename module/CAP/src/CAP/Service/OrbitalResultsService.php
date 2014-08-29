@@ -261,11 +261,11 @@ class OrbitalResultsService {
 			return ($a['score'] > $b['score']);
 		});
 
-		$res['bottom-5'] = array_slice($allAnswers,0,5);
-		$res['top-5'] = array_slice($allAnswers,count($allAnswers)-5);
+		$res['bottom-list'] = array_slice($allAnswers,0,10);
+		$res['top-list'] = array_slice($allAnswers,count($allAnswers)-10);
 
-		$logger->log( \Zend\Log\Logger::INFO, $res['top-5']);
-		$logger->log( \Zend\Log\Logger::INFO, $res['bottom-5']);
+		$logger->log( \Zend\Log\Logger::INFO, $res['top-list']);
+		$logger->log( \Zend\Log\Logger::INFO, $res['bottom-list']);
 
 
     return $res;

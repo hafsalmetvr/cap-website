@@ -8,7 +8,7 @@
 				<?php echo $this->partial($tmplPath.'small-chart',array('heading' => "CATEGORY SELF SCORE", 'average' => $results['score'][$s['sectionNumber']]['average']) ) ?>
 			</div>
 		</div>
-		<?php echo $this->partial($tmplPath."section/interpretation", array('s' => $s)); ?>
+		<?php echo $this->partial($tmplPath."section/".$s['sectionNumber']."-interpretation", array('s' => $s)); ?>
 	</div>
 
 	<div class="section-answers section-page page" style="page-break-inside:avoid;">

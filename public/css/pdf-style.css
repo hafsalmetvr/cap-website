@@ -8070,11 +8070,12 @@ h3 {
   margin-top: 50px;
 }
 .top-report {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 10mm;
+  margin-bottom: 10mm;
 }
 .top-report .top-list {
-  padding: 10px 0;
+  padding: 2mm 0;
+  font-size: 3mm;
 }
 .communication-self-assessment .section-interpretation {
   min-height: 260mm;
