@@ -120,7 +120,7 @@ function LoginControllerOff($scope, $element, $http, $timeout, $location, $cooki
 }
 
 
-function ForgotPasswordController($scope, $element, $http, $timeout, $location)
+function ForgotPasswordController($scope, $element, $http, $timeout, $location, $window)
 {
     $scope.init = function(token){
         $scope.email = '';
@@ -194,7 +194,7 @@ function ForgotPasswordController($scope, $element, $http, $timeout, $location)
             }).success(function(data, status) {
                 if(data.passwordreset == "success"){
                     $scope.msg = "Password changed successfully";
-                    document.location.href = "../../login";
+                    $window.location.href = "../../login";
                 } else {
                     $scope.msg = "Some error occured";
                 }

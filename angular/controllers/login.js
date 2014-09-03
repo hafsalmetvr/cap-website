@@ -32,7 +32,7 @@ controller('PasswordCtrl', ['$scope', '$element', '$http', '$timeout', '$window'
                     if(data.success){
                         $scope.success = true;
                         $scope.msg = "Password changed successfully";
-                        document.location.href = "/dashboard";
+                        $window.location.href = "/dashboard";
                     } else {
                         $scope.success = false;
                         $scope.msg = "Unable to set your password.  Please contact your administrator.";
