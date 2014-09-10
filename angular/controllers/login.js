@@ -60,35 +60,10 @@ controller('LoginCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '
             $scope.success = false;
         }
 
-        /* TODO: do something with this */
-        $scope.forgotPassword = function(){
-            $scope.is_valid = $scope.validate_form();
-            if ($scope.is_valid) {
-                params = {
-                    'email': $scope.email,
-                }
-                $http({
-                    method: 'post',
-                    url: "/user/register",
-                    data: angular.toJson(params),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).success(function(data, status) {
-                    if(data.status == "sent"){
-                        $scope.msg = "Your request sent Successfully, Please check your email";
-                    } else {
-                        $scope.msg = "Some error occured";
-                    }
-                }).error(function(data, success){
-                });
-            }
-        }
-
         $scope.submitLogin = function() {
             console.log('submit login');
             if ($scope.loginForm.$pristine) {
-            	return;
+                return;
             }
             if (!$scope.loginForm.$valid) {
                 $scope.msg = "Your email or password was incorrect.";
@@ -134,7 +109,56 @@ controller('LoginCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '
 
     }
 ]).
-controller('FooCtrl', ['$scope', '$window',
-	function($scope, $window) {
+controller('ResetPasswordCtrl', ['$scope', '$window', '$http',
+	function($scope, $window, $http) {
+        $scope.init = function(){
+            $scope.email = '';
+            $scope.success = false;
+        }
+
+        $scope.submitResetPassword = function() {
+            console.log('submit login');
+            if ($scope.resetPasswordForm.$pristine) {
+                return;
+            }
+
+            if (!$scope.resetPasswordForm.$valid) {
+                $scope.msg = "That email address is invalid.";
+            } else {
+                $scope.inProgress = true;
+                $scope.success    = true;
+                $scope.msg        = "Sending reset password email...";
+
+                var params = {
+                    'email': $scope.email,
+                }
+
+                $http({
+                    method: 'post',
+                    url: "/password-email",
+                    data: angular.toJson(params),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).success(function(data, status) {
+                    if(data.success){
+                        $scope.inProgress = false;
+                        $scope.success = true;
+                        $scope.msg = data.message;
+                    } else {
+                        $scope.inProgress = false;
+                        $scope.success = false;
+                        $scope.msg = data.message || "Your email address was not found.";
+                    }
+
+                }).error(function(data, success){
+                    $scope.success = false;
+                    $scope.inProgress = false;
+                    $scope.msg = "An internal error ocurred. Please contact your administrator.";
+                });
+            }
+        }
+
+
 	}
 ]);

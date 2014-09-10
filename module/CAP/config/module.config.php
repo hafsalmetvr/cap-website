@@ -34,6 +34,16 @@ return array(
                     )
                 ),
             ),
+            'rest-password-email' => array(
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/password-email',
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Rest\ResetPassword',
+                    )
+                ),
+            ),
+
             'rest-password' => array(
                 'type' => 'literal',
                 'options' => array(
@@ -178,6 +188,17 @@ return array(
                     'defaults' => array(
                         'controller' => 'CAP\Controller\Index',
                         'action' => 'index'
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+            'reset-password' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/reset-password',
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Index',
+                        'action' => 'resetPassword'
                     ),
                 ),
                 'may_terminate' => true,
@@ -405,6 +426,7 @@ return array(
             'CAP\Controller\Rest\QuestionnaireStatus' => 'CAP\Controller\Rest\QuestionnaireStatusController',
             'CAP\Controller\Rest\Dashboard'  => 'CAP\Controller\Rest\DashboardController',
             'CAP\Controller\Rest\Login'      => 'CAP\Controller\Rest\LoginController',
+            'CAP\Controller\Rest\ResetPassword'  => 'CAP\Controller\Rest\ResetPasswordController',
             'CAP\Controller\Rest\Password'   => 'CAP\Controller\Rest\PasswordController',
             'CAP\Controller\Rest\Settings'   => 'CAP\Controller\Rest\SettingsController',
             'CAP\Controller\Rest\Answer'     => 'CAP\Controller\Rest\AnswerController',
@@ -423,6 +445,7 @@ return array(
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'cap/index/index'         => __DIR__ . '/../view/cap/login/index.phtml', //homepage goes to login for now
+            'cap/index/reset-password' => __DIR__ . '/../view/cap/login/reset-password.phtml', //homepage goes to login for now
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

@@ -30,11 +30,7 @@ class DashboardController extends AbstractActionController {
 			return $this->redirect()->toRoute( 'home' );
 		}
 
-
-
 		/* display the appropriate view depending on the role of the logged in user */
-
-
 		return new viewModel();
 	}
 
