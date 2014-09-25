@@ -24,6 +24,8 @@ alter table questionnaire auto_increment = 1;
 delete from customer_questionnaire;
 alter table customer_questionnaire auto_increment = 1;
 
+delete from role;
+alter table role auto_increment = 1;
 delete from domain;
 alter table domain auto_increment = 1;
 delete from organization;
