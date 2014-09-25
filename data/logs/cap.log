@@ -97,3 +97,71 @@ Stack trace:
 2014-09-09T21:32:23-07:00 INFO (6): array (
   'email' => 'tom@tomwalpole.com',
 )
+2014-09-24T20:56:06+05:30 INFO (6): Dashboard index action
+2014-09-24T20:56:07+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-24T20:56:07+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-24T20:56:10+05:30 INFO (6): Dashboard index action
+2014-09-24T20:56:11+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-24T20:56:11+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-24T20:56:15+05:30 INFO (6): Dashboard index action
+2014-09-24T20:56:15+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-24T20:56:15+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-24T20:56:18+05:30 INFO (6): Dashboard settings action
+2014-09-24T20:56:23+05:30 INFO (6): logout
+2014-09-24T20:56:23+05:30 INFO (6): This is a little log!
+2014-09-24T20:58:39+05:30 INFO (6): This is a little log!
+2014-09-24T20:58:41+05:30 INFO (6): 0
+2014-09-24T20:58:42+05:30 INFO (6): Dashboard index action
+2014-09-24T20:58:42+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-24T20:58:42+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-24T20:58:48+05:30 INFO (6): Dashboard index action
+2014-09-24T20:58:48+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-24T20:58:48+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-24T20:59:00+05:30 INFO (6): Dashboard index action
+2014-09-24T20:59:00+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-24T20:59:01+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-24T21:29:24+05:30 INFO (6): Dashboard index action
+2014-09-24T21:29:24+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-24T21:29:24+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-24T22:17:29+05:30 INFO (6): This is a little log!
+2014-09-24T22:17:35+05:30 INFO (6): array (
+  'email' => 'hafsalmetvr@gmail.com',
+)
+2014-09-24T22:17:57+05:30 INFO (6): Display confirm email form
+2014-09-24T22:17:58+05:30 INFO (6): This is a little log!
+2014-09-24T22:18:14+05:30 INFO (6): Display confirm email form
+2014-09-24T22:18:14+05:30 INFO (6): This is a little log!
+2014-09-24T22:18:37+05:30 INFO (6): 0
+2014-09-24T22:18:37+05:30 INFO (6): Dashboard index action
+2014-09-24T22:18:38+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-24T22:18:38+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-24T22:36:54+05:30 INFO (6): Dashboard index action
+2014-09-24T22:36:55+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-24T22:36:55+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-25T20:29:03+05:30 INFO (6): This is a little log!
+2014-09-25T20:29:06+05:30 INFO (6): 0
+2014-09-25T20:29:06+05:30 INFO (6): Dashboard index action
+2014-09-25T20:29:10+05:30 INFO (6): Dashboard index action
+2014-09-25T20:40:51+05:30 INFO (6): Dashboard index action
+2014-09-25T20:40:52+05:30 INFO (6): Dashboard index action
+2014-09-25T20:43:04+05:30 INFO (6): Dashboard index action
+2014-09-25T20:43:05+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-25T20:43:05+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-25T20:43:13+05:30 INFO (6): Rest call to PUT /customer/1
+2014-09-25T20:43:13+05:30 INFO (6): array (
+  'status' => 'INACTIVE',
+)
+2014-09-25T20:43:19+05:30 INFO (6): Dashboard index action
+2014-09-25T20:43:19+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-25T20:43:20+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-25T20:43:30+05:30 INFO (6): Dashboard index action
+2014-09-25T20:43:30+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-25T20:43:30+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-25T20:46:38+05:30 INFO (6): Dashboard index action
+2014-09-25T20:46:38+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-25T20:46:39+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-25T20:46:50+05:30 INFO (6): Display dashboard create form
+2014-09-25T20:46:50+05:30 INFO (6): Rest call to /customer
+2014-09-25T20:46:56+05:30 INFO (6): Dashboard index action
+2014-09-25T20:46:57+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-25T20:46:57+05:30 INFO (6): Rest call to GET /dashboard

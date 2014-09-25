@@ -1,4 +1,3 @@
-set FOREIGN_KEY_CHECKS = 0;
 -- MySQL dump 10.13  Distrib 5.5.32, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: cap
@@ -43,7 +42,6 @@ CREATE TABLE `answer` (
 
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-/* INSERT INTO `answer` VALUES (1,1,'Multiselect Option 1','MULTISELECT',1,1,'2014-07-19 17:33:26','2014-07-22 19:30:06'),(2,1,'Multiselect Option 2','MULTISELECT',2,1,'2014-07-19 17:33:52','2014-07-22 19:30:18'),(3,1,'This is third multiselection option','MULTISELECT',3,1,'2014-07-19 17:34:03','2014-07-22 19:30:28'),(4,1,'This is Enum Answer Text number 1','ENUM',1,4,'2014-07-22 21:40:36','2014-07-22 16:10:36'),(5,2,'This is Enum Answer Text number 2','ENUM',2,4,'2014-07-22 21:40:56','2014-07-22 16:10:56'),(6,3,'This is Enum Answer Text number 3','ENUM',3,4,'2014-07-22 21:41:37','2014-07-22 16:11:37'),(7,1,'','TEXT',1,2,'2014-07-24 00:41:10','2014-07-23 19:11:10'),(8,1,'check box option 1','CHECKBOX',1,5,'2014-07-24 02:07:55','2014-07-23 20:37:55'),(9,2,'check box option 2','CHECKBOX',2,5,'2014-07-24 02:08:17','2014-07-23 20:38:17'),(10,3,'check box option 3','CHECKBOX',3,5,'2014-07-24 02:09:00','2014-07-23 20:39:00'),(11,1,'Radio option 1','RADIO',1,6,'2014-07-24 02:09:37','2014-07-23 20:39:37'),(12,2,'Radio option 2','RADIO',2,6,'2014-07-24 02:09:50','2014-07-23 20:39:50'),(13,3,'Radio option 3','RADIO',3,6,'2014-07-24 02:10:00','2014-07-23 20:40:00'),(14,1,'Select option 1','SELECT',1,7,'2014-07-24 02:11:03','2014-07-23 20:41:03'),(15,2,'Select option 2','SELECT',2,7,'2014-07-24 02:11:17','2014-07-23 20:41:17'),(16,3,'Select option 3','SELECT',3,7,'2014-07-24 02:11:33','2014-07-23 20:41:33'),(17,4,'Select option 4','SELECT',4,7,'2014-07-24 02:11:48','2014-07-23 20:41:48'),(19,1,'','TEXTAREA',1,8,'2014-07-24 02:56:25','2014-07-23 21:26:25'); */
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -84,7 +82,6 @@ CREATE TABLE `answer_enum` (
 
 LOCK TABLES `answer_enum` WRITE;
 /*!40000 ALTER TABLE `answer_enum` DISABLE KEYS */;
-
 /*!40000 ALTER TABLE `answer_enum` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -131,7 +128,6 @@ CREATE TABLE `answer_enum_map` (
 
 LOCK TABLES `answer_enum_map` WRITE;
 /*!40000 ALTER TABLE `answer_enum_map` DISABLE KEYS */;
-
 /*!40000 ALTER TABLE `answer_enum_map` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -164,7 +160,7 @@ CREATE TABLE `completion_status` (
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +169,7 @@ CREATE TABLE `completion_status` (
 
 LOCK TABLES `completion_status` WRITE;
 /*!40000 ALTER TABLE `completion_status` DISABLE KEYS */;
-INSERT INTO `completion_status` (name) VALUES ('NOT STARTED'),('NOT COMPLETED'),('COMPLETED');
+INSERT INTO `completion_status` VALUES (1,'NOT STARTED','0000-00-00 00:00:00','2014-09-25 14:57:06'),(2,'NOT COMPLETED','0000-00-00 00:00:00','2014-09-25 14:57:06'),(3,'COMPLETED','0000-00-00 00:00:00','2014-09-25 14:57:06');
 /*!40000 ALTER TABLE `completion_status` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -220,7 +216,7 @@ CREATE TABLE `customer` (
   CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `domain` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `customer_ibfk_3` FOREIGN KEY (`status_id`) REFERENCES `customer_status` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,13 +225,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` (email,domain_id,role_id,name,password,status_id) VALUES
-('kwalpole@go-optimum.com',0,1,'Kim Walpole','$2y$10$hxluqSwKn1A5ydOBf/BB0Oe1NH6PBt9xx/bRDm5Vfb0ZIoux4l1VS',1),
-('demo-admin@go-optimum.com',1,1,'Demo Admin','$2y$10$bgNH98TWY9BCpP79Dg8AOu7r7z9UvR/atrdXONC2dVkQdjhV.Wzia',1),
-('demo-mentor@go-optimum.com',1,2,'Demo Mentor','$2y$10$/VUVit1FoYkDl1fCyDoGpuVC2oXGzYFof0/mG1KkYGqhnHv838xTq',1),
-('demo-mentee@go-optimum.com',1,3,'Demo Mentee','$2y$10$zXflcw3.BuBCbFerdq.YTOd3mffFqH01tAUXpnfo/GkrmaUSBuDFC',1);
-
-
+INSERT INTO `customer` VALUES (1,'hafsalmetvr@gmail.com',0,3,'Kim Walpole',NULL,NULL,'$2y$10$K0ZZKJLmCweOrSBF/dNK5OrvpBCFwbmXtKYFFlf0ItpjT6GhPc5wK',2,NULL,'0000-00-00 00:00:00','2014-09-25 15:13:14'),(2,'demo-mentee2@captest.com',1,3,'Demo Admin',NULL,NULL,'$2y$10$bgNH98TWY9BCpP79Dg8AOu7r7z9UvR/atrdXONC2dVkQdjhV.Wzia',1,NULL,'0000-00-00 00:00:00','2014-09-25 15:30:02'),(3,'demo-mentee1@captest.com',1,4,'Demo Mentor',NULL,NULL,'$2y$10$/VUVit1FoYkDl1fCyDoGpuVC2oXGzYFof0/mG1KkYGqhnHv838xTq',1,NULL,'0000-00-00 00:00:00','2014-09-25 15:30:10'),(4,'demo-mentee@captest.com',1,5,'Demo Mentee',NULL,NULL,'$2y$10$zXflcw3.BuBCbFerdq.YTOd3mffFqH01tAUXpnfo/GkrmaUSBuDFC',1,NULL,'0000-00-00 00:00:00','2014-09-25 15:29:43');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -406,7 +396,7 @@ CREATE TABLE `customer_note_map` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_note_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `share` boolean DEFAULT FALSE,
+  `share` tinyint(1) DEFAULT '0',
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -565,7 +555,6 @@ CREATE TABLE `customer_questionnaire` (
 
 LOCK TABLES `customer_questionnaire` WRITE;
 /*!40000 ALTER TABLE `customer_questionnaire` DISABLE KEYS */;
-
 /*!40000 ALTER TABLE `customer_questionnaire` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -614,7 +603,6 @@ CREATE TABLE `customer_recommendation` (
 
 LOCK TABLES `customer_recommendation` WRITE;
 /*!40000 ALTER TABLE `customer_recommendation` DISABLE KEYS */;
-
 /*!40000 ALTER TABLE `customer_recommendation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -696,7 +684,7 @@ CREATE TABLE `customer_status` (
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -705,7 +693,7 @@ CREATE TABLE `customer_status` (
 
 LOCK TABLES `customer_status` WRITE;
 /*!40000 ALTER TABLE `customer_status` DISABLE KEYS */;
-INSERT INTO `customer_status` (name) VALUES ('ACTIVE'),('INACTIVE'),('DELETED');
+INSERT INTO `customer_status` VALUES (1,'ACTIVE','0000-00-00 00:00:00','2014-09-25 14:57:09'),(2,'INACTIVE','0000-00-00 00:00:00','2014-09-25 14:57:09'),(3,'DELETED','0000-00-00 00:00:00','2014-09-25 14:57:09');
 /*!40000 ALTER TABLE `customer_status` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -770,47 +758,6 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
--- Table structure for table `organization`
---
-
-DROP TABLE IF EXISTS `organization`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `organization` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `template_dir` varchar(255) NOT NULL DEFAULT '',
-  `created` datetime NOT NULL,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `organization`
---
-
-LOCK TABLES `organization` WRITE;
-/*!40000 ALTER TABLE `organization` DISABLE KEYS */;
-/*!40000 ALTER TABLE `organization` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER organization_created BEFORE INSERT ON organization FOR EACH ROW SET new.created = now() */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
 -- Table structure for table `domain`
 --
 
@@ -826,7 +773,7 @@ CREATE TABLE `domain` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `domain_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -835,6 +782,7 @@ CREATE TABLE `domain` (
 
 LOCK TABLES `domain` WRITE;
 /*!40000 ALTER TABLE `domain` DISABLE KEYS */;
+INSERT INTO `domain` VALUES (2,'go-optimum.com',1,'2014-09-25 20:39:32','2014-09-25 15:09:32');
 /*!40000 ALTER TABLE `domain` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -854,7 +802,46 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `organization`
+--
 
+DROP TABLE IF EXISTS `organization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `organization` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `template_dir` varchar(255) NOT NULL DEFAULT '',
+  `created` datetime NOT NULL,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `organization`
+--
+
+LOCK TABLES `organization` WRITE;
+/*!40000 ALTER TABLE `organization` DISABLE KEYS */;
+INSERT INTO `organization` VALUES (1,'Optimum Training & Consulting, Inc.','','2014-09-25 20:39:19','2014-09-25 15:09:19');
+/*!40000 ALTER TABLE `organization` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER organization_created BEFORE INSERT ON organization FOR EACH ROW SET new.created = now() */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `question`
@@ -866,7 +853,7 @@ DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `question_number` int(11) NOT NULL,
-  `question_text` text DEFAULT NULL,
+  `question_text` text,
   `question_order` int(11) NOT NULL DEFAULT '0',
   `section_id` int(11) NOT NULL,
   `questionnaire_id` int(11) NOT NULL,
@@ -887,7 +874,6 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
--- INSERT INTO `question` VALUES (1,1,'This is a question with answer type MULTISELECT',1,1,1,'2014-06-16 21:44:21','2014-07-22 19:34:53'),(2,1,'This is a question with Answer type of TEXT, it just has an input type = text',2,2,1,'2014-06-16 21:44:33','2014-07-22 19:39:01'),(3,1,'What is python',1,1,2,'2014-06-16 21:44:36','2014-07-19 10:57:38'),(4,1,'This is a question with answer type ENUM',1,2,1,'2014-06-16 21:44:47','2014-07-22 16:07:27'),(5,1,'This is a question with anser type of CHECKBOX',3,2,1,'2014-07-24 02:02:42','2014-07-23 20:32:42'),(6,1,'This is a question with anser type of RADIO',4,2,1,'2014-07-24 02:03:22','2014-07-23 20:33:22'),(7,1,'This is a question with anser type of SELECT',5,2,1,'2014-07-24 02:03:44','2014-07-23 20:33:44'),(8,1,'This is a text area type question',6,2,1,'2014-07-24 02:50:47','2014-07-23 21:24:05');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -917,8 +903,8 @@ CREATE TABLE `questionnaire` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `questions_per_page` int(11) NOT NULL DEFAULT 10,
-  `type` enum('QUESTIONNAIRE', 'FORM') NOT NULL DEFAULT 'QUESTIONNAIRE',
+  `questions_per_page` int(11) NOT NULL DEFAULT '10',
+  `type` enum('QUESTIONNAIRE','FORM') NOT NULL DEFAULT 'QUESTIONNAIRE',
   `template_dir` varchar(255) NOT NULL DEFAULT '',
   `organization_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
@@ -1098,7 +1084,7 @@ CREATE TABLE `role` (
   PRIMARY KEY (`id`),
   KEY `domain_id` (`domain_id`),
   CONSTRAINT `role_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `domain` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1107,7 +1093,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
--- INSERT INTO `role` (name,level,domain_id) VALUES ('Admin',0,1),('Mentor',0,1),('Mentee',0,1);
+INSERT INTO `role` VALUES (3,'Admin',0,2,'2014-09-25 20:40:10','2014-09-25 15:10:10'),(4,'Mentor',0,2,'2014-09-25 20:40:35','2014-09-25 15:10:35'),(5,'Mentee',0,2,'2014-09-25 20:40:48','2014-09-25 15:10:48');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1233,7 +1219,7 @@ CREATE TABLE `version` (
 
 LOCK TABLES `version` WRITE;
 /*!40000 ALTER TABLE `version` DISABLE KEYS */;
-INSERT INTO `version` VALUES (1,now());
+INSERT INTO `version` VALUES (1,'2014-09-25 14:57:12');
 /*!40000 ALTER TABLE `version` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1246,5 +1232,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-24  3:21:34
-set FOREIGN_KEY_CHECKS = 1;
+-- Dump completed on 2014-09-25 21:00:37

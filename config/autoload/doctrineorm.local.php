@@ -22,7 +22,7 @@ return array(
                     'host'     => 'localhost',
                     'port'     => '3306',
                     'user'     => 'root',
-                    'password' => 'optimum2014',
+                    'password' => 'root',
                     'dbname'   => 'cap',
 					'charset' => 'utf8', // extra
 					'driverOptions' => array(
