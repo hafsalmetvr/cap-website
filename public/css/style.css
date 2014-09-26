@@ -8213,3 +8213,118 @@ nav .hover-menu-container.active ul.hover-menu li a:hover {
 #overlay.overlay .overlay-loading img {
   margin-bottom: 20px;
 }
+
+/********* manage questionnaire styles *********/
+
+.bread_crumb {
+  background-color: #F2F2F2;
+  height: 40px;
+  padding-top: 10px;
+  border-radius: 3px;
+}
+
+.bread_crumb ul {
+  list-style: none;
+  display: block;
+}
+
+.bread_crumb li {
+  float: left
+}
+.right_section {
+  border: 1px solid #ADADAD;
+  min-width: 64%;
+  margin-top: 30px;
+}
+.left_section {
+  margin-right: 20px;
+  padding: 10px;
+  background-color: #F2F2F2;
+  margin-top: 30px;
+}
+.controls {
+  padding: 10px;
+  background-color: #999999;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.controls input[type="text"], .controls textarea {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #999999;
+  border-radius: 7px;
+}
+
+.controls input[type="text"] {
+  height: 50px;
+}
+
+.controls textarea {
+  height: 150px;
+}
+.properties {
+  padding: 15px;
+  background-color: #A6C2F1;
+}
+
+.section {
+  border: 1px solid #ADADAD;
+  float: left;
+  width: 100%;
+}
+
+.section_name, .add_page {
+  padding: 15px;
+  border-bottom: 1px solid #ADADAD;
+  width: 100%;
+  display: block;
+  background-color: #E4E4E4;
+}
+.add_page {
+  float: left;
+}
+
+.page {
+  padding: 15px;
+  border-bottom: 1px solid #ADADAD;
+  width: 100%;
+  display: block;
+  background-color: #FFFFFF;
+  float:;
+}
+
+.add_page_button, .save_button {
+  display: block;
+  padding: 10px;
+  color: #FFFFFF;
+  font-size: 12px;
+  border-radius: 3px;
+  float: right;
+  background-color: #0000FF;
+}
+
+.add_section_button {
+  display: block;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 3px;
+  float: right;
+  background-color: #A6C2F1;
+  color: #000000;
+}
+.add_section {
+  padding: 15px;
+  float: left;
+  width: 100%;
+}
+
+.settings {
+  width: 100%;
+  height: 200px;
+  background-color: #F2F2F2;
+}
+
+.save_button {
+  margin: 30px 0px 30px 0px;
+}
