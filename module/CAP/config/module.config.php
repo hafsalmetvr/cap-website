@@ -334,6 +334,22 @@ return array(
                 'may_terminate' => true,
             ),
 
+
+            'managequestionnaire' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/managequestionnaire/[:questionnaireId]',
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'CAP\Controller\Managequestionnaire',
+                        'action' => 'index'
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+
             /* partials */
             'partials-index' => array(
                 'type'    => 'segment',
@@ -416,6 +432,7 @@ return array(
             'CAP\Controller\Questionnaire'   => 'CAP\Controller\QuestionnaireController',
             'CAP\Controller\Partials'        => 'CAP\Controller\PartialsController',
             'CAP\Controller\AnswerType'      => 'CAP\Controller\AnswerTypeController',
+            'CAP\Controller\Managequestionnaire'   => 'CAP\Controller\ManagequestionnaireController',
 
             'CAP\Controller\Rest\Customer'   => 'CAP\Controller\Rest\CustomerController',
             'CAP\Controller\Rest\Mentee'     => 'CAP\Controller\Rest\MenteeController',

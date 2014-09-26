@@ -165,3 +165,192 @@ Stack trace:
 2014-09-25T20:46:56+05:30 INFO (6): Dashboard index action
 2014-09-25T20:46:57+05:30 INFO (6): Rest call to GET /customer/current
 2014-09-25T20:46:57+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-25T23:08:33+05:30 INFO (6): This is a little log!
+2014-09-25T23:08:36+05:30 INFO (6): 0
+2014-09-25T23:09:56+05:30 INFO (6): 0
+2014-09-25T23:09:56+05:30 INFO (6): Dashboard index action
+2014-09-25T23:09:57+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-25T23:09:57+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-25T23:10:03+05:30 INFO (6): Dashboard index action
+2014-09-25T23:10:03+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-25T23:10:03+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-25T23:11:04+05:30 INFO (6): Dashboard index action
+2014-09-25T23:11:04+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-25T23:11:05+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-26T00:50:52+05:30 INFO (6): Dashboard index action
+2014-09-26T00:50:52+05:30 INFO (6): This is a little log!
+2014-09-26T00:50:55+05:30 INFO (6): 0
+2014-09-26T00:50:57+05:30 INFO (6): 0
+2014-09-26T00:54:00+05:30 INFO (6): 0
+2014-09-26T00:54:00+05:30 INFO (6): Dashboard index action
+2014-09-26T00:54:01+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-26T00:54:01+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-26T00:56:37+05:30 INFO (6): Dashboard index action
+2014-09-26T00:56:37+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-26T00:56:38+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-26T00:56:47+05:30 INFO (6): Dashboard index action
+2014-09-26T00:56:47+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-26T00:56:48+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-26T00:57:09+05:30 INFO (6): Dashboard index action
+2014-09-26T00:57:09+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-26T00:57:09+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-26T00:57:13+05:30 INFO (6): Dashboard index action
+2014-09-26T00:57:13+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-26T00:57:14+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-26T00:58:17+05:30 INFO (6): Dashboard index action
+2014-09-26T00:58:17+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-26T00:58:17+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-26T00:58:21+05:30 INFO (6): questionnaire index action
+2014-09-26T00:58:21+05:30 INFO (6): qId: 1 cust:
+2014-09-26T00:58:21+05:30 INFO (6): check permissions on questionnaire
+2014-09-26T00:58:21+05:30 INFO (6): 1
+2014-09-26T00:58:21+05:30 INFO (6): got questionnaire: Communication & Interpersonal Skills Self-Assessment
+2014-09-26T00:58:21+05:30 INFO (6): got section: EMPATHAZING
+2014-09-26T00:58:21+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:21+05:30 INFO (6): enum count12
+2014-09-26T00:58:21+05:30 INFO (6): got section: RECEIVING
+2014-09-26T00:58:21+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:21+05:30 INFO (6): enum count12
+2014-09-26T00:58:21+05:30 INFO (6): got section: TRANSMITTING YOUR MESSAGE
+2014-09-26T00:58:21+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:21+05:30 INFO (6): enum count12
+2014-09-26T00:58:21+05:30 INFO (6): got section: CLARIFYING
+2014-09-26T00:58:21+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:21+05:30 INFO (6): enum count12
+2014-09-26T00:58:21+05:30 INFO (6): got section: FEEDBACK: GIVING AND RECEIVING
+2014-09-26T00:58:21+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:21+05:30 INFO (6): enum count12
+2014-09-26T00:58:21+05:30 INFO (6): got section: READING NON VERBAL CLUES
+2014-09-26T00:58:21+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:21+05:30 INFO (6): enum count12
+2014-09-26T00:58:21+05:30 INFO (6): got section: UNDERSTANDING
+2014-09-26T00:58:21+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:21+05:30 INFO (6): enum count12
+2014-09-26T00:58:36+05:30 INFO (6): Dashboard index action
+2014-09-26T00:58:37+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-26T00:58:37+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-26T00:58:54+05:30 INFO (6): questionnaire index action
+2014-09-26T00:58:54+05:30 INFO (6): qId: 1 cust:
+2014-09-26T00:58:54+05:30 INFO (6): check permissions on questionnaire
+2014-09-26T00:58:54+05:30 INFO (6): session says 1
+2014-09-26T00:58:54+05:30 INFO (6): 1
+2014-09-26T00:58:54+05:30 INFO (6): got questionnaire: Communication & Interpersonal Skills Self-Assessment
+2014-09-26T00:58:54+05:30 INFO (6): got section: EMPATHAZING
+2014-09-26T00:58:54+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:54+05:30 INFO (6): enum count12
+2014-09-26T00:58:54+05:30 INFO (6): got section: RECEIVING
+2014-09-26T00:58:54+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:54+05:30 INFO (6): enum count12
+2014-09-26T00:58:54+05:30 INFO (6): got section: TRANSMITTING YOUR MESSAGE
+2014-09-26T00:58:54+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:54+05:30 INFO (6): enum count12
+2014-09-26T00:58:54+05:30 INFO (6): got section: CLARIFYING
+2014-09-26T00:58:54+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:54+05:30 INFO (6): enum count12
+2014-09-26T00:58:54+05:30 INFO (6): got section: FEEDBACK: GIVING AND RECEIVING
+2014-09-26T00:58:54+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:54+05:30 INFO (6): enum count12
+2014-09-26T00:58:54+05:30 INFO (6): got section: READING NON VERBAL CLUES
+2014-09-26T00:58:54+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:54+05:30 INFO (6): enum count12
+2014-09-26T00:58:54+05:30 INFO (6): got section: UNDERSTANDING
+2014-09-26T00:58:54+05:30 INFO (6): questioncount not enum0
+2014-09-26T00:58:54+05:30 INFO (6): enum count12
+2014-09-26T00:59:06+05:30 INFO (6): Dashboard index action
+2014-09-26T00:59:07+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-26T00:59:07+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-26T01:08:56+05:30 INFO (6): questionnaire index action
+2014-09-26T01:08:56+05:30 INFO (6): qId: 1 cust:
+2014-09-26T01:08:56+05:30 INFO (6): check permissions on questionnaire
+2014-09-26T01:08:56+05:30 INFO (6): session says 1
+2014-09-26T01:08:56+05:30 INFO (6): 1
+2014-09-26T01:08:56+05:30 INFO (6): got questionnaire: Communication & Interpersonal Skills Self-Assessment
+2014-09-26T01:08:56+05:30 INFO (6): got section: EMPATHAZING
+2014-09-26T01:08:56+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:08:56+05:30 INFO (6): enum count12
+2014-09-26T01:08:56+05:30 INFO (6): got section: RECEIVING
+2014-09-26T01:08:56+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:08:56+05:30 INFO (6): enum count12
+2014-09-26T01:08:56+05:30 INFO (6): got section: TRANSMITTING YOUR MESSAGE
+2014-09-26T01:08:56+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:08:56+05:30 INFO (6): enum count12
+2014-09-26T01:08:56+05:30 INFO (6): got section: CLARIFYING
+2014-09-26T01:08:56+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:08:56+05:30 INFO (6): enum count12
+2014-09-26T01:08:56+05:30 INFO (6): got section: FEEDBACK: GIVING AND RECEIVING
+2014-09-26T01:08:56+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:08:56+05:30 INFO (6): enum count12
+2014-09-26T01:08:56+05:30 INFO (6): got section: READING NON VERBAL CLUES
+2014-09-26T01:08:56+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:08:56+05:30 INFO (6): enum count12
+2014-09-26T01:08:56+05:30 INFO (6): got section: UNDERSTANDING
+2014-09-26T01:08:56+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:08:56+05:30 INFO (6): enum count12
+2014-09-26T01:09:05+05:30 INFO (6): questionnaire index action
+2014-09-26T01:09:05+05:30 INFO (6): qId: 1 cust:
+2014-09-26T01:09:05+05:30 INFO (6): check permissions on questionnaire
+2014-09-26T01:09:05+05:30 INFO (6): session says 1
+2014-09-26T01:09:05+05:30 INFO (6): 1
+2014-09-26T01:09:05+05:30 INFO (6): got questionnaire: Communication & Interpersonal Skills Self-Assessment
+2014-09-26T01:09:05+05:30 INFO (6): got section: EMPATHAZING
+2014-09-26T01:09:05+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:09:05+05:30 INFO (6): enum count12
+2014-09-26T01:09:05+05:30 INFO (6): got section: RECEIVING
+2014-09-26T01:09:05+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:09:05+05:30 INFO (6): enum count12
+2014-09-26T01:09:05+05:30 INFO (6): got section: TRANSMITTING YOUR MESSAGE
+2014-09-26T01:09:05+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:09:05+05:30 INFO (6): enum count12
+2014-09-26T01:09:05+05:30 INFO (6): got section: CLARIFYING
+2014-09-26T01:09:05+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:09:05+05:30 INFO (6): enum count12
+2014-09-26T01:09:05+05:30 INFO (6): got section: FEEDBACK: GIVING AND RECEIVING
+2014-09-26T01:09:05+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:09:05+05:30 INFO (6): enum count12
+2014-09-26T01:09:05+05:30 INFO (6): got section: READING NON VERBAL CLUES
+2014-09-26T01:09:05+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:09:05+05:30 INFO (6): enum count12
+2014-09-26T01:09:05+05:30 INFO (6): got section: UNDERSTANDING
+2014-09-26T01:09:05+05:30 INFO (6): questioncount not enum0
+2014-09-26T01:09:05+05:30 INFO (6): enum count12
+2014-09-26T08:46:45+05:30 INFO (6): This is a little log!
+2014-09-26T08:46:47+05:30 INFO (6): 0
+2014-09-26T08:46:48+05:30 INFO (6): Dashboard index action
+2014-09-26T08:46:48+05:30 INFO (6): Rest call to GET /customer/current
+2014-09-26T08:46:48+05:30 INFO (6): Rest call to GET /dashboard
+2014-09-26T08:47:06+05:30 INFO (6): questionnaire index action
+2014-09-26T08:47:06+05:30 INFO (6): qId: 1 cust:
+2014-09-26T08:47:06+05:30 INFO (6): check permissions on questionnaire
+2014-09-26T08:47:06+05:30 INFO (6): 1
+2014-09-26T08:47:06+05:30 INFO (6): got questionnaire: Communication & Interpersonal Skills Self-Assessment
+2014-09-26T08:47:06+05:30 INFO (6): got section: EMPATHAZING
+2014-09-26T08:47:06+05:30 INFO (6): questioncount not enum0
+2014-09-26T08:47:06+05:30 INFO (6): enum count12
+2014-09-26T08:47:06+05:30 INFO (6): got section: RECEIVING
+2014-09-26T08:47:06+05:30 INFO (6): questioncount not enum0
+2014-09-26T08:47:06+05:30 INFO (6): enum count12
+2014-09-26T08:47:06+05:30 INFO (6): got section: TRANSMITTING YOUR MESSAGE
+2014-09-26T08:47:06+05:30 INFO (6): questioncount not enum0
+2014-09-26T08:47:06+05:30 INFO (6): enum count12
+2014-09-26T08:47:06+05:30 INFO (6): got section: CLARIFYING
+2014-09-26T08:47:06+05:30 INFO (6): questioncount not enum0
+2014-09-26T08:47:06+05:30 INFO (6): enum count12
+2014-09-26T08:47:06+05:30 INFO (6): got section: FEEDBACK: GIVING AND RECEIVING
+2014-09-26T08:47:06+05:30 INFO (6): questioncount not enum0
+2014-09-26T08:47:06+05:30 INFO (6): enum count12
+2014-09-26T08:47:06+05:30 INFO (6): got section: READING NON VERBAL CLUES
+2014-09-26T08:47:06+05:30 INFO (6): questioncount not enum0
+2014-09-26T08:47:06+05:30 INFO (6): enum count12
+2014-09-26T08:47:06+05:30 INFO (6): got section: UNDERSTANDING
+2014-09-26T08:47:06+05:30 INFO (6): questioncount not enum0
+2014-09-26T08:47:06+05:30 INFO (6): enum count12
+2014-09-26T09:04:51+05:30 INFO (6): Manage questionnaire index action
+2014-09-26T09:04:51+05:30 INFO (6): qId: 1 cust:
+2014-09-26T09:04:51+05:30 INFO (6): check permissions on questionnaire
+2014-09-26T09:04:51+05:30 INFO (6): session says 1
+2014-09-26T09:04:51+05:30 INFO (6): 1
+2014-09-26T09:06:23+05:30 INFO (6): Manage questionnaire index action
+2014-09-26T09:06:23+05:30 INFO (6): qId: 1 cust:
+2014-09-26T09:06:23+05:30 INFO (6): check permissions on questionnaire
+2014-09-26T09:06:23+05:30 INFO (6): session says 1
+2014-09-26T09:06:23+05:30 INFO (6): 1
