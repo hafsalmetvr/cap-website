@@ -1,0 +1,55 @@
+<div class="row summary page"  style="page-break-inside:avoid;">
+	<div class="col-xs-12">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<h2>OVERALL SUMMARY</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="chart chart-large">
+					<div class="chart-scale">
+						<div class="clearfix">
+							<div class="chart-heading-space pull-left"></div>
+							<div class="chart-columns pull-left clearfix">
+								<div class="chart-col-line"></div>
+								<div class="chart-col-line"></div>
+								<div class="chart-col-line"></div>
+								<div class="chart-col-line"></div>
+								<div class="chart-col-line"></div>
+								<div class="chart-col-line last"></div>
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class="chart-label-space pull-left"></div>
+							<div class="chart-labels pull-left clearfix">
+								<div class="chart-label">0</div>
+								<div class="chart-label">1</div>
+								<div class="chart-label">2</div>
+								<div class="chart-label">3</div>
+								<div class="chart-label">4</div>
+								<div class="chart-label">5</div>
+							</div>
+						</div>
+					</div>
+					<div class="chart-bars">
+						<?php foreach ($results['sections'] as $s) { ?>
+							<div class="chart-row clearfix">
+								<div class="chart-bar-heading pull-left"><?php echo $s['name'];?></div>
+								<div class="chart-bar pull-left">
+									<?php $width = ($results['score'][$s['sectionNumber']]['average'] * 16); ?>
+									<div class="bar" style="height:20px; width:<?php echo $width ?>%;"></div>
+								</div>
+							</div>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<?php echo $this->partial($tmplPath.'small-chart',array('heading' => "AGGREGATE SELF SCORE", 'average' => $results['score']['average']) ) ?>
+			</div>
+		</div>
+	</div>
+</div>

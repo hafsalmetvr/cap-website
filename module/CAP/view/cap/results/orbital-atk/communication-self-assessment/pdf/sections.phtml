@@ -1,0 +1,28 @@
+<?php	foreach ($results['sections'] as $s) { ?>
+
+	<div class="section-interpretation section-page page" style="page-break-inside:avoid;">
+		<?php echo $this->partial($tmplPath."section/heading", array('reportTitle' => 'Successful Communication Profile Report'));	?>
+		<?php	echo $this->partial($tmplPath."section/".$s['sectionNumber']."-description", array('s' => $s)); ?>
+		<div class="row">
+			<div class="col-xs-12">
+				<?php echo $this->partial($tmplPath.'small-chart',array('heading' => "CATEGORY SELF SCORE", 'average' => $results['score'][$s['sectionNumber']]['average']) ) ?>
+			</div>
+		</div>
+		<?php echo $this->partial($tmplPath."section/".$s['sectionNumber']."-interpretation", array('s' => $s)); ?>
+	</div>
+
+	<div class="section-answers section-page page" style="page-break-inside:avoid;">
+		<?php echo $this->partial($tmplPath."section/heading", array('reportTitle' => 'Successful Communication Profile Report'));	?>
+		<?php	echo $this->partial($tmplPath."section/answers", array('results' => $results, 's' => $s)); ?>
+	</div>
+
+	<div class="section-improvement section-page page" style="page-break-inside:avoid;">
+
+	<?php
+			echo $this->partial($tmplPath."section/heading", array('reportTitle' => 'Successful Communication Profile Report'));
+			echo $this->partial($tmplPath."section/".$s['sectionNumber']."-description", array('s' => $s));
+			echo $this->partial($tmplPath."section/".$s['sectionNumber']."-improvement", array('tmplPath' => $tmplPath,'s' => $s));
+	?>
+	</div>
+
+<?php	} ?>

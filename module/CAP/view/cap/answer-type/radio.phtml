@@ -1,0 +1,10 @@
+<div class="row">
+	<div class="col-xs-4 form-group" ng-repeat="answer in answers track by $index">
+		<label ng-disabled="disabled">
+			<i ng-hide="selectedAnswerId==answer.id" class="fa fa-circle-o fa-fw"></i>
+			<i ng-show="selectedAnswerId==answer.id" class="fa fa-check-circle-o green fa-fw"></i>
+			<input ng-change="save(selectedAnswerId)" name="[[questionId]]" type="radio" value="[[answer.id]]" ng-disabled="disabled" ng-model="selectedAnswerId" class="hide">
+			<span>[[answer.answerText]]</span>
+		</label>
+	</div>
+</div>

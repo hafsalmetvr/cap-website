@@ -1,9 +1,11 @@
 /* Controllers */
 angular.module('cap.controllers.mentor', []).
 
-controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies', 'customer',
-  function($scope, $element, $http, $timeout, $window, $cookies, customer) {
+controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies', 'customer', 'overlay',
+  function($scope, $element, $http, $timeout, $window, $cookies, customer, overlay) {
   	$scope.init = function() {
+  		overlay.message('loading your dashboard...').loading(true).show();
+
 			/* fetch the logged in identity */
 			customer.get(function(result) {
 				$scope.customer = result;
@@ -12,8 +14,13 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window
         $http.get('/rest/dashboard').success(function(data, status) {
         	console.log(data);
         	$scope.mentees = data.mentees;
+        	$scope.forms = data.forms;
+        	$scope.saqList = data.saqList;
+
+        	overlay.loading(false).hide();
         }).error(function(data, status){
           console.log(data);
+        	overlay.loading(false).hide();
         });
 
 			});
@@ -21,11 +28,13 @@ controller('DashboardCtrl', ['$scope', '$element', '$http', '$timeout', '$window
   }
 ]).
 
-controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer',
-	function($scope, $element, $http, $timeout, $cookies, customer) {
+controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay) {
 		/* can only edit my note */
 		$scope.createNoteModal = function() {
-			$scope.modal = {};
+			$scope.modal = {
+				'shareWith' : 'mentee'
+			};
 		}
 
 		$scope.editNoteModal = function(idx) {
@@ -33,6 +42,7 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 			$scope.modal = {
 				'noteIdx':idx,
 				'note': note,
+				'shareWith' : 'mentee'
 			};
 
 		}
@@ -43,7 +53,7 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 			console.log(note);
 			$scope.createInProgress = true;
 
-			$http.post('/rest/note/'+note.id,{'note':note,'customerId':$scope.menteeId}).success(function(data,staus) {
+			$http.post('/rest/note/'+note.id,{'note':note,'customerId':$scope.menteeId}).success(function(data,status) {
 	    	$scope.createInProgress = false;
 	    	console.log(data);
 	    	if (data.success) {
@@ -68,7 +78,7 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 			$scope.inProgress = {'myNotes': {}};
 			$scope.inProgress['myNotes'][note.noteIdx] = true;
 
-			$http.put('/rest/note/'+note.id,note).success(function(data,staus) {
+			$http.put('/rest/note/'+note.id,note).success(function(data,status) {
 	    	$scope.inProgress = false;
 	    	console.log(data);
 	    	if (data.success) {
@@ -91,6 +101,7 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 				'noteIdx':idx,
 				'type':type,
 				'note': note,
+				'shareWith' : 'mentee'
 			};
 		}
 
@@ -120,6 +131,8 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 		}
 
 		$scope.init = function(menteeId) {
+  		overlay.message('loading mentee information...').loading(true).show();
+
 			/* get list of saqs for this mentee */
 			$scope.menteeId = menteeId;
 			$scope.inProgress = true;
@@ -128,16 +141,32 @@ controller('MenteeCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies',
 	    	$scope.inProgress = false;
 	    	console.log(data);
 	    	$scope.saqList = data.saqs;
+	    	$scope.forms = data.forms;
 	    	$scope.mentors = data.mentors;
 	    	$scope.myNotes     = data.myNotes;
 	    	$scope.sharedNotes = data.sharedNotes;
 
-
+        overlay.loading(false).hide();
 	    }).error(function(data, status){
 	    	$scope.inProgress = false;
 	      console.log(data);
+        overlay.loading(false).hide();
 	    });
 		}
+	}
+]).
+controller('QuestionnaireCtrl', ['$scope', '$element', '$http', '$timeout', '$window', '$cookies',
+  function($scope, $element, $http, $timeout, $window, $cookies) {
+  }
+]).
+controller('QuestionnairePageCtrl', ['$scope', '$element', '$http', '$timeout', '$cookies', 'customer', 'overlay', '$window',
+	function($scope, $element, $http, $timeout, $cookies, customer, overlay, $window) {
+  	overlay.message('loading questions...').loading(true).show();
+  	$scope.continue = function(nextUrl) {
+  		$window.location.href = '/dashboard';
+  		$window.open(nextUrl,'_blank');
+  	}
+
 	}
 ]).
 

@@ -3,16 +3,9 @@
 <html lang="en" ng-app="cap">
     <head>
         <meta charset="utf-8">
-        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Roboto Condensed' rel='stylesheet' type='text/css'>
         <?php echo $this->headTitle($this->translate('Centurion Assesment Portal'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0')->appendHttpEquiv('X-UA-Compatible', 'IE=edge'); ?>
 
-        <?php echo $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-        ?>
-
-        <!-- Le styles -->
         <?php
             /*
             echo $this->headLink(array('rel' => 'shortcut icon',
@@ -21,7 +14,6 @@
             */
             echo $this->headLink()->prependStylesheet($this->basePath() . '/css/style.css');
         ?>
-
         <!-- Scripts -->
         <?php echo $this->headScript()
             ->prependFile($this->basePath() . '/js/cap.min.js')
@@ -30,12 +22,22 @@
         ; ?>
     </head>
     <body>
-        <?php echo $this->partial('layout/nav') ?>
-        <div class="container-fluid">
-            <?php echo $this->content ?>
-            <?php echo $this->partial('layout/footer') ?>
+        <div id="overlay" cap-overlay>
+            <div class="overlay-loading hide">
+                <div>
+                    <img src="/img/optimum-links.png"/>
+                </div>
+                <div ng-show="message">
+                    <i class="fa fa-cog fa-spin fa-fw"></i>
+                    <span>[[message]]</span>
+                </div>
+            </div>
         </div>
-
+        <?php echo $this->partial('layout/nav') ?>
+        <div id="content" class="container-fluid">
+            <?php echo $this->content ?>
+        </div>
+        <?php echo $this->partial('layout/footer') ?>
         <?php echo $this->inlineScript() ?>
     </body>
 </html>

@@ -1,0 +1,60 @@
+<div class="row">
+	<div class="col-xs-12 <?php echo $questionnaireTemplate; ?>">
+		<?php	echo $this->partial($tmplPath.'summary'); ?>
+		<div class="row">
+			<div class="col-xs-12 sections-container">
+				<?php foreach ($results['sections'] as $s) { ?>
+					<div class="section">
+						<div class="row">
+							<div class="col-xs-12"><h2><?php echo $s['name'];?></h2></div>
+						</div>
+						<div class="row" style="page-break-inside:avoid;">
+							<div class="col-xs-12">
+								<?php foreach ($results['questions'][$s['id']] as $q) { ?>
+									<?php if (isset($results['answers'][$q['questionId']] )) { ?>
+										<?php foreach ($results['answers'][$q['questionId']] as $a) { ?>
+											<?php if ($q['answerType'] === "TEXTAREA") { ?>
+												<div class="row">
+													<div class="col-xs-1 text-center"><?php echo $q['questionNumber']; ?>. </div>
+													<div class="col-xs-11">
+														<div class="row">
+															<div class="col-xs-12 question"><p><strong>QUESTION:&nbsp;</strong><?php echo $q['questionText']; ?></p></div>
+															<div class="col-xs-12 answer"><p><strong>ANSWER:&nbsp;</strong><?php echo $a['customerAnswerText']; ?></p></div>
+														</div>
+													</div>
+												</div>
+											<?php } ?>
+											<?php if ($q['answerType'] === "RADIO") { ?>
+												<div class="row">
+													<div class="col-xs-1 text-center"><?php echo $q['questionNumber']; ?>. </div>
+													<div class="col-xs-11">
+														<div class="row">
+															<div class="col-xs-12 question"><p><strong>QUESTION:&nbsp;</strong><?php echo $q['questionText']; ?></p></div>
+															<div class="col-xs-12 answer"><p><strong>ANSWER:&nbsp;</strong><?php echo $a['answerText']; ?></p></div>
+														</div>
+													</div>
+												</div>
+											<?php } ?>
+											<?php if ($q['answerType'] === "TEXT") { ?>
+												<div class="row">
+													<div class="col-xs-1 text-center"><?php echo $q['questionNumber']; ?>. </div>
+													<div class="col-xs-11">
+														<div class="row">
+															<div class="col-xs-12 question"><p><strong>QUESTION:&nbsp;</strong><?php echo $q['questionText']; ?></p></div>
+															<div class="col-xs-12 answer"><p><strong>ANSWER:&nbsp;</strong><?php echo $a['customerAnswerText']; ?></p></div>
+														</div>
+													</div>
+												</div>
+											<?php } ?>
+
+										<?php } ?>
+									<?php } ?>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>

@@ -41,4 +41,10 @@ class IndexController extends AbstractActionController {
 
 		return new viewModel();
 	}
+
+	public function resetPasswordAction() {
+		return new viewModel();
+
+	}
+
 }

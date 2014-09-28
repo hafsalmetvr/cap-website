@@ -9,6 +9,8 @@ return array(
     'Zend\\' => array($vendorDir . '/zendframework/zendframework/library'),
     'ZendXml' => array($vendorDir . '/zendframework/zendxml/library'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
+    'MvlabsSnappy' => array($vendorDir . '/mvlabs/mvlabs-snappy/src'),
+    'Knp\\Snappy' => array($vendorDir . '/knplabs/knp-snappy/src'),
     'Doctrine\\ORM\\' => array($vendorDir . '/doctrine/orm/lib'),
     'Doctrine\\DBAL\\' => array($vendorDir . '/doctrine/dbal/lib'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
@@ -20,5 +22,4 @@ return array(
     'DoctrineORMModule\\' => array($vendorDir . '/doctrine/doctrine-orm-module/src'),
     'DoctrineModule\\' => array($vendorDir . '/doctrine/doctrine-module/src'),
     'DoctrineModuleTest\\' => array($vendorDir . '/doctrine/doctrine-module/tests'),
-    'CsnUser\\' => array($vendorDir . '/coolcsn/csn-user/src'),
 );

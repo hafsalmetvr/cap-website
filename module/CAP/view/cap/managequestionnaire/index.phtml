@@ -1,0 +1,45 @@
+<?php $this->headScript()->prependFile($this->basePath() . '/js/'. strtolower($this->identity()->getRole()->getName()) .'.min.js') ?>
+
+<div class="row" ng-controller="ManageQuestionnaireCtrl" ng-init="init()">
+	<div class="container">
+		<div class="bread_crumb">
+			<ul>
+				<li> <a href=""> Dashboard </a>/</li>
+				<li> <a href=""> Questionnaire </a>/</li>
+				<li> Edit </li>
+			</ul>
+
+		</div>
+
+		<div class="col-xs-4 left_section">
+			<div class="properties">
+				<span> QUESTIONNAIRE PROPERTIES </span>
+				<a href="" ng-click="edit_questionnaire()">Edit</a>
+			</div>
+			<div class="section" ng-repeat="section in questionnaire.sections">
+				<span class="section_name"> [[section.name]] </span>
+				<div class="page" ng-repeat="page in section.pages">
+					<span>[[page.name]]</span>
+				</div>
+				<div class="add_page">
+					<a href="" class="add_page_button"> ADD PAGE </a>
+				</div>
+			</div>
+			<div class="add_section">
+				<a href="" class="add_section_button"> ADD SECTION </a>
+			</div>
+		</div>
+		<div class="col-xs-7 right_section">
+			<div class="questionnaire_name controls">
+				<input type="text" name="questionnaire_name" ng-model="current_questionnaire.name" placeholder="QUESTIONNAIRE NAME" />
+			</div>
+			<div class="description controls">
+				<textarea name="description" ng-model="current_questionnaire.description" placeholder="QUESTIONNAIRE DESCRIPTION"></textarea>
+			</div>
+			<div class="settings">
+				<label> SETTINGS:</label>
+			</div>
+			<a href="" class="save_button"> Save </a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,30 @@
+<div id="confirm-continue-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+        	<span aria-hidden="true">
+        		<i class="fa fa-times"></i>
+        	</span>
+        	<span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-12"><div class="alert alert-warning">Congratulations you're all done!  Once you continue to the view your results, you will not be able to go back and change any answers.  Are you sure you're ready to view your results?</div></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-xs-6">
+            <button type="button" class="btn btn-default form-control" data-dismiss="modal">No, Cancel</button>
+          </div>
+          <div class="col-xs-6">
+            <a href="[[nextUrl]]" target="_blank" ng-click="redirect('/dashboard')", class="btn btn-primary form-control"><span>Yes I'm sure, Continue</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

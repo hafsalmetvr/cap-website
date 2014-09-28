@@ -1,0 +1,85 @@
+<?php
+	/* for each section, render the section partial */
+	foreach ($results['sections'] as $s) {
+?>
+<div class="row section page" style="page-break-inside:avoid;">
+	<div class="col-xs-12">
+		<div class="row">
+			<div class="col-xs-12">
+				<?php echo $this->partial($tmplPath.'small-chart',array('heading' => "CATEGORY SELF SCORE", 'average' => $results['score'][$s['sectionNumber']]['average']) ) ?>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 section-content-container">
+				<div class="row">
+					<div class="col-xs-12">
+						<h2>Goal Setting Profile Report</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<h3><?php echo $s['name'] ?></h3>
+					</div>
+				</div>
+
+				<div class="answer-container">
+					<div class="chart-scale clearfix">
+						<div class="answer-col-space pull-left"></div>
+						<div class="answer-columns clearfix pull-left">
+							<div class="answer-col"></div>
+							<div class="answer-col"></div>
+							<div class="answer-col"></div>
+							<div class="answer-col"></div>
+							<div class="answer-col"></div>
+						</div>
+					</div>
+					<div class="answer-content">
+
+					<?php foreach ($results['questions'][$s['id']] as $q) {
+						if (isset($results['answers'][$q['questionId']])) {
+							foreach ($results['answers'][$q['questionId']] as $a) {
+					?>
+
+						<div class="answer clearfix">
+							<div class="answer-heading pull-left clearfix">
+								<div class="answer-number pull-left"><?php echo $a['answerNumber'].".&nbsp;"; ?></div>
+								<div class="answer-text pull-left"><?php echo $a['answerText']; ?></div>
+							</div>
+							<div class="answer-bar-container pull-left">
+								<?php $width = ($results['score'][$s['sectionNumber']]['answers'][$a['answerNumber']] * 20) ?>
+								<div class="answer-bar" style="width:<?php echo $width; ?>%"></div>
+							</div>
+						</div>
+
+
+						<?php
+								}
+							}
+						}
+						?>
+					</div>
+					<div class="answer-labels-container clearfix">
+						<div class="answer-label-space pull-left">
+						</div>
+						<div class="answer-labels pull-left clearfix text-right">
+							<div class="answer-label">1</div>
+							<div class="answer-label">2</div>
+							<div class="answer-label">3</div>
+							<div class="answer-label">4</div>
+							<div class="answer-label">5</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php echo $this->partial($tmplPath."section/".$s['sectionNumber'], array('section' => $s)); ?>
+
+<?php
+
+	}
+
+?>

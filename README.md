@@ -10,7 +10,7 @@ Installation
     git clone https://github.com/bluesman/cap-website.git
     
 
-Database Configuration
+See Database Configuration
 ------------
     Create a database "cap"
     import mysql dump file (sql/cap.sql)

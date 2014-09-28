@@ -38,7 +38,7 @@ class MentorController extends AbstractRestfulController {
 		if ($this->identity()->getRole()->getName() !== "Admin") {
 	    $ch = $entityManager->getRepository('CAP\Entity\CustomerHierarchy')
 	    										->findOneBy(array('parentCustomer' => $id,
-	    																			'childCustomerd' => $this->identity()->getId()));
+	    																			'childCustomerId' => $this->identity()->getId()));
 	    if (!$ch) {
 				return new JsonModel();
 	    }
@@ -59,18 +59,54 @@ class MentorController extends AbstractRestfulController {
       $mentees = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' )->createQuery( $sql )
                       ->setParameter('parentId',$id)
                       ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+      /* get all saqs for this mentor */
+      $saqs = $entityManager->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where c.type = 'QUESTIONNAIRE' AND q.customer = :customerId" )
+                            ->setParameter('customerId', $id)
+                            ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+      /* get all saqs for this mentor */
+      $forms = $entityManager->createQuery( "SELECT c.id, c.name, cs.name as completion_status FROM CAP\Entity\CustomerQuestionnaire q JOIN q.questionnaire c JOIN q.completionStatus cs where c.type = 'FORM' AND q.customer = :customerId" )
+                            ->setParameter('customerId', $id)
+                            ->getResult( \Doctrine\ORM\Query::HYDRATE_OBJECT );
+
+
 		}
 
 
-		return new JsonModel(array('mentor' => array('id' => $mentor->getId(),
-																								 'name' => $mentor->getName(),
-																								 'email' => $mentor->getEmail(),
-																								 'title' => $mentor->getTitle(),
-																								 'status' => $mentor->getStatus()->getName(),
-																								 'phoneNumber' => $mentor->getPhoneNumber()
-																								 ),
-															 'mentees' => $mentees));
+    if ( $this->identity()->getRole()->getName() === 'Mentee') {
 
+      /* get mentors notes on this mentee */
+      $myNotes = $entityManager->createQuery("SELECT cn.id, cn.customerId, cn.note, cn.name, cn.created, nm.share FROM CAP\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = :menteeId and nm.customer = :mentorId")
+                               ->setParameter('mentorId', $id)
+                               ->setParameter('menteeId', $this->identity()->getId())
+                               ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+
+      /* get mentee notes shared with this mentor */
+      $sharedNotes = $entityManager->createQuery("SELECT cn.id, cn.customerId, cn.note, cn.name, cn.created, nm.share FROM CAP\Entity\CustomerNoteMap nm JOIN nm.customerNote cn WHERE cn.customer = :mentorId and nm.customer = :menteeId and nm.share = TRUE")
+                                   ->setParameter('mentorId', $id)
+                                   ->setParameter('menteeId', $this->identity()->getId())
+                                   ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
+
+
+		$modelArgs = array('mentor' => array('id' => $mentor->getId(),
+																				 'name' => $mentor->getName(),
+																				 'email' => $mentor->getEmail(),
+																				 'title' => $mentor->getTitle(),
+																				 'status' => $mentor->getStatus()->getName(),
+																				 'phoneNumber' => $mentor->getPhoneNumber()
+																				 ),
+											 'mentees' => $mentees,
+                       'saqList' => $saqs,
+                       'forms'   => $forms
+                      );
+
+    $modelArgs['myNotes']     = isset($myNotes) ? $myNotes : null;
+    $modelArgs['sharedNotes'] = isset($sharedNotes) ? $sharedNotes : null;
+
+
+    return new JsonModel($modelArgs);
 	}
 
 	/* will return a list of mentors that belong to the logged in user (or all mentors if Admin) if key is passed in the body it will filter by key */

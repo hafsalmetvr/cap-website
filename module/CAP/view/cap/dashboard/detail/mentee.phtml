@@ -9,6 +9,7 @@
         	echo $this->partial("cap/partials/customer-info", array('type' => 'mentee', 'title' => 'Mentee Information', 'customer' => $mentee));
 	      	echo $this->partial("cap/partials/mentors-list");
 	      	echo $this->partial("cap/partials/saq-list");
+	      	echo $this->partial("cap/partials/forms-list");
 	      	if ($this->identity()->getRole()->getName() !== 'Admin') {
 	      		echo $this->partial("cap/partials/notes-list",array('title' => 'My Notes','notes' => 'myNotes'));
 	      		echo $this->partial("cap/partials/notes-list",array('title' => 'Notes Shared With Me','notes' => 'sharedNotes'));

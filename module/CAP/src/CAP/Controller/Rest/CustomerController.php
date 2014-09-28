@@ -116,8 +116,8 @@ class CustomerController extends AbstractRestfulController {
 		}
 
 
-		$logger = $this->getServiceLocator()->get( 'Log\App' );
-		$logger->log( \Zend\Log\Logger::INFO, $data );
+    $logger = $this->getServiceLocator()->get( 'Log\App' );
+    $logger->log( \Zend\Log\Logger::INFO, $data );
 
     $entityManager = $this->getServiceLocator()->get( 'doctrine.entitymanager.orm_default' );
     $c = $entityManager->createQuery( "SELECT u FROM CAP\Entity\Customer u WHERE u.email = :email" )
@@ -129,7 +129,7 @@ class CustomerController extends AbstractRestfulController {
 
 			$customer = new Customer;
 			/* TODO : make domain a global */
-			$customer->setDomain( $entityManager->find( 'CAP\Entity\Domain', 3 ) );
+			$customer->setDomain( $entityManager->find( 'CAP\Entity\Domain', 1 ) );
 			$customer->setRole(   $entityManager->find( 'CAP\Entity\Role', $data['role_id'] ) );
 
       $customer->setStatus( $entityManager->find( 'CAP\Entity\CustomerStatus', 2 ) );
@@ -138,21 +138,21 @@ class CustomerController extends AbstractRestfulController {
 			$customer->setRegistrationToken( md5( uniqid( mt_rand(), true ) ) );
 			$customer->setPassword( UserService::encryptPassword( $this->generatePassword() ) );
 
-			try {
-				$fullLink = $this->getBaseUrl() . $this->url()->fromRoute( 'dashboard', array( 'action' => 'confirm-email', 'id' => $customer->getRegistrationToken() ) );
-				$this->sendEmail(
-					$customer->getEmail(),
-					$this->getTranslatorHelper()->translate( 'Please, confirm your registration!' ),
-					sprintf( $this->getTranslatorHelper()->translate( 'Please, click the link to confirm your registration => %s' ), $fullLink )
-				);
+      try {
+        $fullLink = $this->getBaseUrl() . $this->url()->fromRoute( 'dashboard', array( 'action' => 'confirm-email', 'id' => $customer->getRegistrationToken() ) );
+        $this->sendEmail(
+          $customer->getEmail(),
+          $this->getTranslatorHelper()->translate( 'Please, confirm your registration!' ),
+          sprintf( $this->getTranslatorHelper()->translate( 'Please, click the link to confirm your registration => %s' ), $fullLink )
+        );
         $entityManager->persist( $customer );
         $entityManager->flush();
 
-				return new JsonModel( array( 'success' => true, 'message' => 'An email has been sent to '.$customer->getEmail() ) );
-			} catch ( \Exception $e ) {
-				$logger->log( \Zend\Log\Logger::INFO, $e );
-				return new JsonModel( array( 'success' => false, 'message' =>'Something went wrong when trying to send the activation email! Please contact your administrator.' ) );
-			}
+        return new JsonModel( array( 'success' => true, 'message' => 'An email has been sent to '.$customer->getEmail() ) );
+      } catch ( \Exception $e ) {
+        $logger->log( \Zend\Log\Logger::INFO, $e );
+        return new JsonModel( array( 'success' => false, 'message' =>'Something went wrong when trying to send the activation email! Please contact your administrator.' ) );
+      }
 		} else {
 			return new JsonModel( array( 'success' => false, 'message' =>'This email is already registered' ) );
 		}

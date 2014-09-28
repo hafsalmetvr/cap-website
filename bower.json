@@ -17,5 +17,7 @@
     "components-font-awesome": "~4.1.0",
     "angular-resource": "~1.2.21"
   },
-  "dependencies": {}
+  "dependencies": {
+    "underscore": "~1.6.0"
+  }
 }
